@@ -1,7 +1,7 @@
-Hey Hi Hello, aquí estará el códifo de Krello.
+Hey Hi Hello, aquí estará el código del proyecto Final "Krello".
 
 Creado por:
 - Alexander Chacón
-- Nicoll Durán
 - Sharon Cruz
+- Nicoll Durán
 - Brian Vargas
