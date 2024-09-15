@@ -4,12 +4,12 @@ public class Tarea {
     private String descripcion;
     private String fechaVencimiento;
     private boolean casilla;
-    private Colaborador listaDelegados = new Colaborador();
+    private Persona listaDelegados = new Persona();//lista heterogenea
     
     public Tarea() {
     }
 
-    public Tarea(String descripcion, String fechaVencimiento, boolean casilla, Colaborador listaDelegados) {
+    public Tarea(String descripcion, String fechaVencimiento, boolean casilla, Persona listaDelegados) {
         this.descripcion = descripcion;
         this.fechaVencimiento = fechaVencimiento;
         this.casilla = casilla;
@@ -40,11 +40,11 @@ public class Tarea {
         this.casilla = casilla;
     }
 
-    public Colaborador getListaDelegados() {
+    public Persona getListaDelegados() {
         return listaDelegados;
     }
 
-    public void setListaDelegados(Colaborador listaDelegados) {
+    public void setListaDelegados(Persona listaDelegados) {
         this.listaDelegados = listaDelegados;
     }
 
