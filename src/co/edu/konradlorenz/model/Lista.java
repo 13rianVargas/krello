@@ -1,13 +1,15 @@
 package co.edu.konradlorenz.model;
 
+import java.util.ArrayList;
+
 public class Lista {
     private String nombreLista;
-    private Tarea listaDeTareas = new Tarea();
+    private ArrayList<Tarea> listaDeTareas = new ArrayList<>();
     
     public Lista() {
     }
     
-    public Lista(String nombreLista, Tarea listaDeTareas) {
+    public Lista(String nombreLista, ArrayList<Tarea> listaDeTareas) {
         this.nombreLista = nombreLista;
         this.listaDeTareas = listaDeTareas;
     }
@@ -20,11 +22,11 @@ public class Lista {
         this.nombreLista = nombreLista;
     }
 
-    public Tarea getListaDeTareas() {
+    public ArrayList<Tarea> getListaDeTareas() {
         return listaDeTareas;
     }
 
-    public void setListaDeTareas(Tarea listaDeTareas) {
+    public void setListaDeTareas(ArrayList<Tarea> listaDeTareas) {
         this.listaDeTareas = listaDeTareas;
     }
 

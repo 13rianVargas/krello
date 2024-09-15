@@ -148,7 +148,7 @@ public class Controlador {
 	
 	public Tablero crearTablero() {
 		String nombre = Vista.pedirString("Ingrese el nombre del tablero: ");
-		Lista lista = crearLista();
+		ArrayList<Lista> lista = new ArrayList<>();
 		Tablero tablero = new Tablero(nombre, lista);
 		listaDeTableros.add(tablero);
 		return tablero;
@@ -157,7 +157,7 @@ public class Controlador {
 	
 	public Lista crearLista() {
 		String nombre = Vista.pedirString("Ingrese el nombre de la lista: ");
-		Tarea tarea = crearTarea();
+		ArrayList<Tarea> tarea = new ArrayList<>();
 		Lista lista = new Lista(nombre, tarea);
 		listaDeListas.add(lista);
 		return lista;
@@ -167,25 +167,26 @@ public class Controlador {
 		String descripcion = Vista.pedirString("Ingrese la descripción de la tarea: ");
 		String fecha = Vista.pedirString("Ingrese la fecha de vencimiento de la tarea: ");
 		boolean casilla = false;
-		Colaborador colaborador = new Colaborador();
-		Tarea tarea = new Tarea( descripcion, fecha, casilla, colaborador);
+		ArrayList<Persona> delegado = new ArrayList<>();
+		Tarea tarea = new Tarea( descripcion, fecha, casilla, delegado);
 		listaDeTareas.add(tarea);
 		return tarea;
 	}
 
-	public void crearAdministrador() {
-		 String nombre = Vista.pedirString("Ingrese el nombre del administrador: ");
-		 String correo = Vista.pedirString("Ingrese el correo del administrador: ");
-		 String rol = "Administrador";
-		    
-		 objAdministrador = new Administrador(nombre, correo, rol);
-	}
-	
-	public void crearColaborador() {
-		String nombre = Vista.pedirString("Ingrese el nombre del colaborador: ");
-		String correo = Vista.pedirString("Ingrese el correo del colaborador: ");
-		String rol = "Colaborador";
-		objColaborador = new Colaborador(nombre, correo, rol);
+	public Persona crearDelegado() {
+		String nombre = Vista.pedirString("Ingrese el nombre del delegado: ");
+		String correo = Vista.pedirString("Ingrese el correo del delegado: ");
+		String rol = Vista.pedirString("Ingrese el rol del delegado: ").toLowerCase();
+		
+		if (rol.equals("colaborador")) {
+			return objColaborador = new Colaborador(nombre, correo, rol);
+		}else  if (rol.equals("administrador")) {
+			return objAdministrador = new Administrador(nombre, correo, rol);
+		} else {
+			Vista.mostrarMensaje("No es un rol valido.");
+			crearDelegado();
+		}
+		return null;
 	}
 
 	public void eliminarTablero(String nombreTablero) {

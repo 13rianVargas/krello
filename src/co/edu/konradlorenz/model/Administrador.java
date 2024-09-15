@@ -6,7 +6,7 @@ public class Administrador extends Persona {
 	}
 
 	public Administrador(String nombre, String correo, String rol) {
-		super(nombre, correo, rol);
+		super(nombre, correo, "Administrador");
 	}
 
 	@Override
