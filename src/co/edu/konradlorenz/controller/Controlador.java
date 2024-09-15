@@ -148,7 +148,7 @@ public class Controlador {
 	
 	public Tablero crearTablero() {
 		String nombre = Vista.pedirString("Ingrese el nombre del tablero: ");
-		Lista lista = new Lista();
+		Lista lista = crearLista();
 		Tablero tablero = new Tablero(nombre, lista);
 		listaDeTableros.add(tablero);
 		return tablero;
@@ -157,19 +157,18 @@ public class Controlador {
 	
 	public Lista crearLista() {
 		String nombre = Vista.pedirString("Ingrese el nombre de la lista: ");
-		Tarea tarea = new Tarea();
+		Tarea tarea = crearTarea();
 		Lista lista = new Lista(nombre, tarea);
 		listaDeListas.add(lista);
 		return lista;
 	}
 	
 	public Tarea crearTarea() {
-		String nombre = Vista.pedirString("Ingrese el nombre de la tarea: ");
-		String descripcion = Vista.perdirString("Ingrese la descripción de la tarea: ");
+		String descripcion = Vista.pedirString("Ingrese la descripción de la tarea: ");
 		String fecha = Vista.pedirString("Ingrese la fecha de vencimiento de la tarea: ");
 		boolean casilla = false;
-		Colaborador colaborador = new colaborador();
-		Tarea tarea = new Tarea(nombre, descripcion, fecha, casilla, colaborador);
+		Colaborador colaborador = new Colaborador();
+		Tarea tarea = new Tarea( descripcion, fecha, casilla, colaborador);
 		listaDeTareas.add(tarea);
 		return tarea;
 	}
@@ -177,22 +176,23 @@ public class Controlador {
 	public void crearAdministrador() {
 		 String nombre = Vista.pedirString("Ingrese el nombre del administrador: ");
 		 String correo = Vista.pedirString("Ingrese el correo del administrador: ");
+		 String rol = "Administrador";
 		    
-		 objAdministrador = new Administrador(nombre, correo);
+		 objAdministrador = new Administrador(nombre, correo, rol);
 	}
 	
 	public void crearColaborador() {
 		String nombre = Vista.pedirString("Ingrese el nombre del colaborador: ");
 		String correo = Vista.pedirString("Ingrese el correo del colaborador: ");
-
-		objColaborador = new Colaborador(nombre, correo);
+		String rol = "Colaborador";
+		objColaborador = new Colaborador(nombre, correo, rol);
 	}
 
 	public void eliminarTablero(String nombreTablero) {
-		boolean encontrado;
+		boolean encontrado = false;
 
 		for (Tablero tablero : listaDeTableros) {
-			if (tablero.getNombre().equals(nombreTablero)) {
+			if (tablero.getNombreTablero().equals(nombreTablero)) {
 				listaDeTableros.remove(tablero);
 				Vista.mostrarMensaje("tablero eliminado");
 				encontrado = true;
@@ -205,10 +205,10 @@ public class Controlador {
 	}
 
 	public void eliminarLista(String nombreLista) {
-		boolean encontrado;
+		boolean encontrado = false;
 
 		for (Lista lista : listaDeListas) {
-			if (lista.getNombre().equals(nombreLista)) {
+			if (lista.getNombreLista().equals(nombreLista)) {
 				listaDeListas.remove(lista);
 				Vista.mostrarMensaje("lista eliminada");
 				encontrado = true;
@@ -221,10 +221,10 @@ public class Controlador {
 	}
 
 	public void eliminarTarea(String nombreTarea) {	
-		boolean encontrado;
+		boolean encontrado = false;
 
 		for (Tarea tarea : listaDeTareas) {
-	        if (tarea.getNombre().equals(nombreTarea)) {
+	        if (tarea.getDescripcion().equals(nombreTarea)) {
 	            listaDeTareas.remove(tarea);
 	            Vista.mostrarMensaje("tarea eliminada");
 	            encontrado = true;

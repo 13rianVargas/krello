@@ -1,17 +1,15 @@
 package co.edu.konradlorenz.model;
 
-import java.util.ArrayList;
-
 public class Tarea {
     private String descripcion;
     private String fechaVencimiento;
     private boolean casilla;
-    private ArrayList<Colaborador> listaDelegados = new ArrayList<>();
+    private Colaborador listaDelegados = new Colaborador();
     
     public Tarea() {
     }
 
-    public Tarea(String descripcion, String fechaVencimiento, boolean casilla, ArrayList<Colaborador> listaDelegados) {
+    public Tarea(String descripcion, String fechaVencimiento, boolean casilla, Colaborador listaDelegados) {
         this.descripcion = descripcion;
         this.fechaVencimiento = fechaVencimiento;
         this.casilla = casilla;
@@ -42,11 +40,11 @@ public class Tarea {
         this.casilla = casilla;
     }
 
-    public ArrayList<Colaborador> getListaDelegados() {
+    public Colaborador getListaDelegados() {
         return listaDelegados;
     }
 
-    public void setListaDelegados(ArrayList<Colaborador> listaDelegados) {
+    public void setListaDelegados(Colaborador listaDelegados) {
         this.listaDelegados = listaDelegados;
     }
 

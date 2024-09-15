@@ -1,15 +1,13 @@
 package co.edu.konradlorenz.model;
 
-import java.util.ArrayList;
-
 public class Tablero {
     private String nombreTablero;
-    private ArrayList<Lista> listaDeListas = new ArrayList<>();
+    private Lista listaDeListas = new Lista();
 
     public Tablero() {
     }
     
-    public Tablero(String nombreTablero, ArrayList<Lista> listaDeListas) {
+    public Tablero(String nombreTablero, Lista listaDeListas) {
         this.nombreTablero = nombreTablero;
         this.listaDeListas = listaDeListas;
     }
@@ -22,11 +20,11 @@ public class Tablero {
         this.nombreTablero = nombreTablero;
     }
 
-    public ArrayList<Lista> getListaDeListas() {
+    public Lista getListaDeListas() {
         return listaDeListas;
         }
         
-    public void setListaDeListas(ArrayList<Lista> listaDeListas) {
+    public void setListaDeListas(Lista listaDeListas) {
         this.listaDeListas = listaDeListas;
     }
             
