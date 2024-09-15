@@ -4,12 +4,6 @@ import java.util.Scanner;
 public class Vista {
 	static Scanner sc = new Scanner(System.in);
 	
-	static public int pedirInt() {
-		System.out.println("Ingrese la opción que desea: ");
-		int opc = sc.nextInt();
-		return opc;
-	}
-	
 	static public String pedirString(String dato) {
 		System.out.println("Por favor ingrese "+dato+": ");
 		return sc.nextLine();
@@ -19,7 +13,7 @@ public class Vista {
 		System.out.println(mensaje);
 	}
 	
-	static public void menuPrincipal() {
+	static public int menuPrincipal() {
 		System.out.println();
 		System.out.println("<> <> <> <> <> <> <> <> <> <> <>");
 		System.out.println("<>       MENÚ PRINCIPAL       <>");
@@ -27,33 +21,42 @@ public class Vista {
 		System.out.println("<> [2] Abrir tablero          <>");
 		System.out.println("<> [3] Salir                  <>");
 		System.out.println("<> <> <> <> <> <> <> <> <> <> <>");
+		int opc = sc.nextInt();
+		System.out.println();
+		return opc;
 	}
 	
-	static public void menuTablero() {
+	static public int menuTablero() {
 		System.out.println();
 		System.out.println("<> <> <> <> <> <> <> <> <> <> <>");
 		System.out.println("<>        MENÚ TABLERO        <>");
 		System.out.println("<> [1] Agregar lista          <>");
 		System.out.println("<> [2] Abrir lista            <>");
 		System.out.println("<> [3] Eliminar lista         <>");
-		System.out.println("<> [4] Vover                  <>");
+		System.out.println("<> [4] Volver                 <>");
 		System.out.println("<> [5] Salir                  <>");
 		System.out.println("<> <> <> <> <> <> <> <> <> <> <>");
+		int opc = sc.nextInt();
+		System.out.println();
+		return opc;
 	}
 	
-	static public void menuLista() {
+	static public int menuLista() {
 		System.out.println();
 		System.out.println("<> <> <> <> <> <> <> <> <> <> <>");
 		System.out.println("<>         MENÚ LISTA         <>");
 		System.out.println("<> [1] Agregar tarea          <>");
 		System.out.println("<> [2] Abrir tarea            <>");
 		System.out.println("<> [3] Eliminar tarea         <>");
-		System.out.println("<> [4] Vover                  <>");
+		System.out.println("<> [4] Volver                 <>");
 		System.out.println("<> [5] Salir                  <>");
 		System.out.println("<> <> <> <> <> <> <> <> <> <> <>");
+		int opc = sc.nextInt();
+		System.out.println();
+		return opc;
 	}
 	
-	static public void menuTarea() {
+	static public int menuTarea() {
 		System.out.println();
 		System.out.println("<> <> <> <> <> <> <> <> <> <> <>");
 		System.out.println("<>         MENÚ TAREA         <>");
@@ -64,5 +67,8 @@ public class Vista {
 		System.out.println("<> [5] Volver                 <>");
 		System.out.println("<> [6] Salir                  <>");
 		System.out.println("<> <> <> <> <> <> <> <> <> <> <>");
+		int opc = sc.nextInt();
+		System.out.println();
+		return opc;
 	}
 }
