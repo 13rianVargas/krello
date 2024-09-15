@@ -11,4 +11,10 @@ public class Administrador extends Persona {
 		// TODO Auto-generated constructor stub
 	}
 
+	@Override
+	public String toString() {
+		return "El nombre del administrador es = " + getNombre() + ", el correo es = " + getCorreo() + ", el rol es = "
+				+ getRol();
+	}
+
 }
