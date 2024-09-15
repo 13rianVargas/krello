@@ -1,1 +1,0 @@
-package co.edu.konradlorenz.model;
