@@ -15,7 +15,7 @@ public class Controlador {
 	
 	private ArrayList<Tablero> listaDeTableros = new ArrayList<>();
 	private ArrayList<Lista> listaDeListas = new ArrayList<>();
-	private ArrayList<Tareas> listaDeTareas = new ArrayList<>();
+	private ArrayList<Tarea> listaDeTareas = new ArrayList<>();
 
 	
 	public void run() {
