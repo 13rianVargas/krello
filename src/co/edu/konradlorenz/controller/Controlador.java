@@ -147,19 +147,31 @@ public class Controlador {
 	}
 	
 	public Tablero crearTablero() {
-		
-		return Tablero;
+		String nombre = Vista.pedirString("Ingrese el nombre del tablero: ");
+		Lista lista = new Lista();
+		Tablero tablero = new Tablero(nombre, lista);
+		listaDeTableros.add(tablero);
+		return tablero;
 	}
 	
 	
 	public Lista crearLista() {
-		
-		return Lista;
+		String nombre = Vista.pedirString("Ingrese el nombre de la lista: ");
+		Tarea tarea = new Tarea();
+		Lista lista = new Lista(nombre, tarea);
+		listaDeListas.add(lista);
+		return lista;
 	}
 	
 	public Tarea crearTarea() {
-		
-		return Tarea;
+		String nombre = Vista.pedirString("Ingrese el nombre de la tarea: ");
+		String descripcion = Vista.perdirString("Ingrese la descripción de la tarea: ");
+		String fecha = Vista.pedirString("Ingrese la fecha de vencimiento de la tarea: ");
+		boolean casilla = false;
+		Colaborador colaborador = new colaborador();
+		Tarea tarea = new Tarea(nombre, descripcion, fecha, casilla, colaborador);
+		listaDeTareas.add(tarea);
+		return tarea;
 	}
 
 	public void crearAdministrador() {
