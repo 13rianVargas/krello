@@ -13,7 +13,7 @@ public class Colaborador extends Persona {
 
 	@Override
 	public String toString() {
-		return "El nombre del colaborador es = " + getNombre() + ", el correo es = " + getCorreo() + ", el rol es = "
+		return "El nombre del colaborador es = " + getNombre() + ", el correo es = " + getCorreo() + "y el rol es = "
 				+ getRol();
 	}
 }

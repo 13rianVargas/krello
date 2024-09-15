@@ -13,7 +13,7 @@ public class Administrador extends Persona {
 
 	@Override
 	public String toString() {
-		return "El nombre del administrador es = " + getNombre() + ", el correo es = " + getCorreo() + ", el rol es = "
+		return "El nombre del administrador es = " + getNombre() + ", el correo es = " + getCorreo() + " y el rol es = "
 				+ getRol();
 	}
 
