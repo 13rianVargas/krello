@@ -1,11 +1,12 @@
 package co.edu.konradlorenz.controller;
 
-import co.edu.konradlorenz.view.gui.Ventana;
+import co.edu.konradlorenz.view.gui.MenuPrincipal;
 
 public class AplMain {
 
 	public static void main(String[] args) {
-		mostrarGUI();
+		@SuppressWarnings("unused")
+		MenuPrincipal menuPrincipal = new MenuPrincipal();
 		
 		/*/ <- Quita el * entre las barras para descomentar la sección.
 		Controlador objControlador = new Controlador();
@@ -13,10 +14,4 @@ public class AplMain {
 		//*/
 	}
 	
-	// <- Agrega un * entre las barras para comentar el método.
-	// Solo creo este método para hacer visible la GUI y no interferir en el controller aún.
-	public static void mostrarGUI() {
-		Ventana.guiMenuPrincipal();
-	}
-	//*/
 }
