@@ -1,6 +1,9 @@
 package co.edu.konradlorenz.model;
 
-public class Persona {
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+
+public class Persona implements WorkTime {
 
 	private String nombre;
 	private String correo;
@@ -44,6 +47,13 @@ public class Persona {
 	@Override
 	public String toString() {
 		return "El nombre de la persona es = " + nombre + ", el correo = " + correo + "y el rol = " + rol;
+	}
+
+	@Override
+	public boolean isWorkTime(LocalDateTime dateTime) {
+		LocalTime time = dateTime.toLocalTime();
+		boolean isWorkTime = !time.isBefore(HORA_INICIO) && !time.isAfter(HORA_FIN);
+        return isWorkTime;
 	}
 
 }
