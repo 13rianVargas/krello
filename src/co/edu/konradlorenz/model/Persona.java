@@ -1,6 +1,9 @@
 package co.edu.konradlorenz.model;
 
-public class Persona implements Login {
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+
+public class Persona implements WorkTime, Login {
 
 	private String nombre;
 	private String correo;
@@ -74,5 +77,11 @@ public class Persona implements Login {
 		}
 	}
 
+
+	public boolean isWorkTime(LocalDateTime dateTime) {
+		LocalTime time = dateTime.toLocalTime();
+		boolean isWorkTime = !time.isBefore(HORA_INICIO) && !time.isAfter(HORA_FIN);
+        return isWorkTime;
+	}
 
 }
