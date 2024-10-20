@@ -3,7 +3,7 @@ package co.edu.konradlorenz.model;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 
-public class Persona implements WorkTime {
+public abstract class Persona implements WorkTime {
 
 	private String nombre;
 	private String correo;
@@ -43,7 +43,7 @@ public class Persona implements WorkTime {
 	public void setRol(String rol) {
 		this.rol = rol;
 	}
-
+	
 	@Override
 	public String toString() {
 		return "El nombre de la persona es = " + nombre + ", el correo = " + correo + "y el rol = " + rol;
@@ -56,4 +56,6 @@ public class Persona implements WorkTime {
         return isWorkTime;
 	}
 
+	public abstract boolean verificarDisponibilidad(int tareasPendientes);
+	
 }
