@@ -1,17 +1,18 @@
 package co.edu.konradlorenz.model;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 public class Tarea {
     private String descripcion;
-    private String fechaVencimiento;
+    private LocalDateTime fechaVencimiento;
     private boolean casilla;
     private ArrayList<Persona> listaDelegados = new ArrayList<>();//lista heterogenea
     
     public Tarea() {
     }
 
-    public Tarea(String descripcion, String fechaVencimiento, boolean casilla, ArrayList<Persona> listaDelegados) {
+    public Tarea(String descripcion, LocalDateTime fechaVencimiento, boolean casilla, ArrayList<Persona> listaDelegados) {
         this.descripcion = descripcion;
         this.fechaVencimiento = fechaVencimiento;
         this.casilla = casilla;
@@ -26,11 +27,11 @@ public class Tarea {
         this.descripcion = descripcion;
     }
 
-    public String getFechaVencimiento() {
+    public LocalDateTime getFechaVencimiento() {
         return fechaVencimiento;
     }
 
-    public void setFechaVencimiento(String fechaVencimiento) {
+    public void setFechaVencimiento(LocalDateTime fechaVencimiento) {
         this.fechaVencimiento = fechaVencimiento;
     }
 
