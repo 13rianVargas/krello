@@ -14,4 +14,10 @@ public class Colaborador extends Persona {
 		return "El nombre del colaborador es = " + getNombre() + ", el correo es = " + getCorreo() + "y el rol es = "
 				+ getRol();
 	}
+
+	@Override
+	public boolean verificarDisponibilidad(int tareasPendientes) {
+	    boolean disponible = tareasPendientes < 5;  
+	    return disponible;
+	}
 }
