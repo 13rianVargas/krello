@@ -22,7 +22,7 @@ public class Vista {
 		System.out.println("<> [3] Salir                  <>");
 		System.out.println("<> <> <> <> <> <> <> <> <> <> <>");
 		int opc = sc.nextInt();
-		System.out.println();
+		sc.nextLine();
 		return opc;
 	}
 	
@@ -37,7 +37,7 @@ public class Vista {
 		System.out.println("<> [5] Salir                  <>");
 		System.out.println("<> <> <> <> <> <> <> <> <> <> <>");
 		int opc = sc.nextInt();
-		System.out.println();
+		sc.nextLine();
 		return opc;
 	}
 	
@@ -52,7 +52,7 @@ public class Vista {
 		System.out.println("<> [5] Salir                  <>");
 		System.out.println("<> <> <> <> <> <> <> <> <> <> <>");
 		int opc = sc.nextInt();
-		System.out.println();
+		sc.nextLine();
 		return opc;
 	}
 	
@@ -68,7 +68,7 @@ public class Vista {
 		System.out.println("<> [6] Salir                  <>");
 		System.out.println("<> <> <> <> <> <> <> <> <> <> <>");
 		int opc = sc.nextInt();
-		System.out.println();
+		sc.nextLine();
 		return opc;
 	}
 }
