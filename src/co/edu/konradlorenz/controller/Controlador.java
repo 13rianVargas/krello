@@ -22,144 +22,208 @@ public class Controlador {
 
 	public void run() {
 
-		while (true) {
-
+		boolean ejecucion = true;
+		int opcion = 0;
+		
 			// crear Administrador
+			
+			String nombre = Vista.pedirString("su nombre.");
+			String correo = Vista.pedirString("su correo.");
+			Administrador objAdministrador = new Administrador(nombre, correo, "Administrador");
+			
+		while (ejecucion) {
 
-			int opcion = Vista.menuPrincipal();
-
+			opcion = Vista.menuPrincipal();
+			
 			switch (opcion) {
-			case 1:
-				// 1. crear tablero
-
-				// pedir nombre tablero
-				// abrir tablero (siguiente opc por eso sin break)
-			case 2:
-				// 2. abrir tablero
-
-				opcion = Vista.menuTablero();
-				switch (opcion) {
 				case 1:
-					// 1. agregar lista
-
-					// pedir nombre lista
-					// abrir lista(siguiente por eso quito el break)
+					// 1. crear tablero
+					
+					crearTablero();
+					break;
 				case 2:
-					// 2. abrir lista
-
-					opcion = Vista.menuLista();
-					switch (opcion) {
-					case 1:
-						// 1. agregar tarea
-
-						// pedir nombre, descripcion, fecha, delegado, casilla?
-						// abrir tarea (sin break)
-					case 2:
-						// 2. abrir tarea
-
-						opcion = Vista.menuTarea();
-						switch (opcion) {
-						case 1:
-							// 1. modificar descripcion
-
-							// abrir tarea
-							break;
-						case 2:
-							// 2. modificar fecha
-
-							// abrir tarea
-							break;
-						case 3:
-							// 3. modificar casilla
-
-							// modificar descripcion
-							// modificar fecha
-							// abrir tarea
-							break;
-						case 4:
-							// 4. mover tarea
-
-							// modificar casilla
-							// abrir tarea
-							break;
-						case 5:
-							// 5. volver
-							break;
-						case 6:
-							// 6. salir
-							Vista.mostrarMensaje("Saliendo ...");
-							System.exit(0);
-							break;
-						default:
-							Vista.mostrarMensaje("No es una opción valida.");
-							break;
-						}
-
-						break;
-					case 3:
-						// 3. eliminar tarea
-
-						// pedir nombre tarea
-						// volver
-					case 4:
-						// 4. volver
-						break;
-					case 5:
-						// 5. salir
-						Vista.mostrarMensaje("Saliendo ...");
-						System.exit(0);
-						break;
-					default:
-						Vista.mostrarMensaje("No es una opción valida.");
-						break;
-					}
+					// 2. abrir tablero
+					
+					Tablero tableroSel = abrirTablero();
+					ejecutarTablero(tableroSel);
 					break;
 				case 3:
-					// 3. eliminar lista
-
-					// pedir nombre lista
-					// volver (siguiente, sin break)
-				case 4:
-					// 4. volver
-					break;
-				case 5:
-					// 5. Salir
+					// 3. Salir
+				
 					Vista.mostrarMensaje("Saliendo ...");
-					System.exit(0);
+					ejecucion = false;
 					break;
 				default:
 					Vista.mostrarMensaje("No es una opción valida.");
 					break;
-				}
-
-				break;
-			case 3:
-				// 3. Salir
-				Vista.mostrarMensaje("Saliendo ...");
-				System.exit(0);
-				break;
-			default:
-				Vista.mostrarMensaje("No es una opción valida.");
-				break;
 			}
 
 		}
 
 	}
+	
+	public void ejecutarTablero(Tablero tableroAbierto){
+		
+		boolean ejecucion = true;
+		int opcion = 0;
+		
+		while (ejecucion) {
+			
+			Vista.mostrarMensaje("<> <> <> "+tableroAbierto.getNombreTablero()+" <> <> <>");
+			
+			opcion = Vista.menuTablero();
+			
+			switch (opcion) {
+				case 1:
+					// 1. agregar lista
 
+					crearLista(tableroAbierto);
+					break;
+				case 2:
+					// 2. abrir lista
+			
+					Lista listaAbierta = abrirLista(tableroAbierto);
+					ejecutarLista(listaAbierta);
+					break;
+				case 3:
+					// 3. eliminar lista
+
+					eliminarLista(tableroAbierto);
+					break;
+				case 4:
+					// 4. volver
+					
+					ejecucion = false;
+					break;
+				case 5:
+					// 5. Salir
+					
+					Vista.mostrarMensaje("Saliendo ...");
+					ejecucion = false; //no sale, vuelve al run
+					break;
+				default:
+					Vista.mostrarMensaje("No es una opción valida.");
+					break;
+			}
+		}
+	}
+	
+	public void ejecutarLista(Lista listaAbierta) {
+
+		boolean ejecucion = true;
+		int opcion = 0;
+		
+		while (ejecucion) {
+			
+			Vista.mostrarMensaje("<> <> <> "+listaAbierta.getNombreLista()+" <> <> <>");
+			
+			opcion = Vista.menuLista();
+			
+			switch (opcion) {
+			case 1:
+				// 1. agregar tarea
+				
+				// pedir nombre, descripcion, fecha, delegado, casilla?
+				// abrir tarea (sin break)
+				break;
+			case 2:
+				// 2. abrir tarea
+				
+				break;
+			case 3:
+				// 3. eliminar tarea
+
+				// pedir nombre tarea
+				// volver
+				break;
+			case 4:
+				// 4. volver
+				break;
+			case 5:
+				// 5. salir
+				
+				Vista.mostrarMensaje("Saliendo ...");
+				ejecucion = false;
+				break;
+			default:
+				Vista.mostrarMensaje("No es una opción valida.");
+				break;
+			}
+		}
+	}
+	
+	public void ejecutarTarea() {
+
+		boolean ejecucion = true;
+		int opcion = 0;
+		
+		while (ejecucion) {
+			
+			Vista.mostrarMensaje("<> <> <> "+" <> <> <>");
+			
+			opcion = Vista.menuTarea();
+			
+			switch (opcion) {
+			case 1:
+				// 1. modificar descripcion
+
+				// abrir tarea
+				break;
+			case 2:
+				// 2. modificar fecha
+
+				// abrir tarea
+				break;
+			case 3:
+				// 3. modificar casilla
+
+				// modificar descripcion
+				// modificar fecha
+				// abrir tarea
+				break;
+			case 4:
+				// 4. mover tarea
+
+				// modificar casilla
+				// abrir tarea
+				break;
+			case 5:
+				// 5. volver
+				break;
+			case 6:
+				// 6. salir
+				
+				Vista.mostrarMensaje("Saliendo ...");
+				ejecucion = false;
+				break;
+			default:
+				Vista.mostrarMensaje("No es una opción valida.");
+				break;
+			}
+		}
+	}
+	
 	public void crearTablero() {
+		
 		String nombreTablero = Vista.pedirString("el nombre del tablero");
 		ArrayList<Lista> listaDeListas = new ArrayList<>();
 		Tablero tablero = new Tablero(nombreTablero, listaDeListas);
 		listaDeTableros.add(tablero);
+		
+		Vista.mostrarMensaje("Tablero agregado correctamente.");
+		
 	}
 
 	public void crearLista(Tablero tableroElegido) {
+		
 		ArrayList<Lista> listaDeListas = tableroElegido.getListaDeListas();
 		String nombreLista = Vista.pedirString("el nombre de la lista");
 		ArrayList<Tarea> listaDeTareas = new ArrayList<>();
 		Lista lista = new Lista(nombreLista, listaDeTareas);
 		listaDeListas.add(lista);
+		
+		Vista.mostrarMensaje("Lista agregada correctamente.");
+		
 	}
 
 	public void crearTarea(Lista listaElegida) {
@@ -204,8 +268,9 @@ public class Controlador {
 	}
 
 	public void eliminarTablero() {
+		
 		boolean encontrado = false;
-		String nombreBusqueda = Vista.pedirString("Por favor ingrese el nombre del tablero que desea eliminar");
+		String nombreBusqueda = Vista.pedirString("el nombre del tablero que desea eliminar");
 		for (Tablero tablero : listaDeTableros) {
 			if (tablero.getNombreTablero().equalsIgnoreCase(nombreBusqueda)) {
 				listaDeTableros.remove(tablero);
@@ -218,12 +283,14 @@ public class Controlador {
 			Vista.mostrarMensaje("EL tablero no fue encontrado, por favor intente de nuevo.");
 			eliminarTablero();
 		}
+		
 	}
 
 	public void eliminarLista(Tablero tableroElegido) {
+		
 		boolean encontrado = false;
 		ArrayList<Lista> listaDeListas = tableroElegido.getListaDeListas();
-		String nombreBusqueda = Vista.pedirString("Por favor ingrese el nombre de la lista que desea eliminar");
+		String nombreBusqueda = Vista.pedirString("}el nombre de la lista que desea eliminar");
 		for (Lista lista : listaDeListas) {
 			if (lista.getNombreLista().equals(nombreBusqueda)) {
 				listaDeListas.remove(lista);
@@ -236,12 +303,13 @@ public class Controlador {
 			Vista.mostrarMensaje("La lista no fue encontrada, por favor intente de nuevo.");
 			eliminarLista(tableroElegido);
 		}
+		
 	}
 
 	public void eliminarTarea(Lista listaElegida) {
 		ArrayList<Tarea> listaDeTareas = listaElegida.getListaDeTareas();
 		int indiceBusqueda = Integer
-				.parseInt(Vista.pedirString("Por favor ingrese el indice de la tarea que desea eliminar"));
+				.parseInt(Vista.pedirString("el indice de la tarea que desea eliminar"));
 		boolean encontrado = false;
 
 		for (int i = 0; i < listaDeTareas.size(); i++) {
@@ -309,7 +377,7 @@ public class Controlador {
 			return null;
 		} else {
 			mostrarTablero();
-			String nombreBusqueda = Vista.pedirString("Por favor ingrese el nombre del tablero que desea abrir.");
+			String nombreBusqueda = Vista.pedirString("el nombre del tablero que desea abrir.");
 			for (Tablero tablero : listaDeTableros) {
 				if (tablero.getNombreTablero().equalsIgnoreCase(nombreBusqueda)) {
 					encontrado = true;
@@ -325,14 +393,16 @@ public class Controlador {
 	}
 
 	public Lista abrirLista(Tablero tableroElegido) {
+		
 		ArrayList<Lista> listaDeListas = tableroElegido.getListaDeListas();
 		boolean encontrado = false;
+		
 		if (listaDeListas.isEmpty()) {
 			Vista.mostrarMensaje("No hay listas creadas para abrir.");
 			return null;
 		} else {
 			mostrarLista(listaDeListas);
-			String nombreBusqueda = Vista.pedirString("Por favor ingrese el nombre de la lista que desea abrir.");
+			String nombreBusqueda = Vista.pedirString("el nombre de la lista que desea abrir.");
 			for (Lista lista : listaDeListas) {
 				if (lista.getNombreLista().equalsIgnoreCase(nombreBusqueda)) {
 					encontrado = true;
@@ -357,7 +427,7 @@ public class Controlador {
 		} else {
 			mostrarTarea(listaDeTareas);
 			int indice = Integer.parseInt(
-					Vista.pedirString("Por favor elija el idice de la descripción de la tarea que desea abrir."));
+					Vista.pedirString("el idice de la descripción de la tarea que desea abrir."));
 			for (int i = 0; i < listaDeTareas.size(); i++) {
 				if ((i + 1) == indice) {
 					encontrado = true;
