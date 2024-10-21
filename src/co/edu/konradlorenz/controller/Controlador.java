@@ -1,6 +1,6 @@
 package co.edu.konradlorenz.controller;
 
-import java.lang.reflect.Array;
+//import java.lang.reflect.Array;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
@@ -21,7 +21,9 @@ public class Controlador {
 	private ArrayList<Tarea> listaDeTareasGlobal = new ArrayList<>();
 	private ArrayList<Tablero> listaDeTablerosGlobal = new ArrayList<>();
 
-	public void run(boolean ejecucion) {
+	boolean ejecucion = true;
+
+	public void run() {
 
 		// crear Administrador
 		String nombre = Vista.pedirString("su nombre.");
@@ -29,6 +31,7 @@ public class Controlador {
 		Administrador objAdministrador = new Administrador(nombre, correo, "Administrador");
 
 		while (ejecucion) {
+			if(!ejecucion) break;
 
 			int opcion = Vista.menuPrincipal();
 
@@ -40,10 +43,15 @@ public class Controlador {
 			case 2:
 				// 2. abrir tablero
 				Tablero tableroSel = abrirTablero();
-				ejecutarTablero(tableroSel);
+				if(tableroSel != null) {
+					ejecutarTablero(tableroSel);
+				}else{
+					tableroSel = abrirTablero();
+					ejecutarTablero(tableroSel);
+				}
 				break;
-			case 3:
-				// 3. Salir
+			case 0:
+				// 0. Salir
 				Vista.mostrarMensaje("Saliendo ...");
 				ejecucion = false;
 				break;
@@ -58,11 +66,7 @@ public class Controlador {
 
 	public void ejecutarTablero(Tablero tableroAbierto) {
 
-		boolean ejecucion = true;
-
-		while (ejecucion) {
-
-			Vista.mostrarMensaje("<> <> <> " + tableroAbierto.getNombreTablero() + " <> <> <>");
+			Vista.mostrarMensaje("<> <> <> TABLERO: " + tableroAbierto.getNombreTablero() + " <> <> <>");
 
 			int opcion = Vista.menuTablero();
 
@@ -70,128 +74,133 @@ public class Controlador {
 			case 1:
 				// 1. agregar lista
 				crearLista(tableroAbierto);
+				ejecutarTablero(tableroAbierto);
 				break;
 			case 2:
 				// 2. abrir lista
 				Lista listaAbierta = abrirLista(tableroAbierto);
-				ejecutarLista(listaAbierta);
+				if(listaAbierta != null) {
+					ejecutarLista(listaAbierta);
+				}else{
+					listaAbierta = abrirLista(tableroAbierto);
+					ejecutarLista(listaAbierta);
+				}
 				break;
 			case 3:
 				// 3. eliminar lista
 				eliminarLista(tableroAbierto);
+				if(tableroAbierto!=null){
+					ejecutarTablero(tableroAbierto);
+				}
 				break;
 			case 4:
 				// 4. volver
-				ejecucion = false;
+				Vista.mostrarMensaje("Volviendo ...");;
 				break;
-			case 5:
-				// 5. Salir
-
+			case 0:
+				// 0. Salir
+				ejecucion = false;
 				Vista.mostrarMensaje("Saliendo ...");
-				salirPrograma();
 				break;
 			default:
 				Vista.mostrarMensaje("No es una opción valida.");
 				break;
 			}
-		}
+		
 	}
 
 	public void ejecutarLista(Lista listaAbierta) {
+			
+			Vista.mostrarMensaje("<> <> <> LISTA: " + listaAbierta.getNombreLista() + " <> <> <>");
 
-		boolean ejecucion = true;
-		int opcion = 0;
-
-		while (ejecucion) {
-
-			Vista.mostrarMensaje("<> <> <> " + listaAbierta.getNombreLista() + " <> <> <>");
-
-			opcion = Vista.menuLista();
+			int opcion = Vista.menuLista();
 
 			switch (opcion) {
 			case 1:
 				// 1. agregar tarea
 				crearTarea(listaAbierta);
+				ejecutarLista(listaAbierta);
 				// pedir nombre, descripcion, fecha, delegado, casilla?
-				// abrir tarea (sin break)
 				break;
 			case 2:
 				// 2. abrir tarea
 				Tarea tareaAbierta = abrirTarea(listaAbierta);
-				ejecutarTarea(tareaAbierta);
+				if(tareaAbierta != null) {
+					ejecutarTarea(tareaAbierta);
+				}else{
+					tareaAbierta = abrirTarea(listaAbierta);
+					ejecutarTarea(tareaAbierta);
+				}
 				break;
 			case 3:
 				// 3. eliminar tarea
 				eliminarTarea(listaAbierta);
-				// pedir nombre tarea
-				// volver
+				if(listaAbierta!=null){
+				ejecutarLista(listaAbierta);
+				}
 				break;
 			case 4:
 				// 4. volver
-				ejecucion = false;
+				Vista.mostrarMensaje("Volviendo ...");
+				
 				break;
-			case 5:
-				// 5. salir
+			case 0:
+				// 0. salir
 				Vista.mostrarMensaje("Saliendo ...");
-				salirPrograma();
+				ejecucion = false;
 				break;
 			default:
 				Vista.mostrarMensaje("No es una opción valida.");
 				break;
 			}
-		}
+		
 	}
 
 	public void ejecutarTarea(Tarea tareaAbierta) {
 
-		boolean ejecucion = true;
-		int opcion = 0;
-
-		while (ejecucion) {
-
 			// Las tareas no tienen nombre, le dejamos la descripcion
 			Vista.mostrarMensaje("<> <> <> " + tareaAbierta.getDescripcion() + " <> <> <>");
 
-			opcion = Vista.menuTarea();
+			int opcion = Vista.menuTarea();
 
 			switch (opcion) {
-			case 1:
-				// 1. modificar descripcion
-				modificarDescripcionTarea(tareaAbierta);
-				// abrir tarea
-				break;
-			case 2:
-				// 2. modificar fecha
-				modificarFechaTarea(tareaAbierta);
-				// abrir tarea
-				break;
-			case 3:
-				// 3. modificar casilla
-				modificarCasilla(tareaAbierta);
-				// modificar descripcion
-				// modificar fecha
-				// abrir tarea
-				break;
-			case 4:
-				// 4. mover tarea
+				case 1:
+					// 1. modificar descripcion
+					modificarDescripcionTarea(tareaAbierta);
+					// abrir tarea
+					break;
+				case 2:
+					// 2. modificar fecha
+					modificarFechaTarea(tareaAbierta);
+					// abrir tarea
+					break;
+				case 3:
+					// 3. modificar casilla
+					modificarCasilla(tareaAbierta);
+					// modificar descripcion
+					// modificar fecha
+					// abrir tarea
+					break;
+				//case 4:  de momento no lo utilizaremos
+					// 4. mover tarea
 
-				// modificar casilla
-				// abrir tarea
-				break;
-			case 5:
-				// 5. volver
-				ejecucion = false;
-				break;
-			case 6:
-				// 6. salir
-				Vista.mostrarMensaje("Saliendo ...");
-				salirPrograma();
-				break;
-			default:
-				Vista.mostrarMensaje("No es una opción valida.");
-				break;
+					// modificar casilla
+					// abrir tarea
+					//break;
+				case 5:
+					// 5. volver
+					Vista.mostrarMensaje("Volviendo ...");
+					break;
+				case 0:
+					// 0. salir
+					Vista.mostrarMensaje("Saliendo ...");
+					ejecucion = false;
+					break;
+				default:
+					Vista.mostrarMensaje("No es una opción valida.");
+					break;
 			}
-		}
+		
 	}
 
 	/**
@@ -223,7 +232,7 @@ public class Controlador {
 		String descripcion = Vista.pedirString("la descripción de la tarea");
 		objTarea.setDescripcion(descripcion);
 		int anio = Integer.parseInt(Vista.pedirString("el año de la fecha de vencimiento"));
-		int dia = Integer.parseInt(Vista.pedirString("el mes de la fecha de vencimiento"));
+		int dia = Integer.parseInt(Vista.pedirString("el número de mes de la fecha de vencimiento"));
 		int mes = Integer.parseInt(Vista.pedirString("el dia de la fecha de vencimiento"));
 		int hora = Integer.parseInt(Vista.pedirString("la hora de la fecha de vencimiento"));
 		int min = Integer.parseInt(Vista.pedirString("los minutos de la fecha de vencimiento"));
@@ -265,6 +274,8 @@ public class Controlador {
 	public void eliminarTablero() {
 
 		boolean encontrado = false;
+
+		mostrarTablero();
 		String nombreBusqueda = Vista.pedirString("el nombre del tablero que desea eliminar");
 		for (Tablero tablero : listaDeTablerosGlobal) {
 			if (tablero.getNombreTablero().equalsIgnoreCase(nombreBusqueda)) {
@@ -282,7 +293,10 @@ public class Controlador {
 	}
 
 	public void eliminarLista(Tablero tableroElegido) {
+
 		boolean encontrado = false;
+		
+		mostrarLista(tableroElegido.getListaDeListas());
 		String nombreBusqueda = Vista.pedirString("el nombre de la lista que desea eliminar");
 		for (Lista lista : tableroElegido.getListaDeListas()) {
 			if (lista.getNombreLista().equalsIgnoreCase(nombreBusqueda)) {
@@ -301,6 +315,9 @@ public class Controlador {
 	}
 
 	public void eliminarTarea(Lista listaElegida) {
+
+		mostrarTarea(listaElegida.getListaDeTareas());
+
 		int indiceBusqueda = Integer.parseInt(Vista.pedirString("el indice de la tarea que desea eliminar"));
 		boolean encontrado = false;
 
@@ -402,7 +419,6 @@ public class Controlador {
 			}
 			if (!encontrado) {
 				Vista.mostrarMensaje("El tablero no fue encontrado, por favor intente de nuevo.");
-				abrirTablero();
 			}
 			return null;
 		}
@@ -428,7 +444,6 @@ public class Controlador {
 			}
 			if (!encontrado) {
 				Vista.mostrarMensaje("La lista no fue encontrada, por favor intente de nuevo.");
-				abrirLista(tableroElegido);
 			}
 			return null;
 		}
@@ -454,7 +469,6 @@ public class Controlador {
 		}
 		if (!encontrado) {
 			Vista.mostrarMensaje("La tarea no fue encontrada, por favor intente de nuevo.");
-			abrirTarea(listaElegida);
 		}
 		return null;
 	}
@@ -538,7 +552,7 @@ public class Controlador {
 		tableroEditar.setNombreTablero(nuevoNombre);
 	}
 
-	/* Verificar funcionalidad de este tablero poque est heavy, toca crear metodos para recorrer tableros y listas creo
+	/* Verificar funcionalidad de este tablero poque esta heavy, toca crear metodos para recorrer tableros y listas creo
 	public void moverTarea(Lista listaElegida, Tarea tareaElegida) {
 		mostrarLista(listaDeListasGlobal);
 		String nombreBusqueda = Vista.pedirString("el nombre de la lista destino en la que desea mover la tarea");
@@ -555,8 +569,5 @@ public class Controlador {
 		}
 
 	}*/
-	public void salirPrograma() {
-		boolean ejecucion = false;
-		run(ejecucion);
-	}
+	
 }
