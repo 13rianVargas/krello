@@ -25,12 +25,9 @@ public class Controlador {
 	private Lista listaAbierta;
 	private Tarea tareaAbierta;
 
-	// > > > > > > > > > > > > > > > > > > > > > > > - < < < < < < < < < < < < < < <
-	// < < < < < < //
-	// > > > > > > > > > > > > > > > > > > > > M É T O D O S < < < < < < < < < < < <
-	// < < < < < < //
-	// > > > > > > > > > > > > > > > > > > > > > > > - < < < < < < < < < < < < < < <
-	// < < < < < < //
+	// > > > > > > > > > > > > > > > > > > > < < < < < < < < < < < < < < < < < < //
+	// > > > > > > > > > > > > > > > > M E T O D O S < < < < < < < < < < < < < < //
+	// > > > > > > > > > > > > > > > > > > > < < < < < < < < < < < < < < < < < < //
 
 	public void run() {
 
@@ -41,7 +38,7 @@ public class Controlador {
 
 		ejecutarMenuPrincipal();
 	}
-
+	// run
 	public void ejecutarMenuPrincipal() {
 		while (true) {
 			int opcion = Vista.menuPrincipal();
@@ -78,12 +75,9 @@ public class Controlador {
 	}
 	// ejecutarLista
 
-	// > > > > > > > > > > > > > > > > > > > > > > < < < < < < < < < < < < < < < < <
-	// < < < < < //
-	// > > > > > > > > > > > > > > > > > > S W I T C H E S < < < < < < < < < < < < <
-	// < < < < < //
-	// > > > > > > > > > > > > > > > > > > > > > > < < < < < < < < < < < < < < < < <
-	// < < < < < //
+	// > > > > > > > > > > > > > > > > > > > < < < < < < < < < < < < < < < < < < //
+	// > > > > > > > > > > > > > > > > S W I T C H < < < < < < < < < < < < < < < //
+	// > > > > > > > > > > > > > > > > > > > < < < < < < < < < < < < < < < < < < //
 
 	public void switchMenuPrincipal(int opcion) {
 		switch (opcion) {
@@ -250,12 +244,9 @@ public class Controlador {
 	}
 	// switchTarea
 
-	// > > > > > > > > > > > > > > > > > > > > > > < < < < < < < < < < < < < < < < <
-	// < < < < < //
-	// > > > > > > > > > > > > > > > > > > > > C R E A R < < < < < < < < < < < < < <
-	// < < < < < //
-	// > > > > > > > > > > > > > > > > > > > > > > < < < < < < < < < < < < < < < < <
-	// < < < < < //
+	// > > > > > > > > > > > > > > > > > > > < < < < < < < < < < < < < < < < < < //
+	// > > > > > > > > > > > > > > > > > C R E A R < < < < < < < < < < < < < < < //
+	// > > > > > > > > > > > > > > > > > > > < < < < < < < < < < < < < < < < < < //
 
 	/**
 	 * Metodos de crear objetos Tablero, Lista, Tarea y Persona. -crearPersona() se
@@ -325,12 +316,9 @@ public class Controlador {
 	}
 	// crearPersona
 
-	// > > > > > > > > > > > > > > > > > > > > > > < < < < < < < < < < < < < < < < <
-	// < < < < < //
-	// > > > > > > > > > > > > > > > > > > E L I M I N A R < < < < < < < < < < < < <
-	// < < < < < //
-	// > > > > > > > > > > > > > > > > > > > > > > < < < < < < < < < < < < < < < < <
-	// < < < < < //
+	// > > > > > > > > > > > > > > > > > > > < < < < < < < < < < < < < < < < < < //
+	// > > > > > > > > > > > > > > > E L I M I N A R < < < < < < < < < < < < < < //
+	// > > > > > > > > > > > > > > > > > > > < < < < < < < < < < < < < < < < < < //
 
 	/**
 	 * Metodos de eliminar objetos Tablero, Lista, Tarea y Persona. -eliminarTablero
@@ -420,12 +408,9 @@ public class Controlador {
 	}
 	// eliminarPersona
 
-	// > > > > > > > > > > > > > > > > > > > > > > < < < < < < < < < < < < < < < < <
-	// < < < < < //
-	// > > > > > > > > > > > > > > > > > > > M O S T R A R < < < < < < < < < < < < <
-	// < < < < < //
-	// > > > > > > > > > > > > > > > > > > > > > > < < < < < < < < < < < < < < < < <
-	// < < < < < //
+	// > > > > > > > > > > > > > > > > > > > < < < < < < < < < < < < < < < < < < //
+	// > > > > > > > > > > > > > > > > M O S T R A R < < < < < < < < < < < < < < //
+	// > > > > > > > > > > > > > > > > > > > < < < < < < < < < < < < < < < < < < //
 
 	/**
 	 * Metodos para mostrar listas, tableros, tareas y personas. -los métodos de
@@ -476,12 +461,9 @@ public class Controlador {
 	}
 	// mostrarPersonas
 
-	// > > > > > > > > > > > > > > > > > > > > > > < < < < < < < < < < < < < < < < <
-	// < < < < < //
-	// > > > > > > > > > > > > > > > > > > > > A B R I R < < < < < < < < < < < < < <
-	// < < < < < //
-	// > > > > > > > > > > > > > > > > > > > > > > < < < < < < < < < < < < < < < < <
-	// < < < < < //
+	// > > > > > > > > > > > > > > > > > > > < < < < < < < < < < < < < < < < < < //
+	// > > > > > > > > > > > > > > > > > A B R I R < < < < < < < < < < < < < < < //
+	// > > > > > > > > > > > > > > > > > > > < < < < < < < < < < < < < < < < < < //
 
 	/**
 	 * Metodos para abrir/seleccionar objetos Tablero, Lista, Tarea y Persona. -Creo
@@ -592,12 +574,9 @@ public class Controlador {
 	}
 	// abrirPersona
 
-	// > > > > > > > > > > > > > > > > > > > > > > < < < < < < < < < < < < < < < < <
-	// < < < < < //
-	// > > > > > > > > > > > > > > > > > > M O D I F I C A R < < < < < < < < < < < <
-	// < < < < < //
-	// > > > > > > > > > > > > > > > > > > > > > > < < < < < < < < < < < < < < < < <
-	// < < < < < //
+	// > > > > > > > > > > > > > > > > > > > < < < < < < < < < < < < < < < < < < //
+	// > > > > > > > > > > > > > > M O D I F I C A R < < < < < < < < < < < < < < //
+	// > > > > > > > > > > > > > > > > > > > < < < < < < < < < < < < < < < < < < //
 
 	public void modificarDescripcionTarea(Tarea tareaEditar) {
 		String nuevaDescripcion = Vista.pedirString("la nueva descripción de la tarea");
