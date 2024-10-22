@@ -19,6 +19,7 @@ public class Controlador {
 	private ArrayList<Lista> listaDeListasGlobal = new ArrayList<>();
 	private ArrayList<Tarea> listaDeTareasGlobal = new ArrayList<>();
 	private ArrayList<Tablero> listaDeTablerosGlobal = new ArrayList<>();
+	private Administrador objAdministrador;
 
 	boolean ejecucion = true;
 
@@ -27,7 +28,7 @@ public class Controlador {
 		// crear Administrador
 		String nombre = Vista.pedirString("su nombre");
 		String correo = Vista.pedirString("su correo");
-		Administrador objAdministrador = new Administrador(nombre, correo, "Administrador");
+		objAdministrador = new Administrador(nombre, correo, "Administrador");
 
 		while (ejecucion) {
 			if (!ejecucion)
@@ -522,14 +523,19 @@ public class Controlador {
 	}
 
 	public void modificarCasilla(Tarea tareaEditar) {
-		Vista.mostrarMensaje("¿La tarea fue finalizada?");
-		String confirmacion = Vista.pedirString("si/no");
-		if (confirmacion.equalsIgnoreCase("si")) {
-			tareaEditar.setCasilla(true);
-			Vista.mostrarMensaje("La tarea fue marcada como finalizada");
-		} else {
-			tareaEditar.setCasilla(false);
-			Vista.mostrarMensaje("La tarea fue marcada como pendiente");
+		LocalDateTime tiempoAhora = LocalDateTime.now();
+		if(objAdministrador.isWorkTime(tiempoAhora)){
+			Vista.mostrarMensaje("¿La tarea fue finalizada?");
+			String confirmacion = Vista.pedirString("si/no");
+			if (confirmacion.equalsIgnoreCase("si")) {
+				tareaEditar.setCasilla(true);
+				Vista.mostrarMensaje("La tarea fue marcada como finalizada");
+			} else {
+				tareaEditar.setCasilla(false);
+				Vista.mostrarMensaje("La tarea fue marcada como pendiente");
+			}
+		}else{
+			Vista.mostrarMensaje("No se puede realizar la acción, estás fuera del horario laboral.");
 		}
 	}
 
