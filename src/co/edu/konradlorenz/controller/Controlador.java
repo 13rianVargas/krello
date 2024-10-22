@@ -20,7 +20,6 @@ public class Controlador {
 	private ArrayList<Tarea> listaDeTareasGlobal = new ArrayList<>();
 	private ArrayList<Tablero> listaDeTablerosGlobal = new ArrayList<>();
 	private Administrador objAdministrador;
-	private Lista objLista = new Lista();
 
 	private Tablero tableroAbierto;
 	private Lista listaAbierta;
@@ -526,7 +525,6 @@ public class Controlador {
 
 		if (tableroAbierto.getListaDeListas().isEmpty()) {
 			Vista.mostrarMensaje("No hay listas creadas para abrir.");
-			objLista = null;
 			return null;
 		} else {
 			mostrarLista(tableroAbierto.getListaDeListas());
@@ -535,7 +533,6 @@ public class Controlador {
 				if (lista.getNombreLista().equalsIgnoreCase(nombreBusqueda)) {
 					encontrado = true;
 					Vista.mostrarMensaje("La lista fue encontrada.");
-					objLista = lista;
 					return lista;
 				}
 			}
