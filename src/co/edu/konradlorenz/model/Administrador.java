@@ -15,4 +15,8 @@ public class Administrador extends Persona {
 				+ getRol();
 	}
 
+	@Override
+	public boolean verificarDisponibilidad(int tareasPendientes) {
+		return true;
+	}
 }
