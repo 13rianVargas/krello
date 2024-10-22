@@ -63,7 +63,7 @@ public class Vista {
 		System.out.println("<> [1] Modificar descripción  <>");
 		System.out.println("<> [2] Modificar fecha        <>");
 		System.out.println("<> [3] Modificar casilla      <>");
-		System.out.println("<> [4] Mover tarea            <>");
+		//System.out.println("<> [4] Mover tarea            <>");
 		System.out.println("<> [5] Volver                 <>");
 		System.out.println("<> [0] Salir                  <>");
 		System.out.println("<> <> <> <> <> <> <> <> <> <> <>");

@@ -1,6 +1,5 @@
 package co.edu.konradlorenz.controller;
 
-//import java.lang.reflect.Array;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
@@ -26,46 +25,50 @@ public class Controlador {
 	public void run() {
 
 		// crear Administrador
-		String nombre = Vista.pedirString("su nombre.");
-		String correo = Vista.pedirString("su correo.");
+		String nombre = Vista.pedirString("su nombre");
+		String correo = Vista.pedirString("su correo");
 		Administrador objAdministrador = new Administrador(nombre, correo, "Administrador");
 
 		while (ejecucion) {
-			if(!ejecucion) break;
-
-			int opcion = Vista.menuPrincipal();
-
-			switch (opcion) {
-			case 1:
-				// 1. crear tablero
-				crearTablero();
+			if (!ejecucion)
 				break;
-			case 2:
-				// 2. abrir tablero
-				Tablero tableroSel = abrirTablero();
-				if(tableroSel != null) {
-					ejecutarTablero(tableroSel);
-				}else{
-					tableroSel = abrirTablero();
-					ejecutarTablero(tableroSel);
-				}
-				break;
-			case 0:
-				// 0. Salir
-				Vista.mostrarMensaje("Saliendo ...");
-				ejecucion = false;
-				break;
-			default:
-				Vista.mostrarMensaje("No es una opción valida.");
-				break;
-			}
-
+			ejecutarMenuPrincipal();
 		}
 
 	}
 
-	public void ejecutarTablero(Tablero tableroAbierto) {
+	public void ejecutarMenuPrincipal() {
 
+		int opcion = Vista.menuPrincipal();
+
+		switch (opcion) {
+		case 1:
+			// 1. crear tablero
+			crearTablero();
+			break;
+		case 2:
+			// 2. abrir tablero
+			Tablero tableroSel = abrirTablero();
+			if (tableroSel != null) {
+				ejecutarTablero(tableroSel);
+			} else {
+				tableroSel = abrirTablero();
+				ejecutarTablero(tableroSel);
+			}
+			break;
+		case 0:
+			// 0. Salir
+			Vista.mostrarMensaje("Saliendo ...");
+			ejecucion = false;
+			break;
+		default:
+			Vista.mostrarMensaje("No es una opción valida.");
+			break;
+		}
+	}
+
+	public void ejecutarTablero(Tablero tableroAbierto) {
+		if (tableroAbierto != null) {
 			Vista.mostrarMensaje("<> <> <> TABLERO: " + tableroAbierto.getNombreTablero() + " <> <> <>");
 
 			int opcion = Vista.menuTablero();
@@ -79,9 +82,9 @@ public class Controlador {
 			case 2:
 				// 2. abrir lista
 				Lista listaAbierta = abrirLista(tableroAbierto);
-				if(listaAbierta != null) {
+				if (listaAbierta != null) {
 					ejecutarLista(listaAbierta);
-				}else{
+				} else {
 					listaAbierta = abrirLista(tableroAbierto);
 					ejecutarLista(listaAbierta);
 				}
@@ -89,13 +92,14 @@ public class Controlador {
 			case 3:
 				// 3. eliminar lista
 				eliminarLista(tableroAbierto);
-				if(tableroAbierto!=null){
+				if (tableroAbierto != null) {
 					ejecutarTablero(tableroAbierto);
 				}
 				break;
 			case 4:
 				// 4. volver
-				Vista.mostrarMensaje("Volviendo ...");;
+				Vista.mostrarMensaje("Volviendo ...");
+				;
 				break;
 			case 0:
 				// 0. Salir
@@ -106,11 +110,12 @@ public class Controlador {
 				Vista.mostrarMensaje("No es una opción valida.");
 				break;
 			}
-		
+		}
+
 	}
 
 	public void ejecutarLista(Lista listaAbierta) {
-			
+		if (listaAbierta != null) {
 			Vista.mostrarMensaje("<> <> <> LISTA: " + listaAbierta.getNombreLista() + " <> <> <>");
 
 			int opcion = Vista.menuLista();
@@ -125,9 +130,9 @@ public class Controlador {
 			case 2:
 				// 2. abrir tarea
 				Tarea tareaAbierta = abrirTarea(listaAbierta);
-				if(tareaAbierta != null) {
+				if (tareaAbierta != null) {
 					ejecutarTarea(tareaAbierta);
-				}else{
+				} else {
 					tareaAbierta = abrirTarea(listaAbierta);
 					ejecutarTarea(tareaAbierta);
 				}
@@ -135,14 +140,14 @@ public class Controlador {
 			case 3:
 				// 3. eliminar tarea
 				eliminarTarea(listaAbierta);
-				if(listaAbierta!=null){
-				ejecutarLista(listaAbierta);
+				if (listaAbierta != null) {
+					ejecutarLista(listaAbierta);
 				}
 				break;
 			case 4:
 				// 4. volver
 				Vista.mostrarMensaje("Volviendo ...");
-				
+
 				break;
 			case 0:
 				// 0. salir
@@ -153,54 +158,55 @@ public class Controlador {
 				Vista.mostrarMensaje("No es una opción valida.");
 				break;
 			}
-		
+
+		}
 	}
 
 	public void ejecutarTarea(Tarea tareaAbierta) {
-
+		if (tareaAbierta != null) {
 			// Las tareas no tienen nombre, le dejamos la descripcion
 			Vista.mostrarMensaje("<> <> <> " + tareaAbierta.getDescripcion() + " <> <> <>");
 
 			int opcion = Vista.menuTarea();
 
 			switch (opcion) {
-				case 1:
-					// 1. modificar descripcion
-					modificarDescripcionTarea(tareaAbierta);
-					// abrir tarea
-					break;
-				case 2:
-					// 2. modificar fecha
-					modificarFechaTarea(tareaAbierta);
-					// abrir tarea
-					break;
-				case 3:
-					// 3. modificar casilla
-					modificarCasilla(tareaAbierta);
-					// modificar descripcion
-					// modificar fecha
-					// abrir tarea
-					break;
-				//case 4:  de momento no lo utilizaremos
-					// 4. mover tarea
+			case 1:
+				// 1. modificar descripcion
+				modificarDescripcionTarea(tareaAbierta);
+				// abrir tarea
+				break;
+			case 2:
+				// 2. modificar fecha
+				modificarFechaTarea(tareaAbierta);
+				// abrir tarea
+				break;
+			case 3:
+				// 3. modificar casilla
+				modificarCasilla(tareaAbierta);
+				// modificar descripcion
+				// modificar fecha
+				// abrir tarea
+				break;
+			// case 4: de momento no lo utilizaremos
+			// 4. mover tarea
 
-					// modificar casilla
-					// abrir tarea
-					//break;
-				case 5:
-					// 5. volver
-					Vista.mostrarMensaje("Volviendo ...");
-					break;
-				case 0:
-					// 0. salir
-					Vista.mostrarMensaje("Saliendo ...");
-					ejecucion = false;
-					break;
-				default:
-					Vista.mostrarMensaje("No es una opción valida.");
-					break;
+			// modificar casilla
+			// abrir tarea
+			// break;
+			case 5:
+				// 5. volver
+				Vista.mostrarMensaje("Volviendo ...");
+				break;
+			case 0:
+				// 0. salir
+				Vista.mostrarMensaje("Saliendo ...");
+				ejecucion = false;
+				break;
+			default:
+				Vista.mostrarMensaje("No es una opción valida.");
+				break;
 			}
-		
+		}
 	}
 
 	/**
@@ -232,15 +238,15 @@ public class Controlador {
 		String descripcion = Vista.pedirString("la descripción de la tarea");
 		objTarea.setDescripcion(descripcion);
 		int anio = Integer.parseInt(Vista.pedirString("el año de la fecha de vencimiento"));
-		int dia = Integer.parseInt(Vista.pedirString("el número de mes de la fecha de vencimiento"));
-		int mes = Integer.parseInt(Vista.pedirString("el dia de la fecha de vencimiento"));
+		int mes = Integer.parseInt(Vista.pedirString("el número de mes de la fecha de vencimiento"));
+		int dia = Integer.parseInt(Vista.pedirString("el dia de la fecha de vencimiento"));
 		int hora = Integer.parseInt(Vista.pedirString("la hora de la fecha de vencimiento"));
 		int min = Integer.parseInt(Vista.pedirString("los minutos de la fecha de vencimiento"));
 		objTarea.setFechaVencimiento(LocalDateTime.of(anio, mes, dia, hora, min));
 		objTarea.setCasilla(false);
 		ArrayList<Persona> listaDelegados = new ArrayList<>();
 		int indice = Integer.parseInt(Vista.pedirString("cuantos delegados tiene la tarea"));
-		for (int i = 0; i <= indice; i++) {
+		for (int i = 1; i <= indice; i++) {
 			listaDelegados.add(crearPersona());
 		}
 		objTarea.setListaDelegados(listaDelegados);
@@ -252,7 +258,7 @@ public class Controlador {
 	public Persona crearPersona() {
 		String nombre = Vista.pedirString("el nombre del delegado");
 		String correo = Vista.pedirString("el correo del delegado");
-		String rol = Vista.pedirString("el rol del delegado");
+		String rol = Vista.pedirString("el rol del delegado (Colaborador/Administrador)");
 
 		if (rol.equalsIgnoreCase("colaborador")) {
 			Colaborador objColaborador = new Colaborador(nombre, correo, rol);
@@ -269,87 +275,87 @@ public class Controlador {
 	}
 
 	/**
-	 * Metodos de eliminar objetos Tablero, Lista, Tarea y Persona.
+	 * Metodos de eliminar objetos Tablero, Lista, Tarea y Persona. -eliminarTablero
+	 * no se usa aún.
 	 */
-	public void eliminarTablero() {
-
-		boolean encontrado = false;
-
-		mostrarTablero();
-		String nombreBusqueda = Vista.pedirString("el nombre del tablero que desea eliminar");
-		for (Tablero tablero : listaDeTablerosGlobal) {
-			if (tablero.getNombreTablero().equalsIgnoreCase(nombreBusqueda)) {
-				listaDeTablerosGlobal.remove(tablero);
-				Vista.mostrarMensaje("Tablero eliminado correctamente.");
-				encontrado = true;
-				break;
-			}
-		}
-		if (encontrado == false) {
-			Vista.mostrarMensaje("EL tablero no fue encontrado, por favor intente de nuevo.");
-			eliminarTablero();
-		}
-
-	}
+	/*
+	 * public void eliminarTablero() {
+	 * 
+	 * boolean encontrado = false;
+	 * 
+	 * mostrarTablero(); String nombreBusqueda =
+	 * Vista.pedirString("el nombre del tablero que desea eliminar"); for (Tablero
+	 * tablero : listaDeTablerosGlobal) { if
+	 * (tablero.getNombreTablero().equalsIgnoreCase(nombreBusqueda)) {
+	 * listaDeTablerosGlobal.remove(tablero);
+	 * Vista.mostrarMensaje("Tablero eliminado correctamente."); encontrado = true;
+	 * break; } } if (encontrado == false) { Vista.
+	 * mostrarMensaje("EL tablero no fue encontrado, por favor intente de nuevo.");
+	 * eliminarTablero(); }
+	 * 
+	 * }
+	 */
 
 	public void eliminarLista(Tablero tableroElegido) {
-
-		boolean encontrado = false;
-		
 		mostrarLista(tableroElegido.getListaDeListas());
-		String nombreBusqueda = Vista.pedirString("el nombre de la lista que desea eliminar");
-		for (Lista lista : tableroElegido.getListaDeListas()) {
-			if (lista.getNombreLista().equalsIgnoreCase(nombreBusqueda)) {
-				tableroElegido.getListaDeListas().remove(lista);
-				listaDeListasGlobal.remove(lista);
-				Vista.mostrarMensaje("Lista eliminada correctamente.");
-				encontrado = true;
-				break;
+		if (!tableroElegido.getListaDeListas().isEmpty()) {
+			boolean encontrado = false;
+			String nombreBusqueda = Vista.pedirString("el nombre de la lista que desea eliminar");
+			for (Lista lista : tableroElegido.getListaDeListas()) {
+				if (lista.getNombreLista().equalsIgnoreCase(nombreBusqueda)) {
+					tableroElegido.getListaDeListas().remove(lista);
+					listaDeListasGlobal.remove(lista);
+					Vista.mostrarMensaje("Lista eliminada correctamente.");
+					encontrado = true;
+					break;
+				}
 			}
-		}
-		if (encontrado == false) {
-			Vista.mostrarMensaje("La lista no fue encontrada, por favor intente de nuevo.");
-			eliminarLista(tableroElegido);
-		}
+			if (encontrado == false) {
+				Vista.mostrarMensaje("La lista no fue encontrada, por favor intente de nuevo.");
+				eliminarLista(tableroElegido);
+			}
 
+		}
 	}
 
 	public void eliminarTarea(Lista listaElegida) {
-
 		mostrarTarea(listaElegida.getListaDeTareas());
+		if (!listaElegida.getListaDeTareas().isEmpty()) {
+			int indiceBusqueda = Integer.parseInt(Vista.pedirString("el indice de la tarea que desea eliminar"));
+			boolean encontrado = false;
 
-		int indiceBusqueda = Integer.parseInt(Vista.pedirString("el indice de la tarea que desea eliminar"));
-		boolean encontrado = false;
-
-		for (int i = 0; i < listaElegida.getListaDeTareas().size(); i++) {
-			if (indiceBusqueda == (i + 1)) {
-				listaElegida.getListaDeTareas().remove(i);
-				listaDeTareasGlobal.remove(i);
-				Vista.mostrarMensaje("Tarea eliminada correctamente.");
-				encontrado = true;
-				break;
+			for (int i = 0; i < listaElegida.getListaDeTareas().size(); i++) {
+				if (indiceBusqueda == (i + 1)) {
+					listaElegida.getListaDeTareas().remove(i);
+					listaDeTareasGlobal.remove(i);
+					Vista.mostrarMensaje("Tarea eliminada correctamente.");
+					encontrado = true;
+					break;
+				}
 			}
-		}
-		if (!encontrado) {
-			Vista.mostrarMensaje("La tarea no fue encontrada, por favor intente de nuevo.");
-			eliminarTarea(listaElegida);
+			if (!encontrado) {
+				Vista.mostrarMensaje("La tarea no fue encontrada, por favor intente de nuevo.");
+				eliminarTarea(listaElegida);
+			}
 		}
 	}
 
 	public void eliminarPersona(Tarea tareaElegida) {
-		String nombreBusqueda = Vista.pedirString("el nombre del delegado que desea eliminar");
-		boolean encontrado = false;
-		for (Persona persona : tareaElegida.getListaDelegados()) {
-			if (persona.getNombre().equalsIgnoreCase(nombreBusqueda)) {
-				tareaElegida.getListaDelegados().remove(persona);
-				Vista.mostrarMensaje("Persona eliminada correctamente.");
-				encontrado = true;
-				break;
+		if (!tareaElegida.getListaDelegados().isEmpty()) {
+			String nombreBusqueda = Vista.pedirString("el nombre del delegado que desea eliminar");
+			boolean encontrado = false;
+			for (Persona persona : tareaElegida.getListaDelegados()) {
+				if (persona.getNombre().equalsIgnoreCase(nombreBusqueda)) {
+					tareaElegida.getListaDelegados().remove(persona);
+					Vista.mostrarMensaje("Persona eliminada correctamente.");
+					encontrado = true;
+					break;
+				}
 			}
-		}
-		if (!encontrado) {
-			Vista.mostrarMensaje("La persona no fue encontrada, por favor intente de nuevo.");
-			eliminarPersona(tareaElegida);
+			if (!encontrado) {
+				Vista.mostrarMensaje("La persona no fue encontrada, por favor intente de nuevo.");
+				eliminarPersona(tareaElegida);
+			}
 		}
 	}
 
@@ -408,6 +414,7 @@ public class Controlador {
 		if (listaDeTablerosGlobal.isEmpty()) {
 			Vista.mostrarMensaje("No hay tableros creados para abrir.");
 			return null;
+
 		} else {
 			mostrarTablero();
 			String nombreBusqueda = Vista.pedirString("el nombre del tablero que desea abrir.");
@@ -425,17 +432,15 @@ public class Controlador {
 	}
 
 	public Lista abrirLista(Tablero tableroElegido) {
-
-		ArrayList<Lista> listaDeListas = tableroElegido.getListaDeListas();
 		boolean encontrado = false;
 
-		if (listaDeListas.isEmpty()) {
+		if (tableroElegido.getListaDeListas().isEmpty()) {
 			Vista.mostrarMensaje("No hay listas creadas para abrir.");
 			return null;
 		} else {
-			mostrarLista(listaDeListas);
+			mostrarLista(tableroElegido.getListaDeListas());
 			String nombreBusqueda = Vista.pedirString("el nombre de la lista que desea abrir.");
-			for (Lista lista : listaDeListas) {
+			for (Lista lista : tableroElegido.getListaDeListas()) {
 				if (lista.getNombreLista().equalsIgnoreCase(nombreBusqueda)) {
 					encontrado = true;
 					Vista.mostrarMensaje("La lista fue encontrada.");
@@ -503,13 +508,14 @@ public class Controlador {
 	public void modificarDescripcionTarea(Tarea tareaEditar) {
 		String nuevaDescripcion = Vista.pedirString("la nueva descripción de la tarea");
 		tareaEditar.setDescripcion(nuevaDescripcion);
+		Vista.mostrarMensaje("Descripción modificada correctamente.");
 	}
 
 	public void modificarFechaTarea(Tarea tareaEditar) {
 		Vista.mostrarMensaje("la nueva fecha de vencimiento de la tarea.");
 		int anio = Integer.parseInt(Vista.pedirString("el año de la fecha de vencimiento"));
-		int dia = Integer.parseInt(Vista.pedirString("el mes de la fecha de vencimiento"));
-		int mes = Integer.parseInt(Vista.pedirString("el dia de la fecha de vencimiento"));
+		int mes = Integer.parseInt(Vista.pedirString("el mes de la fecha de vencimiento"));
+		int dia = Integer.parseInt(Vista.pedirString("el dia de la fecha de vencimiento"));
 		int hora = Integer.parseInt(Vista.pedirString("la hora de la fecha de vencimiento"));
 		int min = Integer.parseInt(Vista.pedirString("los minutos de la fecha de vencimiento"));
 		tareaEditar.setFechaVencimiento(LocalDateTime.of(anio, mes, dia, hora, min));
@@ -552,22 +558,21 @@ public class Controlador {
 		tableroEditar.setNombreTablero(nuevoNombre);
 	}
 
-	/* Verificar funcionalidad de este tablero poque esta heavy, toca crear metodos para recorrer tableros y listas creo
-	public void moverTarea(Lista listaElegida, Tarea tareaElegida) {
-		mostrarLista(listaDeListasGlobal);
-		String nombreBusqueda = Vista.pedirString("el nombre de la lista destino en la que desea mover la tarea");
-		for (Lista lista : listaDeListasGlobal) {
-			if (nombreBusqueda.equalsIgnoreCase(lista.getNombreLista())) {
-				for (Tablero tablero : listaDeTablerosGlobal) {
-					if (tablero.getListaDeListas().contains(lista)) {
-						
-					}
-				}
-				listaElegida.getListaDeTareas().remove(tareaElegida);
-				Vista.mostrarMensaje("La tarea fue movida exitosamente");
-			}
-		}
+	/*
+	 * Verificar funcionalidad de este tablero poque esta heavy, toca crear metodos
+	 * para recorrer tableros y listas creo 
+	 * public void moverTarea(ListalistaElegida, Tarea tareaElegida) { 
+	 * mostrarLista(listaDeListasGlobal); 
+	 * String nombreBusqueda = Vista.pedirString("el nombre de la lista destino en la que desea mover la tarea");
+	 * for (Lista lista : listaDeListasGlobal) { if
+	 * (nombreBusqueda.equalsIgnoreCase(lista.getNombreLista())) { 
+	 * for (Tablero tablero : listaDeTablerosGlobal) { if
+	 * (tablero.getListaDeListas().contains(lista)) {
+	 * 
+	 * } } listaElegida.getListaDeTareas().remove(tareaElegida);
+	 * Vista.mostrarMensaje("La tarea fue movida exitosamente"); } }
+	 * 
+	 * }
+	 */
 
-	}*/
-	
 }
