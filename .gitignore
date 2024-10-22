@@ -1,8 +1,14 @@
 
 .metadata/
 
+<<<<<<< Updated upstream
 .vscode/
 
 /bin/
 
 .DS_Store
+=======
+*.class
+
+bin/.project
+>>>>>>> Stashed changes
