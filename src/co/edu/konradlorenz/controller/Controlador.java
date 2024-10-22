@@ -20,6 +20,7 @@ public class Controlador {
 	private ArrayList<Tarea> listaDeTareasGlobal = new ArrayList<>();
 	private ArrayList<Tablero> listaDeTablerosGlobal = new ArrayList<>();
 	private Administrador objAdministrador;
+	private Lista objLista = new Lista();
 
 	private Tablero tableroAbierto;
 	private Lista listaAbierta;
@@ -123,7 +124,6 @@ public class Controlador {
 					listaAbierta = abrirLista(tableroAbierto);
 					ejecutarLista();
 				}
-				break;
 			case 3:
 				// 3. eliminar lista
 				eliminarLista(tableroAbierto);
@@ -481,8 +481,8 @@ public class Controlador {
 		} else {
 			while (!encontrado) {
 				mostrarTablero();
-				String nombreBusqueda = Vista.pedirString("Escriba el nombre del tablero que desea abrir.");
-	
+				String nombreBusqueda = Vista.pedirString("El nombre del tablero que desea abrir.");
+
 				for (Tablero tablero : listaDeTablerosGlobal) {
 					if (tablero.getNombreTablero().equalsIgnoreCase(nombreBusqueda)) {
 						encontrado = true;
@@ -507,6 +507,7 @@ public class Controlador {
 
 		if (tableroElegido.getListaDeListas().isEmpty()) {
 			Vista.mostrarMensaje("No hay listas creadas para abrir.");
+			objLista = null;
 			return null;
 		} else {
 			mostrarLista(tableroElegido.getListaDeListas());
@@ -515,6 +516,7 @@ public class Controlador {
 				if (lista.getNombreLista().equalsIgnoreCase(nombreBusqueda)) {
 					encontrado = true;
 					Vista.mostrarMensaje("La lista fue encontrada.");
+					objLista = lista;
 					return lista;
 				}
 			}
@@ -599,7 +601,7 @@ public class Controlador {
 
 	public void modificarCasilla(Tarea tareaEditar) {
 		LocalDateTime tiempoAhora = LocalDateTime.now();
-		if(objAdministrador.isWorkTime(tiempoAhora)){
+		if (objAdministrador.isWorkTime(tiempoAhora)) {
 			Vista.mostrarMensaje("¿La tarea fue finalizada?");
 			String confirmacion = Vista.pedirString("si/no");
 			if (confirmacion.equalsIgnoreCase("si")) {
@@ -609,7 +611,7 @@ public class Controlador {
 				tareaEditar.setCasilla(false);
 				Vista.mostrarMensaje("La tarea fue marcada como pendiente");
 			}
-		}else{
+		} else {
 			Vista.mostrarMensaje("No se puede realizar la acción, estás fuera del horario laboral.");
 		}
 	}
@@ -647,13 +649,13 @@ public class Controlador {
 
 	/*
 	 * Verificar funcionalidad de este tablero poque esta heavy, toca crear metodos
-	 * para recorrer tableros y listas creo 
-	 * public void moverTarea(ListalistaElegida, Tarea tareaElegida) { 
-	 * mostrarLista(listaDeListasGlobal); 
-	 * String nombreBusqueda = Vista.pedirString("el nombre de la lista destino en la que desea mover la tarea");
+	 * para recorrer tableros y listas creo public void
+	 * moverTarea(ListalistaElegida, Tarea tareaElegida) {
+	 * mostrarLista(listaDeListasGlobal); String nombreBusqueda = Vista.
+	 * pedirString("el nombre de la lista destino en la que desea mover la tarea");
 	 * for (Lista lista : listaDeListasGlobal) { if
-	 * (nombreBusqueda.equalsIgnoreCase(lista.getNombreLista())) { 
-	 * for (Tablero tablero : listaDeTablerosGlobal) { if
+	 * (nombreBusqueda.equalsIgnoreCase(lista.getNombreLista())) { for (Tablero
+	 * tablero : listaDeTablerosGlobal) { if
 	 * (tablero.getListaDeListas().contains(lista)) {
 	 * 
 	 * } } listaElegida.getListaDeTareas().remove(tareaElegida);
