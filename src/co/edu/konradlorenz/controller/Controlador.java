@@ -21,7 +21,13 @@ public class Controlador {
 	private ArrayList<Tablero> listaDeTablerosGlobal = new ArrayList<>();
 	private Administrador objAdministrador;
 
-	boolean ejecucion = true;
+	private Tablero tableroAbierto;
+	private Lista listaAbierta;
+	private Tarea tareaAbierta;
+
+	// > > > > > > > > > > > > > > > > > > > > > > > - < < < < < < < < < < < < < < < < < < < < < //
+    // > > > > > > > > > > > > > > > > > > > > M É T O D O S < < < < < < < < < < < < < < < < < < //
+    // > > > > > > > > > > > > > > > > > > > > > > > - < < < < < < < < < < < < < < < < < < < < < //
 
 	public void run() {
 
@@ -30,18 +36,50 @@ public class Controlador {
 		String correo = Vista.pedirString("su correo");
 		objAdministrador = new Administrador(nombre, correo, "Administrador");
 
-		while (ejecucion) {
-			if (!ejecucion)
-				break;
-			ejecutarMenuPrincipal();
-		}
-
+		ejecutarMenuPrincipal();
 	}
 
-	public void ejecutarMenuPrincipal() {
+    public void ejecutarMenuPrincipal(){
+		while (true) {
+			int opcion = Vista.menuPrincipal();
+			switchMenuPrincipal(opcion);
+        }
+    }
+	//ejecutarMenuPrincipal
 
-		int opcion = Vista.menuPrincipal();
+	public void ejecutarTablero() {
+		while (true) {
+			Vista.mostrarMensaje("<> <> <> TABLERO: " + tableroAbierto.getNombreTablero() + " <> <> <>");
+			int opcion = Vista.menuTablero();
+			switchTablero(opcion);
+		}
+	}
+	//ejecutarTablero
 
+	public void ejecutarLista() {
+		while (true) {
+			Vista.mostrarMensaje("<> <> <> LISTA: " + listaAbierta.getNombreLista() + " <> <> <>");
+			int opcion = Vista.menuLista();
+			switchLista(opcion);
+		}
+	}
+	//ejecutarLista
+
+	public void ejecutarTarea() {
+		while (true) {
+			// Las tareas no tienen nombre, le dejamos la descripcion
+			Vista.mostrarMensaje("<> <> <> " + tareaAbierta.getDescripcion() + " <> <> <>");
+			int opcion = Vista.menuTarea();
+			switchTarea(opcion);
+		}
+	}
+	//ejecutarLista
+	
+	// > > > > > > > > > > > > > > > > > > > > > > < < < < < < < < < < < < < < < < < < < < < < //
+	// > > > > > > > > > > > > > > > > > > S W I T C H E S < < < < < < < < < < < < < < < < < < //
+    // > > > > > > > > > > > > > > > > > > > > > > < < < < < < < < < < < < < < < < < < < < < < //
+
+	public void switchMenuPrincipal(int opcion) {
 		switch (opcion) {
 		case 1:
 			// 1. crear tablero
@@ -49,127 +87,118 @@ public class Controlador {
 			break;
 		case 2:
 			// 2. abrir tablero
-			Tablero tableroSel = abrirTablero();
-			if (tableroSel != null) {
-				ejecutarTablero(tableroSel);
-			} else {
-				tableroSel = abrirTablero();
-				ejecutarTablero(tableroSel);
+			while(true){
+				tableroAbierto = abrirTablero();
+				if(tableroAbierto!=null){
+					ejecutarTablero();
+				}else break;
 			}
 			break;
 		case 0:
 			// 0. Salir
 			Vista.mostrarMensaje("Saliendo ...");
-			ejecucion = false;
+			System.exit(0);
 			break;
 		default:
 			Vista.mostrarMensaje("No es una opción valida.");
 			break;
 		}
 	}
+	//switchMenuPrincipal
 
-	public void ejecutarTablero(Tablero tableroAbierto) {
+	public void switchTablero(int opcion) {
 		if (tableroAbierto != null) {
-			Vista.mostrarMensaje("<> <> <> TABLERO: " + tableroAbierto.getNombreTablero() + " <> <> <>");
-
-			int opcion = Vista.menuTablero();
-
 			switch (opcion) {
 			case 1:
 				// 1. agregar lista
 				crearLista(tableroAbierto);
-				ejecutarTablero(tableroAbierto);
+				ejecutarTablero();
 				break;
 			case 2:
 				// 2. abrir lista
-				Lista listaAbierta = abrirLista(tableroAbierto);
+				listaAbierta = abrirLista(tableroAbierto);
 				if (listaAbierta != null) {
-					ejecutarLista(listaAbierta);
+					ejecutarLista();
 				} else {
 					listaAbierta = abrirLista(tableroAbierto);
-					ejecutarLista(listaAbierta);
+					ejecutarLista();
 				}
 				break;
 			case 3:
 				// 3. eliminar lista
 				eliminarLista(tableroAbierto);
 				if (tableroAbierto != null) {
-					ejecutarTablero(tableroAbierto);
+					ejecutarTablero();
 				}
 				break;
 			case 4:
 				// 4. volver
 				Vista.mostrarMensaje("Volviendo ...");
-				;
+				ejecutarMenuPrincipal();
 				break;
 			case 0:
 				// 0. Salir
-				ejecucion = false;
 				Vista.mostrarMensaje("Saliendo ...");
+				System.exit(0);
 				break;
 			default:
 				Vista.mostrarMensaje("No es una opción valida.");
 				break;
 			}
+			//switch
 		}
-
+		//if
 	}
+	//switchTablero
 
-	public void ejecutarLista(Lista listaAbierta) {
+	public void switchLista(int opcion) {
 		if (listaAbierta != null) {
-			Vista.mostrarMensaje("<> <> <> LISTA: " + listaAbierta.getNombreLista() + " <> <> <>");
-
-			int opcion = Vista.menuLista();
-
 			switch (opcion) {
 			case 1:
 				// 1. agregar tarea
 				crearTarea(listaAbierta);
-				ejecutarLista(listaAbierta);
+				ejecutarLista();
 				// pedir nombre, descripcion, fecha, delegado, casilla?
 				break;
 			case 2:
 				// 2. abrir tarea
-				Tarea tareaAbierta = abrirTarea(listaAbierta);
+				tareaAbierta = abrirTarea(listaAbierta);
 				if (tareaAbierta != null) {
-					ejecutarTarea(tareaAbierta);
+					ejecutarTarea();
 				} else {
 					tareaAbierta = abrirTarea(listaAbierta);
-					ejecutarTarea(tareaAbierta);
+					ejecutarTarea();
 				}
 				break;
 			case 3:
 				// 3. eliminar tarea
 				eliminarTarea(listaAbierta);
 				if (listaAbierta != null) {
-					ejecutarLista(listaAbierta);
+					ejecutarLista();
 				}
 				break;
 			case 4:
 				// 4. volver
 				Vista.mostrarMensaje("Volviendo ...");
-
+				ejecutarTablero();
 				break;
 			case 0:
 				// 0. salir
 				Vista.mostrarMensaje("Saliendo ...");
-				ejecucion = false;
+				System.exit(0);
 				break;
 			default:
 				Vista.mostrarMensaje("No es una opción valida.");
 				break;
 			}
-
+			//switch
 		}
+		//if
 	}
+	//switchLista
 
-	public void ejecutarTarea(Tarea tareaAbierta) {
+	public void switchTarea(int opcion) {
 		if (tareaAbierta != null) {
-			// Las tareas no tienen nombre, le dejamos la descripcion
-			Vista.mostrarMensaje("<> <> <> " + tareaAbierta.getDescripcion() + " <> <> <>");
-
-			int opcion = Vista.menuTarea();
-
 			switch (opcion) {
 			case 1:
 				// 1. modificar descripcion
@@ -197,18 +226,26 @@ public class Controlador {
 			case 5:
 				// 5. volver
 				Vista.mostrarMensaje("Volviendo ...");
+				ejecutarLista();
 				break;
 			case 0:
 				// 0. salir
 				Vista.mostrarMensaje("Saliendo ...");
-				ejecucion = false;
+				System.exit(0);
 				break;
 			default:
 				Vista.mostrarMensaje("No es una opción valida.");
 				break;
 			}
+			//switch
 		}
+		//if
 	}
+	//switchTarea
+
+	// > > > > > > > > > > > > > > > > > > > > > > < < < < < < < < < < < < < < < < < < < < < < //
+	// > > > > > > > > > > > > > > > > > > > > C R E A R < < < < < < < < < < < < < < < < < < < //
+    // > > > > > > > > > > > > > > > > > > > > > > < < < < < < < < < < < < < < < < < < < < < < //
 
 	/**
 	 * Metodos de crear objetos Tablero, Lista, Tarea y Persona. -crearPersona() se
@@ -223,6 +260,7 @@ public class Controlador {
 
 		Vista.mostrarMensaje("Tablero agregado correctamente.");
 	}
+	//crearTablero
 
 	public void crearLista(Tablero tableroElegido) {
 		String nombreLista = Vista.pedirString("el nombre de la lista");
@@ -233,6 +271,7 @@ public class Controlador {
 		Vista.mostrarMensaje("Lista agregada correctamente.");
 
 	}
+	//crearLista
 
 	public void crearTarea(Lista listaElegida) {
 		Tarea objTarea = new Tarea();
@@ -255,6 +294,7 @@ public class Controlador {
 		listaDeTareasGlobal.add(objTarea);
 		Vista.mostrarMensaje("Tarea agregada correctamente.");
 	}
+	//crearTarea
 
 	public Persona crearPersona() {
 		String nombre = Vista.pedirString("el nombre del delegado");
@@ -274,6 +314,11 @@ public class Controlador {
 		}
 		return null;
 	}
+	//crearPersona
+
+	// > > > > > > > > > > > > > > > > > > > > > > < < < < < < < < < < < < < < < < < < < < < < //
+	// > > > > > > > > > > > > > > > > > > E L I M I N A R < < < < < < < < < < < < < < < < < < //
+    // > > > > > > > > > > > > > > > > > > > > > > < < < < < < < < < < < < < < < < < < < < < < //
 
 	/**
 	 * Metodos de eliminar objetos Tablero, Lista, Tarea y Persona. -eliminarTablero
@@ -318,6 +363,7 @@ public class Controlador {
 
 		}
 	}
+	//eliminarLista
 
 	public void eliminarTarea(Lista listaElegida) {
 		mostrarTarea(listaElegida.getListaDeTareas());
@@ -340,6 +386,7 @@ public class Controlador {
 			}
 		}
 	}
+	//eliminarTarea
 
 	public void eliminarPersona(Tarea tareaElegida) {
 		if (!tareaElegida.getListaDelegados().isEmpty()) {
@@ -359,6 +406,11 @@ public class Controlador {
 			}
 		}
 	}
+	//eliminarPersona
+
+	// > > > > > > > > > > > > > > > > > > > > > > < < < < < < < < < < < < < < < < < < < < < < //
+	// > > > > > > > > > > > > > > > > > > > M O S T R A R < < < < < < < < < < < < < < < < < < //
+    // > > > > > > > > > > > > > > > > > > > > > > < < < < < < < < < < < < < < < < < < < < < < //
 
 	/**
 	 * Metodos para mostrar listas, tableros, tareas y personas. -los métodos de
@@ -373,6 +425,7 @@ public class Controlador {
 			}
 		}
 	}
+	//mostrarTablero
 
 	public void mostrarLista(ArrayList<Lista> listaDeListas) {
 
@@ -384,6 +437,7 @@ public class Controlador {
 			}
 		}
 	}
+	//mostrarLista
 
 	public void mostrarTarea(ArrayList<Tarea> listaDeTareas) {
 
@@ -394,6 +448,7 @@ public class Controlador {
 				Vista.mostrarMensaje("[" + (i + 1) + "] " + listaDeTareas.get(i).getDescripcion());
 		}
 	}
+	//mostrarTarea
 
 	public void mostrarPersonas(ArrayList<Persona> listaDePersonas) {
 		if (listaDePersonas.isEmpty()) {
@@ -404,6 +459,11 @@ public class Controlador {
 			}
 		}
 	}
+	//mostrarPersonas
+
+	// > > > > > > > > > > > > > > > > > > > > > > < < < < < < < < < < < < < < < < < < < < < < //
+	// > > > > > > > > > > > > > > > > > > > > A B R I R < < < < < < < < < < < < < < < < < < < //
+    // > > > > > > > > > > > > > > > > > > > > > > < < < < < < < < < < < < < < < < < < < < < < //
 
 	/**
 	 * Metodos para abrir/seleccionar objetos Tablero, Lista, Tarea y Persona. -Creo
@@ -412,25 +472,35 @@ public class Controlador {
 	 */
 	public Tablero abrirTablero() {
 		boolean encontrado = false;
+
+		Tablero tableroAbierto = null;
+	
 		if (listaDeTablerosGlobal.isEmpty()) {
 			Vista.mostrarMensaje("No hay tableros creados para abrir.");
 			return null;
-
 		} else {
-			mostrarTablero();
-			String nombreBusqueda = Vista.pedirString("el nombre del tablero que desea abrir.");
-			for (Tablero tablero : listaDeTablerosGlobal) {
-				if (tablero.getNombreTablero().equalsIgnoreCase(nombreBusqueda)) {
-					encontrado = true;
-					return tablero;
+			while (!encontrado) {
+				mostrarTablero();
+				String nombreBusqueda = Vista.pedirString("Escriba el nombre del tablero que desea abrir.");
+	
+				for (Tablero tablero : listaDeTablerosGlobal) {
+					if (tablero.getNombreTablero().equalsIgnoreCase(nombreBusqueda)) {
+						encontrado = true;
+						tableroAbierto = tablero;
+						break;
+					}
 				}
+	
+				if (!encontrado) {
+					Vista.mostrarMensaje("El tablero ingresado no existe, intente de nuevo.");
+				}
+				
 			}
-			if (!encontrado) {
-				Vista.mostrarMensaje("El tablero no fue encontrado, por favor intente de nuevo.");
-			}
-			return null;
+	
+			return tableroAbierto;
 		}
 	}
+	//abrirTablero
 
 	public Lista abrirLista(Tablero tableroElegido) {
 		boolean encontrado = false;
@@ -454,6 +524,7 @@ public class Controlador {
 			return null;
 		}
 	}
+	//abrirLista
 
 	public Tarea abrirTarea(Lista listaElegida) {
 		ArrayList<Tarea> listaDeTareas = listaElegida.getListaDeTareas();
@@ -478,6 +549,7 @@ public class Controlador {
 		}
 		return null;
 	}
+	//abrirTarea
 
 	public Persona abrirPersona(Tarea tareaElegida) {
 		ArrayList<Persona> listaDePersonas = tareaElegida.getListaDelegados();
@@ -501,16 +573,18 @@ public class Controlador {
 		}
 		return null;
 	}
+	//abrirPersona
+	
+	// > > > > > > > > > > > > > > > > > > > > > > < < < < < < < < < < < < < < < < < < < < < < //
+	// > > > > > > > > > > > > > > > > > > M O D I F I C A R < < < < < < < < < < < < < < < < < //
+    // > > > > > > > > > > > > > > > > > > > > > > < < < < < < < < < < < < < < < < < < < < < < //
 
-	/**
-	 * Metodos para modificar objetos Tablero, Lista, Tarea y Persona.
-	 * 
-	 */
 	public void modificarDescripcionTarea(Tarea tareaEditar) {
 		String nuevaDescripcion = Vista.pedirString("la nueva descripción de la tarea");
 		tareaEditar.setDescripcion(nuevaDescripcion);
 		Vista.mostrarMensaje("Descripción modificada correctamente.");
 	}
+	//modificarDescripcionTarea
 
 	public void modificarFechaTarea(Tarea tareaEditar) {
 		Vista.mostrarMensaje("la nueva fecha de vencimiento de la tarea.");
@@ -521,6 +595,7 @@ public class Controlador {
 		int min = Integer.parseInt(Vista.pedirString("los minutos de la fecha de vencimiento"));
 		tareaEditar.setFechaVencimiento(LocalDateTime.of(anio, mes, dia, hora, min));
 	}
+	//modificarFechaTarea
 
 	public void modificarCasilla(Tarea tareaEditar) {
 		LocalDateTime tiempoAhora = LocalDateTime.now();
@@ -538,31 +613,37 @@ public class Controlador {
 			Vista.mostrarMensaje("No se puede realizar la acción, estás fuera del horario laboral.");
 		}
 	}
+	//modificarCasilla
 
 	public void modificarNombrePersona(Persona personaEditar) {
 		String nuevoNombre = Vista.pedirString("el nuevo nombre del delegado");
 		personaEditar.setNombre(nuevoNombre);
 	}
+	//modificarNombrePersona
 
 	public void modificarCorreoPersona(Persona personaEditar) {
 		String nuevoCorreo = Vista.pedirString("el nuevo correo del delegado");
 		personaEditar.setCorreo(nuevoCorreo);
 	}
+	//modificarCorreoPersona
 
 	public void modificarRolPersona(Persona personaEditar) {
 		String nuevoRol = Vista.pedirString("el nuevo rol del delegado");
 		personaEditar.setRol(nuevoRol);
 	}
+	//modificarRolPersona
 
 	public void modificarNombreLista(Lista listaEditar) {
 		String nuevoNombre = Vista.pedirString("el nuevo nombre de la lista");
 		listaEditar.setNombreLista(nuevoNombre);
 	}
+	//modificarNombreLista
 
 	public void modificarNombreTablero(Tablero tableroEditar) {
 		String nuevoNombre = Vista.pedirString("el nuevo nombre del tablero");
 		tableroEditar.setNombreTablero(nuevoNombre);
 	}
+	//modificarNombreTablero
 
 	/*
 	 * Verificar funcionalidad de este tablero poque esta heavy, toca crear metodos
@@ -582,3 +663,4 @@ public class Controlador {
 	 */
 
 }
+//class

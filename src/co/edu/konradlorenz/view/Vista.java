@@ -21,6 +21,7 @@ public class Vista {
 		System.out.println("<> [2] Abrir tablero          <>");
 		System.out.println("<> [0] Salir                  <>");
 		System.out.println("<> <> <> <> <> <> <> <> <> <> <>");
+		System.out.print("\n>> Seleccione una opción: ");
 		int opc = sc.nextInt();
 		sc.nextLine();
 		return opc;
@@ -36,6 +37,8 @@ public class Vista {
 		System.out.println("<> [4] Volver                 <>");
 		System.out.println("<> [0] Salir                  <>");
 		System.out.println("<> <> <> <> <> <> <> <> <> <> <>");
+		System.out.print("\n>> Seleccione una opción: ");
+
 		int opc = sc.nextInt();
 		sc.nextLine();
 		return opc;
@@ -51,6 +54,8 @@ public class Vista {
 		System.out.println("<> [4] Volver                 <>");
 		System.out.println("<> [0] Salir                  <>");
 		System.out.println("<> <> <> <> <> <> <> <> <> <> <>");
+		System.out.print("\n>> Seleccione una opción: ");
+
 		int opc = sc.nextInt();
 		sc.nextLine();
 		return opc;
@@ -67,6 +72,8 @@ public class Vista {
 		System.out.println("<> [5] Volver                 <>");
 		System.out.println("<> [0] Salir                  <>");
 		System.out.println("<> <> <> <> <> <> <> <> <> <> <>");
+		System.out.print("\n>> Seleccione una opción: ");
+
 		int opc = sc.nextInt();
 		sc.nextLine();
 		return opc;
