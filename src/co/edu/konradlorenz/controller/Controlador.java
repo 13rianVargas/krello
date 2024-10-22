@@ -26,9 +26,12 @@ public class Controlador {
 	private Lista listaAbierta;
 	private Tarea tareaAbierta;
 
-	// > > > > > > > > > > > > > > > > > > > > > > > - < < < < < < < < < < < < < < < < < < < < < //
-    // > > > > > > > > > > > > > > > > > > > > M É T O D O S < < < < < < < < < < < < < < < < < < //
-    // > > > > > > > > > > > > > > > > > > > > > > > - < < < < < < < < < < < < < < < < < < < < < //
+	// > > > > > > > > > > > > > > > > > > > > > > > - < < < < < < < < < < < < < < <
+	// < < < < < < //
+	// > > > > > > > > > > > > > > > > > > > > M É T O D O S < < < < < < < < < < < <
+	// < < < < < < //
+	// > > > > > > > > > > > > > > > > > > > > > > > - < < < < < < < < < < < < < < <
+	// < < < < < < //
 
 	public void run() {
 
@@ -40,13 +43,13 @@ public class Controlador {
 		ejecutarMenuPrincipal();
 	}
 
-    public void ejecutarMenuPrincipal(){
+	public void ejecutarMenuPrincipal() {
 		while (true) {
 			int opcion = Vista.menuPrincipal();
 			switchMenuPrincipal(opcion);
-        }
-    }
-	//ejecutarMenuPrincipal
+		}
+	}
+	// ejecutarMenuPrincipal
 
 	public void ejecutarTablero() {
 		while (true) {
@@ -55,7 +58,7 @@ public class Controlador {
 			switchTablero(opcion);
 		}
 	}
-	//ejecutarTablero
+	// ejecutarTablero
 
 	public void ejecutarLista() {
 		while (true) {
@@ -64,7 +67,7 @@ public class Controlador {
 			switchLista(opcion);
 		}
 	}
-	//ejecutarLista
+	// ejecutarLista
 
 	public void ejecutarTarea() {
 		while (true) {
@@ -74,11 +77,14 @@ public class Controlador {
 			switchTarea(opcion);
 		}
 	}
-	//ejecutarLista
-	
-	// > > > > > > > > > > > > > > > > > > > > > > < < < < < < < < < < < < < < < < < < < < < < //
-	// > > > > > > > > > > > > > > > > > > S W I T C H E S < < < < < < < < < < < < < < < < < < //
-    // > > > > > > > > > > > > > > > > > > > > > > < < < < < < < < < < < < < < < < < < < < < < //
+	// ejecutarLista
+
+	// > > > > > > > > > > > > > > > > > > > > > > < < < < < < < < < < < < < < < < <
+	// < < < < < //
+	// > > > > > > > > > > > > > > > > > > S W I T C H E S < < < < < < < < < < < < <
+	// < < < < < //
+	// > > > > > > > > > > > > > > > > > > > > > > < < < < < < < < < < < < < < < < <
+	// < < < < < //
 
 	public void switchMenuPrincipal(int opcion) {
 		switch (opcion) {
@@ -88,11 +94,12 @@ public class Controlador {
 			break;
 		case 2:
 			// 2. abrir tablero
-			while(true){
+			while (true) {
 				tableroAbierto = abrirTablero();
-				if(tableroAbierto!=null){
+				if (tableroAbierto != null) {
 					ejecutarTablero();
-				}else break;
+				} else
+					break;
 			}
 			break;
 		case 0:
@@ -105,7 +112,7 @@ public class Controlador {
 			break;
 		}
 	}
-	//switchMenuPrincipal
+	// switchMenuPrincipal
 
 	public void switchTablero(int opcion) {
 		if (tableroAbierto != null) {
@@ -117,12 +124,12 @@ public class Controlador {
 				break;
 			case 2:
 				// 2. abrir lista
-				listaAbierta = abrirLista(tableroAbierto);
-				if (listaAbierta != null) {
-					ejecutarLista();
-				} else {
-					listaAbierta = abrirLista(tableroAbierto);
-					ejecutarLista();
+				while (true) {
+					listaAbierta = abrirLista();
+					if (listaAbierta != null) {
+						ejecutarLista();
+					} else
+						break;
 				}
 			case 3:
 				// 3. eliminar lista
@@ -145,11 +152,11 @@ public class Controlador {
 				Vista.mostrarMensaje("No es una opción valida.");
 				break;
 			}
-			//switch
+			// switch
 		}
-		//if
+		// if
 	}
-	//switchTablero
+	// switchTablero
 
 	public void switchLista(int opcion) {
 		if (listaAbierta != null) {
@@ -162,12 +169,13 @@ public class Controlador {
 				break;
 			case 2:
 				// 2. abrir tarea
-				tareaAbierta = abrirTarea(listaAbierta);
-				if (tareaAbierta != null) {
-					ejecutarTarea();
-				} else {
-					tareaAbierta = abrirTarea(listaAbierta);
-					ejecutarTarea();
+
+				while (true) {
+					tareaAbierta = abrirTarea();
+					if (tareaAbierta != null) {
+						ejecutarTarea();
+					} else
+						break;
 				}
 				break;
 			case 3:
@@ -191,11 +199,11 @@ public class Controlador {
 				Vista.mostrarMensaje("No es una opción valida.");
 				break;
 			}
-			//switch
+			// switch
 		}
-		//if
+		// if
 	}
-	//switchLista
+	// switchLista
 
 	public void switchTarea(int opcion) {
 		if (tareaAbierta != null) {
@@ -237,15 +245,18 @@ public class Controlador {
 				Vista.mostrarMensaje("No es una opción valida.");
 				break;
 			}
-			//switch
+			// switch
 		}
-		//if
+		// if
 	}
-	//switchTarea
+	// switchTarea
 
-	// > > > > > > > > > > > > > > > > > > > > > > < < < < < < < < < < < < < < < < < < < < < < //
-	// > > > > > > > > > > > > > > > > > > > > C R E A R < < < < < < < < < < < < < < < < < < < //
-    // > > > > > > > > > > > > > > > > > > > > > > < < < < < < < < < < < < < < < < < < < < < < //
+	// > > > > > > > > > > > > > > > > > > > > > > < < < < < < < < < < < < < < < < <
+	// < < < < < //
+	// > > > > > > > > > > > > > > > > > > > > C R E A R < < < < < < < < < < < < < <
+	// < < < < < //
+	// > > > > > > > > > > > > > > > > > > > > > > < < < < < < < < < < < < < < < < <
+	// < < < < < //
 
 	/**
 	 * Metodos de crear objetos Tablero, Lista, Tarea y Persona. -crearPersona() se
@@ -260,7 +271,7 @@ public class Controlador {
 
 		Vista.mostrarMensaje("Tablero agregado correctamente.");
 	}
-	//crearTablero
+	// crearTablero
 
 	public void crearLista(Tablero tableroElegido) {
 		String nombreLista = Vista.pedirString("el nombre de la lista");
@@ -271,7 +282,7 @@ public class Controlador {
 		Vista.mostrarMensaje("Lista agregada correctamente.");
 
 	}
-	//crearLista
+	// crearLista
 
 	public void crearTarea(Lista listaElegida) {
 		Tarea objTarea = new Tarea();
@@ -289,12 +300,11 @@ public class Controlador {
 		for (int i = 1; i <= indice; i++) {
 			listaDelegados.add(crearPersona());
 		}
-		objTarea.setListaDelegados(listaDelegados);
 		listaElegida.getListaDeTareas().add(objTarea);
 		listaDeTareasGlobal.add(objTarea);
 		Vista.mostrarMensaje("Tarea agregada correctamente.");
 	}
-	//crearTarea
+	// crearTarea
 
 	public Persona crearPersona() {
 		String nombre = Vista.pedirString("el nombre del delegado");
@@ -314,11 +324,14 @@ public class Controlador {
 		}
 		return null;
 	}
-	//crearPersona
+	// crearPersona
 
-	// > > > > > > > > > > > > > > > > > > > > > > < < < < < < < < < < < < < < < < < < < < < < //
-	// > > > > > > > > > > > > > > > > > > E L I M I N A R < < < < < < < < < < < < < < < < < < //
-    // > > > > > > > > > > > > > > > > > > > > > > < < < < < < < < < < < < < < < < < < < < < < //
+	// > > > > > > > > > > > > > > > > > > > > > > < < < < < < < < < < < < < < < < <
+	// < < < < < //
+	// > > > > > > > > > > > > > > > > > > E L I M I N A R < < < < < < < < < < < < <
+	// < < < < < //
+	// > > > > > > > > > > > > > > > > > > > > > > < < < < < < < < < < < < < < < < <
+	// < < < < < //
 
 	/**
 	 * Metodos de eliminar objetos Tablero, Lista, Tarea y Persona. -eliminarTablero
@@ -363,7 +376,7 @@ public class Controlador {
 
 		}
 	}
-	//eliminarLista
+	// eliminarLista
 
 	public void eliminarTarea(Lista listaElegida) {
 		mostrarTarea(listaElegida.getListaDeTareas());
@@ -386,7 +399,7 @@ public class Controlador {
 			}
 		}
 	}
-	//eliminarTarea
+	// eliminarTarea
 
 	public void eliminarPersona(Tarea tareaElegida) {
 		if (!tareaElegida.getListaDelegados().isEmpty()) {
@@ -406,11 +419,14 @@ public class Controlador {
 			}
 		}
 	}
-	//eliminarPersona
+	// eliminarPersona
 
-	// > > > > > > > > > > > > > > > > > > > > > > < < < < < < < < < < < < < < < < < < < < < < //
-	// > > > > > > > > > > > > > > > > > > > M O S T R A R < < < < < < < < < < < < < < < < < < //
-    // > > > > > > > > > > > > > > > > > > > > > > < < < < < < < < < < < < < < < < < < < < < < //
+	// > > > > > > > > > > > > > > > > > > > > > > < < < < < < < < < < < < < < < < <
+	// < < < < < //
+	// > > > > > > > > > > > > > > > > > > > M O S T R A R < < < < < < < < < < < < <
+	// < < < < < //
+	// > > > > > > > > > > > > > > > > > > > > > > < < < < < < < < < < < < < < < < <
+	// < < < < < //
 
 	/**
 	 * Metodos para mostrar listas, tableros, tareas y personas. -los métodos de
@@ -425,7 +441,7 @@ public class Controlador {
 			}
 		}
 	}
-	//mostrarTablero
+	// mostrarTablero
 
 	public void mostrarLista(ArrayList<Lista> listaDeListas) {
 
@@ -437,7 +453,7 @@ public class Controlador {
 			}
 		}
 	}
-	//mostrarLista
+	// mostrarLista
 
 	public void mostrarTarea(ArrayList<Tarea> listaDeTareas) {
 
@@ -448,7 +464,7 @@ public class Controlador {
 				Vista.mostrarMensaje("[" + (i + 1) + "] " + listaDeTareas.get(i).getDescripcion());
 		}
 	}
-	//mostrarTarea
+	// mostrarTarea
 
 	public void mostrarPersonas(ArrayList<Persona> listaDePersonas) {
 		if (listaDePersonas.isEmpty()) {
@@ -459,11 +475,14 @@ public class Controlador {
 			}
 		}
 	}
-	//mostrarPersonas
+	// mostrarPersonas
 
-	// > > > > > > > > > > > > > > > > > > > > > > < < < < < < < < < < < < < < < < < < < < < < //
-	// > > > > > > > > > > > > > > > > > > > > A B R I R < < < < < < < < < < < < < < < < < < < //
-    // > > > > > > > > > > > > > > > > > > > > > > < < < < < < < < < < < < < < < < < < < < < < //
+	// > > > > > > > > > > > > > > > > > > > > > > < < < < < < < < < < < < < < < < <
+	// < < < < < //
+	// > > > > > > > > > > > > > > > > > > > > A B R I R < < < < < < < < < < < < < <
+	// < < < < < //
+	// > > > > > > > > > > > > > > > > > > > > > > < < < < < < < < < < < < < < < < <
+	// < < < < < //
 
 	/**
 	 * Metodos para abrir/seleccionar objetos Tablero, Lista, Tarea y Persona. -Creo
@@ -474,7 +493,7 @@ public class Controlador {
 		boolean encontrado = false;
 
 		Tablero tableroAbierto = null;
-	
+
 		if (listaDeTablerosGlobal.isEmpty()) {
 			Vista.mostrarMensaje("No hay tableros creados para abrir.");
 			return null;
@@ -490,29 +509,29 @@ public class Controlador {
 						break;
 					}
 				}
-	
+
 				if (!encontrado) {
 					Vista.mostrarMensaje("El tablero ingresado no existe, intente de nuevo.");
 				}
-				
+
 			}
-	
+
 			return tableroAbierto;
 		}
 	}
-	//abrirTablero
+	// abrirTablero
 
-	public Lista abrirLista(Tablero tableroElegido) {
+	public Lista abrirLista() {
 		boolean encontrado = false;
 
-		if (tableroElegido.getListaDeListas().isEmpty()) {
+		if (tableroAbierto.getListaDeListas().isEmpty()) {
 			Vista.mostrarMensaje("No hay listas creadas para abrir.");
 			objLista = null;
 			return null;
 		} else {
-			mostrarLista(tableroElegido.getListaDeListas());
+			mostrarLista(tableroAbierto.getListaDeListas());
 			String nombreBusqueda = Vista.pedirString("el nombre de la lista que desea abrir.");
-			for (Lista lista : tableroElegido.getListaDeListas()) {
+			for (Lista lista : tableroAbierto.getListaDeListas()) {
 				if (lista.getNombreLista().equalsIgnoreCase(nombreBusqueda)) {
 					encontrado = true;
 					Vista.mostrarMensaje("La lista fue encontrada.");
@@ -526,18 +545,17 @@ public class Controlador {
 			return null;
 		}
 	}
-	//abrirLista
+	// abrirLista
 
-	public Tarea abrirTarea(Lista listaElegida) {
-		ArrayList<Tarea> listaDeTareas = listaElegida.getListaDeTareas();
+	public Tarea abrirTarea() {
+		ArrayList<Tarea> listaDeTareas = listaAbierta.getListaDeTareas();
 		boolean encontrado = false;
 		if (listaDeTareas.isEmpty()) {
 			Vista.mostrarMensaje("No hay tareas creadas para abrir.");
 			return null;
 		} else {
 			mostrarTarea(listaDeTareas);
-			int indice = Integer
-					.parseInt(Vista.pedirString("el indice de la descripción de la tarea que desea abrir."));
+			int indice = Integer.parseInt(Vista.pedirString("el indice de la descripción de la tarea que desea abrir"));
 			for (int i = 0; i < listaDeTareas.size(); i++) {
 				if ((i + 1) == indice) {
 					encontrado = true;
@@ -547,11 +565,11 @@ public class Controlador {
 			}
 		}
 		if (!encontrado) {
-			Vista.mostrarMensaje("La tarea no fue encontrada, por favor intente de nuevo.");
+			Vista.mostrarMensaje("La tarea no fue encontrada, por favor intente de nuevo");
 		}
 		return null;
 	}
-	//abrirTarea
+	// abrirTarea
 
 	public Persona abrirPersona(Tarea tareaElegida) {
 		ArrayList<Persona> listaDePersonas = tareaElegida.getListaDelegados();
@@ -575,18 +593,21 @@ public class Controlador {
 		}
 		return null;
 	}
-	//abrirPersona
-	
-	// > > > > > > > > > > > > > > > > > > > > > > < < < < < < < < < < < < < < < < < < < < < < //
-	// > > > > > > > > > > > > > > > > > > M O D I F I C A R < < < < < < < < < < < < < < < < < //
-    // > > > > > > > > > > > > > > > > > > > > > > < < < < < < < < < < < < < < < < < < < < < < //
+	// abrirPersona
+
+	// > > > > > > > > > > > > > > > > > > > > > > < < < < < < < < < < < < < < < < <
+	// < < < < < //
+	// > > > > > > > > > > > > > > > > > > M O D I F I C A R < < < < < < < < < < < <
+	// < < < < < //
+	// > > > > > > > > > > > > > > > > > > > > > > < < < < < < < < < < < < < < < < <
+	// < < < < < //
 
 	public void modificarDescripcionTarea(Tarea tareaEditar) {
 		String nuevaDescripcion = Vista.pedirString("la nueva descripción de la tarea");
 		tareaEditar.setDescripcion(nuevaDescripcion);
 		Vista.mostrarMensaje("Descripción modificada correctamente.");
 	}
-	//modificarDescripcionTarea
+	// modificarDescripcionTarea
 
 	public void modificarFechaTarea(Tarea tareaEditar) {
 		Vista.mostrarMensaje("la nueva fecha de vencimiento de la tarea.");
@@ -597,55 +618,59 @@ public class Controlador {
 		int min = Integer.parseInt(Vista.pedirString("los minutos de la fecha de vencimiento"));
 		tareaEditar.setFechaVencimiento(LocalDateTime.of(anio, mes, dia, hora, min));
 	}
-	//modificarFechaTarea
+	// modificarFechaTarea
 
 	public void modificarCasilla(Tarea tareaEditar) {
 		LocalDateTime tiempoAhora = LocalDateTime.now();
 		if (objAdministrador.isWorkTime(tiempoAhora)) {
 			Vista.mostrarMensaje("¿La tarea fue finalizada?");
-			String confirmacion = Vista.pedirString("si/no");
-			if (confirmacion.equalsIgnoreCase("si")) {
-				tareaEditar.setCasilla(true);
-				Vista.mostrarMensaje("La tarea fue marcada como finalizada");
-			} else {
-				tareaEditar.setCasilla(false);
-				Vista.mostrarMensaje("La tarea fue marcada como pendiente");
+			while (true) {
+				String confirmacion = Vista.pedirString("s/n");
+				if (confirmacion.equalsIgnoreCase("s")) {
+					tareaEditar.setCasilla(true);
+					Vista.mostrarMensaje("La tarea fue marcada como finalizada");
+				} else if (confirmacion.equalsIgnoreCase("n")) {
+					tareaEditar.setCasilla(false);
+					Vista.mostrarMensaje("La tarea fue marcada como pendiente");
+				}else{
+					Vista.mostrarMensaje("Opción incorrecta, itentalo de nuevo");
+				}
 			}
 		} else {
 			Vista.mostrarMensaje("No se puede realizar la acción, estás fuera del horario laboral.");
 		}
 	}
-	//modificarCasilla
+	// modificarCasilla
 
 	public void modificarNombrePersona(Persona personaEditar) {
 		String nuevoNombre = Vista.pedirString("el nuevo nombre del delegado");
 		personaEditar.setNombre(nuevoNombre);
 	}
-	//modificarNombrePersona
+	// modificarNombrePersona
 
 	public void modificarCorreoPersona(Persona personaEditar) {
 		String nuevoCorreo = Vista.pedirString("el nuevo correo del delegado");
 		personaEditar.setCorreo(nuevoCorreo);
 	}
-	//modificarCorreoPersona
+	// modificarCorreoPersona
 
 	public void modificarRolPersona(Persona personaEditar) {
 		String nuevoRol = Vista.pedirString("el nuevo rol del delegado");
 		personaEditar.setRol(nuevoRol);
 	}
-	//modificarRolPersona
+	// modificarRolPersona
 
 	public void modificarNombreLista(Lista listaEditar) {
 		String nuevoNombre = Vista.pedirString("el nuevo nombre de la lista");
 		listaEditar.setNombreLista(nuevoNombre);
 	}
-	//modificarNombreLista
+	// modificarNombreLista
 
 	public void modificarNombreTablero(Tablero tableroEditar) {
 		String nuevoNombre = Vista.pedirString("el nuevo nombre del tablero");
 		tableroEditar.setNombreTablero(nuevoNombre);
 	}
-	//modificarNombreTablero
+	// modificarNombreTablero
 
 	/*
 	 * Verificar funcionalidad de este tablero poque esta heavy, toca crear metodos
