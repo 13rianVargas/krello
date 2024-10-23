@@ -16,21 +16,22 @@ public class Controlador {
 	 * ArrayList<>();
 	 */
 
+	private ArrayList<Tablero> listaDeTablerosGlobal = new ArrayList<>();
 	private ArrayList<Lista> listaDeListasGlobal = new ArrayList<>();
 	private ArrayList<Tarea> listaDeTareasGlobal = new ArrayList<>();
-	private ArrayList<Tablero> listaDeTablerosGlobal = new ArrayList<>();
+	private ArrayList<Persona> listaDePersonaGlobal = new ArrayList<>();
 	private Administrador objAdministrador;
 
 	private Tablero tableroAbierto;
 	private Lista listaAbierta;
 	private Tarea tareaAbierta;
+	private Colaborador colaboradorAbierto;
 
 	// > > > > > > > > > > > > > > > > > > > < < < < < < < < < < < < < < < < < < //
 	// > > > > > > > > > > > > > > > > M E T O D O S < < < < < < < < < < < < < < //
 	// > > > > > > > > > > > > > > > > > > > < < < < < < < < < < < < < < < < < < //
-
 	public void run() {
-
+		crearEjemplosPersona();
 		// crear Administrador
 		String nombre = Vista.pedirString("su nombre");
 		String correo = Vista.pedirString("su correo");
@@ -112,7 +113,7 @@ public class Controlador {
 			switch (opcion) {
 			case 1:
 				// 1. agregar lista
-				crearLista(tableroAbierto);
+				crearLista();
 				ejecutarTablero();
 				break;
 			case 2:
@@ -121,12 +122,14 @@ public class Controlador {
 					listaAbierta = abrirLista();
 					if (listaAbierta != null) {
 						ejecutarLista();
-					} else
+					} else 
 						break;
 				}
+				break;		
+				
 			case 3:
 				// 3. eliminar lista
-				eliminarLista(tableroAbierto);
+				eliminarLista();
 				if (tableroAbierto != null) {
 					ejecutarTablero();
 				}
@@ -156,9 +159,8 @@ public class Controlador {
 			switch (opcion) {
 			case 1:
 				// 1. agregar tarea
-				crearTarea(listaAbierta);
+				crearTarea();
 				ejecutarLista();
-				// pedir nombre, descripcion, fecha, delegado, casilla?
 				break;
 			case 2:
 				// 2. abrir tarea
@@ -173,7 +175,7 @@ public class Controlador {
 				break;
 			case 3:
 				// 3. eliminar tarea
-				eliminarTarea(listaAbierta);
+				eliminarTarea();
 				if (listaAbierta != null) {
 					ejecutarLista();
 				}
@@ -203,17 +205,17 @@ public class Controlador {
 			switch (opcion) {
 			case 1:
 				// 1. modificar descripcion
-				modificarDescripcionTarea(tareaAbierta);
+				modificarDescripcionTarea();
 				// abrir tarea
 				break;
 			case 2:
 				// 2. modificar fecha
-				modificarFechaTarea(tareaAbierta);
+				modificarFechaTarea();
 				// abrir tarea
 				break;
 			case 3:
 				// 3. modificar casilla
-				modificarCasilla(tareaAbierta);
+				modificarCasilla();
 				// modificar descripcion
 				// modificar fecha
 				// abrir tarea
@@ -255,26 +257,22 @@ public class Controlador {
 	public void crearTablero() {
 
 		String nombreTablero = Vista.pedirString("el nombre del tablero");
-		ArrayList<Lista> listaDeListas = new ArrayList<>();
-		Tablero tablero = new Tablero(nombreTablero, listaDeListas);
+		Tablero tablero = new Tablero(nombreTablero, listaDeListasGlobal);
 		listaDeTablerosGlobal.add(tablero);
 
 		Vista.mostrarMensaje("Tablero agregado correctamente.");
 	}
 	// crearTablero
 
-	public void crearLista(Tablero tableroElegido) {
+	public void crearLista() {
 		String nombreLista = Vista.pedirString("el nombre de la lista");
-		ArrayList<Tarea> listaDeTareas = new ArrayList<>();
-		Lista lista = new Lista(nombreLista, listaDeTareas);
-		tableroElegido.getListaDeListas().add(lista);
+		Lista lista = new Lista(nombreLista, listaDeTareasGlobal);
 		listaDeListasGlobal.add(lista);
 		Vista.mostrarMensaje("Lista agregada correctamente.");
-
 	}
 	// crearLista
 
-	public void crearTarea(Lista listaElegida) {
+	public void crearTarea() {
 		Tarea objTarea = new Tarea();
 		String descripcion = Vista.pedirString("la descripción de la tarea");
 		objTarea.setDescripcion(descripcion);
@@ -286,11 +284,33 @@ public class Controlador {
 		objTarea.setFechaVencimiento(LocalDateTime.of(anio, mes, dia, hora, min));
 		objTarea.setCasilla(false);
 		ArrayList<Persona> listaDelegados = new ArrayList<>();
-		int indice = Integer.parseInt(Vista.pedirString("cuantos delegados tiene la tarea"));
-		for (int i = 1; i <= indice; i++) {
-			listaDelegados.add(crearPersona());
+		objTarea.setListaDelegados(listaDelegados);
+		mostrarPersonas(listaDePersonaGlobal);
+		boolean disponible = false;
+		boolean vacia = false;
+		if (listaDePersonaGlobal.isEmpty()) {
+			int indice = Integer.parseInt(Vista.pedirString("cuantos delegados tiene la tarea"));
+			for (int i = 1; i <= indice; i++) {
+				listaDelegados.add(crearPersona());
+			}
+		}else {
+			String correoBusqueda = Vista.pedirString("el correo del delegado a asignar la tarea");
+			for (Persona persona : listaDePersonaGlobal) {
+				if (persona.getCorreo().equals(correoBusqueda)) {
+					colaboradorAbierto= (Colaborador)persona;
+					break;
+				}
+			}
+			if(listaDeTareasGlobal.isEmpty()){
+				vacia = true;
+			}else{
+				disponible = asignarTarea(colaboradorAbierto);
+			}	
 		}
-		listaElegida.getListaDeTareas().add(objTarea);
+		if(vacia || disponible){
+			objTarea.getListaDelegados().add(colaboradorAbierto);
+		}
+		
 		listaDeTareasGlobal.add(objTarea);
 		Vista.mostrarMensaje("Tarea agregada correctamente.");
 	}
@@ -342,14 +362,14 @@ public class Controlador {
 	 * }
 	 */
 
-	public void eliminarLista(Tablero tableroElegido) {
-		mostrarLista(tableroElegido.getListaDeListas());
-		if (!tableroElegido.getListaDeListas().isEmpty()) {
+	public void eliminarLista() {
+		mostrarLista();
+		if (!tableroAbierto.getListaDeListas().isEmpty()) {
 			boolean encontrado = false;
 			String nombreBusqueda = Vista.pedirString("el nombre de la lista que desea eliminar");
-			for (Lista lista : tableroElegido.getListaDeListas()) {
+			for (Lista lista : tableroAbierto.getListaDeListas()) {
 				if (lista.getNombreLista().equalsIgnoreCase(nombreBusqueda)) {
-					tableroElegido.getListaDeListas().remove(lista);
+					tableroAbierto.getListaDeListas().remove(lista);
 					listaDeListasGlobal.remove(lista);
 					Vista.mostrarMensaje("Lista eliminada correctamente.");
 					encontrado = true;
@@ -358,22 +378,21 @@ public class Controlador {
 			}
 			if (encontrado == false) {
 				Vista.mostrarMensaje("La lista no fue encontrada, por favor intente de nuevo.");
-				eliminarLista(tableroElegido);
+				eliminarLista();
 			}
 
 		}
 	}
 	// eliminarLista
 
-	public void eliminarTarea(Lista listaElegida) {
-		mostrarTarea(listaElegida.getListaDeTareas());
-		if (!listaElegida.getListaDeTareas().isEmpty()) {
+	public void eliminarTarea() {
+		mostrarTarea();
+		if (!listaAbierta.getListaDeTareas().isEmpty()) {
 			int indiceBusqueda = Integer.parseInt(Vista.pedirString("el indice de la tarea que desea eliminar"));
 			boolean encontrado = false;
 
-			for (int i = 0; i < listaElegida.getListaDeTareas().size(); i++) {
+			for (int i = 0; i < listaAbierta.getListaDeTareas().size(); i++) {
 				if (indiceBusqueda == (i + 1)) {
-					listaElegida.getListaDeTareas().remove(i);
 					listaDeTareasGlobal.remove(i);
 					Vista.mostrarMensaje("Tarea eliminada correctamente.");
 					encontrado = true;
@@ -382,7 +401,7 @@ public class Controlador {
 			}
 			if (!encontrado) {
 				Vista.mostrarMensaje("La tarea no fue encontrada, por favor intente de nuevo.");
-				eliminarTarea(listaElegida);
+				eliminarTarea();
 			}
 		}
 	}
@@ -427,25 +446,25 @@ public class Controlador {
 	}
 	// mostrarTablero
 
-	public void mostrarLista(ArrayList<Lista> listaDeListas) {
+	public void mostrarLista() {
 
-		if (listaDeListas.isEmpty()) {
+		if (listaDeListasGlobal.isEmpty()) {
 			Vista.mostrarMensaje("No hay listas creadas para mostrar.");
 		} else {
-			for (Lista lista : listaDeListas) {
+			for (Lista lista : listaDeListasGlobal) {
 				Vista.mostrarMensaje(" -" + lista.toString());
 			}
 		}
 	}
 	// mostrarLista
 
-	public void mostrarTarea(ArrayList<Tarea> listaDeTareas) {
+	public void mostrarTarea() {
 
-		if (listaDeTareas.isEmpty()) {
+		if (listaDeTareasGlobal.isEmpty()) {
 			Vista.mostrarMensaje("No hay tareas creadas para mostrar.");
 		} else {
-			for (int i = 0; i < listaDeTareas.size(); i++)
-				Vista.mostrarMensaje("[" + (i + 1) + "] " + listaDeTareas.get(i).getDescripcion());
+			for (int i = 0; i < listaDeTareasGlobal.size(); i++)
+				Vista.mostrarMensaje("[" + (i + 1) + "] " + listaDeTareasGlobal.get(i).getDescripcion());
 		}
 	}
 	// mostrarTarea
@@ -503,23 +522,25 @@ public class Controlador {
 	// abrirTablero
 
 	public Lista abrirLista() {
+		
 		boolean encontrado = false;
-
 		if (tableroAbierto.getListaDeListas().isEmpty()) {
 			Vista.mostrarMensaje("No hay listas creadas para abrir.");
 			return null;
 		} else {
-			mostrarLista(tableroAbierto.getListaDeListas());
-			String nombreBusqueda = Vista.pedirString("el nombre de la lista que desea abrir.");
-			for (Lista lista : tableroAbierto.getListaDeListas()) {
-				if (lista.getNombreLista().equalsIgnoreCase(nombreBusqueda)) {
-					encontrado = true;
-					Vista.mostrarMensaje("La lista fue encontrada.");
-					return lista;
+			while (!encontrado) {
+				mostrarLista();
+				String nombreBusqueda = Vista.pedirString("el nombre de la lista que desea abrir.");
+				for (Lista lista : listaDeListasGlobal) {
+					if (lista.getNombreLista().equalsIgnoreCase(nombreBusqueda)) {
+						encontrado = true;
+						Vista.mostrarMensaje("La lista fue encontrada.");
+						return lista;
+					}
 				}
-			}
-			if (!encontrado) {
-				Vista.mostrarMensaje("La lista no fue encontrada, por favor intente de nuevo.");
+				if (!encontrado) {
+					Vista.mostrarMensaje("La lista no fue encontrada, por favor intente de nuevo.");
+				}
 			}
 			return null;
 		}
@@ -527,24 +548,25 @@ public class Controlador {
 	// abrirLista
 
 	public Tarea abrirTarea() {
-		ArrayList<Tarea> listaDeTareas = listaAbierta.getListaDeTareas();
 		boolean encontrado = false;
-		if (listaDeTareas.isEmpty()) {
+		if (listaAbierta.getListaDeTareas().isEmpty()) {
 			Vista.mostrarMensaje("No hay tareas creadas para abrir.");
 			return null;
 		} else {
-			mostrarTarea(listaDeTareas);
-			int indice = Integer.parseInt(Vista.pedirString("el indice de la descripción de la tarea que desea abrir"));
-			for (int i = 0; i < listaDeTareas.size(); i++) {
-				if ((i + 1) == indice) {
-					encontrado = true;
-					Vista.mostrarMensaje("La tarea fue encontrada.");
-					return listaDeTareas.get(i);
+			while (!encontrado) {
+				mostrarTarea();
+				int indice = Integer.parseInt(Vista.pedirString("el indice de la descripción de la tarea que desea abrir"));
+				for (int i = 0; i < listaDeTareasGlobal.size(); i++) {
+					if ((i + 1) == indice) {
+						encontrado = true;
+						Vista.mostrarMensaje("La tarea fue encontrada.");
+						return listaAbierta.getListaDeTareas().get(i);
+					}
+				}
+				if (!encontrado) {
+					Vista.mostrarMensaje("La tarea no fue encontrada, por favor intente de nuevo");
 				}
 			}
-		}
-		if (!encontrado) {
-			Vista.mostrarMensaje("La tarea no fue encontrada, por favor intente de nuevo");
 		}
 		return null;
 	}
@@ -578,35 +600,35 @@ public class Controlador {
 	// > > > > > > > > > > > > > > M O D I F I C A R < < < < < < < < < < < < < < //
 	// > > > > > > > > > > > > > > > > > > > < < < < < < < < < < < < < < < < < < //
 
-	public void modificarDescripcionTarea(Tarea tareaEditar) {
+	public void modificarDescripcionTarea() {
 		String nuevaDescripcion = Vista.pedirString("la nueva descripción de la tarea");
-		tareaEditar.setDescripcion(nuevaDescripcion);
+		tareaAbierta.setDescripcion(nuevaDescripcion);
 		Vista.mostrarMensaje("Descripción modificada correctamente.");
 	}
 	// modificarDescripcionTarea
 
-	public void modificarFechaTarea(Tarea tareaEditar) {
+	public void modificarFechaTarea() {
 		Vista.mostrarMensaje("la nueva fecha de vencimiento de la tarea.");
 		int anio = Integer.parseInt(Vista.pedirString("el año de la fecha de vencimiento"));
 		int mes = Integer.parseInt(Vista.pedirString("el mes de la fecha de vencimiento"));
 		int dia = Integer.parseInt(Vista.pedirString("el dia de la fecha de vencimiento"));
 		int hora = Integer.parseInt(Vista.pedirString("la hora de la fecha de vencimiento"));
 		int min = Integer.parseInt(Vista.pedirString("los minutos de la fecha de vencimiento"));
-		tareaEditar.setFechaVencimiento(LocalDateTime.of(anio, mes, dia, hora, min));
+		tareaAbierta.setFechaVencimiento(LocalDateTime.of(anio, mes, dia, hora, min));
 	}
 	// modificarFechaTarea
 
-	public void modificarCasilla(Tarea tareaEditar) {
+	public void modificarCasilla() {
 		LocalDateTime tiempoAhora = LocalDateTime.now();
 		if (objAdministrador.isWorkTime(tiempoAhora)) {
 			Vista.mostrarMensaje("¿La tarea fue finalizada?");
 			while (true) {
 				String confirmacion = Vista.pedirString("s/n");
 				if (confirmacion.equalsIgnoreCase("s")) {
-					tareaEditar.setCasilla(true);
+					tareaAbierta.setCasilla(true);
 					Vista.mostrarMensaje("La tarea fue marcada como finalizada");
 				} else if (confirmacion.equalsIgnoreCase("n")) {
-					tareaEditar.setCasilla(false);
+					tareaAbierta.setCasilla(false);
 					Vista.mostrarMensaje("La tarea fue marcada como pendiente");
 				}else{
 					Vista.mostrarMensaje("Opción incorrecta, itentalo de nuevo");
@@ -636,17 +658,51 @@ public class Controlador {
 	}
 	// modificarRolPersona
 
-	public void modificarNombreLista(Lista listaEditar) {
+	public void modificarNombreLista() {
 		String nuevoNombre = Vista.pedirString("el nuevo nombre de la lista");
-		listaEditar.setNombreLista(nuevoNombre);
+		listaAbierta.setNombreLista(nuevoNombre);
 	}
 	// modificarNombreLista
 
-	public void modificarNombreTablero(Tablero tableroEditar) {
+	public void modificarNombreTablero() {
 		String nuevoNombre = Vista.pedirString("el nuevo nombre del tablero");
-		tableroEditar.setNombreTablero(nuevoNombre);
+		tableroAbierto.setNombreTablero(nuevoNombre);
 	}
 	// modificarNombreTablero
+
+	public void crearEjemplosPersona() {
+		listaDePersonaGlobal.add(new Colaborador("Juan Perez", "juan.perez@example.com", "Colaborador"));
+		listaDePersonaGlobal.add(new Colaborador("Pedro Lopez", "pedro.lopez@example.com", "Colaborador"));
+		listaDePersonaGlobal.add(new Colaborador("Maria Guzman", "maria.garcia@example.com", "Colaborador"));
+	}
+	
+	public boolean asignarTarea(Persona persona) {//TODO: Crear lista de personas global
+		if (persona.getRol().equalsIgnoreCase("Colaborador")) {
+			if (persona.verificarDisponibilidad(recorrerTarea(persona))) {
+				Vista.mostrarMensaje("El colaborador esta disponible para realizar la tarea");
+				return true;
+			}else {
+				Vista.mostrarMensaje("El colaborador no esta disponible para realizar la tarea");
+				return false;
+			}
+		}
+		return true;
+	}
+	
+	public int recorrerTarea(Persona PersonaComparar) {
+		int canTareas = 0;
+		for (Tarea tarea : listaDeTareasGlobal) {
+			ArrayList<Persona> listaDelegados = tarea.getListaDelegados();
+			for (Persona delegado : listaDelegados) {
+				if (delegado.getCorreo().equalsIgnoreCase(PersonaComparar.getCorreo())) {	
+					canTareas++;
+					break;  // Rompe el ciclo si ya se encontró la persona en los delegados.
+				}
+			}
+		}
+		return canTareas;
+	} 
+	// recorrerTarea
 
 	/*
 	 * Verificar funcionalidad de este tablero poque esta heavy, toca crear metodos
