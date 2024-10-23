@@ -1,6 +1,5 @@
 package co.edu.konradlorenz.controller;
 
-import java.lang.reflect.Array;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
@@ -17,9 +16,9 @@ public class Controlador {
 	 * ArrayList<>();
 	 */
 
+	private ArrayList<Tablero> listaDeTablerosGlobal = new ArrayList<>();
 	private ArrayList<Lista> listaDeListasGlobal = new ArrayList<>();
 	private ArrayList<Tarea> listaDeTareasGlobal = new ArrayList<>();
-	private ArrayList<Tablero> listaDeTablerosGlobal = new ArrayList<>();
 	private ArrayList<Persona> listaDePersonaGlobal = new ArrayList<>();
 	private Administrador objAdministrador;
 
@@ -162,7 +161,6 @@ public class Controlador {
 				// 1. agregar tarea
 				crearTarea();
 				ejecutarLista();
-				// pedir nombre, descripcion, fecha, delegado, casilla?
 				break;
 			case 2:
 				// 2. abrir tarea
@@ -286,24 +284,35 @@ public class Controlador {
 		objTarea.setFechaVencimiento(LocalDateTime.of(anio, mes, dia, hora, min));
 		objTarea.setCasilla(false);
 		ArrayList<Persona> listaDelegados = new ArrayList<>();
+		objTarea.setListaDelegados(listaDelegados);
 		mostrarPersonas(listaDePersonaGlobal);
+		boolean disponible = false;
+		boolean vacia = false;
 		if (listaDePersonaGlobal.isEmpty()) {
 			int indice = Integer.parseInt(Vista.pedirString("cuantos delegados tiene la tarea"));
 			for (int i = 1; i <= indice; i++) {
 				listaDelegados.add(crearPersona());
 			}
-			listaDeTareasGlobal.add(objTarea);
-			Vista.mostrarMensaje("Tarea agregada correctamente.");
 		}else {
 			String correoBusqueda = Vista.pedirString("el correo del delegado a asignar la tarea");
 			for (Persona persona : listaDePersonaGlobal) {
-					if (persona.getCorreo().equals(correoBusqueda)) {
-						colaboradorAbierto= (Colaborador)persona;
-						break;
-					}
+				if (persona.getCorreo().equals(correoBusqueda)) {
+					colaboradorAbierto= (Colaborador)persona;
+					break;
+				}
 			}
-			asignarTarea(colaboradorAbierto);
+			if(listaDeTareasGlobal.isEmpty()){
+				vacia = true;
+			}else{
+				disponible = asignarTarea(colaboradorAbierto);
+			}	
 		}
+		if(vacia || disponible){
+			objTarea.getListaDelegados().add(colaboradorAbierto);
+		}
+		
+		listaDeTareasGlobal.add(objTarea);
+		Vista.mostrarMensaje("Tarea agregada correctamente.");
 	}
 	// crearTarea
 
@@ -667,27 +676,34 @@ public class Controlador {
 		listaDePersonaGlobal.add(new Colaborador("Maria Guzman", "maria.garcia@example.com", "Colaborador"));
 	}
 	
-	public void asignarTarea(Persona persona) {
-			if (persona.getRol().equalsIgnoreCase("Colaborador")) {
-				if (persona.verificarDisponibilidad(recorrerTarea(persona))) {
-					Vista.mostrarMensaje("El colaborador esta disponible para realizar la tarea");
-					tareaAbierta.getListaDelegados().add(persona);	
-				}else {
-					Vista.mostrarMensaje("El colaborador no esta disponible para realizar la tarea");
-				}
+	public boolean asignarTarea(Persona persona) {//TODO: Crear lista de personas global
+		if (persona.getRol().equalsIgnoreCase("Colaborador")) {
+			if (persona.verificarDisponibilidad(recorrerTarea(persona))) {
+				Vista.mostrarMensaje("El colaborador esta disponible para realizar la tarea");
+				return true;
+			}else {
+				Vista.mostrarMensaje("El colaborador no esta disponible para realizar la tarea");
+				return false;
 			}
+		}
+		return true;
 	}
 	
 	public int recorrerTarea(Persona PersonaComparar) {
-		int canTareas=0;
-		for (int i = 0; i < listaDeTareasGlobal.size(); i++) {
-			ArrayList<Persona> listaDelegados = listaDeTareasGlobal.get(i).getListaDelegados();
-			if (listaDelegados.get(i).getCorreo().equalsIgnoreCase(PersonaComparar.getCorreo())) {	
-				canTareas++;
+		int canTareas = 0;
+		for (Tarea tarea : listaDeTareasGlobal) {
+			ArrayList<Persona> listaDelegados = tarea.getListaDelegados();
+			for (Persona delegado : listaDelegados) {
+				if (delegado.getCorreo().equalsIgnoreCase(PersonaComparar.getCorreo())) {	
+					canTareas++;
+					break;  // Rompe el ciclo si ya se encontró la persona en los delegados.
+				}
 			}
 		}
 		return canTareas;
 	} 
+	// recorrerTarea
+
 	/*
 	 * Verificar funcionalidad de este tablero poque esta heavy, toca crear metodos
 	 * para recorrer tableros y listas creo public void
