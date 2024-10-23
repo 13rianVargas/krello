@@ -121,9 +121,11 @@ public class Controlador {
 					listaAbierta = abrirLista();
 					if (listaAbierta != null) {
 						ejecutarLista();
-					} else
+					} else 
 						break;
 				}
+				break;		
+				
 			case 3:
 				// 3. eliminar lista
 				eliminarLista();
@@ -368,7 +370,6 @@ public class Controlador {
 
 			for (int i = 0; i < listaAbierta.getListaDeTareas().size(); i++) {
 				if (indiceBusqueda == (i + 1)) {
-					listaAbierta.getListaDeTareas().remove(i);
 					listaDeTareasGlobal.remove(i);
 					Vista.mostrarMensaje("Tarea eliminada correctamente.");
 					encontrado = true;
@@ -498,23 +499,25 @@ public class Controlador {
 	// abrirTablero
 
 	public Lista abrirLista() {
+		
 		boolean encontrado = false;
-
 		if (tableroAbierto.getListaDeListas().isEmpty()) {
 			Vista.mostrarMensaje("No hay listas creadas para abrir.");
 			return null;
 		} else {
-			mostrarLista();
-			String nombreBusqueda = Vista.pedirString("el nombre de la lista que desea abrir.");
-			for (Lista lista : tableroAbierto.getListaDeListas()) {
-				if (lista.getNombreLista().equalsIgnoreCase(nombreBusqueda)) {
-					encontrado = true;
-					Vista.mostrarMensaje("La lista fue encontrada.");
-					return lista;
+			while (!encontrado) {
+				mostrarLista();
+				String nombreBusqueda = Vista.pedirString("el nombre de la lista que desea abrir.");
+				for (Lista lista : listaDeListasGlobal) {
+					if (lista.getNombreLista().equalsIgnoreCase(nombreBusqueda)) {
+						encontrado = true;
+						Vista.mostrarMensaje("La lista fue encontrada.");
+						return lista;
+					}
 				}
-			}
-			if (!encontrado) {
-				Vista.mostrarMensaje("La lista no fue encontrada, por favor intente de nuevo.");
+				if (!encontrado) {
+					Vista.mostrarMensaje("La lista no fue encontrada, por favor intente de nuevo.");
+				}
 			}
 			return null;
 		}
@@ -527,18 +530,20 @@ public class Controlador {
 			Vista.mostrarMensaje("No hay tareas creadas para abrir.");
 			return null;
 		} else {
-			mostrarTarea();
-			int indice = Integer.parseInt(Vista.pedirString("el indice de la descripción de la tarea que desea abrir"));
-			for (int i = 0; i < listaAbierta.getListaDeTareas().size(); i++) {
-				if ((i + 1) == indice) {
-					encontrado = true;
-					Vista.mostrarMensaje("La tarea fue encontrada.");
-					return listaAbierta.getListaDeTareas().get(i);
+			while (!encontrado) {
+				mostrarTarea();
+				int indice = Integer.parseInt(Vista.pedirString("el indice de la descripción de la tarea que desea abrir"));
+				for (int i = 0; i < listaDeTareasGlobal.size(); i++) {
+					if ((i + 1) == indice) {
+						encontrado = true;
+						Vista.mostrarMensaje("La tarea fue encontrada.");
+						return listaAbierta.getListaDeTareas().get(i);
+					}
+				}
+				if (!encontrado) {
+					Vista.mostrarMensaje("La tarea no fue encontrada, por favor intente de nuevo");
 				}
 			}
-		}
-		if (!encontrado) {
-			Vista.mostrarMensaje("La tarea no fue encontrada, por favor intente de nuevo");
 		}
 		return null;
 	}
