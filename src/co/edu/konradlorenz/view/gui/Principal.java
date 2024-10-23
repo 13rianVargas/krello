@@ -15,8 +15,6 @@ public class Principal extends JFrame {
 	
     //Constructor
     public Principal(){
-    	
-    	
 
     	principal.setDefaultCloseOperation(EXIT_ON_CLOSE); //Terminar la ejecución si se cierra la ventana
     	principal.setTitle("KRELLO");
@@ -27,13 +25,11 @@ public class Principal extends JFrame {
     	principal.setBackground(Color.CYAN);//Color del Titulo de la ventana
     	principal.getContentPane().setBackground(fondoFrame);
 
-    		JPanel head = head();
     		
-	        principal.add(head);
+	        principal.add(head());
 	
-	        JPanel middle = middle();
 	        
-	        principal.add(middle);
+	        principal.add(middle());
 	        
 	        // - BODY - //
 	        
@@ -82,7 +78,6 @@ public class Principal extends JFrame {
 	        holaUser.add(admiracion);
 	        holaUser.setForeground(Color.BLACK);
 	        holaUser.setBounds(207, 10, 400, 60);
-	        holaUser.setAlignmentY(Component.CENTER_ALIGNMENT);
 	        holaUser.setOpaque(false);
 	     
 	        head.add(holaUser);
@@ -109,6 +104,7 @@ public class Principal extends JFrame {
     }
     //*/head
     
+    //middle
     @SuppressWarnings("exports")
     public JPanel middle() {
     	 // - MIDDLE - //
@@ -117,8 +113,18 @@ public class Principal extends JFrame {
         middle.setBounds(40, 140, 1200, 80);
         middle.setBackground(fondoPanel);
         
+	        //Mis Tableros
+	        JLabel misTableros = new JLabel("Mis Tableros");
+	        misTableros.setFont(new Font("Arial", Font.PLAIN, 30));
+	        //misTableros.setLayout(new BoxLayout(misTableros, BoxLayout.X_AXIS));
+	        misTableros.setLayout(new BoxLayout(misTableros, BoxLayout.Y_AXIS));
+	        misTableros.setBounds(0, 0, 1200, 80);
+        
+        middle.add(misTableros);
     	return middle;
     }
+    //*/middle
+    
     
 }
 //class
