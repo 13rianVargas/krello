@@ -1,5 +1,6 @@
 package co.edu.konradlorenz.controller;
 
+import java.lang.reflect.Array;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
@@ -19,18 +20,19 @@ public class Controlador {
 	private ArrayList<Lista> listaDeListasGlobal = new ArrayList<>();
 	private ArrayList<Tarea> listaDeTareasGlobal = new ArrayList<>();
 	private ArrayList<Tablero> listaDeTablerosGlobal = new ArrayList<>();
+	private ArrayList<Persona> listaDePersonaGlobal = new ArrayList<>();
 	private Administrador objAdministrador;
 
 	private Tablero tableroAbierto;
 	private Lista listaAbierta;
 	private Tarea tareaAbierta;
+	private Colaborador colaboradorAbierto;
 
 	// > > > > > > > > > > > > > > > > > > > < < < < < < < < < < < < < < < < < < //
 	// > > > > > > > > > > > > > > > > M E T O D O S < < < < < < < < < < < < < < //
 	// > > > > > > > > > > > > > > > > > > > < < < < < < < < < < < < < < < < < < //
-
 	public void run() {
-
+		crearEjemplosPersona();
 		// crear Administrador
 		String nombre = Vista.pedirString("su nombre");
 		String correo = Vista.pedirString("su correo");
@@ -284,12 +286,24 @@ public class Controlador {
 		objTarea.setFechaVencimiento(LocalDateTime.of(anio, mes, dia, hora, min));
 		objTarea.setCasilla(false);
 		ArrayList<Persona> listaDelegados = new ArrayList<>();
-		int indice = Integer.parseInt(Vista.pedirString("cuantos delegados tiene la tarea"));
-		for (int i = 1; i <= indice; i++) {
-			listaDelegados.add(crearPersona());
+		mostrarPersonas(listaDePersonaGlobal);
+		if (listaDePersonaGlobal.isEmpty()) {
+			int indice = Integer.parseInt(Vista.pedirString("cuantos delegados tiene la tarea"));
+			for (int i = 1; i <= indice; i++) {
+				listaDelegados.add(crearPersona());
+			}
+			listaDeTareasGlobal.add(objTarea);
+			Vista.mostrarMensaje("Tarea agregada correctamente.");
+		}else {
+			String correoBusqueda = Vista.pedirString("el correo del delegado a asignar la tarea");
+			for (Persona persona : listaDePersonaGlobal) {
+					if (persona.getCorreo().equals(correoBusqueda)) {
+						colaboradorAbierto= (Colaborador)persona;
+						break;
+					}
+			}
+			asignarTarea(colaboradorAbierto);
 		}
-		listaDeTareasGlobal.add(objTarea);
-		Vista.mostrarMensaje("Tarea agregada correctamente.");
 	}
 	// crearTarea
 
@@ -647,6 +661,33 @@ public class Controlador {
 	}
 	// modificarNombreTablero
 
+	public void crearEjemplosPersona() {
+		listaDePersonaGlobal.add(new Colaborador("Juan Perez", "juan.perez@example.com", "Colaborador"));
+		listaDePersonaGlobal.add(new Colaborador("Pedro Lopez", "pedro.lopez@example.com", "Colaborador"));
+		listaDePersonaGlobal.add(new Colaborador("Maria Guzman", "maria.garcia@example.com", "Colaborador"));
+	}
+	
+	public void asignarTarea(Persona persona) {
+			if (persona.getRol().equalsIgnoreCase("Colaborador")) {
+				if (persona.verificarDisponibilidad(recorrerTarea(persona))) {
+					Vista.mostrarMensaje("El colaborador esta disponible para realizar la tarea");
+					tareaAbierta.getListaDelegados().add(persona);	
+				}else {
+					Vista.mostrarMensaje("El colaborador no esta disponible para realizar la tarea");
+				}
+			}
+	}
+	
+	public int recorrerTarea(Persona PersonaComparar) {
+		int canTareas=0;
+		for (int i = 0; i < listaDeTareasGlobal.size(); i++) {
+			ArrayList<Persona> listaDelegados = listaDeTareasGlobal.get(i).getListaDelegados();
+			if (listaDelegados.get(i).getCorreo().equalsIgnoreCase(PersonaComparar.getCorreo())) {	
+				canTareas++;
+			}
+		}
+		return canTareas;
+	} 
 	/*
 	 * Verificar funcionalidad de este tablero poque esta heavy, toca crear metodos
 	 * para recorrer tableros y listas creo public void
