@@ -1,136 +1,168 @@
 package co.edu.konradlorenz.view.gui;
 
-import java.awt.Color;
-import java.awt.Cursor;
-import java.awt.Font;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
+import java.awt.*;
+import java.awt.event.*;
 
-import javax.swing.BoxLayout;
-import javax.swing.ImageIcon;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
+import javax.swing.*;
+import javax.swing.border.*;
 
 @SuppressWarnings("serial")
 public class Principal extends JFrame {
 
-	JFrame principal = new JFrame();
+	//FRAMES
+	JFrame framePrincipal = new JFrame();
 	
-	Color fondoPanel = Color.LIGHT_GRAY;//Fondo de todos los JPanel
+	//PANELS
+	//JPanel panelInvisible = new JPanel(); //PENDIENTE -> Este JPanel permite que el autofocus no sea el primer campo de texto. 
+	JPanel panelPrincipalHead;
+	JPanel panelPrincipalMiddle;
+	JPanel panelPrincipalBody;
+	
+	//TEXTFIELDS
+	
+	
+	//PASSWORDFIELDS
+	
+	
+	//BUTTONS
+	JButton btnCrearTablero;
+	JButton btnAbrirTablero1;
+	JButton btnAbrirTablero2;
+	JButton btnAbrirTablero3;
+		
+	//COLORS
 	Color fondoFrame = Color.GRAY;//Fondo del JFrame
+	Color fondoPanel = Color.LIGHT_GRAY;//Fondo de todos los JPanel
 	
-    //Constructor
+	//MOSTRAR DETALLES
+	boolean detalles = true;//true -> mostrar / false -> ocultar
+	
+    //Método constructor del frame Principal
     public Principal(){
 
-    	principal.setDefaultCloseOperation(EXIT_ON_CLOSE); //Terminar la ejecución si se cierra la ventana
-    	principal.setTitle("KRELLO");
-    	principal.setSize(1280, 720);
-    	principal.setLocationRelativeTo(null); // Centra la ventana
-    	principal.setLayout(null);//Desactivar layout automático para usar setBounds()
-    	principal.setResizable(false);//No permite modificar el tamaño de la ventana
-    	principal.setBackground(Color.CYAN);//Color del Titulo de la ventana
-    	principal.getContentPane().setBackground(fondoFrame);
+    	framePrincipal.setDefaultCloseOperation(EXIT_ON_CLOSE); //Terminar la ejecución si se cierra la ventana
+    	framePrincipal.setTitle("Krello - Mis Tableros");//Título de la ventana
+    	framePrincipal.setSize(1280, 720);//ancho, alto
+    	framePrincipal.setMinimumSize(new Dimension(1280, 720));//Tamaño mínimo al que se puede ajustar
+    	framePrincipal.setLocationRelativeTo(null); //Centra la ventana
+    	framePrincipal.setLayout(new BorderLayout());//Hace el frame responsivo a los ajustes de tamaño
+    	framePrincipal.setBackground(Color.CYAN);//Color de la barra de la ventana
+    	framePrincipal.getContentPane().setBackground(fondoFrame);//Color del fondo
 
-    		
-	        principal.add(head());
+    	panelPrincipalHead = panelPrincipalHead();
+    	//framePrincipal.add(panelPrincipalHead);//Solo lo añade
+    	framePrincipal.add(panelPrincipalHead, BorderLayout.NORTH);//Lo añade y hace el panel responsivo
 	
+    	panelPrincipalMiddle = panelPrincipalMiddle();
+    	//framePrincipal.add(panelPrincipalMiddle);//Solo lo añade
+    	framePrincipal.add(panelPrincipalMiddle, BorderLayout.CENTER);//Lo añade y hace el panel responsivo
 	        
-	        principal.add(middle());
-	        
-	        // - BODY - //
-	        
-	        //TODO:Aquí te toca Aleja
-	        
-	        
-	        
-	        principal.setVisible(true); //IMPORTANTE dejar esta línea de últimas al cerrar el constructor para que carguen las pinches imagenes (llevo 3 horas tratando de ver porque no salía la imagen y es por esta babosada T-T )
+    	framePrincipal.setVisible(true); //IMPORTANTE dejar esta línea de últimas al cerrar el constructor para que carguen las pinches imagenes (llevo 3 horas tratando de ver porque no salía la imagen y es por esta babosada T-T )
     }
     //Principal
     
-    //Método para crear head
-    @SuppressWarnings("exports")
-	public JPanel head() {
-    	// - HEAD - //
-        JPanel head = new JPanel();
-        head.setBounds(40, 40, 1200, 80);
-        head.setBackground(fondoPanel);
-        head.setLayout(null);//Desactivar layout automático para usar setBounds()
-        //*/
+    //Método para crear panelPrincipalHead
+	public JPanel panelPrincipalHead() {
+    	
+        panelPrincipalHead = new JPanel();
+        panelPrincipalHead.setBackground(fondoPanel);
+        panelPrincipalHead.setLayout(new BorderLayout(20, 0));//Espacio horizontal y vertical entre los componentes
 
-	        // Krello Logo
-	        JLabel krelloLogo = new JLabel();
-	        krelloLogo.setIcon(new ImageIcon(getClass().getResource("/co/edu/konradlorenz/view/img/KrelloLogo187x60.png")));
-	        krelloLogo.setBounds(10, 10, 187, 60);
+        	//LOGO KRELLO
+	        JLabel lblKrelloLogo = new JLabel();
+	        lblKrelloLogo.setIcon(new ImageIcon(getClass().getResource("/co/edu/konradlorenz/view/img/KrelloLogo187x60.png")));
+	        lblKrelloLogo.setBorder(new EmptyBorder(10, 10, 10, 10)); // top, left, bottom, right -> Ajusta un borde por pixeles
+	        lblKrelloLogo.setBackground(Color.GREEN);
+	        lblKrelloLogo.setOpaque(detalles);//Mostrar detalles
 	        
-	        head.add(krelloLogo);
+        panelPrincipalHead.add(lblKrelloLogo, BorderLayout.WEST);//Ubica automáticamente a la izquierda
 	        
-	        //Hola
-	        JLabel hola = new JLabel("¡Hola ");
-	        hola.setFont(new Font("Arial", Font.PLAIN, 20));
+	        //FRASE CENTRAL
+	        JLabel lblHola = new JLabel("¡Hola ");
+	        lblHola.setFont(new Font("Arial", Font.PLAIN, 20));
 
-	        //User
-	        JLabel user = new JLabel("User Genérico"); //TODO: Aquí va el nombre del usuario en el futuro
-	        user.setFont(new Font("Arial", Font.ITALIC, 20));
+	        JLabel lblUser = new JLabel("Aquí va un nombre genérico, si tan solo tuvieramos uno T-T"); //TODO: Agregar nombre genérico xd
+	        lblUser.setFont(new Font("Arial", Font.ITALIC, 20));
 	        
-	        //!
-	        JLabel admiracion = new JLabel("!");
-	        admiracion.setFont(new Font("Arial", Font.PLAIN, 20));
+	        JLabel lblAdmiracion = new JLabel("!");//IMPORTANTE, dirás, para que se separa en 3 lbl?, es para que solo el lblUser se muestre en Italic y quede guapo
+	        lblAdmiracion.setFont(new Font("Arial", Font.PLAIN, 20));
 
-	        //Hola User !
-	        JPanel holaUser = new JPanel();
-	        holaUser.setLayout(new BoxLayout(holaUser, BoxLayout.X_AXIS));
-	        holaUser.add(hola);
-	        holaUser.add(user);
-	        holaUser.add(admiracion);
-	        holaUser.setForeground(Color.BLACK);
-	        holaUser.setBounds(207, 10, 400, 60);
-	        holaUser.setOpaque(false);
-	     
-	        head.add(holaUser);
+	        JPanel lblHolaUser = new JPanel();//Sí, esto es un Panel anidado xd
+	        lblHolaUser.setLayout(new BoxLayout(lblHolaUser, BoxLayout.X_AXIS));//El BoxLayout.X_AXIS es para que se ordenen Horizontalmente, cambia la X por la Y para que lo notes.
+	        lblHolaUser.add(lblHola);
+	        lblHolaUser.add(lblUser);
+	        lblHolaUser.add(lblAdmiracion);
+	        lblHolaUser.setForeground(Color.BLACK);//Color de la letra
+	        lblHolaUser.setBorder(new EmptyBorder(10, 0, 10, 0)); // top, left, bottom, right -> Ajusta un borde por pixeles
+	        lblHolaUser.setBackground(Color.BLUE);
+	        lblHolaUser.setOpaque(detalles);//Mostrar detalles
 	        
-	        //Cerrar Sesión
-	        JLabel cerrarSesion = new JLabel("Cerrar sesión");
-	        cerrarSesion.setFont(new Font("Arial", Font.PLAIN, 20));
-	        cerrarSesion.setForeground(Color.BLACK);
-	        cerrarSesion.setCursor(new Cursor(Cursor.HAND_CURSOR)); //Cambia el cursor a una mano cuando pase por encima
-	        cerrarSesion.setBounds(1050, 10, 150, 60);
+        panelPrincipalHead.add(lblHolaUser, BorderLayout.CENTER);//Ubica automáticamente al centro
 	        
-	        cerrarSesion.addMouseListener(new MouseAdapter() {
+        	//"BOTÓN" CERRAR SESIÓN
+	        JLabel lblCerrarSesion = new JLabel("Cerrar sesión");
+	        lblCerrarSesion.setFont(new Font("Arial", Font.PLAIN, 20));
+	        lblCerrarSesion.setForeground(Color.BLACK);//Color de la letra
+	        lblCerrarSesion.setCursor(new Cursor(Cursor.HAND_CURSOR));//Cambia el cursor a una mano cuando pase por encima
+	        lblCerrarSesion.setBackground(Color.CYAN);
+	        lblCerrarSesion.setOpaque(detalles);//Mostrar detalles
+	        
+	        //Acción al pasar el mouse
+	        lblCerrarSesion.addMouseListener(new MouseAdapter() {
+	        	@Override
+	            public void mouseEntered(MouseEvent e) {
+	                // Subraya el texto cuando el mouse entra
+	                lblCerrarSesion.setText("<html><u>Cerrar sesión</u></html>");//Lo subraya al poner el cursor encima
+	            }
 	            @Override
-	            public void mouseClicked(MouseEvent e) {
+	            public void mouseExited(MouseEvent e) {
+	                // Elimina el subrayado cuando el mouse sale
+	                lblCerrarSesion.setText("Cerrar sesión");
+	            }
+	            @Override
+	        	public void mouseClicked(MouseEvent e) {
 	                //TODO: Acción para volver a Ventana Iniciar Sesión
-
-	                principal.dispose(); // Cierra Ventana Principal
+	            	
+	            	
 	            }
 	        });
+	        	
+	        	//Este panel es para ajustar mejor el lblCerrarSesion y centrarlo
+		        JPanel panelCerrarSesion = new JPanel();
+		        panelCerrarSesion.setLayout(new BoxLayout(panelCerrarSesion, BoxLayout.Y_AXIS));//Se ordena verticalmente
+		        panelCerrarSesion.setBackground(Color.RED);
+		        panelCerrarSesion.setOpaque(detalles);//Mostrar detalles
+		        panelCerrarSesion.setBorder(BorderFactory.createEmptyBorder(10, 20, 10, 20)); // top, left, bottom, right -> Ajusta un borde por pixeles
+	
+		        panelCerrarSesion.add(Box.createVerticalGlue());//Agrega espacio flexible antes del JLabel
+		        panelCerrarSesion.add(lblCerrarSesion);
+		        panelCerrarSesion.add(Box.createVerticalGlue());//Agrega espacio flexible después del JLabel
 	        
-	        head.add(cerrarSesion);
+        panelPrincipalHead.add(panelCerrarSesion, BorderLayout.EAST);//Ubica automáticamente a la derecha
+        //Posdata: Que heavy fue poner ese pinche botón de CerrarSesión T-T
 	        
-    	return head;
+    	return panelPrincipalHead;
     }
-    //*/head
+    //*/panelPrincipalHead
     
-    //middle
-    @SuppressWarnings("exports")
-    public JPanel middle() {
-    	 // - MIDDLE - //
-        JPanel middle = new JPanel();
-        middle.setVisible(true);
-        middle.setBounds(40, 140, 1200, 80);
-        middle.setBackground(fondoPanel);
+    //Método para crear panelPrincipalMiddle
+    public JPanel panelPrincipalMiddle() {
+    	
+        panelPrincipalMiddle = new JPanel();       
+        //panelPrincipalMiddle.setBounds(40, 140, 1200, 80);
+        panelPrincipalMiddle.setBackground(fondoPanel);
         
-	        //Mis Tableros
-	        JLabel misTableros = new JLabel("Mis Tableros");
-	        misTableros.setFont(new Font("Arial", Font.PLAIN, 30));
+	        JLabel lblMisTableros = new JLabel("Mis Tableros");
+	        lblMisTableros.setFont(new Font("Arial", Font.PLAIN, 30));
 	        //misTableros.setLayout(new BoxLayout(misTableros, BoxLayout.X_AXIS));
-	        misTableros.setLayout(new BoxLayout(misTableros, BoxLayout.Y_AXIS));
-	        misTableros.setBounds(0, 0, 1200, 80);
+	        //lblMisTableros.setLayout(new BoxLayout(lblMisTableros, BoxLayout.Y_AXIS));
+	        lblMisTableros.setBounds(0, 0, 1200, 80);
         
-        middle.add(misTableros);
-    	return middle;
+	        panelPrincipalMiddle.add(lblMisTableros);
+	        
+    	return panelPrincipalMiddle;
     }
-    //*/middle
+    //*/panelPrincipalMiddle
     
     
 }
