@@ -1,11 +1,18 @@
 package co.edu.konradlorenz.view.gui;
 
-import javax.swing.*;
-import java.awt.*;
+import java.awt.Color;
+import java.awt.Cursor;
+import java.awt.Font;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
-@SuppressWarnings("serial") //TODO: Revisar ese warning en el futuro
+import javax.swing.BoxLayout;
+import javax.swing.ImageIcon;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+
+@SuppressWarnings("serial")
 public class Principal extends JFrame {
 
 	JFrame principal = new JFrame();
