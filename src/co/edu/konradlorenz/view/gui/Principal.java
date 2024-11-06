@@ -71,7 +71,7 @@ public class Principal extends JFrame {
         	//LOGO KRELLO
 	        JLabel lblKrelloLogo = new JLabel();
 	        lblKrelloLogo.setIcon(new ImageIcon(getClass().getResource("/co/edu/konradlorenz/view/img/KrelloLogo187x60.png")));
-	        lblKrelloLogo.setBorder(new EmptyBorder(10, 10, 10, 10)); // top, left, bottom, right -> Ajusta un borde por pixeles
+	        lblKrelloLogo.setBorder(new EmptyBorder(30, 10, 30, 10)); // top, left, bottom, right -> Ajusta un borde por pixeles
 	        lblKrelloLogo.setBackground(Color.GREEN);
 	        lblKrelloLogo.setOpaque(detalles);//Mostrar detalles
 	        
@@ -93,7 +93,7 @@ public class Principal extends JFrame {
 	        lblHolaUser.add(lblUser);
 	        lblHolaUser.add(lblAdmiracion);
 	        lblHolaUser.setForeground(Color.BLACK);//Color de la letra
-	        lblHolaUser.setBorder(new EmptyBorder(10, 0, 10, 0)); // top, left, bottom, right -> Ajusta un borde por pixeles
+	        lblHolaUser.setBorder(new EmptyBorder(30, 0, 30, 0)); // top, left, bottom, right -> Ajusta un borde por pixeles
 	        lblHolaUser.setBackground(Color.BLUE);
 	        lblHolaUser.setOpaque(detalles);//Mostrar detalles
 	        
@@ -132,7 +132,7 @@ public class Principal extends JFrame {
 		        panelCerrarSesion.setLayout(new BoxLayout(panelCerrarSesion, BoxLayout.Y_AXIS));//Se ordena verticalmente
 		        panelCerrarSesion.setBackground(Color.RED);
 		        panelCerrarSesion.setOpaque(detalles);//Mostrar detalles
-		        panelCerrarSesion.setBorder(BorderFactory.createEmptyBorder(10, 20, 10, 20)); // top, left, bottom, right -> Ajusta un borde por pixeles
+		        panelCerrarSesion.setBorder(BorderFactory.createEmptyBorder(30, 20, 30, 20)); // top, left, bottom, right -> Ajusta un borde por pixeles
 	
 		        panelCerrarSesion.add(Box.createVerticalGlue());//Agrega espacio flexible antes del JLabel
 		        panelCerrarSesion.add(lblCerrarSesion);
