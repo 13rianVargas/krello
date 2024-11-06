@@ -65,13 +65,14 @@ public class Principal extends JFrame {
 	public JPanel panelPrincipalHead() {
     	
         panelPrincipalHead = new JPanel();
-        panelPrincipalHead.setBackground(fondoPanel);
-        panelPrincipalHead.setLayout(new BorderLayout(20, 0));//Espacio horizontal y vertical entre los componentes
+        panelPrincipalHead.setBackground(Color.PINK);
+        panelPrincipalHead.setOpaque(detalles);//Mostrar detalles
+        panelPrincipalHead.setLayout(new BorderLayout(10, 0));//Espacio horizontal y vertical entre los componentes
 
         	//LOGO KRELLO
 	        JLabel lblKrelloLogo = new JLabel();
 	        lblKrelloLogo.setIcon(new ImageIcon(getClass().getResource("/co/edu/konradlorenz/view/img/KrelloLogo187x60.png")));
-	        lblKrelloLogo.setBorder(new EmptyBorder(30, 10, 30, 10)); // top, left, bottom, right -> Ajusta un borde por pixeles
+	        lblKrelloLogo.setBorder(new EmptyBorder(30, 30, 30, 30)); // top, left, bottom, right -> Ajusta un borde por pixeles
 	        lblKrelloLogo.setBackground(Color.GREEN);
 	        lblKrelloLogo.setOpaque(detalles);//Mostrar detalles
 	        
@@ -79,13 +80,13 @@ public class Principal extends JFrame {
 	        
 	        //FRASE CENTRAL
 	        JLabel lblHola = new JLabel("¡Hola ");
-	        lblHola.setFont(new Font("Arial", Font.PLAIN, 20));
+	        lblHola.setFont(new Font("Arial", Font.PLAIN, 22));
 
 	        JLabel lblUser = new JLabel("Aquí va un nombre genérico, si tan solo tuvieramos uno T-T"); //TODO: Agregar nombre genérico xd
-	        lblUser.setFont(new Font("Arial", Font.ITALIC, 20));
+	        lblUser.setFont(new Font("Arial", Font.ITALIC, 22));
 	        
 	        JLabel lblAdmiracion = new JLabel("!");//IMPORTANTE, dirás, para que se separa en 3 lbl?, es para que solo el lblUser se muestre en Italic y quede guapo
-	        lblAdmiracion.setFont(new Font("Arial", Font.PLAIN, 20));
+	        lblAdmiracion.setFont(new Font("Arial", Font.PLAIN, 22));
 
 	        JPanel lblHolaUser = new JPanel();//Sí, esto es un Panel anidado xd
 	        lblHolaUser.setLayout(new BoxLayout(lblHolaUser, BoxLayout.X_AXIS));//El BoxLayout.X_AXIS es para que se ordenen Horizontalmente, cambia la X por la Y para que lo notes.
@@ -101,7 +102,7 @@ public class Principal extends JFrame {
 	        
         	//"BOTÓN" CERRAR SESIÓN
 	        JLabel lblCerrarSesion = new JLabel("Cerrar sesión");
-	        lblCerrarSesion.setFont(new Font("Arial", Font.PLAIN, 20));
+	        lblCerrarSesion.setFont(new Font("Arial", Font.PLAIN, 22));
 	        lblCerrarSesion.setForeground(Color.BLACK);//Color de la letra
 	        lblCerrarSesion.setCursor(new Cursor(Cursor.HAND_CURSOR));//Cambia el cursor a una mano cuando pase por encima
 	        lblCerrarSesion.setBackground(Color.CYAN);
@@ -111,19 +112,17 @@ public class Principal extends JFrame {
 	        lblCerrarSesion.addMouseListener(new MouseAdapter() {
 	        	@Override
 	            public void mouseEntered(MouseEvent e) {
-	                // Subraya el texto cuando el mouse entra
 	                lblCerrarSesion.setText("<html><u>Cerrar sesión</u></html>");//Lo subraya al poner el cursor encima
 	            }
 	            @Override
 	            public void mouseExited(MouseEvent e) {
-	                // Elimina el subrayado cuando el mouse sale
-	                lblCerrarSesion.setText("Cerrar sesión");
+	                lblCerrarSesion.setText("Cerrar sesión");//Elimina el subrayado cuando el mouse sale
 	            }
 	            @Override
 	        	public void mouseClicked(MouseEvent e) {
 	                //TODO: Acción para volver a Ventana Iniciar Sesión
 	            	
-	            	
+	            	//Voy a usar este botoncito mientras para crear la emergente del nuevo tablero.
 	            }
 	        });
 	        	
@@ -132,7 +131,7 @@ public class Principal extends JFrame {
 		        panelCerrarSesion.setLayout(new BoxLayout(panelCerrarSesion, BoxLayout.Y_AXIS));//Se ordena verticalmente
 		        panelCerrarSesion.setBackground(Color.RED);
 		        panelCerrarSesion.setOpaque(detalles);//Mostrar detalles
-		        panelCerrarSesion.setBorder(BorderFactory.createEmptyBorder(30, 20, 30, 20)); // top, left, bottom, right -> Ajusta un borde por pixeles
+		        panelCerrarSesion.setBorder(BorderFactory.createEmptyBorder(30, 30, 30, 30)); // top, left, bottom, right -> Ajusta un borde por pixeles
 	
 		        panelCerrarSesion.add(Box.createVerticalGlue());//Agrega espacio flexible antes del JLabel
 		        panelCerrarSesion.add(lblCerrarSesion);
