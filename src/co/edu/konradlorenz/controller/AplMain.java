@@ -6,8 +6,9 @@ public class AplMain {
 
 	public static void main(String[] args) {
 		
-		Login login = new Login();
-		//Principal menuPrincipal = new Principal();
+		//Principal framePrincipal = new Principal();
+		Login frameLogin = new Login();
+		//Tablero frameTablero = new Tablero();
 		
 		/*/ <- Quita el * entre las barras para descomentar la sección.
 		Controlador objControlador = new Controlador();
