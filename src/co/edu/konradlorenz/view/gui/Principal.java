@@ -15,7 +15,7 @@ import javax.swing.JPanel;
 @SuppressWarnings("serial")
 public class Principal extends JFrame {
 
-	JFrame principal = new JFrame();
+	JFrame framePrincipal = new JFrame();
 	
 	Color fondoPanel = Color.LIGHT_GRAY;//Fondo de todos los JPanel
 	Color fondoFrame = Color.GRAY;//Fondo del JFrame
@@ -23,20 +23,20 @@ public class Principal extends JFrame {
     //Constructor
     public Principal(){
 
-    	principal.setDefaultCloseOperation(EXIT_ON_CLOSE); //Terminar la ejecución si se cierra la ventana
-    	principal.setTitle("KRELLO");
-    	principal.setSize(1280, 720);
-    	principal.setLocationRelativeTo(null); // Centra la ventana
-    	principal.setLayout(null);//Desactivar layout automático para usar setBounds()
-    	principal.setResizable(false);//No permite modificar el tamaño de la ventana
-    	principal.setBackground(Color.CYAN);//Color del Titulo de la ventana
-    	principal.getContentPane().setBackground(fondoFrame);
+    	framePrincipal.setDefaultCloseOperation(EXIT_ON_CLOSE); //Terminar la ejecución si se cierra la ventana
+    	framePrincipal.setTitle("KRELLO");
+    	framePrincipal.setSize(1280, 720);
+    	framePrincipal.setLocationRelativeTo(null); // Centra la ventana
+    	framePrincipal.setLayout(null);//Desactivar layout automático para usar setBounds()
+    	framePrincipal.setResizable(false);//No permite modificar el tamaño de la ventana
+    	framePrincipal.setBackground(Color.CYAN);//Color del Titulo de la ventana
+    	framePrincipal.getContentPane().setBackground(fondoFrame);
 
     		
-	        principal.add(head());
+    	framePrincipal.add(head());
 	
 	        
-	        principal.add(middle());
+    	framePrincipal.add(middle());
 	        
 	        // - BODY - //
 	        
@@ -44,7 +44,7 @@ public class Principal extends JFrame {
 	        
 	        
 	        
-	        principal.setVisible(true); //IMPORTANTE dejar esta línea de últimas al cerrar el constructor para que carguen las pinches imagenes (llevo 3 horas tratando de ver porque no salía la imagen y es por esta babosada T-T )
+    	framePrincipal.setVisible(true); //IMPORTANTE dejar esta línea de últimas al cerrar el constructor para que carguen las pinches imagenes (llevo 3 horas tratando de ver porque no salía la imagen y es por esta babosada T-T )
     }
     //Principal
     
@@ -101,7 +101,7 @@ public class Principal extends JFrame {
 	            public void mouseClicked(MouseEvent e) {
 	                //TODO: Acción para volver a Ventana Iniciar Sesión
 
-	                principal.dispose(); // Cierra Ventana Principal
+	            	framePrincipal.dispose(); // Cierra Ventana Principal
 	            }
 	        });
 	        
