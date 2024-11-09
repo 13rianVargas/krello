@@ -15,8 +15,8 @@ public class Tablero extends JFrame{
 		//PANELS
 		//JPanel panelInvisible = new JPanel(); //PENDIENTE -> Este JPanel permite que el autofocus no sea el primer campo de texto. 
 		JPanel panelTableroHead;
-		JPanel panelTableroMiddle;
 		JPanel panelTableroBody;
+		JPanel panelTableroTitulo;
 		JPanel panelTablero;
 		
 		//BUTTONS
@@ -137,29 +137,37 @@ public class Tablero extends JFrame{
 	    
 	    public JPanel panelTableroBody() {
 	    	
-	    	panelTableroBody = new JPanel(new BorderLayout());
-	    	panelTableroBody.setBackground(fondoPanel);
+	    	panelTableroBody = new JPanel();
+	    	panelTableroBody.setLayout(new BorderLayout());
+	    	panelTableroBody.setBackground(Color.WHITE);
+	    	panelTableroBody.setBorder(new EmptyBorder(10,20,10,20));
 	    	
-	    	panelTableroMiddle = new JPanel(new BorderLayout());
-	    	panelTableroMiddle.setBackground(Color.WHITE);
 	    	JLabel lblTituloTablero = new JLabel("Proyecto Final Técnicas II");//Nombre que esta en los MockUps
-	    	panelTableroMiddle.add(lblTituloTablero, BorderLayout.WEST);
+	    	lblTituloTablero.setFont(new Font("Arial", Font.BOLD, 24));
+	    	lblTituloTablero.setForeground(Color.BLACK);
+	    	
+	    	panelTableroTitulo = new JPanel(new BorderLayout());
+	    	panelTableroTitulo.setOpaque(false);
+	    	panelTableroTitulo.add(lblTituloTablero, BorderLayout.WEST);
 	    	
 	    	//Boton para crear lista
 	    	btnCrearLista = new JButton("Crear Lista");
 	    	btnCrearLista.setBackground(new Color(102, 204, 255));
 	    	btnCrearLista.setForeground(Color.WHITE);
 	    	btnCrearLista.setFocusPainted(false);
+	    	btnCrearLista.setFont(new Font("Arial", Font.PLAIN, 18));
 	    	
-	    	panelTableroMiddle.add(btnCrearLista, BorderLayout.EAST);
+	    	JPanel panelBoton = new JPanel();
+	        panelBoton.setOpaque(false);
+	        panelBoton.add(btnCrearLista);
 	    	
-	    	panelTablero = new JPanel(new BorderLayout());
+	        panelTableroTitulo.add(panelBoton, BorderLayout.EAST);
+	        panelTableroBody.add(panelTableroTitulo, BorderLayout.NORTH);
+	        
+	    	panelTablero = new JPanel();
 	    	panelTablero.setBackground(fondoPanel);
-	    	
-	    	panelTableroBody.add(panelTableroMiddle, BorderLayout.NORTH);
 	    	panelTableroBody.add(panelTablero, BorderLayout.CENTER);
 	    	
 	    	return panelTableroBody;
-	    	
 	    }
 }
