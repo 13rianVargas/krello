@@ -33,9 +33,10 @@ public class Principal extends JFrame {
 	//COLORS
 	Color fondoFrame = Color.GRAY;//Fondo del JFrame
 	Color fondoPanel = Color.LIGHT_GRAY;//Fondo de todos los JPanel
-	
+	Color btns = new Color(0, 151, 149);// con transparencia pero funciona raro (0, 151, 149, 89);
+
 	//MOSTRAR DETALLES
-	boolean detalles = true;//true -> mostrar / false -> ocultar
+	boolean detalles = false;//true -> mostrar / false -> ocultar
 	
     //Método constructor del frame Principal
     public Principal(){
@@ -56,6 +57,10 @@ public class Principal extends JFrame {
     	panelPrincipalMiddle = panelPrincipalMiddle();
     	//framePrincipal.add(panelPrincipalMiddle);//Solo lo añade
     	framePrincipal.add(panelPrincipalMiddle, BorderLayout.CENTER);//Lo añade y hace el panel responsivo
+    	
+    	panelPrincipalBody = panelPrincipalBody();
+    	//framePrincipal.add(panelPrincipalMiddle);//Solo lo añade
+    	framePrincipal.add(panelPrincipalBody, BorderLayout.SOUTH);//Lo añade y hace el panel responsivo
 	        
     	framePrincipal.setVisible(true); //IMPORTANTE dejar esta línea de últimas al cerrar el constructor para que carguen las pinches imagenes (llevo 3 horas tratando de ver porque no salía la imagen y es por esta babosada T-T )
     }
@@ -71,7 +76,8 @@ public class Principal extends JFrame {
 
         	//LOGO KRELLO
 	        JLabel lblKrelloLogo = new JLabel();
-	        lblKrelloLogo.setIcon(new ImageIcon(getClass().getResource("/co/edu/konradlorenz/view/img/KrelloLogo187x60.png")));
+	        //No me esta sirviendo la img
+	        //lblKrelloLogo.setIcon(new ImageIcon(getClass().getResource("/co/edu/konradlorenz/view/img/KrelloLogo187x60.png")));
 	        lblKrelloLogo.setBorder(new EmptyBorder(30, 30, 30, 30)); // top, left, bottom, right -> Ajusta un borde por pixeles
 	        lblKrelloLogo.setBackground(Color.GREEN);
 	        lblKrelloLogo.setOpaque(detalles);//Mostrar detalles
@@ -155,13 +161,69 @@ public class Principal extends JFrame {
 	        lblMisTableros.setFont(new Font("Arial", Font.PLAIN, 30));
 	        //misTableros.setLayout(new BoxLayout(misTableros, BoxLayout.X_AXIS));
 	        //lblMisTableros.setLayout(new BoxLayout(lblMisTableros, BoxLayout.Y_AXIS));
-	        lblMisTableros.setBounds(0, 0, 1200, 80);
+	        lblMisTableros.setBounds(0, 0, 1280, 720);
         
 	        panelPrincipalMiddle.add(lblMisTableros);
 	        
     	return panelPrincipalMiddle;
     }
     //*/panelPrincipalMiddle
+    
+  //Método para crear panelPrincipalBody
+    public JPanel panelPrincipalBody() {
+    	
+        panelPrincipalBody = new JPanel();       
+        panelPrincipalBody.setBackground(fondoPanel);
+
+        panelPrincipalBody.setLayout(new FlowLayout(FlowLayout.CENTER, 50, 150));  // Espacio entre los botones
+
+        
+        btnCrearTablero = new JButton("+");
+        btnCrearTablero.setBackground(btns); 
+        btnCrearTablero.setForeground(Color.WHITE);
+    	btnCrearTablero.setFocusPainted(false);
+    	btnCrearTablero.setBorder(new EmptyBorder(30, 30, 30, 30)); // top, left, bottom, right -> Ajusta un borde por pixeles
+    	btnCrearTablero.setFont(new Font("Arial", Font.PLAIN, 80));
+   
+    	
+        btnAbrirTablero1 = new JButton("Abrir Tablero 1");
+        btnAbrirTablero1.setBackground(btns); 
+        btnAbrirTablero1.setForeground(Color.WHITE); 
+        btnAbrirTablero1.setFocusPainted(false);
+        btnAbrirTablero1.setBorder(new EmptyBorder(30, 30, 30, 30)); // top, left, bottom, right -> Ajusta un borde por pixeles
+        btnAbrirTablero1.setFont(new Font("Inter", Font.BOLD, 18));
+        
+        btnAbrirTablero2 = new JButton("Abrir Tablero 2");
+        btnAbrirTablero2.setBackground(btns); 
+        btnAbrirTablero2.setForeground(Color.WHITE); 
+        btnAbrirTablero2.setFocusPainted(false);
+        btnAbrirTablero2.setBorder(new EmptyBorder(30, 30, 30, 30)); // top, left, bottom, right -> Ajusta un borde por pixeles
+        btnAbrirTablero2.setFont(new Font("Inter", Font.BOLD, 18));
+        
+        btnAbrirTablero3 = new JButton("Abrir Tablero 3");
+        btnAbrirTablero3.setBackground(btns); 
+        btnAbrirTablero3.setForeground(Color.WHITE);
+        btnAbrirTablero3.setBorder(new EmptyBorder(30, 30, 30, 30)); // top, left, bottom, right -> Ajusta un borde por pixeles
+        btnAbrirTablero3.setFont(new Font("Inter", Font.BOLD, 18));
+        btnAbrirTablero3.setFocusPainted(false);
+        
+        Dimension buttonSize = new Dimension(200, 200);        
+        btnCrearTablero.setPreferredSize(buttonSize);
+        btnAbrirTablero1.setPreferredSize(buttonSize);
+        btnAbrirTablero2.setPreferredSize(buttonSize);
+        btnAbrirTablero3.setPreferredSize(buttonSize);
+
+
+        panelPrincipalBody.add(btnCrearTablero);
+        panelPrincipalBody.add(btnAbrirTablero1);
+        panelPrincipalBody.add(btnAbrirTablero2);
+        panelPrincipalBody.add(btnAbrirTablero3);
+
+
+        
+        return panelPrincipalBody;
+
+    }
     
     
 }
