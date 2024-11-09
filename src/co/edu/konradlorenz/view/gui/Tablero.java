@@ -143,7 +143,7 @@ public class Tablero extends JFrame{
 	    	panelTableroMiddle = new JPanel(new BorderLayout());
 	    	panelTableroMiddle.setBackground(Color.WHITE);
 	    	JLabel lblTituloTablero = new JLabel("Proyecto Final Técnicas II");//Nombre que esta en los MockUps
-	    	lblTituloTablero.add(lblTituloTablero, BorderLayout.WEST);
+	    	panelTableroMiddle.add(lblTituloTablero, BorderLayout.WEST);
 	    	
 	    	//Boton para crear lista
 	    	btnCrearLista = new JButton("Crear Lista");
