@@ -5,6 +5,7 @@ import java.awt.Font;
 import java.awt.Image;
 
 import javax.swing.*;
+import javax.swing.border.*;
 
 @SuppressWarnings("serial")
 public class Login extends JFrame {
@@ -121,6 +122,11 @@ public class Login extends JFrame {
 			btnLoginContinuar.setBounds(47, 300, 295, 40);
 			btnLoginContinuar.setFont(new Font("Calibri", Font.ITALIC, 15));
 			btnLoginContinuar.setForeground(Color.white);
+			
+			//Estas 3 lineas permiten que se pueda visualizar en macOS
+			btnLoginContinuar.setOpaque(true);
+			Border border = BorderFactory.createLineBorder(Color.MAGENTA, 2);
+			btnLoginContinuar.setBorder(border);
 			
 		panelLoginBody.add(btnLoginContinuar);
 		
