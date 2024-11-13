@@ -77,7 +77,7 @@ public class Principal extends JFrame {
         	//LOGO KRELLO
 	        JLabel lblKrelloLogo = new JLabel();
 	        //No me esta sirviendo la img
-	        //lblKrelloLogo.setIcon(new ImageIcon(getClass().getResource("/co/edu/konradlorenz/view/img/KrelloLogo187x60.png")));
+	        lblKrelloLogo.setIcon(new ImageIcon(getClass().getResource("/co/edu/konradlorenz/view/img/KrelloLogo187x60.png")));
 	        lblKrelloLogo.setBorder(new EmptyBorder(30, 30, 30, 30)); // top, left, bottom, right -> Ajusta un borde por pixeles
 	        lblKrelloLogo.setBackground(Color.GREEN);
 	        lblKrelloLogo.setOpaque(detalles);//Mostrar detalles
@@ -184,6 +184,11 @@ public class Principal extends JFrame {
     	btnCrearTablero.setFocusPainted(false);
     	btnCrearTablero.setBorder(new EmptyBorder(30, 30, 30, 30)); // top, left, bottom, right -> Ajusta un borde por pixeles
     	btnCrearTablero.setFont(new Font("Arial", Font.PLAIN, 80));
+    	//Estas 3 lineas permiten que se pueda visualizar en macOS
+    	//TODO: Implementar en los demás botones.
+    	btnCrearTablero.setOpaque(true);
+		Border border = BorderFactory.createLineBorder(btns, 2);
+		btnCrearTablero.setBorder(border);
    
     	
         btnAbrirTablero1 = new JButton("Abrir Tablero 1");
