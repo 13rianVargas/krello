@@ -28,6 +28,7 @@ public class Principal extends JFrame {
 	
 	//TEXTFIELDS
 	private static JTextField txtFieldIngresarNombreEmergenteCrearTablero;
+	private static JTextField txtFieldIngresarCorreoEmergenteAñadirInvitados;
 	
 	//PASSWORDFIELDS
 	
@@ -40,6 +41,9 @@ public class Principal extends JFrame {
 	private static JButton btnAgregarInvitados;
 	private static JButton btnCancelarEmergenteCrearTablero;
 	private static JButton btnCrearTableroEmergenteCrearTablero;
+	private static JButton btnCancelarEmergenteAñadirInvitados;
+	private static JButton btnAgregarInvitadoEmergenteAñadirInvitados;
+	
 		
 	//COLORS
 	private static Color blanco = new Color(255, 255, 255);
@@ -65,6 +69,7 @@ public class Principal extends JFrame {
 	
 	//STRINGS
 	private static String mensajeIngresarNombreTablero = " Ingrese nombre del tablero...";
+	private static String mensajeIngresarCorreo = " Ingrese correo electrónico...";
 	
 	
 	
@@ -304,7 +309,7 @@ public class Principal extends JFrame {
 	// -- // -- // -- // -- // -- // -- //
     
     //Método para crear ventana emergente crear tablero
-    public static JDialog emergenteCrearTablero() {
+    public static void emergenteCrearTablero() {
     	//Emergente Crear Tablero
     	emergenteCrearTablero = new JDialog(framePrincipal, "Crear Tablero", true);//JDialog hace que framePrincipal no sea interactivo hasta que se cierre la emergente.
         emergenteCrearTablero.setSize(600, 300);//Tamaño
@@ -313,11 +318,6 @@ public class Principal extends JFrame {
         emergenteCrearTablero.setLocationRelativeTo(framePrincipal);//Se centra según el framePrincipal
         emergenteCrearTablero.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);//Se cierra solo la emergente
         emergenteCrearTablero.setLayout(new BorderLayout());//Asegura usar BorderLayout
-        
-        //Panel Invisible
-        panelInvisible.setFocusable(true);
-        panelInvisible.setVisible(true);
-        emergenteCrearTablero.add(panelInvisible);
         
         	//Label del Título
 	        JLabel lblTituloCrearTablero = new JLabel("Crear Tablero");
@@ -457,15 +457,23 @@ public class Principal extends JFrame {
 		        panelInferior.add(panelBotonesBasicos, BorderLayout.SOUTH);
 
         emergenteCrearTablero.add(panelInferior, BorderLayout.SOUTH);
+    	
+        //Deshabilita el campo de texto para poner el placeholder
+        txtFieldIngresarNombreEmergenteCrearTablero.setEnabled(false);
+        //Crea un temporizador para habilitarlo luego de unos milisegundos
+        Timer timer = new Timer(100, e -> {
+            txtFieldIngresarNombreEmergenteCrearTablero.setEnabled(true);
+        });
+        timer.setRepeats(false); // Evita que el timer se repita
+        timer.start(); // Inicia el timer
         
         emergenteCrearTablero.setVisible(true);
 	    	
-        return emergenteCrearTablero;
     }
     //*///emergenteCrearTablero
     
     //Método para crear ventana emergente agregar invitados
-    public static JDialog emergenteAgregarInvitados() {
+    public static void emergenteAgregarInvitados() {
     	//Emergente Agregar Invitados
     	emergenteAgregarInvitados = new JDialog(framePrincipal, "Agregar Invitados", true);//JDialog hace que framePrincipal no sea interactivo hasta que se cierre la emergente.
     	emergenteAgregarInvitados.setSize(600, 300);//Tamaño
@@ -475,14 +483,124 @@ public class Principal extends JFrame {
         emergenteAgregarInvitados.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);//Se cierra solo la emergente
         emergenteAgregarInvitados.setLayout(new BorderLayout());//Asegura usar BorderLayout
         
-        //Panel Invisible
-        panelInvisible.setFocusable(true);
-        panelInvisible.setVisible(true);
-        emergenteAgregarInvitados.add(panelInvisible);
+        //Label del Título
+        JLabel lblTituloInvitados = new JLabel("Agregar Invitados");
+        lblTituloInvitados.setFont(new Font("Arial", Font.BOLD, 40));//Cambia la letra del interior
+        lblTituloInvitados.setForeground(limon2);//Color de la letra
+        lblTituloInvitados.setAlignmentX(Component.CENTER_ALIGNMENT);//Centra horizontalmente
+        lblTituloInvitados.setBackground(gris);//Color de fondo
+        lblTituloInvitados.setOpaque(detalles);//Mostrar detalles
+
+	    	//Panel del Título
+	        JPanel panelTituloInvitados = new JPanel();
+	        panelTituloInvitados.setLayout(new BoxLayout(panelTituloInvitados, BoxLayout.Y_AXIS));//Se ordena verticalmente
+	        panelTituloInvitados.setBackground(morado);//Color de fondo
+	        panelTituloInvitados.setOpaque(detalles);//Mostrar detalles
+	        panelTituloInvitados.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));// top, left, bottom, right -> Ajusta un borde por pixeles
+	        panelTituloInvitados.add(Box.createVerticalGlue());//Agrega espacio flexible antes del JLabel
+	        panelTituloInvitados.add(lblTituloInvitados);
+	        panelTituloInvitados.add(Box.createVerticalGlue());//Agrega espacio flexible después del JLabel
         
+	    emergenteAgregarInvitados.add(panelTituloInvitados, BorderLayout.NORTH);//Ubica arriba
+        
+		    //Panel Ingresar Correo.
+	    	JPanel panelIngresarCorreo = new JPanel(new FlowLayout(FlowLayout.CENTER, 10, 10));//Usa FlowLayout: (alineación), (espacio horizontal entre los componentes), (espacio vertical entre las filas de componentes).
+	    	panelIngresarCorreo.setBackground(millos);//Color de fondo
+	    	panelIngresarCorreo.setOpaque(detalles);//Mostrar detalles
+		    	txtFieldIngresarCorreoEmergenteAñadirInvitados = new JTextField(mensajeIngresarCorreo);
+		    	txtFieldIngresarCorreoEmergenteAñadirInvitados.setForeground(gris);
+		        
+		        //Placeholder "mensaje previo"
+		    	txtFieldIngresarCorreoEmergenteAñadirInvitados.addFocusListener(new FocusListener() {
+		            @Override
+		            public void focusGained(FocusEvent e) {
+		                if (txtFieldIngresarCorreoEmergenteAñadirInvitados.getText().equals(mensajeIngresarCorreo)) {
+		                	txtFieldIngresarCorreoEmergenteAñadirInvitados.setText("");
+		                	txtFieldIngresarCorreoEmergenteAñadirInvitados.setForeground(negro);
+		                }
+		            }
+		            @Override
+		            public void focusLost(FocusEvent e) {
+		                //Si el campo de texto está vacío al perder el foco, restaurar el placeholder
+		                if (txtFieldIngresarCorreoEmergenteAñadirInvitados.getText().isEmpty()) {
+		                	txtFieldIngresarCorreoEmergenteAñadirInvitados.setForeground(gris);
+		                	txtFieldIngresarCorreoEmergenteAñadirInvitados.setText(mensajeIngresarCorreo);
+		                }
+		            }
+		        });
+		        //Placeholder
+		        
+		        txtFieldIngresarCorreoEmergenteAñadirInvitados.setPreferredSize(new Dimension(400, 30));
+		        txtFieldIngresarCorreoEmergenteAñadirInvitados.setFont(new Font("Arial", Font.PLAIN, 20));//Tamaño del texto interno del txtField
+		        txtFieldIngresarCorreoEmergenteAñadirInvitados.setBackground(grisClaro);//Color de fondo
+		        txtFieldIngresarCorreoEmergenteAñadirInvitados.setOpaque(true);
+		        txtFieldIngresarCorreoEmergenteAñadirInvitados.setBorder(border);
+		        txtFieldIngresarCorreoEmergenteAñadirInvitados.addActionListener(new ActionListener() {
+		            public void actionPerformed(ActionEvent evento) {
+		            	//IMPORTANTE -> Aquí se llama a un método que maneja el evento desde el Controller.
+		            	ctrl.actionEnterTxtFieldIngresarCorreoEmergenteAñadirInvitados(evento);
+		            }
+		        });
+		        txtFieldIngresarCorreoEmergenteAñadirInvitados.setCursor(new Cursor(Cursor.TEXT_CURSOR));//Pone el cursor modo escritura
+	        
+	        panelIngresarCorreo.add(Box.createVerticalGlue());//Agrega espacio flexible antes
+	        panelIngresarCorreo.add(txtFieldIngresarCorreoEmergenteAñadirInvitados);
+	        panelIngresarCorreo.add(Box.createVerticalGlue());//Agrega espacio flexible después
+	        panelIngresarCorreo.setBorder(BorderFactory.createEmptyBorder(40, 0, 40, 0));// top, left, bottom, right -> Ajusta un borde por pixeles
+        
+	    emergenteAgregarInvitados.add(panelIngresarCorreo, BorderLayout.CENTER);//Ubica centro
+	    
+		    //Panel Botones Básicos Emergente
+	        JPanel panelBotonesBasicos = new JPanel(new BorderLayout());
+	        panelBotonesBasicos.setBackground(cyan);//Color de fondo
+	        panelBotonesBasicos.setOpaque(detalles);//Mostrar detalles
+	        
+		        btnCancelarEmergenteAñadirInvitados = new JButton("Cancelar");
+		        btnCancelarEmergenteAñadirInvitados.setFont(new Font("Arial", Font.PLAIN, 18));//Cambia la letra del interior
+		        btnCancelarEmergenteAñadirInvitados.setPreferredSize(new Dimension(200, 40));
+		        btnCancelarEmergenteAñadirInvitados.setBackground(limon);//Color de fondo
+		        //2 lineas para macOS:
+		        btnCancelarEmergenteAñadirInvitados.setOpaque(true);
+		        btnCancelarEmergenteAñadirInvitados.setBorder(border);
+		        btnCancelarEmergenteAñadirInvitados.addActionListener(new ActionListener() {
+		            public void actionPerformed(ActionEvent evento) {
+		                //IMPORTANTE -> Aquí se llama a un método que maneja el evento desde el Controller.
+		            	ctrl.actionBtnCancelarEmergenteAñadirInvitados(evento);
+		            }
+		        });
+		        btnCancelarEmergenteAñadirInvitados.setCursor(new Cursor(Cursor.HAND_CURSOR));//Pone el cursor con una manita
+	    		
+		        btnAgregarInvitadoEmergenteAñadirInvitados = new JButton("Agregar Invitado");
+		        btnAgregarInvitadoEmergenteAñadirInvitados.setFont(new Font("Arial", Font.PLAIN, 18));//Cambia la letra del interior
+		        btnAgregarInvitadoEmergenteAñadirInvitados.setPreferredSize(new Dimension(200, 40));
+		        btnAgregarInvitadoEmergenteAñadirInvitados.setBackground(limon);//Color de fondo
+		        //2 lineas para macOS:
+		        btnAgregarInvitadoEmergenteAñadirInvitados.setOpaque(true);
+		        btnAgregarInvitadoEmergenteAñadirInvitados.setBorder(border);
+		        btnAgregarInvitadoEmergenteAñadirInvitados.addActionListener(new ActionListener() {
+		            public void actionPerformed(ActionEvent evento) {
+		                //IMPORTANTE -> Aquí se llama a un método que maneja el evento desde el Controller.
+		            	ctrl.actionEnterTxtFieldIngresarCorreoEmergenteAñadirInvitados(evento);
+		            }
+		        });
+		        btnAgregarInvitadoEmergenteAñadirInvitados.setCursor(new Cursor(Cursor.HAND_CURSOR));//Pone el cursor con una manita
+	    		
+	        panelBotonesBasicos.add(btnCancelarEmergenteAñadirInvitados, BorderLayout.WEST);
+	        panelBotonesBasicos.add(btnAgregarInvitadoEmergenteAñadirInvitados, BorderLayout.EAST);
+	        panelBotonesBasicos.setBorder(BorderFactory.createEmptyBorder(10, 30, 10, 30));// top, left, bottom, right -> Ajusta un borde por pixeles
+	        
+        emergenteAgregarInvitados.add(panelBotonesBasicos, BorderLayout.SOUTH);//Ubica centro
+
+	    //Deshabilita el campo de texto para poner el placeholder
+	    txtFieldIngresarCorreoEmergenteAñadirInvitados.setEnabled(false);
+        //Crea un temporizador para habilitarlo luego de unos milisegundos
+        Timer timer = new Timer(100, e -> {
+        	txtFieldIngresarCorreoEmergenteAñadirInvitados.setEnabled(true);
+        });
+        timer.setRepeats(false); // Evita que el timer se repita
+        timer.start(); // Inicia el timer
+	    
         emergenteAgregarInvitados.setVisible(true);
-        
-    	return emergenteAgregarInvitados;
     }
     //*///emergenteAgregarInvitados
     
@@ -757,6 +875,39 @@ public class Principal extends JFrame {
 
 	public static void setEmergenteAgregarInvitados(JDialog emergenteAgregarInvitados) {
 		Principal.emergenteAgregarInvitados = emergenteAgregarInvitados;
+	}
+
+	public static JTextField getTxtFieldIngresarCorreoEmergenteAñadirInvitados() {
+		return txtFieldIngresarCorreoEmergenteAñadirInvitados;
+	}
+
+	public static void setTxtFieldIngresarCorreoEmergenteAñadirInvitados(
+			JTextField txtFieldIngresarCorreoEmergenteAñadirInvitados) {
+		Principal.txtFieldIngresarCorreoEmergenteAñadirInvitados = txtFieldIngresarCorreoEmergenteAñadirInvitados;
+	}
+
+	public static JButton getBtnCancelarEmergenteAñadirInvitados() {
+		return btnCancelarEmergenteAñadirInvitados;
+	}
+
+	public static void setBtnCancelarEmergenteAñadirInvitados(JButton btnCancelarEmergenteAñadirInvitados) {
+		Principal.btnCancelarEmergenteAñadirInvitados = btnCancelarEmergenteAñadirInvitados;
+	}
+
+	public static JButton getBtnAgregarInvitadoEmergenteAñadirInvitados() {
+		return btnAgregarInvitadoEmergenteAñadirInvitados;
+	}
+
+	public static void setBtnAgregarInvitadoEmergenteAñadirInvitados(JButton btnAgregarInvitadoEmergenteAñadirInvitados) {
+		Principal.btnAgregarInvitadoEmergenteAñadirInvitados = btnAgregarInvitadoEmergenteAñadirInvitados;
+	}
+
+	public static String getMensajeIngresarCorreo() {
+		return mensajeIngresarCorreo;
+	}
+
+	public static void setMensajeIngresarCorreo(String mensajeIngresarCorreo) {
+		Principal.mensajeIngresarCorreo = mensajeIngresarCorreo;
 	}
 	
 	
