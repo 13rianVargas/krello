@@ -11,6 +11,7 @@ import javax.swing.Timer;
 import javax.swing.border.Border;
 
 import co.edu.konradlorenz.view.Vista;
+import co.edu.konradlorenz.view.gui.FrameTablero;
 import co.edu.konradlorenz.view.gui.Principal;
 import co.edu.konradlorenz.model.*;
 
@@ -104,11 +105,9 @@ public class Controlador {
 	}
 	// crearTablero
 
-	public void crearLista() {
-		String nombreLista = Vista.pedirString("el nombre de la lista");
+	public void crearLista(String nombreLista) {
 		Lista lista = new Lista(nombreLista, listaDeTareasGlobal);
 		listaDeListasGlobal.add(lista);
-		Vista.mostrarMensaje("Lista agregada correctamente.");
 	}
 	// crearLista
 
@@ -628,5 +627,62 @@ public class Controlador {
 		Principal.emergenteAgregarInvitados();
 	}
 	//*///actionBtnAgregarInvitados
+	
+	//Método para gestionar la acción del btnCrearLista
+	public void actionBtnCrearLista(ActionEvent evento) {                                             
+		FrameTablero.emergenteCrearLista();
+	}
+	//*///actionBtnCrearTablero
+	
+	//Método para gestionar la tecla enter del txtFieldIngresarNombreEmergenteCrearTablero
+	public void actionEnterTxtFieldIngresarNombreEmergenteCrearLista(ActionEvent evento) {
+		if(FrameTablero.getTxtFieldIngresarNombreEmergenteCrearLista().getText().equals(FrameTablero.getMensajeIngresarNombreLista()) 
+				|| FrameTablero.getTxtFieldIngresarNombreEmergenteCrearLista().getText().equals("")){
+			//IMPORTANTE: Este if es el que hace parpadear de rojo xd, el else crea el tablero
+			//Inicializo colores
+			Color rojo = Principal.getRojo();
+			Color negro = Principal.getNegro();
+			Color limon = Principal.getLimon();
+				
+			//Inicializo los bordes
+			Border bordeRojo = BorderFactory.createLineBorder(rojo, 2);
+			Border bordeNegro = BorderFactory.createLineBorder(negro, 1);
+				
+			//Agrego los colores y bordes
+			FrameTablero.getBtnCrearListaEmergenteCrearLista().setBorder(bordeRojo);
+			FrameTablero.getBtnCrearListaEmergenteCrearLista().setBackground(rojo);
+			FrameTablero.getTxtFieldIngresarNombreEmergenteCrearLista().setBorder(bordeRojo);
+				
+				//Contador para alternar bordes
+				final int[] contador = {0};
+				
+				//Alternador de bordes (funciona casi como un ciclo)
+				Timer timer = new Timer(150, event -> { // Cambia cada 150 ms
+		            if (contador[0] < 6) { // Se repetirá 3 veces, 3 rojas y 3 azules = 6
+		                Border bordeActual = (contador[0] % 2 == 0) ? bordeRojo : bordeNegro; //Op ternario
+		                Color colorActual = (contador[0] % 2 == 0) ? rojo : limon; //Op ternario x2
+		                FrameTablero.getTxtFieldIngresarNombreEmergenteCrearLista().setBorder(bordeActual);
+		                FrameTablero.getBtnCrearListaEmergenteCrearLista().setBorder(bordeActual);
+		                FrameTablero.getBtnCrearListaEmergenteCrearLista().setBackground(colorActual);
+		                
+		                contador[0]++;
+		            } else {
+		                ((Timer) event.getSource()).stop(); //Detiene el Timer
+		            }
+		        });
+				
+				timer.start();
+			} else {
+				String nombreLista = FrameTablero.getTxtFieldIngresarNombreEmergenteCrearLista().getText();//Obtiene el texto
+			  	crearLista(nombreLista);//Envía el nombre al método crearTablero
+			}//if crearLista
+		}
+		//*///actionEnterTxtFieldIngresarNombreEmergenteCrearLista
+	
+	//Método para gestionar el clic del btnCancelarEmergenteCrearLista
+		public void actionBtnCancelarEmergenteCrearLista(ActionEvent evento) {
+			FrameTablero.getEmergenteCrearLista().dispose();
+		}
+		//*///actionBtnCancelarEmergenteCrearTablero
 }
 //class

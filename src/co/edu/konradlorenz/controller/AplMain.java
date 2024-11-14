@@ -8,7 +8,7 @@ public class AplMain {
 		
 		//Principal framePrincipal = new Principal();
 		//Login frameLogin = new Login();
-		Tablero frameTablero = new Tablero();
+		FrameTablero frameTablero = new FrameTablero();
 		
 		/*/ <- Quita el * entre las barras para descomentar la sección.
 		Controlador objControlador = new Controlador();
