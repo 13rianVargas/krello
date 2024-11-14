@@ -1,9 +1,17 @@
 package co.edu.konradlorenz.controller;
 
+import java.awt.Color;
+import java.awt.event.ActionEvent;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
+import javax.swing.BorderFactory;
+import javax.swing.JDialog;
+import javax.swing.Timer;
+import javax.swing.border.Border;
+
 import co.edu.konradlorenz.view.Vista;
+import co.edu.konradlorenz.view.gui.Principal;
 import co.edu.konradlorenz.model.*;
 
 public class Controlador {
@@ -40,10 +48,11 @@ public class Controlador {
 		ejecutarMenuPrincipal();
 	}
 	// run
+	
 	public void ejecutarMenuPrincipal() {
 		while (true) {
 			int opcion = Vista.menuPrincipal();
-			switchMenuPrincipal(opcion);
+			//switchMenuPrincipal(opcion);
 		}
 	}
 	// ejecutarMenuPrincipal
@@ -52,7 +61,7 @@ public class Controlador {
 		while (true) {
 			Vista.mostrarMensaje("<> <> <> TABLERO: " + tableroAbierto.getNombreTablero() + " <> <> <>");
 			int opcion = Vista.menuTablero();
-			switchTablero(opcion);
+			//switchTablero(opcion);
 		}
 	}
 	// ejecutarTablero
@@ -61,7 +70,7 @@ public class Controlador {
 		while (true) {
 			Vista.mostrarMensaje("<> <> <> LISTA: " + listaAbierta.getNombreLista() + " <> <> <>");
 			int opcion = Vista.menuLista();
-			switchLista(opcion);
+			//switchLista(opcion);
 		}
 	}
 	// ejecutarLista
@@ -71,180 +80,10 @@ public class Controlador {
 			// Las tareas no tienen nombre, le dejamos la descripcion
 			Vista.mostrarMensaje("<> <> <> " + tareaAbierta.getDescripcion() + " <> <> <>");
 			int opcion = Vista.menuTarea();
-			switchTarea(opcion);
+			//switchTarea(opcion);
 		}
 	}
 	// ejecutarLista
-
-	// > > > > > > > > > > > > > > > > > > > < < < < < < < < < < < < < < < < < < //
-	// > > > > > > > > > > > > > > > > S W I T C H < < < < < < < < < < < < < < < //
-	// > > > > > > > > > > > > > > > > > > > < < < < < < < < < < < < < < < < < < //
-
-	public void switchMenuPrincipal(int opcion) {
-		switch (opcion) {
-		case 1:
-			// 1. crear tablero
-			crearTablero();
-			break;
-		case 2:
-			// 2. abrir tablero
-			while (true) {
-				tableroAbierto = abrirTablero();
-				if (tableroAbierto != null) {
-					ejecutarTablero();
-				} else
-					break;
-			}
-			break;
-		case 0:
-			// 0. Salir
-			Vista.mostrarMensaje("Saliendo ...");
-			System.exit(0);
-			break;
-		default:
-			Vista.mostrarMensaje("No es una opción valida.");
-			break;
-		}
-	}
-	// switchMenuPrincipal
-
-	public void switchTablero(int opcion) {
-		if (tableroAbierto != null) {
-			switch (opcion) {
-			case 1:
-				// 1. agregar lista
-				crearLista();
-				ejecutarTablero();
-				break;
-			case 2:
-				// 2. abrir lista
-				while (true) {
-					listaAbierta = abrirLista();
-					if (listaAbierta != null) {
-						ejecutarLista();
-					} else 
-						break;
-				}
-				break;		
-				
-			case 3:
-				// 3. eliminar lista
-				eliminarLista();
-				if (tableroAbierto != null) {
-					ejecutarTablero();
-				}
-				break;
-			case 4:
-				// 4. volver
-				Vista.mostrarMensaje("Volviendo ...");
-				ejecutarMenuPrincipal();
-				break;
-			case 0:
-				// 0. Salir
-				Vista.mostrarMensaje("Saliendo ...");
-				System.exit(0);
-				break;
-			default:
-				Vista.mostrarMensaje("No es una opción valida.");
-				break;
-			}
-			// switch
-		}
-		// if
-	}
-	// switchTablero
-
-	public void switchLista(int opcion) {
-		if (listaAbierta != null) {
-			switch (opcion) {
-			case 1:
-				// 1. agregar tarea
-				crearTarea();
-				ejecutarLista();
-				break;
-			case 2:
-				// 2. abrir tarea
-
-				while (true) {
-					tareaAbierta = abrirTarea();
-					if (tareaAbierta != null) {
-						ejecutarTarea();
-					} else
-						break;
-				}
-				break;
-			case 3:
-				// 3. eliminar tarea
-				eliminarTarea();
-				if (listaAbierta != null) {
-					ejecutarLista();
-				}
-				break;
-			case 4:
-				// 4. volver
-				Vista.mostrarMensaje("Volviendo ...");
-				ejecutarTablero();
-				break;
-			case 0:
-				// 0. salir
-				Vista.mostrarMensaje("Saliendo ...");
-				System.exit(0);
-				break;
-			default:
-				Vista.mostrarMensaje("No es una opción valida.");
-				break;
-			}
-			// switch
-		}
-		// if
-	}
-	// switchLista
-
-	public void switchTarea(int opcion) {
-		if (tareaAbierta != null) {
-			switch (opcion) {
-			case 1:
-				// 1. modificar descripcion
-				modificarDescripcionTarea();
-				// abrir tarea
-				break;
-			case 2:
-				// 2. modificar fecha
-				modificarFechaTarea();
-				// abrir tarea
-				break;
-			case 3:
-				// 3. modificar casilla
-				modificarCasilla();
-				// modificar descripcion
-				// modificar fecha
-				// abrir tarea
-				break;
-			// case 4: de momento no lo utilizaremos
-			// 4. mover tarea
-
-			// modificar casilla
-			// abrir tarea
-			// break;
-			case 5:
-				// 5. volver
-				Vista.mostrarMensaje("Volviendo ...");
-				ejecutarLista();
-				break;
-			case 0:
-				// 0. salir
-				Vista.mostrarMensaje("Saliendo ...");
-				System.exit(0);
-				break;
-			default:
-				Vista.mostrarMensaje("No es una opción valida.");
-				break;
-			}
-			// switch
-		}
-		// if
-	}
-	// switchTarea
 
 	// > > > > > > > > > > > > > > > > > > > < < < < < < < < < < < < < < < < < < //
 	// > > > > > > > > > > > > > > > > > C R E A R < < < < < < < < < < < < < < < //
@@ -254,13 +93,14 @@ public class Controlador {
 	 * Metodos de crear objetos Tablero, Lista, Tarea y Persona. -crearPersona() se
 	 * utiliza unicamente en el método crearTarea.
 	 */
-	public void crearTablero() {
-
-		String nombreTablero = Vista.pedirString("el nombre del tablero");
-		Tablero tablero = new Tablero(nombreTablero, listaDeListasGlobal);
+	public void crearTablero(String nombreTablero, ArrayList<Persona> listaDeInvitados) {
+		Tablero tablero;
+		if(listaDeInvitados.size() == 0) {//Si no ingresó invitados
+			tablero = new Tablero(nombreTablero);
+		}else {//Si sí ingresó invitados
+			tablero = new Tablero(nombreTablero, listaDeInvitados);
+		}
 		listaDeTablerosGlobal.add(tablero);
-
-		Vista.mostrarMensaje("Tablero agregado correctamente.");
 	}
 	// crearTablero
 
@@ -721,5 +561,72 @@ public class Controlador {
 	 * }
 	 */
 
+	  // -- // -- // -- // -- // -- // -- //
+	 // -- // -- // ACTIONS- // -- // -- //
+	// -- // -- // -- // -- // -- // -- //
+  
+	//Método para gestionar la acción del btnCrearTablero
+	public void actionBtnCrearTablero(ActionEvent evento) {                                             
+		Principal.emergenteCrearTablero();
+	}
+	//*///actionBtnCrearTablero
+
+	//Método para gestionar la tecla enter del txtFieldIngresarNombreEmergenteCrearTablero
+	public void actionEnterTxtFieldIngresarNombreEmergenteCrearTablero(ActionEvent evento) {
+		if(Principal.getTxtFieldIngresarNombreEmergenteCrearTablero().getText().equals(Principal.getMensajeIngresarNombreTablero()) 
+				|| Principal.getTxtFieldIngresarNombreEmergenteCrearTablero().getText().equals("")){
+			//IMPORTANTE: Este if es el que hace parpadear de rojo xd, el else crea el tablero
+			//Inicializo colores
+			Color rojo = Principal.getRojo();
+			Color negro = Principal.getNegro();
+			Color limon = Principal.getLimon();
+			
+			//Inicializo los bordes
+			Border bordeRojo = BorderFactory.createLineBorder(rojo, 2);
+			Border bordeNegro = BorderFactory.createLineBorder(negro, 1);
+			
+			//Agrego los colores y bordes
+			Principal.getBtnCrearTableroEmergenteCrearTablero().setBorder(bordeRojo);
+			Principal.getBtnCrearTableroEmergenteCrearTablero().setBackground(rojo);
+			Principal.getTxtFieldIngresarNombreEmergenteCrearTablero().setBorder(bordeRojo);
+			
+			//Contador para alternar bordes
+			final int[] contador = {0};
+			
+			//Alternador de bordes (funciona casi como un ciclo)
+			Timer timer = new Timer(150, event -> { // Cambia cada 150 ms
+	            if (contador[0] < 6) { // Se repetirá 3 veces, 3 rojas y 3 azules = 6
+	                Border bordeActual = (contador[0] % 2 == 0) ? bordeRojo : bordeNegro; //Op ternario
+	                Color colorActual = (contador[0] % 2 == 0) ? rojo : limon; //Op ternario x2
+	                Principal.getTxtFieldIngresarNombreEmergenteCrearTablero().setBorder(bordeActual);
+	                Principal.getBtnCrearTableroEmergenteCrearTablero().setBorder(bordeActual);
+	                Principal.getBtnCrearTableroEmergenteCrearTablero().setBackground(colorActual);
+	                
+	                contador[0]++;
+	            } else {
+	                ((Timer) event.getSource()).stop(); //Detiene el Timer
+	            }
+	        });
+			
+			timer.start();
+		} else {
+			String nombreTablero = Principal.getTxtFieldIngresarNombreEmergenteCrearTablero().getText();//Obtiene el texto
+		  	ArrayList<Persona> listaDeInvitados = null;//TODO: Obtener la lista de invitados.
+		  	crearTablero(nombreTablero, listaDeInvitados);//Envía el nombre al método crearTablero
+		}//if crearTablero
+	}
+	//*///actionEnterTxtFieldIngresarNombreEmergenteCrearTablero
+
+	//Método para gestionar el clic del btnCancelarEmergenteCrearTablero
+	public void actionBtnCancelarEmergenteCrearTablero(ActionEvent evento) {
+		Principal.getEmergenteCrearTablero().dispose();
+	}
+	//*///actionBtnCancelarEmergenteCrearTablero
+
+	//Método para gestionar la acción del btnAgregarInvitados
+	public void actionBtnAgregarInvitados(ActionEvent evento) {
+		Principal.emergenteAgregarInvitados();
+	}
+	//*///actionBtnAgregarInvitados
 }
 //class

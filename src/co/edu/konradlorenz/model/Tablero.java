@@ -4,14 +4,19 @@ import java.util.ArrayList;
 
 public class Tablero {
     private String nombreTablero;
+    private ArrayList<Persona> listaDeInvitados = new ArrayList<>();
     private ArrayList<Lista> listaDeListas = new ArrayList<>();
 
     public Tablero() {
     }
     
-    public Tablero(String nombreTablero, ArrayList<Lista> listaDeListas) {
+    public Tablero(String nombreTablero) {
         this.nombreTablero = nombreTablero;
-        this.listaDeListas = listaDeListas;
+    }
+    
+    public Tablero(String nombreTablero, ArrayList<Persona> listaDeInvitados) {
+        this.nombreTablero = nombreTablero;
+        this.listaDeInvitados = listaDeInvitados;
     }
 
     public String getNombreTablero() {
@@ -22,17 +27,26 @@ public class Tablero {
         this.nombreTablero = nombreTablero;
     }
 
-    public ArrayList<Lista> getListaDeListas() {
+    public ArrayList<Persona> getListaDeInvitados() {
+		return listaDeInvitados;
+	}
+
+	public void setListaDeInvitados(ArrayList<Persona> listaDeInvitados) {
+		this.listaDeInvitados = listaDeInvitados;
+	}
+
+	public ArrayList<Lista> getListaDeListas() {
         return listaDeListas;
         }
         
     public void setListaDeListas(ArrayList<Lista> listaDeListas) {
         this.listaDeListas = listaDeListas;
     }
-            
-    @Override
-    public String toString() {
-        return "Tablero [nombreTablero=" + nombreTablero + ", listas=" + listaDeListas + "]";
-    }
+
+	@Override
+	public String toString() {
+		return "Tablero [nombreTablero=" + nombreTablero + ", listaDeInvitados=" + listaDeInvitados + ", listaDeListas="
+				+ listaDeListas + "]";
+	}
     
 }
