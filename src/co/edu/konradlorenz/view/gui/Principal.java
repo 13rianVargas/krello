@@ -31,14 +31,15 @@ public class Principal extends JFrame {
 	JButton btnAbrirTablero3;
 		
 	//COLORS
-	Color fondoFrame = Color.GRAY;//Fondo del JFrame
-	Color fondoPanel = Color.LIGHT_GRAY;//Fondo de todos los JPanel
-	Color btns = new Color(0, 151, 149);// con transparencia pero funciona raro (0, 151, 149, 89);
+	Color fondoFrame = Color.WHITE;//Fondo del JFrame
+	Color fondoPanel1 = Color.PINK;//Fondo de todos los JPanel1
+	Color fondoPanel2 = Color.CYAN;//Fondo de todos los JPanel2
+	Color btns = new Color(0, 151, 149);// con transparencia pero funciona raro (0, 151, 149, 89); -> Sin transparencia y mejor con setOpaque :v
 
 	//MOSTRAR DETALLES
-	boolean detalles = false;//true -> mostrar / false -> ocultar
+	boolean detalles = true;//true -> mostrar / false -> ocultar
 	
-    //Método constructor del frame Principal
+    //Constructor del frame Principal
     public Principal(){
 
     	framePrincipal.setDefaultCloseOperation(EXIT_ON_CLOSE); //Terminar la ejecución si se cierra la ventana
@@ -51,26 +52,23 @@ public class Principal extends JFrame {
     	framePrincipal.getContentPane().setBackground(fondoFrame);//Color del fondo
 
     	panelPrincipalHead = panelPrincipalHead();
-    	//framePrincipal.add(panelPrincipalHead);//Solo lo añade
     	framePrincipal.add(panelPrincipalHead, BorderLayout.NORTH);//Lo añade y hace el panel responsivo
 	
     	panelPrincipalMiddle = panelPrincipalMiddle();
-    	//framePrincipal.add(panelPrincipalMiddle);//Solo lo añade
     	framePrincipal.add(panelPrincipalMiddle, BorderLayout.CENTER);//Lo añade y hace el panel responsivo
     	
     	panelPrincipalBody = panelPrincipalBody();
-    	//framePrincipal.add(panelPrincipalMiddle);//Solo lo añade
     	framePrincipal.add(panelPrincipalBody, BorderLayout.SOUTH);//Lo añade y hace el panel responsivo
 	        
-    	framePrincipal.setVisible(true); //IMPORTANTE dejar esta línea de últimas al cerrar el constructor para que carguen las pinches imagenes (llevo 3 horas tratando de ver porque no salía la imagen y es por esta babosada T-T )
+    	framePrincipal.setVisible(true); //IMPORTANTE Siempre hacer dejar esto de últimas.
     }
-    //Principal
+    //*/Principal
     
     //Método para crear panelPrincipalHead
 	public JPanel panelPrincipalHead() {
     	
         panelPrincipalHead = new JPanel();
-        panelPrincipalHead.setBackground(Color.PINK);
+        panelPrincipalHead.setBackground(fondoPanel1);
         panelPrincipalHead.setOpaque(detalles);//Mostrar detalles
         panelPrincipalHead.setLayout(new BorderLayout(10, 0));//Espacio horizontal y vertical entre los componentes
 
@@ -106,7 +104,7 @@ public class Principal extends JFrame {
 	        
         panelPrincipalHead.add(lblHolaUser, BorderLayout.CENTER);//Ubica automáticamente al centro
 	        
-        	//"BOTÓN" CERRAR SESIÓN
+        	//"BOTÓN" (guiño guiño) CERRAR SESIÓN
 	        JLabel lblCerrarSesion = new JLabel("Cerrar sesión");
 	        lblCerrarSesion.setFont(new Font("Arial", Font.PLAIN, 22));
 	        lblCerrarSesion.setForeground(Color.BLACK);//Color de la letra
@@ -155,13 +153,18 @@ public class Principal extends JFrame {
     	
         panelPrincipalMiddle = new JPanel();       
         //panelPrincipalMiddle.setBounds(40, 140, 1200, 80);
-        panelPrincipalMiddle.setBackground(fondoPanel);
+        panelPrincipalMiddle.setBackground(fondoPanel2);
+        panelPrincipalMiddle.setOpaque(detalles);//Mostrar detalles
         
 	        JLabel lblMisTableros = new JLabel("Mis Tableros");
 	        lblMisTableros.setFont(new Font("Arial", Font.PLAIN, 30));
-	        //misTableros.setLayout(new BoxLayout(misTableros, BoxLayout.X_AXIS));
+	        //lblMisTableros.setLayout(new BoxLayout(lblMisTableros, BoxLayout.X_AXIS));
 	        //lblMisTableros.setLayout(new BoxLayout(lblMisTableros, BoxLayout.Y_AXIS));
-	        lblMisTableros.setBounds(0, 0, 1280, 720);
+	        //lblMisTableros.setBounds(0, 0, 1280, 720);
+	        //TODO: Al hacer la ventana completa o ajustar la ventana, se desproporciona.
+	        // Guíate del panel "lblCerrarSesion" del head,
+	        // fijate que "lblCerrarSesion" con fondo cyan está dentro de "panelCerrarSesion" de fondo rojo,
+	        // eso con el fin de centrar el "lblCerrarSesion".
         
 	        panelPrincipalMiddle.add(lblMisTableros);
 	        
@@ -169,11 +172,12 @@ public class Principal extends JFrame {
     }
     //*/panelPrincipalMiddle
     
-  //Método para crear panelPrincipalBody
+    //Método para crear panelPrincipalBody
     public JPanel panelPrincipalBody() {
     	
         panelPrincipalBody = new JPanel();       
-        panelPrincipalBody.setBackground(fondoPanel);
+        panelPrincipalBody.setBackground(fondoPanel1);
+        panelPrincipalBody.setOpaque(detalles);//Mostrar detalles
 
         panelPrincipalBody.setLayout(new FlowLayout(FlowLayout.CENTER, 50, 150));  // Espacio entre los botones
 
@@ -184,8 +188,7 @@ public class Principal extends JFrame {
     	btnCrearTablero.setFocusPainted(false);
     	btnCrearTablero.setBorder(new EmptyBorder(30, 30, 30, 30)); // top, left, bottom, right -> Ajusta un borde por pixeles
     	btnCrearTablero.setFont(new Font("Arial", Font.PLAIN, 80));
-    	//Estas 3 lineas permiten que se pueda visualizar en macOS
-    	//TODO: Implementar en los demás botones.
+    	//3 lineas para macOS:
     	btnCrearTablero.setOpaque(true);
 		Border border = BorderFactory.createLineBorder(btns, 2);
 		btnCrearTablero.setBorder(border);
@@ -197,6 +200,10 @@ public class Principal extends JFrame {
         btnAbrirTablero1.setFocusPainted(false);
         btnAbrirTablero1.setBorder(new EmptyBorder(30, 30, 30, 30)); // top, left, bottom, right -> Ajusta un borde por pixeles
         btnAbrirTablero1.setFont(new Font("Inter", Font.BOLD, 18));
+        //3 lineas para macOS:
+        btnAbrirTablero1.setOpaque(true);
+		border = BorderFactory.createLineBorder(btns, 2);
+		btnAbrirTablero1.setBorder(border);
         
         btnAbrirTablero2 = new JButton("Abrir Tablero 2");
         btnAbrirTablero2.setBackground(btns); 
@@ -204,6 +211,10 @@ public class Principal extends JFrame {
         btnAbrirTablero2.setFocusPainted(false);
         btnAbrirTablero2.setBorder(new EmptyBorder(30, 30, 30, 30)); // top, left, bottom, right -> Ajusta un borde por pixeles
         btnAbrirTablero2.setFont(new Font("Inter", Font.BOLD, 18));
+        //3 lineas para macOS:
+        btnAbrirTablero2.setOpaque(true);
+		border = BorderFactory.createLineBorder(btns, 2);
+		btnAbrirTablero2.setBorder(border);
         
         btnAbrirTablero3 = new JButton("Abrir Tablero 3");
         btnAbrirTablero3.setBackground(btns); 
@@ -211,6 +222,11 @@ public class Principal extends JFrame {
         btnAbrirTablero3.setBorder(new EmptyBorder(30, 30, 30, 30)); // top, left, bottom, right -> Ajusta un borde por pixeles
         btnAbrirTablero3.setFont(new Font("Inter", Font.BOLD, 18));
         btnAbrirTablero3.setFocusPainted(false);
+        //3 lineas para macOS:
+        btnAbrirTablero3.setOpaque(true);
+		border = BorderFactory.createLineBorder(btns, 2);
+		btnAbrirTablero3.setBorder(border);
+
         
         Dimension buttonSize = new Dimension(200, 200);        
         btnCrearTablero.setPreferredSize(buttonSize);
@@ -229,6 +245,8 @@ public class Principal extends JFrame {
         return panelPrincipalBody;
 
     }
+    //*/panelPrincipalBody
+    
     
     
 }
