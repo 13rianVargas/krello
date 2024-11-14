@@ -6,54 +6,69 @@ import java.awt.event.*;
 import javax.swing.*;
 import javax.swing.border.*;
 
+import co.edu.konradlorenz.controller.Controlador;
+
 @SuppressWarnings("serial")
 public class Principal extends JFrame {
+	
+	private static Controlador ctrl = new Controlador();
 
 	//FRAMES
-	JFrame framePrincipal = new JFrame();
+	private static JFrame framePrincipal = new JFrame();
+	
+	//EMERGENTES
+	private static JDialog emergenteCrearTablero;
+	private static JDialog emergenteAgregarInvitados;
 	
 	//PANELS
-	JPanel panelInvisible = new JPanel();//Este JPanel permite que el autofocus no sea el primer campo de texto.
-	JPanel panelPrincipalHead;
-	JPanel panelPrincipalMiddle;
-	JPanel panelPrincipalBody;
+	private static JPanel panelInvisible = new JPanel();//Este JPanel permite que el autofocus no sea el primer campo de texto.
+	private static JPanel panelPrincipalHead;
+	private static JPanel panelPrincipalMiddle;
+	private static JPanel panelPrincipalBody;
 	
 	//TEXTFIELDS
-	JTextField txtFieldIngresarNombreEmergenteCrearTablero;
+	private static JTextField txtFieldIngresarNombreEmergenteCrearTablero;
 	
 	//PASSWORDFIELDS
 	
 	
 	//BUTTONS
-	JButton btnCrearTablero;
-	JButton btnAbrirTablero1;
-	JButton btnAbrirTablero2;
-	JButton btnAbrirTablero3;
-	JButton btnAgregarInvitados;
-	JButton btnCancelarEmergenteCrearTablero;
-	JButton btnCrearTableroEmergenteCrearTablero;
+	private static JButton btnCrearTablero;
+	private static JButton btnAbrirTablero1;
+	private static JButton btnAbrirTablero2;
+	private static JButton btnAbrirTablero3;
+	private static JButton btnAgregarInvitados;
+	private static JButton btnCancelarEmergenteCrearTablero;
+	private static JButton btnCrearTableroEmergenteCrearTablero;
 		
 	//COLORS
-	Color blanco = new Color(255, 255, 255);
-	Color rosa = new Color(243, 178, 177);
-	Color cyan = new Color(117, 251, 253);
-	Color rojo = new Color(255, 0, 0);
-	Color verde = new Color(117, 251, 76);
-	Color millos = new Color(0, 0, 255);
-	Color gris = new Color(154, 154, 154);
-	Color grisClaro = new Color(217, 217, 217);
-	Color aguacate = new Color(102, 181, 127);
-	Color morado = new Color(98, 20, 109);
-	Color negro = new Color(0, 0, 0);
-	Color petroleo = new Color(0, 151, 149);
-	Color limon = new Color(206, 220, 23);
-	Color limon2 = new Color(180, 200, 0);//Para los títulos de las emergentes
+	private static Color blanco = new Color(255, 255, 255);
+	private static Color rosa = new Color(243, 178, 177);
+	private static Color cyan = new Color(117, 251, 253);
+	private static Color rojo = new Color(255, 0, 0);
+	private static Color verde = new Color(117, 251, 76);
+	private static Color millos = new Color(0, 0, 255);
+	private static Color gris = new Color(154, 154, 154);
+	private static Color grisClaro = new Color(217, 217, 217);
+	private static Color aguacate = new Color(102, 181, 127);
+	private static Color morado = new Color(98, 20, 109);
+	private static Color negro = new Color(0, 0, 0);
+	private static Color petroleo = new Color(0, 151, 149);
+	private static Color limon = new Color(206, 220, 23);
+	private static Color limon2 = new Color(180, 200, 0);//Para los títulos de las emergentes
 	
 	//BORDER
-	Border border = BorderFactory.createLineBorder(negro, 1);//Borde de 1px
+	private static Border border = BorderFactory.createLineBorder(negro, 1);//Borde de 1px
 
 	//MOSTRAR DETALLES
-	boolean detalles = false;//true -> mostrar / false -> ocultar
+	private static boolean detalles = false;//true -> mostrar / false -> ocultar
+	
+	//STRINGS
+	private static String mensajeIngresarNombreTablero = " Ingrese nombre del tablero...";
+	
+	
+	
+	
 	
 	  // -- // -- // -- // -- // -- // -- //
 	 // -- // -- // VENTANAS // -- // -- //
@@ -82,7 +97,11 @@ public class Principal extends JFrame {
 	        
     	framePrincipal.setVisible(true); //IMPORTANTE Siempre hacer dejar esto de últimas.
     }
-    //*/Principal
+    //*///Principal
+    
+    
+    
+    
     
 	  // -- // -- // -- // -- // -- // -- //
 	 // -- // -- // PANELES  // -- // -- //
@@ -169,7 +188,7 @@ public class Principal extends JFrame {
 	        
     	return panelPrincipalHead;
     }
-    //*/panelPrincipalHead
+	//*///panelPrincipalHead
     
     //Método para crear panelPrincipalMiddle
     public JPanel panelPrincipalMiddle() {
@@ -193,7 +212,7 @@ public class Principal extends JFrame {
 	        
     	return panelPrincipalMiddle;
     }
-    //*/panelPrincipalMiddle
+    //*///panelPrincipalMiddle
     
     //Método para crear panelPrincipalBody
     public JPanel panelPrincipalBody() {
@@ -218,9 +237,10 @@ public class Principal extends JFrame {
 		btnCrearTablero.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent evento) {
                 //IMPORTANTE -> Aquí se llama a un otro método que maneja el evento para poder llamarlo también desde el Controller.
-            	actionBtnCrearTablero(evento);
+            	ctrl.actionBtnCrearTablero(evento);
             }
         });
+		btnCrearTablero.setCursor(new Cursor(Cursor.HAND_CURSOR));//Pone el cursor con una manita
    
     	
         btnAbrirTablero1 = new JButton("Abrir Tablero 1");
@@ -232,6 +252,7 @@ public class Principal extends JFrame {
         //2 lineas para macOS:
         btnAbrirTablero1.setOpaque(true);
 		btnAbrirTablero1.setBorder(border);
+		btnAbrirTablero1.setCursor(new Cursor(Cursor.HAND_CURSOR));//Pone el cursor con una manita
         
         btnAbrirTablero2 = new JButton("Abrir Tablero 2");
         btnAbrirTablero2.setBackground(petroleo); 
@@ -242,6 +263,7 @@ public class Principal extends JFrame {
         //2 lineas para macOS:
         btnAbrirTablero2.setOpaque(true);
 		btnAbrirTablero2.setBorder(border);
+		btnAbrirTablero2.setCursor(new Cursor(Cursor.HAND_CURSOR));//Pone el cursor con una manita
         
         btnAbrirTablero3 = new JButton("Abrir Tablero 3");
         btnAbrirTablero3.setBackground(petroleo); 
@@ -252,6 +274,7 @@ public class Principal extends JFrame {
         //2 lineas para macOS:
         btnAbrirTablero3.setOpaque(true);
 		btnAbrirTablero3.setBorder(border);
+		btnAbrirTablero3.setCursor(new Cursor(Cursor.HAND_CURSOR));//Pone el cursor con una manita
 
         
         Dimension buttonSize = new Dimension(200, 200);        
@@ -270,16 +293,20 @@ public class Principal extends JFrame {
         return panelPrincipalBody;
 
     }
-    //*/panelPrincipalBody
+    //*///panelPrincipalBody
+    
+    
+    
+    
     
 	  // -- // -- // -- // -- // -- // -- //
 	 // -- // -- //EMERGENTES// -- // -- //
 	// -- // -- // -- // -- // -- // -- //
     
     //Método para crear ventana emergente crear tablero
-    public JDialog emergenteCrearTablero() {
+    public static JDialog emergenteCrearTablero() {
     	//Emergente Crear Tablero
-    	JDialog emergenteCrearTablero = new JDialog(framePrincipal, "Crear Tablero", true);//JDialog hace que framePrincipal no sea interactivo hasta que se cierre la emergente.
+    	emergenteCrearTablero = new JDialog(framePrincipal, "Crear Tablero", true);//JDialog hace que framePrincipal no sea interactivo hasta que se cierre la emergente.
         emergenteCrearTablero.setSize(600, 300);//Tamaño
         emergenteCrearTablero.setBackground(blanco);
         emergenteCrearTablero.setResizable(false);//No permite modificar el tamaño
@@ -318,15 +345,41 @@ public class Principal extends JFrame {
 	        panelIngresarNombreTablero.setOpaque(detalles);//Mostrar detalles
 		        JLabel lblNombre = new JLabel("Nombre:");
 		        lblNombre.setFont(new Font("Arial", Font.PLAIN, 20));//Cambia la letra del interior
-		        txtFieldIngresarNombreEmergenteCrearTablero = new JTextField();
-		        //TODO: Agregar mensaje previo.
+		        txtFieldIngresarNombreEmergenteCrearTablero = new JTextField(mensajeIngresarNombreTablero);
+		        txtFieldIngresarNombreEmergenteCrearTablero.setForeground(gris);
+		        
+		        //Placeholder "mensaje previo"
+		        txtFieldIngresarNombreEmergenteCrearTablero.addFocusListener(new FocusListener() {
+		            @Override
+		            public void focusGained(FocusEvent e) {
+		                if (txtFieldIngresarNombreEmergenteCrearTablero.getText().equals(mensajeIngresarNombreTablero)) {
+		                	txtFieldIngresarNombreEmergenteCrearTablero.setText("");
+		                	txtFieldIngresarNombreEmergenteCrearTablero.setForeground(negro);
+		                }
+		            }
+		            @Override
+		            public void focusLost(FocusEvent e) {
+		                //Si el campo de texto está vacío al perder el foco, restaurar el placeholder
+		                if (txtFieldIngresarNombreEmergenteCrearTablero.getText().isEmpty()) {
+		                	txtFieldIngresarNombreEmergenteCrearTablero.setForeground(gris);
+		                	txtFieldIngresarNombreEmergenteCrearTablero.setText(mensajeIngresarNombreTablero);
+		                }
+		            }
+		        });
+		        //Placeholder
 		        
 		        txtFieldIngresarNombreEmergenteCrearTablero.setPreferredSize(new Dimension(400, 30));
 		        txtFieldIngresarNombreEmergenteCrearTablero.setFont(new Font("Arial", Font.PLAIN, 20));//Tamaño del texto interno del txtField
 		        txtFieldIngresarNombreEmergenteCrearTablero.setBackground(grisClaro);//Color de fondo
 		        txtFieldIngresarNombreEmergenteCrearTablero.setOpaque(true);
 		        txtFieldIngresarNombreEmergenteCrearTablero.setBorder(border);
-	    		//TODO: Agregar acción (Tomar datos del txtFieldIngresarNombreEmergenteCrearTablero y crear el tablero).
+		        txtFieldIngresarNombreEmergenteCrearTablero.addActionListener(new ActionListener() {
+		            public void actionPerformed(ActionEvent evento) {
+		            	//IMPORTANTE -> Aquí se llama a un método que maneja el evento desde el Controller.
+		            	ctrl.actionEnterTxtFieldIngresarNombreEmergenteCrearTablero(evento);
+		            }
+		        });
+		        txtFieldIngresarNombreEmergenteCrearTablero.setCursor(new Cursor(Cursor.TEXT_CURSOR));//Pone el cursor modo escritura
 		        
 	        panelIngresarNombreTablero.add(lblNombre);
 	        panelIngresarNombreTablero.add(Box.createVerticalStrut(10));//Espacio entre la etiqueta y el campo de texto
@@ -346,7 +399,14 @@ public class Principal extends JFrame {
 	        	//2 lineas para macOS:
 	        	btnAgregarInvitados.setOpaque(true);
 	    		btnAgregarInvitados.setBorder(border);
-	    		//TODO: Agregar acción (nueva ventana emergente para agregar invitados).
+	    		btnAgregarInvitados.addActionListener(new ActionListener() {
+		            public void actionPerformed(ActionEvent evento) {
+		            	//IMPORTANTE -> Aquí se llama a un método que maneja el evento desde el Controller.
+		            	ctrl.actionBtnAgregarInvitados(evento);
+		            }
+		        });
+	    		btnAgregarInvitados.setCursor(new Cursor(Cursor.HAND_CURSOR));//Pone el cursor con una manita
+	    		
 	        panelAgregarInvitados.add(btnAgregarInvitados);
 	        panelAgregarInvitados.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 
@@ -362,7 +422,13 @@ public class Principal extends JFrame {
 		        //2 lineas para macOS:
 		        btnCancelarEmergenteCrearTablero.setOpaque(true);
 	    		btnCancelarEmergenteCrearTablero.setBorder(border);
-	    		//TODO: Agregar acción (Cerrar emergente)
+	    		btnCancelarEmergenteCrearTablero.addActionListener(new ActionListener() {
+		            public void actionPerformed(ActionEvent evento) {
+		                //IMPORTANTE -> Aquí se llama a un método que maneja el evento desde el Controller.
+		            	ctrl.actionBtnCancelarEmergenteCrearTablero(evento);
+		            }
+		        });
+	    		btnCancelarEmergenteCrearTablero.setCursor(new Cursor(Cursor.HAND_CURSOR));//Pone el cursor con una manita
 	    		
 		        btnCrearTableroEmergenteCrearTablero = new JButton("Crear Tablero");
 		        btnCrearTableroEmergenteCrearTablero.setFont(new Font("Arial", Font.PLAIN, 18));//Cambia la letra del interior
@@ -371,7 +437,13 @@ public class Principal extends JFrame {
 		        //2 lineas para macOS:
 		        btnCrearTableroEmergenteCrearTablero.setOpaque(true);
 	    		btnCrearTableroEmergenteCrearTablero.setBorder(border);
-	    		//TODO: Agregar acción (Tomar datos del txtFieldIngresarNombreEmergenteCrearTablero y crear el tablero).
+	    		btnCrearTableroEmergenteCrearTablero.addActionListener(new ActionListener() {
+		            public void actionPerformed(ActionEvent evento) {
+		                //IMPORTANTE -> Aquí se llama a un método que maneja el evento desde el Controller.
+		            	ctrl.actionEnterTxtFieldIngresarNombreEmergenteCrearTablero(evento);
+		            }
+		        });
+	    		btnCrearTableroEmergenteCrearTablero.setCursor(new Cursor(Cursor.HAND_CURSOR));//Pone el cursor con una manita
 	    		
 	        panelBotonesBasicos.add(btnCancelarEmergenteCrearTablero, BorderLayout.WEST);
 	        panelBotonesBasicos.add(btnCrearTableroEmergenteCrearTablero, BorderLayout.EAST);
@@ -390,17 +462,304 @@ public class Principal extends JFrame {
 	    	
         return emergenteCrearTablero;
     }
-    //*/emergenteCrearTablero
+    //*///emergenteCrearTablero
+    
+    //Método para crear ventana emergente agregar invitados
+    public static JDialog emergenteAgregarInvitados() {
+    	//Emergente Agregar Invitados
+    	emergenteAgregarInvitados = new JDialog(framePrincipal, "Agregar Invitados", true);//JDialog hace que framePrincipal no sea interactivo hasta que se cierre la emergente.
+    	emergenteAgregarInvitados.setSize(600, 300);//Tamaño
+    	emergenteAgregarInvitados.setBackground(blanco);
+        emergenteAgregarInvitados.setResizable(false);//No permite modificar el tamaño
+        emergenteAgregarInvitados.setLocationRelativeTo(framePrincipal);//Se centra según el framePrincipal
+        emergenteAgregarInvitados.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);//Se cierra solo la emergente
+        emergenteAgregarInvitados.setLayout(new BorderLayout());//Asegura usar BorderLayout
+        
+        //Panel Invisible
+        panelInvisible.setFocusable(true);
+        panelInvisible.setVisible(true);
+        emergenteAgregarInvitados.add(panelInvisible);
+        
+        emergenteAgregarInvitados.setVisible(true);
+        
+    	return emergenteAgregarInvitados;
+    }
+    //*///emergenteAgregarInvitados
+    
+    
+    
+    
     
 	  // -- // -- // -- // -- // -- // -- //
-	 // -- // -- // ACTIONS- // -- // -- //
+	 // -- // -- // GET & SET// -- // -- //
 	// -- // -- // -- // -- // -- // -- //
-    
-    //Método para gestionar la acción del btnCrearTablero
-    public void actionBtnCrearTablero(ActionEvent evento) {                                             
-    	emergenteCrearTablero();
-    }
-    //*/actionBtnCrearTablero
-    
+
+	public static Controlador getCtrl() {
+		return ctrl;
+	}
+
+	public static void setCtrl(Controlador ctrl) {
+		Principal.ctrl = ctrl;
+	}
+
+	public static JFrame getFramePrincipal() {
+		return framePrincipal;
+	}
+
+	public static void setFramePrincipal(JFrame framePrincipal) {
+		Principal.framePrincipal = framePrincipal;
+	}
+
+	public static JPanel getPanelInvisible() {
+		return panelInvisible;
+	}
+
+	public static void setPanelInvisible(JPanel panelInvisible) {
+		Principal.panelInvisible = panelInvisible;
+	}
+
+	public static JPanel getPanelPrincipalHead() {
+		return panelPrincipalHead;
+	}
+
+	public static void setPanelPrincipalHead(JPanel panelPrincipalHead) {
+		Principal.panelPrincipalHead = panelPrincipalHead;
+	}
+
+	public static JPanel getPanelPrincipalMiddle() {
+		return panelPrincipalMiddle;
+	}
+
+	public static void setPanelPrincipalMiddle(JPanel panelPrincipalMiddle) {
+		Principal.panelPrincipalMiddle = panelPrincipalMiddle;
+	}
+
+	public static JPanel getPanelPrincipalBody() {
+		return panelPrincipalBody;
+	}
+
+	public static void setPanelPrincipalBody(JPanel panelPrincipalBody) {
+		Principal.panelPrincipalBody = panelPrincipalBody;
+	}
+
+	public static JTextField getTxtFieldIngresarNombreEmergenteCrearTablero() {
+		return txtFieldIngresarNombreEmergenteCrearTablero;
+	}
+
+	public static void setTxtFieldIngresarNombreEmergenteCrearTablero(
+			JTextField txtFieldIngresarNombreEmergenteCrearTablero) {
+		Principal.txtFieldIngresarNombreEmergenteCrearTablero = txtFieldIngresarNombreEmergenteCrearTablero;
+	}
+
+	public static JButton getBtnCrearTablero() {
+		return btnCrearTablero;
+	}
+
+	public static void setBtnCrearTablero(JButton btnCrearTablero) {
+		Principal.btnCrearTablero = btnCrearTablero;
+	}
+
+	public static JButton getBtnAbrirTablero1() {
+		return btnAbrirTablero1;
+	}
+
+	public static void setBtnAbrirTablero1(JButton btnAbrirTablero1) {
+		Principal.btnAbrirTablero1 = btnAbrirTablero1;
+	}
+
+	public static JButton getBtnAbrirTablero2() {
+		return btnAbrirTablero2;
+	}
+
+	public static void setBtnAbrirTablero2(JButton btnAbrirTablero2) {
+		Principal.btnAbrirTablero2 = btnAbrirTablero2;
+	}
+
+	public static JButton getBtnAbrirTablero3() {
+		return btnAbrirTablero3;
+	}
+
+	public static void setBtnAbrirTablero3(JButton btnAbrirTablero3) {
+		Principal.btnAbrirTablero3 = btnAbrirTablero3;
+	}
+
+	public static JButton getBtnAgregarInvitados() {
+		return btnAgregarInvitados;
+	}
+
+	public static void setBtnAgregarInvitados(JButton btnAgregarInvitados) {
+		Principal.btnAgregarInvitados = btnAgregarInvitados;
+	}
+
+	public static JButton getBtnCancelarEmergenteCrearTablero() {
+		return btnCancelarEmergenteCrearTablero;
+	}
+
+	public static void setBtnCancelarEmergenteCrearTablero(JButton btnCancelarEmergenteCrearTablero) {
+		Principal.btnCancelarEmergenteCrearTablero = btnCancelarEmergenteCrearTablero;
+	}
+
+	public static JButton getBtnCrearTableroEmergenteCrearTablero() {
+		return btnCrearTableroEmergenteCrearTablero;
+	}
+
+	public static void setBtnCrearTableroEmergenteCrearTablero(JButton btnCrearTableroEmergenteCrearTablero) {
+		Principal.btnCrearTableroEmergenteCrearTablero = btnCrearTableroEmergenteCrearTablero;
+	}
+
+	public static Color getBlanco() {
+		return blanco;
+	}
+
+	public static void setBlanco(Color blanco) {
+		Principal.blanco = blanco;
+	}
+
+	public static Color getRosa() {
+		return rosa;
+	}
+
+	public static void setRosa(Color rosa) {
+		Principal.rosa = rosa;
+	}
+
+	public static Color getCyan() {
+		return cyan;
+	}
+
+	public static void setCyan(Color cyan) {
+		Principal.cyan = cyan;
+	}
+
+	public static Color getRojo() {
+		return rojo;
+	}
+
+	public static void setRojo(Color rojo) {
+		Principal.rojo = rojo;
+	}
+
+	public static Color getVerde() {
+		return verde;
+	}
+
+	public static void setVerde(Color verde) {
+		Principal.verde = verde;
+	}
+
+	public static Color getMillos() {
+		return millos;
+	}
+
+	public static void setMillos(Color millos) {
+		Principal.millos = millos;
+	}
+
+	public static Color getGris() {
+		return gris;
+	}
+
+	public static void setGris(Color gris) {
+		Principal.gris = gris;
+	}
+
+	public static Color getGrisClaro() {
+		return grisClaro;
+	}
+
+	public static void setGrisClaro(Color grisClaro) {
+		Principal.grisClaro = grisClaro;
+	}
+
+	public static Color getAguacate() {
+		return aguacate;
+	}
+
+	public static void setAguacate(Color aguacate) {
+		Principal.aguacate = aguacate;
+	}
+
+	public static Color getMorado() {
+		return morado;
+	}
+
+	public static void setMorado(Color morado) {
+		Principal.morado = morado;
+	}
+
+	public static Color getNegro() {
+		return negro;
+	}
+
+	public static void setNegro(Color negro) {
+		Principal.negro = negro;
+	}
+
+	public static Color getPetroleo() {
+		return petroleo;
+	}
+
+	public static void setPetroleo(Color petroleo) {
+		Principal.petroleo = petroleo;
+	}
+
+	public static Color getLimon() {
+		return limon;
+	}
+
+	public static void setLimon(Color limon) {
+		Principal.limon = limon;
+	}
+
+	public static Color getLimon2() {
+		return limon2;
+	}
+
+	public static void setLimon2(Color limon2) {
+		Principal.limon2 = limon2;
+	}
+
+	public static Border getBorder() {
+		return border;
+	}
+
+	public static void setBorder(Border border) {
+		Principal.border = border;
+	}
+
+	public static boolean isDetalles() {
+		return detalles;
+	}
+
+	public static void setDetalles(boolean detalles) {
+		Principal.detalles = detalles;
+	}
+
+	public static JDialog getEmergenteCrearTablero() {
+		return emergenteCrearTablero;
+	}
+
+	public static void setEmergenteCrearTablero(JDialog emergenteCrearTablero) {
+		Principal.emergenteCrearTablero = emergenteCrearTablero;
+	}
+
+	public static String getMensajeIngresarNombreTablero() {
+		return mensajeIngresarNombreTablero;
+	}
+
+	public static void setMensajeIngresarNombreTablero(String mensajeIngresarNombreTablero) {
+		Principal.mensajeIngresarNombreTablero = mensajeIngresarNombreTablero;
+	}
+
+	public static JDialog getEmergenteAgregarInvitados() {
+		return emergenteAgregarInvitados;
+	}
+
+	public static void setEmergenteAgregarInvitados(JDialog emergenteAgregarInvitados) {
+		Principal.emergenteAgregarInvitados = emergenteAgregarInvitados;
+	}
+	
+	
+	
 }
 //class
