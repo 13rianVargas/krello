@@ -13,13 +13,13 @@ public class Principal extends JFrame {
 	JFrame framePrincipal = new JFrame();
 	
 	//PANELS
-	//JPanel panelInvisible = new JPanel(); //PENDIENTE -> Este JPanel permite que el autofocus no sea el primer campo de texto. 
+	JPanel panelInvisible = new JPanel();//Este JPanel permite que el autofocus no sea el primer campo de texto.
 	JPanel panelPrincipalHead;
 	JPanel panelPrincipalMiddle;
 	JPanel panelPrincipalBody;
 	
 	//TEXTFIELDS
-	
+	JTextField txtFieldIngresarNombreEmergenteCrearTablero;
 	
 	//PASSWORDFIELDS
 	
@@ -29,15 +29,35 @@ public class Principal extends JFrame {
 	JButton btnAbrirTablero1;
 	JButton btnAbrirTablero2;
 	JButton btnAbrirTablero3;
+	JButton btnAgregarInvitados;
+	JButton btnCancelarEmergenteCrearTablero;
+	JButton btnCrearTableroEmergenteCrearTablero;
 		
 	//COLORS
-	Color fondoFrame = Color.WHITE;//Fondo del JFrame
-	Color fondoPanel1 = Color.PINK;//Fondo de todos los JPanel1
-	Color fondoPanel2 = Color.CYAN;//Fondo de todos los JPanel2
-	Color btns = new Color(0, 151, 149);// con transparencia pero funciona raro (0, 151, 149, 89); -> Sin transparencia y mejor con setOpaque :v
+	Color blanco = new Color(255, 255, 255);
+	Color rosa = new Color(243, 178, 177);
+	Color cyan = new Color(117, 251, 253);
+	Color rojo = new Color(255, 0, 0);
+	Color verde = new Color(117, 251, 76);
+	Color millos = new Color(0, 0, 255);
+	Color gris = new Color(154, 154, 154);
+	Color grisClaro = new Color(217, 217, 217);
+	Color aguacate = new Color(102, 181, 127);
+	Color morado = new Color(98, 20, 109);
+	Color negro = new Color(0, 0, 0);
+	Color petroleo = new Color(0, 151, 149);
+	Color limon = new Color(206, 220, 23);
+	Color limon2 = new Color(180, 200, 0);//Para los títulos de las emergentes
+	
+	//BORDER
+	Border border = BorderFactory.createLineBorder(negro, 1);//Borde de 1px
 
 	//MOSTRAR DETALLES
-	boolean detalles = true;//true -> mostrar / false -> ocultar
+	boolean detalles = false;//true -> mostrar / false -> ocultar
+	
+	  // -- // -- // -- // -- // -- // -- //
+	 // -- // -- // VENTANAS // -- // -- //
+	// -- // -- // -- // -- // -- // -- //
 	
     //Constructor del frame Principal
     public Principal(){
@@ -49,7 +69,7 @@ public class Principal extends JFrame {
     	framePrincipal.setLocationRelativeTo(null); //Centra la ventana
     	framePrincipal.setLayout(new BorderLayout());//Hace el frame responsivo a los ajustes de tamaño
     	framePrincipal.setBackground(Color.CYAN);//Color de la barra de la ventana
-    	framePrincipal.getContentPane().setBackground(fondoFrame);//Color del fondo
+    	framePrincipal.getContentPane().setBackground(blanco);//Color del fondo
 
     	panelPrincipalHead = panelPrincipalHead();
     	framePrincipal.add(panelPrincipalHead, BorderLayout.NORTH);//Lo añade y hace el panel responsivo
@@ -64,11 +84,15 @@ public class Principal extends JFrame {
     }
     //*/Principal
     
+	  // -- // -- // -- // -- // -- // -- //
+	 // -- // -- // PANELES  // -- // -- //
+	// -- // -- // -- // -- // -- // -- //
+    
     //Método para crear panelPrincipalHead
 	public JPanel panelPrincipalHead() {
     	
         panelPrincipalHead = new JPanel();
-        panelPrincipalHead.setBackground(fondoPanel1);
+        panelPrincipalHead.setBackground(rosa);
         panelPrincipalHead.setOpaque(detalles);//Mostrar detalles
         panelPrincipalHead.setLayout(new BorderLayout(10, 0));//Espacio horizontal y vertical entre los componentes
 
@@ -77,20 +101,20 @@ public class Principal extends JFrame {
 	        //No me esta sirviendo la img
 	        lblKrelloLogo.setIcon(new ImageIcon(getClass().getResource("/co/edu/konradlorenz/view/img/KrelloLogo187x60.png")));
 	        lblKrelloLogo.setBorder(new EmptyBorder(30, 30, 30, 30)); // top, left, bottom, right -> Ajusta un borde por pixeles
-	        lblKrelloLogo.setBackground(Color.GREEN);
+	        lblKrelloLogo.setBackground(verde);
 	        lblKrelloLogo.setOpaque(detalles);//Mostrar detalles
 	        
         panelPrincipalHead.add(lblKrelloLogo, BorderLayout.WEST);//Ubica automáticamente a la izquierda
 	        
 	        //FRASE CENTRAL
 	        JLabel lblHola = new JLabel("¡Hola ");
-	        lblHola.setFont(new Font("Arial", Font.PLAIN, 22));
+	        lblHola.setFont(new Font("Arial", Font.PLAIN, 22));//Cambia la letra del interior
 
-	        JLabel lblUser = new JLabel("Aquí va un nombre genérico, si tan solo tuvieramos uno T-T"); //TODO: Agregar nombre genérico xd
-	        lblUser.setFont(new Font("Arial", Font.ITALIC, 22));
+	        JLabel lblUser = new JLabel("Aquí va un nombre genérico, si tan solo tuvieramos uno T-T");//TODO: Agregar nombre genérico xd
+	        lblUser.setFont(new Font("Arial", Font.ITALIC, 22));//Cambia la letra del interior
 	        
 	        JLabel lblAdmiracion = new JLabel("!");//IMPORTANTE, dirás, para que se separa en 3 lbl?, es para que solo el lblUser se muestre en Italic y quede guapo
-	        lblAdmiracion.setFont(new Font("Arial", Font.PLAIN, 22));
+	        lblAdmiracion.setFont(new Font("Arial", Font.PLAIN, 22));//Cambia la letra del interior
 
 	        JPanel lblHolaUser = new JPanel();//Sí, esto es un Panel anidado xd
 	        lblHolaUser.setLayout(new BoxLayout(lblHolaUser, BoxLayout.X_AXIS));//El BoxLayout.X_AXIS es para que se ordenen Horizontalmente, cambia la X por la Y para que lo notes.
@@ -99,17 +123,17 @@ public class Principal extends JFrame {
 	        lblHolaUser.add(lblAdmiracion);
 	        lblHolaUser.setForeground(Color.BLACK);//Color de la letra
 	        lblHolaUser.setBorder(new EmptyBorder(30, 0, 30, 0)); // top, left, bottom, right -> Ajusta un borde por pixeles
-	        lblHolaUser.setBackground(Color.BLUE);
+	        lblHolaUser.setBackground(millos);
 	        lblHolaUser.setOpaque(detalles);//Mostrar detalles
 	        
         panelPrincipalHead.add(lblHolaUser, BorderLayout.CENTER);//Ubica automáticamente al centro
 	        
         	//"BOTÓN" (guiño guiño) CERRAR SESIÓN
 	        JLabel lblCerrarSesion = new JLabel("Cerrar sesión");
-	        lblCerrarSesion.setFont(new Font("Arial", Font.PLAIN, 22));
+	        lblCerrarSesion.setFont(new Font("Arial", Font.PLAIN, 22));//Cambia la letra del interior
 	        lblCerrarSesion.setForeground(Color.BLACK);//Color de la letra
 	        lblCerrarSesion.setCursor(new Cursor(Cursor.HAND_CURSOR));//Cambia el cursor a una mano cuando pase por encima
-	        lblCerrarSesion.setBackground(Color.CYAN);
+	        lblCerrarSesion.setBackground(cyan);
 	        lblCerrarSesion.setOpaque(detalles);//Mostrar detalles
 	        
 	        //Acción al pasar el mouse
@@ -133,7 +157,7 @@ public class Principal extends JFrame {
 	        	//Este panel es para ajustar mejor el lblCerrarSesion y centrarlo
 		        JPanel panelCerrarSesion = new JPanel();
 		        panelCerrarSesion.setLayout(new BoxLayout(panelCerrarSesion, BoxLayout.Y_AXIS));//Se ordena verticalmente
-		        panelCerrarSesion.setBackground(Color.RED);
+		        panelCerrarSesion.setBackground(rojo);
 		        panelCerrarSesion.setOpaque(detalles);//Mostrar detalles
 		        panelCerrarSesion.setBorder(BorderFactory.createEmptyBorder(30, 30, 30, 30)); // top, left, bottom, right -> Ajusta un borde por pixeles
 	
@@ -142,7 +166,6 @@ public class Principal extends JFrame {
 		        panelCerrarSesion.add(Box.createVerticalGlue());//Agrega espacio flexible después del JLabel
 	        
         panelPrincipalHead.add(panelCerrarSesion, BorderLayout.EAST);//Ubica automáticamente a la derecha
-        //Posdata: Que heavy fue poner ese pinche botón de CerrarSesión T-T
 	        
     	return panelPrincipalHead;
     }
@@ -153,11 +176,11 @@ public class Principal extends JFrame {
     	
         panelPrincipalMiddle = new JPanel();       
         //panelPrincipalMiddle.setBounds(40, 140, 1200, 80);
-        panelPrincipalMiddle.setBackground(fondoPanel2);
+        panelPrincipalMiddle.setBackground(cyan);
         panelPrincipalMiddle.setOpaque(detalles);//Mostrar detalles
         
 	        JLabel lblMisTableros = new JLabel("Mis Tableros");
-	        lblMisTableros.setFont(new Font("Arial", Font.PLAIN, 30));
+	        lblMisTableros.setFont(new Font("Arial", Font.PLAIN, 30));//Cambia la letra del interior
 	        //lblMisTableros.setLayout(new BoxLayout(lblMisTableros, BoxLayout.X_AXIS));
 	        //lblMisTableros.setLayout(new BoxLayout(lblMisTableros, BoxLayout.Y_AXIS));
 	        //lblMisTableros.setBounds(0, 0, 1280, 720);
@@ -176,55 +199,58 @@ public class Principal extends JFrame {
     public JPanel panelPrincipalBody() {
     	
         panelPrincipalBody = new JPanel();       
-        panelPrincipalBody.setBackground(fondoPanel1);
+        panelPrincipalBody.setBackground(rosa);
         panelPrincipalBody.setOpaque(detalles);//Mostrar detalles
 
         panelPrincipalBody.setLayout(new FlowLayout(FlowLayout.CENTER, 50, 150));  // Espacio entre los botones
 
         
         btnCrearTablero = new JButton("+");
-        btnCrearTablero.setBackground(btns); 
+        btnCrearTablero.setBackground(petroleo); 
         btnCrearTablero.setForeground(Color.WHITE);
     	btnCrearTablero.setFocusPainted(false);
     	btnCrearTablero.setBorder(new EmptyBorder(30, 30, 30, 30)); // top, left, bottom, right -> Ajusta un borde por pixeles
-    	btnCrearTablero.setFont(new Font("Arial", Font.PLAIN, 80));
+    	btnCrearTablero.setFont(new Font("Arial", Font.PLAIN, 80));//Cambia la letra del interior
     	//3 lineas para macOS:
     	btnCrearTablero.setOpaque(true);
-		Border border = BorderFactory.createLineBorder(btns, 2);
 		btnCrearTablero.setBorder(border);
+		//Acción del botón:
+		btnCrearTablero.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent evento) {
+                //IMPORTANTE -> Aquí se llama a un otro método que maneja el evento para poder llamarlo también desde el Controller.
+            	actionBtnCrearTablero(evento);
+            }
+        });
    
     	
         btnAbrirTablero1 = new JButton("Abrir Tablero 1");
-        btnAbrirTablero1.setBackground(btns); 
+        btnAbrirTablero1.setBackground(petroleo); 
         btnAbrirTablero1.setForeground(Color.WHITE); 
         btnAbrirTablero1.setFocusPainted(false);
         btnAbrirTablero1.setBorder(new EmptyBorder(30, 30, 30, 30)); // top, left, bottom, right -> Ajusta un borde por pixeles
-        btnAbrirTablero1.setFont(new Font("Inter", Font.BOLD, 18));
-        //3 lineas para macOS:
+        btnAbrirTablero1.setFont(new Font("Inter", Font.BOLD, 18));//Cambia la letra del interior
+        //2 lineas para macOS:
         btnAbrirTablero1.setOpaque(true);
-		border = BorderFactory.createLineBorder(btns, 2);
 		btnAbrirTablero1.setBorder(border);
         
         btnAbrirTablero2 = new JButton("Abrir Tablero 2");
-        btnAbrirTablero2.setBackground(btns); 
+        btnAbrirTablero2.setBackground(petroleo); 
         btnAbrirTablero2.setForeground(Color.WHITE); 
         btnAbrirTablero2.setFocusPainted(false);
         btnAbrirTablero2.setBorder(new EmptyBorder(30, 30, 30, 30)); // top, left, bottom, right -> Ajusta un borde por pixeles
-        btnAbrirTablero2.setFont(new Font("Inter", Font.BOLD, 18));
-        //3 lineas para macOS:
+        btnAbrirTablero2.setFont(new Font("Inter", Font.BOLD, 18));//Cambia la letra del interior
+        //2 lineas para macOS:
         btnAbrirTablero2.setOpaque(true);
-		border = BorderFactory.createLineBorder(btns, 2);
 		btnAbrirTablero2.setBorder(border);
         
         btnAbrirTablero3 = new JButton("Abrir Tablero 3");
-        btnAbrirTablero3.setBackground(btns); 
+        btnAbrirTablero3.setBackground(petroleo); 
         btnAbrirTablero3.setForeground(Color.WHITE);
         btnAbrirTablero3.setBorder(new EmptyBorder(30, 30, 30, 30)); // top, left, bottom, right -> Ajusta un borde por pixeles
-        btnAbrirTablero3.setFont(new Font("Inter", Font.BOLD, 18));
+        btnAbrirTablero3.setFont(new Font("Inter", Font.BOLD, 18));//Cambia la letra del interior
         btnAbrirTablero3.setFocusPainted(false);
-        //3 lineas para macOS:
+        //2 lineas para macOS:
         btnAbrirTablero3.setOpaque(true);
-		border = BorderFactory.createLineBorder(btns, 2);
 		btnAbrirTablero3.setBorder(border);
 
         
@@ -241,13 +267,140 @@ public class Principal extends JFrame {
         panelPrincipalBody.add(btnAbrirTablero3);
 
 
-        
         return panelPrincipalBody;
 
     }
     //*/panelPrincipalBody
     
+	  // -- // -- // -- // -- // -- // -- //
+	 // -- // -- //EMERGENTES// -- // -- //
+	// -- // -- // -- // -- // -- // -- //
     
+    //Método para crear ventana emergente crear tablero
+    public JDialog emergenteCrearTablero() {
+    	//Emergente Crear Tablero
+    	JDialog emergenteCrearTablero = new JDialog(framePrincipal, "Crear Tablero", true);//JDialog hace que framePrincipal no sea interactivo hasta que se cierre la emergente.
+        emergenteCrearTablero.setSize(600, 300);//Tamaño
+        emergenteCrearTablero.setBackground(blanco);
+        emergenteCrearTablero.setResizable(false);//No permite modificar el tamaño
+        emergenteCrearTablero.setLocationRelativeTo(framePrincipal);//Se centra según el framePrincipal
+        emergenteCrearTablero.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);//Se cierra solo la emergente
+        emergenteCrearTablero.setLayout(new BorderLayout());//Asegura usar BorderLayout
+        
+        //Panel Invisible
+        panelInvisible.setFocusable(true);
+        panelInvisible.setVisible(true);
+        emergenteCrearTablero.add(panelInvisible);
+        
+        	//Label del Título
+	        JLabel lblTituloCrearTablero = new JLabel("Crear Tablero");
+	        lblTituloCrearTablero.setFont(new Font("Arial", Font.BOLD, 40));//Cambia la letra del interior
+	        lblTituloCrearTablero.setForeground(limon2);//Color de la letra
+	        lblTituloCrearTablero.setAlignmentX(Component.CENTER_ALIGNMENT);//Centra horizontalmente
+	        lblTituloCrearTablero.setBackground(gris);//Color de fondo
+	        lblTituloCrearTablero.setOpaque(detalles);//Mostrar detalles
+	
+		    	//Panel del Título
+		        JPanel panelTituloCrearTablero = new JPanel();
+		        panelTituloCrearTablero.setLayout(new BoxLayout(panelTituloCrearTablero, BoxLayout.Y_AXIS));//Se ordena verticalmente
+		        panelTituloCrearTablero.setBackground(morado);//Color de fondo
+		        panelTituloCrearTablero.setOpaque(detalles);//Mostrar detalles
+		        panelTituloCrearTablero.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));// top, left, bottom, right -> Ajusta un borde por pixeles
+		        panelTituloCrearTablero.add(Box.createVerticalGlue());//Agrega espacio flexible antes del JLabel
+		        panelTituloCrearTablero.add(lblTituloCrearTablero);
+		        panelTituloCrearTablero.add(Box.createVerticalGlue());//Agrega espacio flexible después del JLabel
+	        
+        emergenteCrearTablero.add(panelTituloCrearTablero, BorderLayout.NORTH);//Ubica arriba
+        
+	        //Panel Ingresar Nombre del tablero.
+        	JPanel panelIngresarNombreTablero = new JPanel(new FlowLayout(FlowLayout.CENTER, 10, 10));//Usa FlowLayout: (alineación), (espacio horizontal entre los componentes), (espacio vertical entre las filas de componentes).
+	        panelIngresarNombreTablero.setBackground(millos);//Color de fondo
+	        panelIngresarNombreTablero.setOpaque(detalles);//Mostrar detalles
+		        JLabel lblNombre = new JLabel("Nombre:");
+		        lblNombre.setFont(new Font("Arial", Font.PLAIN, 20));//Cambia la letra del interior
+		        txtFieldIngresarNombreEmergenteCrearTablero = new JTextField();
+		        //TODO: Agregar mensaje previo.
+		        
+		        txtFieldIngresarNombreEmergenteCrearTablero.setPreferredSize(new Dimension(400, 30));
+		        txtFieldIngresarNombreEmergenteCrearTablero.setFont(new Font("Arial", Font.PLAIN, 20));//Tamaño del texto interno del txtField
+		        txtFieldIngresarNombreEmergenteCrearTablero.setBackground(grisClaro);//Color de fondo
+		        txtFieldIngresarNombreEmergenteCrearTablero.setOpaque(true);
+		        txtFieldIngresarNombreEmergenteCrearTablero.setBorder(border);
+	    		//TODO: Agregar acción (Tomar datos del txtFieldIngresarNombreEmergenteCrearTablero y crear el tablero).
+		        
+	        panelIngresarNombreTablero.add(lblNombre);
+	        panelIngresarNombreTablero.add(Box.createVerticalStrut(10));//Espacio entre la etiqueta y el campo de texto
+	        panelIngresarNombreTablero.add(txtFieldIngresarNombreEmergenteCrearTablero);
+	        panelIngresarNombreTablero.setBorder(BorderFactory.createEmptyBorder(3, 0, 0, 0));// top, left, bottom, right -> Ajusta un borde por pixeles
+	        
+        emergenteCrearTablero.add(panelIngresarNombreTablero, BorderLayout.CENTER);//Ubica centro
+
+	        //Panel Agregar Invitados
+	        JPanel panelAgregarInvitados = new JPanel();
+	        panelAgregarInvitados.setBackground(rosa);
+	        panelAgregarInvitados.setOpaque(detalles);//Mostrar detalles
+	        	btnAgregarInvitados = new JButton("Agregar Invitados");
+	        	btnAgregarInvitados.setFont(new Font("Arial", Font.PLAIN, 18));//Cambia la letra del interior
+	        	btnAgregarInvitados.setPreferredSize(new Dimension(200, 40));
+	        	btnAgregarInvitados.setBackground(aguacate);//Color de fondo
+	        	//2 lineas para macOS:
+	        	btnAgregarInvitados.setOpaque(true);
+	    		btnAgregarInvitados.setBorder(border);
+	    		//TODO: Agregar acción (nueva ventana emergente para agregar invitados).
+	        panelAgregarInvitados.add(btnAgregarInvitados);
+	        panelAgregarInvitados.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+
+	        //Panel Botones Básicos Emergente
+	        JPanel panelBotonesBasicos = new JPanel(new BorderLayout());
+	        panelBotonesBasicos.setBackground(cyan);//Color de fondo
+	        panelBotonesBasicos.setOpaque(detalles);//Mostrar detalles
+	        
+		        btnCancelarEmergenteCrearTablero = new JButton("Cancelar");
+		        btnCancelarEmergenteCrearTablero.setFont(new Font("Arial", Font.PLAIN, 18));//Cambia la letra del interior
+		        btnCancelarEmergenteCrearTablero.setPreferredSize(new Dimension(200, 40));
+		        btnCancelarEmergenteCrearTablero.setBackground(limon);//Color de fondo
+		        //2 lineas para macOS:
+		        btnCancelarEmergenteCrearTablero.setOpaque(true);
+	    		btnCancelarEmergenteCrearTablero.setBorder(border);
+	    		//TODO: Agregar acción (Cerrar emergente)
+	    		
+		        btnCrearTableroEmergenteCrearTablero = new JButton("Crear Tablero");
+		        btnCrearTableroEmergenteCrearTablero.setFont(new Font("Arial", Font.PLAIN, 18));//Cambia la letra del interior
+		        btnCrearTableroEmergenteCrearTablero.setPreferredSize(new Dimension(200, 40));
+		        btnCrearTableroEmergenteCrearTablero.setBackground(limon);//Color de fondo
+		        //2 lineas para macOS:
+		        btnCrearTableroEmergenteCrearTablero.setOpaque(true);
+	    		btnCrearTableroEmergenteCrearTablero.setBorder(border);
+	    		//TODO: Agregar acción (Tomar datos del txtFieldIngresarNombreEmergenteCrearTablero y crear el tablero).
+	    		
+	        panelBotonesBasicos.add(btnCancelarEmergenteCrearTablero, BorderLayout.WEST);
+	        panelBotonesBasicos.add(btnCrearTableroEmergenteCrearTablero, BorderLayout.EAST);
+	        panelBotonesBasicos.setBorder(BorderFactory.createEmptyBorder(10, 30, 10, 30));// top, left, bottom, right -> Ajusta un borde por pixeles
+
+		        //Para que los botones cancelar y creat queden alineados, uso un panel extra abajo
+		        JPanel panelInferior = new JPanel(new BorderLayout());
+		        panelInferior.setBackground(blanco);//Color de fondo
+		        panelInferior.setOpaque(detalles);//Mostrar detalles
+		        panelInferior.add(panelAgregarInvitados, BorderLayout.NORTH);
+		        panelInferior.add(panelBotonesBasicos, BorderLayout.SOUTH);
+
+        emergenteCrearTablero.add(panelInferior, BorderLayout.SOUTH);
+        
+        emergenteCrearTablero.setVisible(true);
+	    	
+        return emergenteCrearTablero;
+    }
+    //*/emergenteCrearTablero
+    
+	  // -- // -- // -- // -- // -- // -- //
+	 // -- // -- // ACTIONS- // -- // -- //
+	// -- // -- // -- // -- // -- // -- //
+    
+    //Método para gestionar la acción del btnCrearTablero
+    public void actionBtnCrearTablero(ActionEvent evento) {                                             
+    	emergenteCrearTablero();
+    }
+    //*/actionBtnCrearTablero
     
 }
 //class
