@@ -87,7 +87,7 @@ public class Principal extends JFrame {
     	framePrincipal.setMinimumSize(new Dimension(1280, 720));//Tamaño mínimo al que se puede ajustar
     	framePrincipal.setLocationRelativeTo(null); //Centra la ventana
     	framePrincipal.setLayout(new BorderLayout());//Diseño
-    	framePrincipal.setBackground(cyan);//Color de la barra superior de la ventana
+    	framePrincipal.setBackground(morado);//Color de la barra superior de la ventana
     	framePrincipal.getContentPane().setBackground(blanco);//Color del fondo del frame
 
     		panelPrincipalHead = panelPrincipalHead();//Crea el head
@@ -133,65 +133,76 @@ public class Principal extends JFrame {
         panelPrincipalHead.add(lblKrelloLogo, BorderLayout.WEST);//Lo añade y lo ubica a la izquierda
 	        
 	        //Abre: lblHolaUser
-        	//IMPORTANTE: dirás... ¿para que se hacen 3 labels? Es para que solo el lblUser se muestre en Italic y los demás normal, así queda más bonito.
-	        JLabel lblHola = new JLabel("¡Hola ");//Crea nuevo
-	        lblHola.setFont(new Font("Arial", Font.PLAIN, 22));//Cambia la letra del interior
-
-	        JLabel lblUser = new JLabel("Aquí va un nombre genérico, si tan solo tuvieramos uno T-T");//Crea nuevo //TODO: Agregar nombre genérico xd
-	        lblUser.setFont(new Font("Arial", Font.ITALIC, 22));//Cambia la letra del interior
-	        
-	        JLabel lblAdmiracion = new JLabel("!");//Crea nuevo
-	        lblAdmiracion.setFont(new Font("Arial", Font.PLAIN, 22));//Cambia la letra del interior
-
-	        JPanel lblHolaUser = new JPanel();//Crea nuevo
-	        lblHolaUser.setLayout(new BoxLayout(lblHolaUser, BoxLayout.X_AXIS));//Diseño: El BoxLayout.X_AXIS es para que se ubiquen HORIZONTALMENTE una al lado de la otra.
-	        lblHolaUser.add(lblHola);//Añade lbl
-	        lblHolaUser.add(lblUser);//Añade lbl
-	        lblHolaUser.add(lblAdmiracion);//Añade lbl
-	        lblHolaUser.setForeground(negro);//Color de letra
+        	JPanel lblHolaUser = new JPanel();//Crea nuevo
+        	lblHolaUser.setLayout(new BoxLayout(lblHolaUser, BoxLayout.X_AXIS));//Diseño: El BoxLayout.X_AXIS es para que se ubiquen HORIZONTALMENTE una al lado de la otra.
+        	lblHolaUser.setForeground(negro);//Color de letra
 	        lblHolaUser.setBorder(new EmptyBorder(30, 0, 30, 0));//top, left, bottom, right -> Ajusta un borde por pixeles
 	        lblHolaUser.setBackground(millos);//Color de fondo
 	        lblHolaUser.setOpaque(detalles);//Mostrar detalles
+        	
+        	//Dirás... ¿para que se hacen 3 labels? Es para que solo el lblUser se muestre en Italic y los demás normal, así queda más bonito.
+	        
+	        	//Abrir: lblHola
+	        	JLabel lblHola = new JLabel("¡Hola ");//Crea nuevo
+		        lblHola.setFont(new Font("Arial", Font.PLAIN, 22));//Cambia la letra del interior
+	        	//Cerrar: lblHola
+		        
+	        lblHolaUser.add(lblHola);//Añade lblHola
+
+        		//Abrir: lblUser
+		        JLabel lblUser = new JLabel("Aquí va un nombre genérico, si tan solo tuvieramos uno T-T");//Crea nuevo //TODO: Agregar nombre genérico xd
+		        lblUser.setFont(new Font("Arial", Font.ITALIC, 22));//Cambia la letra del interior
+	        	//Cerrar: lblUser
+		        
+	        lblHolaUser.add(lblUser);//Añade lblUser
+		        
+        		//Abrir: lblAdmiracion
+		        JLabel lblAdmiracion = new JLabel("!");//Crea nuevo
+		        lblAdmiracion.setFont(new Font("Arial", Font.PLAIN, 22));//Cambia la letra del interior
+	        	//Cerrar: lblAdmiracion
+		        
+	        lblHolaUser.add(lblAdmiracion);//Añade lblAdmiracion
 	        //Cierra: lblHolaUser
 	        
         panelPrincipalHead.add(lblHolaUser, BorderLayout.CENTER);//Lo añade y lo ubica al centro
 	        
-        	//Abre: lblCerrarSesion (Este lbl contiene una acción)
-	        JLabel lblCerrarSesion = new JLabel("Cerrar sesión");//Crea nuevo
-	        lblCerrarSesion.setFont(new Font("Arial", Font.PLAIN, 22));//Cambia la letra del interior
-	        lblCerrarSesion.setForeground(negro);//Color de letra
-	        lblCerrarSesion.setCursor(new Cursor(Cursor.HAND_CURSOR));//Pone el cursor con una manita
-	        lblCerrarSesion.setBackground(cyan);//Color de fondo
-	        lblCerrarSesion.setOpaque(detalles);//Mostrar detalles
+	      	//Abre: panelCerrarSesion
+	        JPanel panelCerrarSesion = new JPanel();//Crea nuevo
+	        panelCerrarSesion.setLayout(new BoxLayout(panelCerrarSesion, BoxLayout.X_AXIS));//Diseño: El BoxLayout.X_AXIS es para que se ubiquen HORIZONTALMENTE una al lado de la otra.
+	        panelCerrarSesion.setBorder(BorderFactory.createEmptyBorder(50, 30, 50, 30));//top, left, bottom, right -> Ajusta un borde por pixeles
+	        panelCerrarSesion.setBackground(rojo);//Color de fondo
+	        panelCerrarSesion.setOpaque(detalles);//Mostrar detalles
 	        
-	        	//Abre: Acción de lblCerrarSesion
-	        	lblCerrarSesion.addMouseListener(new MouseAdapter() {
-	        		@Override
-	        		public void mouseEntered(MouseEvent e) {
-	        			lblCerrarSesion.setText("<html><u>Cerrar sesión</u></html>");//Lo subraya al poner el cursor encima
-	        		}
-		            @Override
-		            public void mouseExited(MouseEvent e) {
-		                lblCerrarSesion.setText("Cerrar sesión");//Elimina el subrayado cuando el mouse no está encima
-		            }
-		            @Override
-		        	public void mouseClicked(MouseEvent e) {
-		                //TODO: Acción para volver al Login
-		            }
-		        });
-	        	//Cierra: Acción de lblCerrarSesion
-	        	
-	        	//Abre: panelCerrarSesion
-	        	//Este panel es para centrar el lblCerrarSesion.
-		        JPanel panelCerrarSesion = new JPanel();//Crea nuevo
-		        panelCerrarSesion.setLayout(new BoxLayout(panelCerrarSesion, BoxLayout.Y_AXIS));//Diseño: El BoxLayout.Y_AXIS es para que se ubiquen VERTICALMENTE una encima de la otra.
-		        panelCerrarSesion.setBorder(BorderFactory.createEmptyBorder(30, 30, 30, 30));//top, left, bottom, right -> Ajusta un borde por pixeles
-		        panelCerrarSesion.setBackground(rojo);//Color de fondo
-		        panelCerrarSesion.setOpaque(detalles);//Mostrar detalles
-		        panelCerrarSesion.add(Box.createVerticalGlue());//Agrega espacio flexible antes del JLabel
-		        panelCerrarSesion.add(lblCerrarSesion);//Agrega lblCerrarSesion
-		        panelCerrarSesion.add(Box.createVerticalGlue());//Agrega espacio flexible después del JLabel
-		        //Cierra: panelCerrarSesion
+	        	//Abre: lblCerrarSesion (Este lbl contiene una acción)
+		        JLabel lblCerrarSesion = new JLabel("Cerrar sesión");//Crea nuevo
+		        lblCerrarSesion.setFont(new Font("Arial", Font.PLAIN, 22));//Cambia la letra del interior
+		        lblCerrarSesion.setForeground(negro);//Color de letra
+		        lblCerrarSesion.setCursor(new Cursor(Cursor.HAND_CURSOR));//Pone el cursor con una manita
+		        lblCerrarSesion.setBackground(cyan);//Color de fondo
+		        lblCerrarSesion.setOpaque(detalles);//Mostrar detalles
+		        
+		        	//Abre: Acción de lblCerrarSesion
+		        	lblCerrarSesion.addMouseListener(new MouseAdapter() {
+		        		@Override
+		        		public void mouseEntered(MouseEvent e) {
+		        			lblCerrarSesion.setText("<html><u>Cerrar sesión</u></html>");//Lo subraya al poner el cursor encima
+		        		}
+			            @Override
+			            public void mouseExited(MouseEvent e) {
+			                lblCerrarSesion.setText("Cerrar sesión");//Elimina el subrayado cuando el mouse no está encima
+			            }
+			            @Override
+			        	public void mouseClicked(MouseEvent e) {
+			                //TODO: Acción para volver al Login
+			            }
+			        });
+		        	//Cierra: Acción de lblCerrarSesion
+			        
+	        	//Cierra: lblCerrarSesion
+		        	
+	        panelCerrarSesion.add(lblCerrarSesion);//Agrega lblCerrarSesion
+		        
+	        //Cierra: panelCerrarSesion
 	        
         panelPrincipalHead.add(panelCerrarSesion, BorderLayout.EAST);//Lo añade y lo ubica a la derecha
 	        
