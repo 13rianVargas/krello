@@ -114,9 +114,8 @@ public class Principal extends JFrame {
 	 // -- // -- // PANELES  // -- // -- //
 	// -- // -- // -- // -- // -- // -- //
     
-    //Abre: Método que crea el panelPrincipalHead
-    //Método para crear panelPrincipalHead
-	public JPanel panelPrincipalHead() {
+    //Abre: Método para crear el panelPrincipalHead
+	public static JPanel panelPrincipalHead() {
     	
         panelPrincipalHead = new JPanel();//Crea nuevo
         panelPrincipalHead.setBackground(rosa);//Color de fondo
@@ -125,7 +124,7 @@ public class Principal extends JFrame {
 
         	//Abre: Imagen Krello
 	        JLabel lblKrelloLogo = new JLabel();//Crea nuevo
-	        lblKrelloLogo.setIcon(new ImageIcon(getClass().getResource("/co/edu/konradlorenz/view/img/KrelloLogo187x60.png")));//Ruta de la imagen
+	        lblKrelloLogo.setIcon(new ImageIcon(Principal.class.getResource("/co/edu/konradlorenz/view/img/KrelloLogo187x60.png")));//Ruta de la imagen
 	        lblKrelloLogo.setBorder(new EmptyBorder(30, 30, 30, 30));//top, left, bottom, right -> Ajusta un borde por pixeles
 	        lblKrelloLogo.setBackground(verde);//Color de fondo
 	        lblKrelloLogo.setOpaque(detalles);//Mostrar detalles
@@ -198,11 +197,10 @@ public class Principal extends JFrame {
 	        
     	return panelPrincipalHead;
     }
-	//Cierra: Método que crea el panelPrincipalHead
+	//Cierra: Método para crear el panelPrincipalHead
     
-    //Abre: Método que crea el panelPrincipalMiddle
-    //Método para crear panelPrincipalMiddle
-    public JPanel panelPrincipalMiddle() {
+    //Abre: Método para crear el panelPrincipalMiddle
+    public static JPanel panelPrincipalMiddle() {
     	
         panelPrincipalMiddle = new JPanel();//Crea nuevo
         panelPrincipalMiddle.setBackground(cyan);//Color de fondo
@@ -223,10 +221,10 @@ public class Principal extends JFrame {
 	        
     	return panelPrincipalMiddle;
     }
-    //Cierra: Método que crea el panelPrincipalHead
+    //Cierra: Método para crear el panelPrincipalMiddle
     
-    //Abre: Método para crear panelPrincipalBody
-    public JPanel panelPrincipalBody() {
+    //Abre: Método para crear el panelPrincipalBody
+    public static JPanel panelPrincipalBody() {
     	
         panelPrincipalBody = new JPanel();//Crear nuevo    
         panelPrincipalBody.setBackground(rosa);//Color de fondo
@@ -332,7 +330,7 @@ public class Principal extends JFrame {
 
         return panelPrincipalBody;
     }
-    //Cierra: Método para crear panelPrincipalBody
+    //Cierra: Método para crear el panelPrincipalBody
     
     
     
