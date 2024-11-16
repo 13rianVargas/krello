@@ -693,9 +693,9 @@ public class Controlador {
 				|| FrameTablero.getTxtFieldIngresarNombreEmergenteCrearLista().getText().equals("")){
 			//IMPORTANTE: Este if es el que hace parpadear de rojo xd, el else crea el tablero
 			//Inicializo colores
-			Color rojo = Principal.getRojo();
-			Color negro = Principal.getNegro();
-			Color limon = Principal.getLimon();
+			Color rojo = FrameTablero.getRojo();
+			Color negro = FrameTablero.getNegro();
+			Color limon = FrameTablero.getLimon();
 				
 			//Inicializo los bordes
 			Border bordeRojo = BorderFactory.createLineBorder(rojo, 2);
@@ -737,5 +737,92 @@ public class Controlador {
 			FrameTablero.getEmergenteCrearLista().dispose();
 		}
 		//*///actionBtnCancelarEmergenteCrearTablero
+		
+	//editar tablero
+		
+	//Método para gestionar la acción del btnCrearLista
+		public void actionBtnEditarTablero(ActionEvent evento) {                                             
+			FrameTablero.emergenteEditarTablero();
+		}
+		//*///actionBtnCrearTablero
+		
+	//Método para gestionar la tecla enter del txtFieldIngresarNombreEmergenteEditarTablero
+		public void txtFieldIngresarNombreEmergenteEditarTablero(ActionEvent evento) {
+			if(FrameTablero.getTxtFieldIngresarNombreEmergenteEditarTablero().getText().equals(FrameTablero.getMensajeEditarNombreTablero()) 
+					|| FrameTablero.getTxtFieldIngresarNombreEmergenteEditarTablero().getText().equals("")){
+				//IMPORTANTE: Este if es el que hace parpadear de rojo xd, el else crea el tablero
+				//Inicializo colores
+				Color rojo = FrameTablero.getRojo();
+				Color negro = FrameTablero.getNegro();
+				Color limon = FrameTablero.getLimon();
+					
+				//Inicializo los bordes
+				Border bordeRojo = BorderFactory.createLineBorder(rojo, 2);
+				Border bordeNegro = BorderFactory.createLineBorder(negro, 1);
+					
+				//Agrego los colores y bordes
+				FrameTablero.getBtnGuardarEmergenteEditarTablero().setBorder(bordeRojo);
+				FrameTablero.getBtnGuardarEmergenteEditarTablero().setBackground(rojo);
+				FrameTablero.getTxtFieldIngresarNombreEmergenteEditarTablero().setBorder(bordeRojo);
+					
+					//Contador para alternar bordes
+					final int[] contador = {0};
+					
+					//Alternador de bordes (funciona casi como un ciclo)
+					Timer timer = new Timer(150, event -> { // Cambia cada 150 ms
+			            if (contador[0] < 6) { // Se repetirá 3 veces, 3 rojas y 3 azules = 6
+			                Border bordeActual = (contador[0] % 2 == 0) ? bordeRojo : bordeNegro; //Op ternario
+			                Color colorActual = (contador[0] % 2 == 0) ? rojo : limon; //Op ternario x2
+			                FrameTablero.getTxtFieldIngresarNombreEmergenteEditarTablero().setBorder(bordeActual);
+			                FrameTablero.getBtnGuardarEmergenteEditarTablero().setBorder(bordeActual);
+			                FrameTablero.getBtnGuardarEmergenteEditarTablero().setBackground(colorActual);
+			                
+			                contador[0]++;
+			            } else {
+			                ((Timer) event.getSource()).stop(); //Detiene el Timer
+			            }
+			        });
+					
+					timer.start();
+				} else {
+					String nuevoNombreTablero = FrameTablero.getTxtFieldIngresarNombreEmergenteEditarTablero().getText();//Obtiene el texto
+					//TODO: no existe método de editar tablero
+				}//if crearLista
+			}
+			//*///actionEnterTxtFieldIngresarNombreEmergenteEditarTablero
+		
+	//Método para gestionar la acción del btnColaboradoresEmergenteEditarTablero
+		public void actionBtnColaboradoresEmergenteEditarTablero(ActionEvent evento) {
+			FrameTablero.emergenteColaboradores();
+		}
+		//*///actionBtnColaboradoresEmergenteEditarTablero
+		
+	//Método para gestionar la acción del btnEliminarEmergenteEditarTablero
+		public void actionBtnEliminarEmergenteEditarTablero(ActionEvent evento) {
+			FrameTablero.emergenteEliminar();
+		}
+		//*///actionBtnEliminarEmergenteEditarTablero
+		
+	//Método para gestionar el clic del btnCancelarEmergenteCrearLista
+		public void actionBtnCancelarEmergenteEditarTablero(ActionEvent evento) {
+			FrameTablero.getEmergenteEditarTablero().dispose();
+		}
+		//*///actionBtnCancelarEmergenteEditarTablero
+		
+	//Colaboradores Tablero
+		
+	//Método para gestionar el clic del btnCancelarEmergenteColaboradores
+		public void actionBtnCancelarEmergenteColaboradores(ActionEvent evento) {
+			FrameTablero.getEmergenteColaboradores().dispose();
+		}
+		//*///actionBtnCancelarEmergenteEditarTablero
+		
+	//Eliminar Tablero
+		
+	//Método para gestionar el clic del btnCancelarEmergenteEliminar
+		public void actionBtnCancelarEmergenteEliminar(ActionEvent evento) {
+			FrameTablero.getEmergenteEliminar().dispose();
+		}
+		//*///btnCancelarEmergenteEliminar
 }
 //class
