@@ -6,11 +6,19 @@ public class AplMain {
 
 	public static void main(String[] args) {
 		
-		//Principal framePrincipal = new Principal();
+		// <- Agrega * entre barras para comentar
 		Login frameLogin = new Login();
-		//Tablero frameTablero = new Tablero();
+		//*/
 		
-		/*/ <- Quita el * entre las barras para descomentar la sección.
+		/*/ <- Agrega * entre barras para comentar
+		Principal framePrincipal = new Principal();
+		//*/
+		
+		/*/ <- Agrega * entre barras para comentar
+		FrameTablero frameTablero = new FrameTablero();
+		//*/
+		
+		/*/ <- Agrega * entre barras para comentar
 		Controlador objControlador = new Controlador();
 		objControlador.run();
 		//*/
