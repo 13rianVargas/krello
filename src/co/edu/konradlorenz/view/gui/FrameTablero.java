@@ -260,8 +260,7 @@ public class FrameTablero extends JFrame{
         panelTableroBody.setBorder(new EmptyBorder(5, 5,5, 5));//top, left, bottom, right -> Ajusta un borde por pixeles
         panelTableroBody.setLayout(new FlowLayout(FlowLayout.LEFT, 20, 20)); 
 
-
-        panelLista();
+        panelLista();//Se utilizaria cuando se realice el evento boton crear lista, pero lo dejo para que vean como quedo
     }
     //Cierra: Método para crear el panelTableroBody
     
@@ -290,6 +289,7 @@ public class FrameTablero extends JFrame{
 		    JButton btnEditar = new JButton("･･･");
 		    
 		    btnCrear.setBackground(limon);
+		    btnCrear.setForeground(negro);
 		    btnEditar.setBackground(morado);
 		    btnEditar.setForeground(blanco);
 		    
@@ -300,7 +300,7 @@ public class FrameTablero extends JFrame{
 
 		    panelLista.add(panelSuperior, BorderLayout.NORTH);
 			
-		    panelTarea(panelLista);
+		    panelTarea(panelLista); //Se utilizaria cuando se realice el evento boton crear tarea, pero lo dejo para que vean como quedo
 		    
 		    panelTableroBody.add(panelLista);
 		    
