@@ -35,6 +35,7 @@ public class FrameTablero extends JFrame{
 	//TEXTFIELDS
 	private static JTextField txtFieldIngresarNombreEmergenteCrearLista;
 	private static JTextField txtFieldIngresarNombreEmergenteEditarTablero;
+	private static JTextField txtFieldIngresarCorreoEmergenteColaboradores;
 	
 	//PASSWORDFIELDS
 	
@@ -79,6 +80,7 @@ public class FrameTablero extends JFrame{
 	//STRINGS
 	private static String mensajeIngresarNombreLista = " Ingrese nombre de la lista...";
 	private static String mensajeEditarNombreTablero = " Nombre ";
+	private static String mensajeCorreoColaboradores = " Ingrese correo del colaborador ";
 	
 	
 	
@@ -750,7 +752,7 @@ public class FrameTablero extends JFrame{
     	
     	//JDialog hace que solo la emergente sea interactiva, las demás ventanas se bloquean.
     	emergenteColaboradores = new JDialog(frameTablero, "Editar Colaboradores", true);//Crea nuevo (Dueño), (Título), (Bloquea interacción mientras esté abierta)
-    	emergenteColaboradores.setSize(600, 400);//Tamaño
+    	emergenteColaboradores.setSize(600, 432);//Tamaño
     	emergenteColaboradores.setBackground(blanco);//Color de fondo
     	emergenteColaboradores.setResizable(false);//No permite modificar el tamaño de la ventana
     	emergenteColaboradores.setLocationRelativeTo(frameTablero);//Se centra según el framePrincipal
@@ -784,10 +786,57 @@ public class FrameTablero extends JFrame{
 			panelCentral.setLayout(new BoxLayout(panelCentral ,BoxLayout.Y_AXIS));
 			panelCentral.setBackground(blanco);//Color de fondo
 			panelCentral.setOpaque(detalles);//Mostrar detalles
+			//Cierra: panelCentral
 			
 			//TODO: Panel central de la emergente
 			
-			//Cierra: panelCentral
+				//Abre: txtFieldIngresarCorreoEmergenteColaboradores
+				txtFieldIngresarCorreoEmergenteColaboradores = new JTextField(mensajeCorreoColaboradores);//Crea nuevo
+				txtFieldIngresarCorreoEmergenteColaboradores.setForeground(blanco);//Color de letra
+				//txtFieldIngresarCorreoEmergenteColaboradores.setPreferredSize(new Dimension(198, 42));
+				txtFieldIngresarCorreoEmergenteColaboradores.setHorizontalAlignment(JTextField.CENTER);
+				txtFieldIngresarCorreoEmergenteColaboradores.setMaximumSize(new Dimension(400, 35));
+				txtFieldIngresarCorreoEmergenteColaboradores.setFont(new Font("Arial", Font.PLAIN, 20));//Cambia la letra del interior
+				txtFieldIngresarCorreoEmergenteColaboradores.setBackground(gris);//Color de fondo
+				txtFieldIngresarCorreoEmergenteColaboradores.setCursor(new Cursor(Cursor.TEXT_CURSOR));//Pone el cursor modo escritura
+				txtFieldIngresarCorreoEmergenteColaboradores.setAlignmentX(Component.CENTER_ALIGNMENT);//lo centra???
+				if(macOS){
+					txtFieldIngresarCorreoEmergenteColaboradores.setOpaque(true);//No transparente
+					txtFieldIngresarCorreoEmergenteColaboradores.setBorder(macOSBorde);//Borde negro fino
+		        }
+				
+			        //Abre: Placeholder "mensaje previo"
+					txtFieldIngresarCorreoEmergenteColaboradores.addFocusListener(new FocusListener() {
+			            @Override
+			            public void focusGained(FocusEvent e) {
+			                if (txtFieldIngresarCorreoEmergenteColaboradores.getText().equals(mensajeCorreoColaboradores)) {
+			                	txtFieldIngresarCorreoEmergenteColaboradores.setText("");//Cambia el contenido del txtField
+			                	txtFieldIngresarCorreoEmergenteColaboradores.setForeground(negro);//Color de letra
+			                }
+			            }
+			            @Override
+			            public void focusLost(FocusEvent e) {
+			                //Si el campo de texto está vacío al perder el foco, restaura el placeholder
+			                if (txtFieldIngresarCorreoEmergenteColaboradores.getText().isEmpty()) {
+			                	txtFieldIngresarCorreoEmergenteColaboradores.setText(mensajeCorreoColaboradores);//Cambia el contenido del txtField
+			                	txtFieldIngresarCorreoEmergenteColaboradores.setForeground(gris);//Color de letra
+			                }
+			            }
+			        });
+			        //Cierra: Placeholder "mensaje previo"
+		        
+			        //Abre: Acción del txtFieldIngresarCorreoEmergenteColaboradores
+					txtFieldIngresarCorreoEmergenteColaboradores.addActionListener(new ActionListener() {
+			            public void actionPerformed(ActionEvent evento) {
+			            	ctrl.txtFieldIngresarCorreoEmergenteColaboradores();//Se llama el método del Controller que gestiona el evento.
+			            }
+			        });
+			        //Cierra: Acción del txtFieldIngresarCorreoEmergenteColaboradores
+		        
+		        //Cierra: txtFieldIngresarCorreoEmergenteColaboradores
+				
+				panelCentral.add(txtFieldIngresarCorreoEmergenteColaboradores, BorderLayout.NORTH);
+				panelCentral.add(Box.createRigidArea(new Dimension(0, 20)));
 			
 			//Abre: panelInferior
     		JPanel panelInferior = new JPanel(new BorderLayout());//Crea nuevo
@@ -850,15 +899,16 @@ public class FrameTablero extends JFrame{
 	        panelInferior.add(panelBotonesBasicos, BorderLayout.SOUTH);//Lo añade y lo ubica abajo
 	        //Cierra: panelInferior
 			
+	        emergenteColaboradores.add(panelCentral, BorderLayout.CENTER);//Lo añade y lo ubica abajo
 	        emergenteColaboradores.add(panelInferior, BorderLayout.SOUTH);//Lo añade y lo ubica abajo
 	        
 		    //Abre: Funcionalidad cambiar el foco automático al abrir la emergente
-		    //txtFieldIngresarNombreEmergenteEditarTablero.setEnabled(false);
-		    //Timer timer = new Timer(100, e -> {
-		    	//txtFieldIngresarNombreEmergenteEditarTablero.setEnabled(true);
-		    //});//Temporizador
-		    //timer.setRepeats(false);//Evita que el temporizador se repita
-		    //timer.start();//Inicia el temporizador
+	        txtFieldIngresarCorreoEmergenteColaboradores.setEnabled(false);
+		    Timer timer = new Timer(100, e -> {
+		    	txtFieldIngresarCorreoEmergenteColaboradores.setEnabled(true);
+		    });//Temporizador
+		    timer.setRepeats(false);//Evita que el temporizador se repita
+		    timer.start();//Inicia el temporizador
 		    //Cierra: Funcionalidad cambiar el foco automático al abrir la emergente
 	    
 	        emergenteColaboradores.setVisible(true);//Hace visible la emergente
@@ -1086,6 +1136,14 @@ public class FrameTablero extends JFrame{
 	public static void setTxtFieldIngresarNombreEmergenteEditarTablero(
 			JTextField txtFieldIngresarNombreEmergenteEditarTablero) {
 		FrameTablero.txtFieldIngresarNombreEmergenteEditarTablero = txtFieldIngresarNombreEmergenteEditarTablero;
+	}
+	public static JTextField getTxtFieldIngresarCorreoEmergenteColaboradores() {
+		return txtFieldIngresarCorreoEmergenteColaboradores;
+	}
+
+	public static void setTxtFieldIngresarCorreoEmergenteColaboradores(
+			JTextField txtFieldIngresarCorreoEmergenteColaboradores) {
+		FrameTablero.txtFieldIngresarCorreoEmergenteColaboradores = txtFieldIngresarCorreoEmergenteColaboradores;
 	}
 
 	public static JButton getBtnCrearLista() {
@@ -1327,6 +1385,15 @@ public class FrameTablero extends JFrame{
 	public static void setMensajeEditarNombreTablero(String mensajeEditarNombreTablero) {
 		FrameTablero.mensajeEditarNombreTablero = mensajeEditarNombreTablero;
 	}
+	public static String getMensajeCorreoColaboradores() {
+		return mensajeCorreoColaboradores;
+	}
+
+	public static void setMensajeCorreoColaboradores(String mensajeCorreoColaboradores) {
+		FrameTablero.mensajeCorreoColaboradores = mensajeCorreoColaboradores;
+	}
+	
+	
 	    
 }
 //class

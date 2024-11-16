@@ -948,6 +948,54 @@ public class Controlador {
 	
 	//COLABORADORES TABLERO
 		
+	//Abre: txtFieldIngresarCorreoEmergenteColaboradores
+		public void txtFieldIngresarCorreoEmergenteColaboradores() {
+			
+			String placeholder = FrameTablero.getMensajeCorreoColaboradores();
+			
+			if(FrameTablero.getTxtFieldIngresarCorreoEmergenteColaboradores().getText().equals(placeholder) 
+					|| FrameTablero.getTxtFieldIngresarCorreoEmergenteColaboradores().getText().equals("")){
+				//IMPORTANTE: Este if es el que hace parpadear de rojo xd, el else crea el tablero
+				//Inicializo colores
+				Color rojo = FrameTablero.getRojo();
+				Color negro = FrameTablero.getNegro();
+				Color limon = FrameTablero.getLimon();
+					
+				//Inicializo los bordes
+				Border bordeRojo = BorderFactory.createLineBorder(rojo, 2);
+				Border bordeNegro = BorderFactory.createLineBorder(negro, 1);
+					
+				//Agrego los colores y bordes
+				FrameTablero.getBtnConfirmarEmergenteColaboradores().setBorder(bordeRojo);
+				FrameTablero.getBtnConfirmarEmergenteColaboradores().setBackground(rojo);
+				FrameTablero.getTxtFieldIngresarCorreoEmergenteColaboradores().setBorder(bordeRojo);
+					
+				//Contador para alternar bordes
+				final int[] contador = {0};
+				
+				//Alternador de bordes (funciona casi como un ciclo)
+				Timer timer = new Timer(150, event -> { // Cambia cada 150 ms
+		            if (contador[0] < 6) { // Se repetirá 3 veces, 3 rojas y 3 azules = 6
+		                Border bordeActual = (contador[0] % 2 == 0) ? bordeRojo : bordeNegro; //Op ternario
+		                Color colorActual = (contador[0] % 2 == 0) ? rojo : limon; //Op ternario x2
+		                FrameTablero.getTxtFieldIngresarCorreoEmergenteColaboradores().setBorder(bordeActual);
+		                FrameTablero.getBtnConfirmarEmergenteColaboradores().setBorder(bordeActual);
+		                FrameTablero.getBtnConfirmarEmergenteColaboradores().setBackground(colorActual);
+		                
+		                contador[0]++;
+		            } else {
+		                ((Timer) event.getSource()).stop(); //Detiene el Timer
+		            }
+		        });
+				
+				timer.start();
+			} else {
+				//String nuevoNombreTablero = FrameTablero.getBtnConfirmarEmergenteColaboradores().getText();//Obtiene el texto
+				//TODO: no se que método va aca:)
+			}//if crearLista
+		}
+		//Cierra: txtFieldIngresarNombreEmergenteEditarTablero
+	
 	//Abre: actionBtnCancelarEmergenteColaboradores
 	public void actionBtnCancelarEmergenteColaboradores() {
 		FrameTablero.getEmergenteColaboradores().dispose();
