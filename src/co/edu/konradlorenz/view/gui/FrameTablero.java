@@ -67,6 +67,7 @@ public class FrameTablero extends JFrame{
 	private static Color morado = new Color(98, 20, 109);
 	private static Color negro = new Color(0, 0, 0);
 	private static Color petroleo = new Color(0, 151, 149);
+	private static Color petroleoOscuro = new Color(83, 181, 179);
 	private static Color limon = new Color(206, 220, 23);
 	private static Color limon2 = new Color(180, 200, 0);//Para los títulos de las emergentes
 	private static Color rosita = new Color(235, 116, 116);
@@ -251,19 +252,36 @@ public class FrameTablero extends JFrame{
     
     //Abre: Método para crear el panelTableroBody
     public void panelTableroBody() {
-    	
-    	panelTableroBody = new JPanel();//Crea nuevo
-    	panelTableroBody.setBackground(grisClaro);//Color de fondo
-    	panelTableroBody.setBorder(new EmptyBorder(10, 0, 0, 0));//top, left, bottom, right -> Ajusta un borde por pixeles
-    	panelTableroBody.setPreferredSize(new Dimension(800, 400));//Tamaño
-    	
+        panelTableroBody = new JPanel();
+        panelTableroBody.setBackground(grisClaro);
+        panelTableroBody.setBorder(new EmptyBorder(10, 10, 10, 10)); // Borde externo para todo el contenedor
+        panelTableroBody.setLayout(new BoxLayout(panelTableroBody, BoxLayout.X_AXIS));
+
+        panelLista();
+        panelLista();
+        panelLista();
+        panelLista();
     }
     //Cierra: Método para crear el panelTableroBody
-    
-    
-    
-    
-    
+
+    //Abre: 
+    public void panelLista() {
+        JPanel panelLista = new JPanel();
+        panelLista.setBackground(petroleoOscuro);
+        panelLista.setForeground(negro);
+        panelLista.setFont(new Font("Arial", Font.PLAIN, 80));
+        panelLista.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        panelLista.setBorder(new EmptyBorder(10, 10, 10, 10)); 
+        
+        JPanel panelWrapper = new JPanel();
+        panelWrapper.setLayout(new BorderLayout());
+        panelWrapper.setBorder(new EmptyBorder(10, 10, 10, 10)); 
+        panelWrapper.add(panelLista);
+
+        panelTableroBody.add(panelWrapper);
+    }
+    //Cierra: 
+
 	  // -- // -- // -- // -- // -- // -- //
 	 // -- // -- //EMERGENTES// -- // -- //
 	// -- // -- // -- // -- // -- // -- //
@@ -1183,6 +1201,14 @@ public class FrameTablero extends JFrame{
 
 	public static void setPetroleo(Color petroleo) {
 		FrameTablero.petroleo = petroleo;
+	}
+	
+	public static Color getPetroleoOscuro() {
+		return petroleoOscuro;
+	}
+
+	public static void setPetroleoOscuro(Color petroleoOscuro) {
+		FrameTablero.petroleoOscuro = petroleoOscuro;
 	}
 
 	public static Color getLimon() {
