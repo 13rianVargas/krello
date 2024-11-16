@@ -639,8 +639,8 @@ public class Controlador {
 	
 	//Abre: actionEnterTxtFieldIngresarCorreoEmergenteAgregarInvitados
 	public void actionEnterTxtFieldIngresarCorreoEmergenteAgregarInvitados(ActionEvent evento) {
-		if(Principal.getTxtFieldIngresarCorreoEmergenteAñadirInvitados().getText().equals(Principal.getMensajeIngresarCorreo()) 
-				|| Principal.getTxtFieldIngresarCorreoEmergenteAñadirInvitados().getText().equals("")){
+		if(Principal.getTxtFieldIngresarCorreoEmergenteAgregarInvitados().getText().equals(Principal.getMensajeIngresarCorreo()) 
+				|| Principal.getTxtFieldIngresarCorreoEmergenteAgregarInvitados().getText().equals("")){
 			//IMPORTANTE: Este if es el que hace parpadear de rojo xd, el else crea el tablero
 			//Inicializo colores
 			Color rojo = Principal.getRojo();
@@ -652,9 +652,9 @@ public class Controlador {
 			Border bordeNegro = BorderFactory.createLineBorder(negro, 1);
 			
 			//Agrego los colores y bordes
-			Principal.getBtnAgregarInvitadoEmergenteAñadirInvitados().setBorder(bordeRojo);
-			Principal.getBtnAgregarInvitadoEmergenteAñadirInvitados().setBackground(rojo);
-			Principal.getTxtFieldIngresarCorreoEmergenteAñadirInvitados().setBorder(bordeRojo);
+			Principal.getBtnAgregarInvitadoEmergenteAgregarInvitados().setBorder(bordeRojo);
+			Principal.getBtnAgregarInvitadoEmergenteAgregarInvitados().setBackground(rojo);
+			Principal.getTxtFieldIngresarCorreoEmergenteAgregarInvitados().setBorder(bordeRojo);
 			
 			//Contador para alternar bordes
 			final int[] contador = {0};
@@ -664,9 +664,9 @@ public class Controlador {
 	            if (contador[0] < 6) { // Se repetirá 3 veces, 3 rojas y 3 azules = 6
 	                Border bordeActual = (contador[0] % 2 == 0) ? bordeRojo : bordeNegro; //Op ternario
 	                Color colorActual = (contador[0] % 2 == 0) ? rojo : limon; //Op ternario x2
-	                Principal.getTxtFieldIngresarCorreoEmergenteAñadirInvitados().setBorder(bordeActual);
-	                Principal.getBtnAgregarInvitadoEmergenteAñadirInvitados().setBorder(bordeActual);
-	                Principal.getBtnAgregarInvitadoEmergenteAñadirInvitados().setBackground(colorActual);
+	                Principal.getTxtFieldIngresarCorreoEmergenteAgregarInvitados().setBorder(bordeActual);
+	                Principal.getBtnAgregarInvitadoEmergenteAgregarInvitados().setBorder(bordeActual);
+	                Principal.getBtnAgregarInvitadoEmergenteAgregarInvitados().setBackground(colorActual);
 	                
 	                contador[0]++;
 	            } else {
@@ -676,8 +676,8 @@ public class Controlador {
 			
 			timer.start();
 		} else {
-			String nombreInvitado = Principal.getTxtFieldIngresarCorreoEmergenteAñadirInvitados().getText();//Obtiene el texto
-		  	//TODO: Añadir persona a la lista de invitados.
+			String nombreInvitado = Principal.getTxtFieldIngresarCorreoEmergenteAgregarInvitados().getText();//Obtiene el texto
+		  	//TODO: Agregar persona a la lista de invitados.
 		}//if crearTablero
 	}
 	//Cierra: actionEnterTxtFieldIngresarCorreoEmergenteAgregarInvitados
