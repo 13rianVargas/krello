@@ -17,7 +17,6 @@ public class Login extends JFrame {
 	
 	//MOSTRAR DETALLES
 	private static boolean detalles;
-	private static boolean macOS;
 	
 	//FRAMES
 	private static JFrame frameLogin = new JFrame();
@@ -66,7 +65,6 @@ public class Login extends JFrame {
 		
     	ctrl = controlador;//Llama al controller del AplMain
     	detalles = ctrl.detalles;//Ahora se cambia en el Controller para que actue en todo el GUI.
-    	macOS = ctrl.macOS;	//Ahora se cambia en el Controller para que actue en todo el GUI.
 		
 		frameLogin.setDefaultCloseOperation(EXIT_ON_CLOSE);//Terminar la ejecución si se cierra la ventana
 		frameLogin.setTitle("KRELLO");//Título de la ventana

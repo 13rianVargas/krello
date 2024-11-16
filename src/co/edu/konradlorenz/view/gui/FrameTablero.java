@@ -16,7 +16,6 @@ public class FrameTablero extends JFrame{
 	
 	//MOSTRAR DETALLES
 	private static boolean detalles;
-	private static boolean macOS;
 
 	//FRAMES
 	private static JFrame frameTablero;
@@ -95,7 +94,6 @@ public class FrameTablero extends JFrame{
  		
     	ctrl = controlador;//Llama al controller del AplMain
     	detalles = ctrl.detalles;//Ahora se cambia en el Controller para que actue en todo el GUI.
-    	macOS = ctrl.macOS;	//Ahora se cambia en el Controller para que actue en todo el GUI.
 
  		frameTablero = new JFrame();
 		frameTablero.setDefaultCloseOperation(EXIT_ON_CLOSE); //Terminar la ejecución si se cierra la ventana
@@ -176,10 +174,7 @@ public class FrameTablero extends JFrame{
 		        //Abre: panelBotones
 		    	JPanel panelBotones = new JPanel();//Crea nuevo
 		    	panelBotones.setLayout(new FlowLayout(FlowLayout.RIGHT,10, 0));//Diseño: Flujo a la derecha (espacio horizontal),(espacio vertical)
-		    	if(macOS) {
-		    		panelBotones.setBorder(BorderFactory.createEmptyBorder(10, 47, 10, 47));//top, left, bottom, right -> Ajusta un borde por pixeles
-		    		panelBotones.setLayout(new BorderLayout(12, 0));//Diseño: (espacio horizontal),(espacio vertical)
-		    	} else panelBotones.setBorder(BorderFactory.createEmptyBorder(10, 30, 10, 30));//top, left, bottom, right -> Ajusta un borde por pixeles
+		    	panelBotones.setBorder(BorderFactory.createEmptyBorder(10, 30, 10, 30));//top, left, bottom, right -> Ajusta un borde por pixeles
 		    	panelBotones.setBackground(limon2);//Color de fondo
 		    	panelBotones.setOpaque(detalles);//Mostrar detalles
 		        
@@ -189,11 +184,6 @@ public class FrameTablero extends JFrame{
 			    	btnEditarTablero.setForeground(blanco);//Color de letra
 			    	btnEditarTablero.setFocusPainted(false);//Evita que se muestre un borde cuando el componente tiene el foco.
 			    	btnEditarTablero.setFont(new Font("Arial", Font.PLAIN, 18));//Cambia la letra del interior
-			    	if(macOS){
-			    		btnEditarTablero.setPreferredSize(new Dimension(60, 22));//Tamaño botón
-			    		btnEditarTablero.setOpaque(true);//No transparente
-			    		btnEditarTablero.setBorder(macOSBorde);//Borde negro fino
-			    	}
 			    	
 			    		//Abrir: Acción del btnCrearLista
 			    	btnEditarTablero.addActionListener(new ActionListener() {
@@ -213,11 +203,6 @@ public class FrameTablero extends JFrame{
 			    	btnCrearLista.setForeground(blanco);//Color de letra
 			    	btnCrearLista.setFocusPainted(false);//Evita que se muestre un borde cuando el componente tiene el foco.
 			    	btnCrearLista.setFont(new Font("Arial", Font.PLAIN, 18));//Cambia la letra del interior
-			    	if(macOS){
-			    		btnCrearLista.setPreferredSize(new Dimension(120, 22));//Tamaño botón
-				    	btnCrearLista.setOpaque(true);//No transparente
-				    	btnCrearLista.setBorder(macOSBorde);//Borde negro fino
-			    	}
 			    	
 			    		//Abrir: Acción del btnCrearLista
 				    	btnCrearLista.addActionListener(new ActionListener() {
@@ -297,16 +282,8 @@ public class FrameTablero extends JFrame{
 		    
 		    btnCrear.setBackground(limon);
 		    btnCrear.setForeground(negro);
-		    if(macOS) {
-		    	btnCrear.setOpaque(true);//No transparente
-		    	btnCrear.setBorder(macOSBorde);//Borde negro fino
-		    }
 		    btnEditar.setBackground(morado);
 		    btnEditar.setForeground(blanco);
-		    if(macOS) {
-		    	btnEditar.setOpaque(true);//No transparente
-		    	btnEditar.setBorder(macOSBorde);//Borde negro fino
-		    }
 		    
 		    panelSuperior.add(titulo);
 		    panelSuperior.add(Box.createHorizontalStrut(50)); // Espacio centraldel título y los botones
@@ -346,10 +323,6 @@ public class FrameTablero extends JFrame{
 	    JButton btnEditar = new JButton("･･･");
 	    btnEditar.setBackground(morado); // Color de fondo para el botón
 	    btnEditar.setForeground(blanco); // Color de texto para el botón
-	    if(macOS) {
-	    	btnEditar.setOpaque(true);//No transparente
-	    	btnEditar.setBorder(macOSBorde);//Borde negro fino
-	    }
 	    
 	    panelTarea.add(Box.createHorizontalStrut(100)); // Espacio  entre la tarea y el botón
 
@@ -421,10 +394,6 @@ public class FrameTablero extends JFrame{
 		        txtFieldIngresarNombreEmergenteCrearLista.setFont(new Font("Arial", Font.PLAIN, 20));//Cambia la letra del interior
 		        txtFieldIngresarNombreEmergenteCrearLista.setBackground(grisClaro);//Color de fondo
 		        txtFieldIngresarNombreEmergenteCrearLista.setCursor(new Cursor(Cursor.TEXT_CURSOR));//Pone el cursor modo escritura
-		        if(macOS){
-			        txtFieldIngresarNombreEmergenteCrearLista.setOpaque(true);//No transparente
-			        txtFieldIngresarNombreEmergenteCrearLista.setBorder(macOSBorde);//Borde negro fino
-		        }
 		        
 		        	//Abre: Placeholder "mensaje previo"
 			        txtFieldIngresarNombreEmergenteCrearLista.addFocusListener(new FocusListener() {
@@ -479,10 +448,6 @@ public class FrameTablero extends JFrame{
 			        btnCancelarEmergenteCrearLista.setPreferredSize(new Dimension(200, 40));//Tamaño botón
 			        btnCancelarEmergenteCrearLista.setBackground(limon);//Color de fondo
 			        btnCancelarEmergenteCrearLista.setCursor(new Cursor(Cursor.HAND_CURSOR));//Pone el cursor con una manita
-			        if(macOS){
-			        	btnCancelarEmergenteCrearLista.setOpaque(true);//No transparente
-			        	btnCancelarEmergenteCrearLista.setBorder(macOSBorde);//Borde negro fino
-			        }
 		        
 	    				//Abre: Acción del btnCancelarEmergenteCrearLista
 				        btnCancelarEmergenteCrearLista.addActionListener(new ActionListener() {
@@ -500,10 +465,6 @@ public class FrameTablero extends JFrame{
 			        btnCrearListaEmergenteCrearLista.setPreferredSize(new Dimension(200, 40));//Tamaño
 			        btnCrearListaEmergenteCrearLista.setBackground(limon);//Color de fondo
 			        btnCrearListaEmergenteCrearLista.setCursor(new Cursor(Cursor.HAND_CURSOR));//Pone el cursor con una manita
-			        if(macOS){
-			        	btnCrearListaEmergenteCrearLista.setOpaque(true);//No transparente
-			        	btnCrearListaEmergenteCrearLista.setBorder(macOSBorde);//Borde negro fino
-			        }
 		        
 			        	//Abre: Acción del btnCrearListaEmergenteCrearLista
 			        	btnCrearListaEmergenteCrearLista.addActionListener(new ActionListener() {
@@ -590,10 +551,6 @@ public class FrameTablero extends JFrame{
 				txtFieldIngresarNombreEmergenteEditarTablero.setBackground(moradito);//Color de fondo
 				txtFieldIngresarNombreEmergenteEditarTablero.setCursor(new Cursor(Cursor.TEXT_CURSOR));//Pone el cursor modo escritura
 				txtFieldIngresarNombreEmergenteEditarTablero.setAlignmentX(Component.CENTER_ALIGNMENT);//lo centra???
-				if(macOS){
-					txtFieldIngresarNombreEmergenteEditarTablero.setOpaque(true);//No transparente
-					txtFieldIngresarNombreEmergenteEditarTablero.setBorder(macOSBorde);//Borde negro fino
-		        }
 				
 			        //Abre: Placeholder "mensaje previo"
 					txtFieldIngresarNombreEmergenteEditarTablero.addFocusListener(new FocusListener() {
@@ -637,10 +594,6 @@ public class FrameTablero extends JFrame{
 				btnColaboradoresEmergenteEditarTablero.setForeground(blanco);
 				btnColaboradoresEmergenteEditarTablero.setCursor(new Cursor(Cursor.HAND_CURSOR));//Pone el cursor con una manita
 				btnColaboradoresEmergenteEditarTablero.setAlignmentX(Component.CENTER_ALIGNMENT);//lo centra???
-				if(macOS){
-					btnColaboradoresEmergenteEditarTablero.setOpaque(true);//No transparente
-					btnColaboradoresEmergenteEditarTablero.setBorder(macOSBorde);//Borde negro fino
-		        }
 				
 	        		//Abre: Acción del btnColaboradoresEmergenteEditarTablero
 					btnColaboradoresEmergenteEditarTablero.addActionListener(new ActionListener() {
@@ -664,10 +617,6 @@ public class FrameTablero extends JFrame{
 				btnEliminarEmergenteEditarTablero.setForeground(blanco);
 				btnEliminarEmergenteEditarTablero.setCursor(new Cursor(Cursor.HAND_CURSOR));//Pone el cursor con una manita
 				btnEliminarEmergenteEditarTablero.setAlignmentX(Component.CENTER_ALIGNMENT);//lo centra???
-				if(macOS){
-					btnEliminarEmergenteEditarTablero.setOpaque(true);//No transparente
-					btnEliminarEmergenteEditarTablero.setBorder(macOSBorde);//Borde negro fino
-		        }
 				
 	        		//Abre: Acción del btnEliminarEmergenteEditarTablero
 					btnEliminarEmergenteEditarTablero.addActionListener(new ActionListener() {
@@ -706,10 +655,6 @@ public class FrameTablero extends JFrame{
 		        	btnCancelarEmergenteEditarTablero.setPreferredSize(new Dimension(200, 40));//Tamaño botón
 		        	btnCancelarEmergenteEditarTablero.setBackground(limon);//Color de fondo
 		        	btnCancelarEmergenteEditarTablero.setCursor(new Cursor(Cursor.HAND_CURSOR));//Pone el cursor con una manita
-		        	if(macOS){
-		        		btnCancelarEmergenteEditarTablero.setOpaque(true);//No transparente
-		        		btnCancelarEmergenteEditarTablero.setBorder(macOSBorde);//Borde negro fino
-		        	}
 	        
 						//Abre: Acción del btnCancelarEmergenteEditarTablero
 			        	btnCancelarEmergenteEditarTablero.addActionListener(new ActionListener() {
@@ -727,10 +672,6 @@ public class FrameTablero extends JFrame{
 			        btnGuardarEmergenteEditarTablero.setPreferredSize(new Dimension(200, 40));//Tamaño
 			        btnGuardarEmergenteEditarTablero.setBackground(limon);//Color de fondo
 			        btnGuardarEmergenteEditarTablero.setCursor(new Cursor(Cursor.HAND_CURSOR));//Pone el cursor con una manita
-			        if(macOS){
-			        	btnGuardarEmergenteEditarTablero.setOpaque(true);//No transparente
-			        	btnGuardarEmergenteEditarTablero.setBorder(macOSBorde);//Borde negro fino
-			        }
 	        
 			        	//Abre: Acción del btnCrearListaEmergenteCrearLista
 				        btnGuardarEmergenteEditarTablero.addActionListener(new ActionListener() {
@@ -819,10 +760,6 @@ public class FrameTablero extends JFrame{
 				txtFieldIngresarCorreoEmergenteColaboradores.setBackground(gris);//Color de fondo
 				txtFieldIngresarCorreoEmergenteColaboradores.setCursor(new Cursor(Cursor.TEXT_CURSOR));//Pone el cursor modo escritura
 				txtFieldIngresarCorreoEmergenteColaboradores.setAlignmentX(Component.CENTER_ALIGNMENT);//lo centra???
-				if(macOS){
-					txtFieldIngresarCorreoEmergenteColaboradores.setOpaque(true);//No transparente
-					txtFieldIngresarCorreoEmergenteColaboradores.setBorder(macOSBorde);//Borde negro fino
-		        }
 				
 			        //Abre: Placeholder "mensaje previo"
 					txtFieldIngresarCorreoEmergenteColaboradores.addFocusListener(new FocusListener() {
@@ -873,10 +810,6 @@ public class FrameTablero extends JFrame{
 		        	btnCancelarEmergenteColaboradores.setPreferredSize(new Dimension(200, 40));//Tamaño botón
 		        	btnCancelarEmergenteColaboradores.setBackground(limon);//Color de fondo
 		        	btnCancelarEmergenteColaboradores.setCursor(new Cursor(Cursor.HAND_CURSOR));//Pone el cursor con una manita
-		        	if(macOS){
-		        		btnCancelarEmergenteColaboradores.setOpaque(true);//No transparente
-		        		btnCancelarEmergenteColaboradores.setBorder(macOSBorde);//Borde negro fino
-		        	}
 	        
 						//Abre: Acción del btnCancelarEmergenteColaboradores
 			        	btnCancelarEmergenteColaboradores.addActionListener(new ActionListener() {
@@ -894,10 +827,6 @@ public class FrameTablero extends JFrame{
 		        	btnConfirmarEmergenteColaboradores.setPreferredSize(new Dimension(200, 40));//Tamaño
 		        	btnConfirmarEmergenteColaboradores.setBackground(limon);//Color de fondo
 		        	btnConfirmarEmergenteColaboradores.setCursor(new Cursor(Cursor.HAND_CURSOR));//Pone el cursor con una manita
-			        if(macOS){
-			        	btnConfirmarEmergenteColaboradores.setOpaque(true);//No transparente
-			        	btnConfirmarEmergenteColaboradores.setBorder(macOSBorde);//Borde negro fino
-			        }
 	        
 			        	//Abre: Acción del btnCrearListaEmergenteCrearLista
 				        btnConfirmarEmergenteColaboradores.addActionListener(new ActionListener() {
@@ -983,10 +912,6 @@ public class FrameTablero extends JFrame{
 		        	btnCancelarEmergenteEliminar.setPreferredSize(new Dimension(200, 40));//Tamaño botón
 		        	btnCancelarEmergenteEliminar.setBackground(limon);//Color de fondo
 		        	btnCancelarEmergenteEliminar.setCursor(new Cursor(Cursor.HAND_CURSOR));//Pone el cursor con una manita
-		        	if(macOS) {
-		        		btnCancelarEmergenteEliminar.setOpaque(true);//No transparente
-		        		btnCancelarEmergenteEliminar.setBorder(macOSBorde);//Borde negro fino
-		        	}
 	        
 						//Abre: Acción del btnCancelarEmergenteEliminar
 			        	btnCancelarEmergenteEliminar.addActionListener(new ActionListener() {
@@ -1004,10 +929,6 @@ public class FrameTablero extends JFrame{
 		        	btnBorrarEmergenteEliminar.setPreferredSize(new Dimension(200, 40));//Tamaño
 		        	btnBorrarEmergenteEliminar.setBackground(rojo);//Color de fondo
 		        	btnBorrarEmergenteEliminar.setCursor(new Cursor(Cursor.HAND_CURSOR));//Pone el cursor con una manita
-			        if(macOS) {
-			        	btnBorrarEmergenteEliminar.setOpaque(true);//No transparente
-			        	btnBorrarEmergenteEliminar.setBorder(macOSBorde);//Borde negro fino
-			        }
 	        
 			        	//Abre: Acción del btnCrearListaEmergenteCrearLista
 				        btnBorrarEmergenteEliminar.addActionListener(new ActionListener() {
@@ -1057,14 +978,6 @@ public class FrameTablero extends JFrame{
 
 	public static void setDetalles(boolean detalles) {
 		FrameTablero.detalles = detalles;
-	}
-
-	public static boolean isMacOS() {
-		return macOS;
-	}
-
-	public static void setMacOS(boolean macOS) {
-		FrameTablero.macOS = macOS;
 	}
 
 	public static Controlador getCtrl() {

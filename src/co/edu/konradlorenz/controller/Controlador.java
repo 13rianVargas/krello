@@ -16,17 +16,7 @@ import co.edu.konradlorenz.model.*;
 public class Controlador {
 	
 	//MOSTRAR DETALLES
-	public boolean detalles = false;//true -> mostrar / false -> ocultar //LEE EL TODO DE LA LINEA 21 PORFAVOR
-	public boolean macOS = false;//true -> macOS / false -> Windows
-	
-	/*/ TODO: Añade el este if cuando crees botones pls: 
-	
-		if(macOS) {
-	    	nombreDelBoton.setOpaque(true);//No transparente
-	    	nombreDelBoton.setBorder(macOSBorde);//Borde negro fino
-	    }
-    
-    //*/
+	public boolean detalles = false;//true -> mostrar / false -> ocultar
 
 	private ArrayList<Tablero> listaDeTablerosGlobal = new ArrayList<>();
 	private ArrayList<Lista> listaDeListasGlobal = new ArrayList<>();
