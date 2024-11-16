@@ -1,9 +1,6 @@
 package co.edu.konradlorenz.controller;
 
 import java.awt.Color;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.FocusListener;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
@@ -18,16 +15,17 @@ import co.edu.konradlorenz.model.*;
 public class Controlador {
 	
 	//MOSTRAR DETALLES
-	public boolean detalles = true;//true -> mostrar / false -> ocultar
+	public boolean detalles = false;//true -> mostrar / false -> ocultar //LEE EL TODO DE LA LINEA 21 PORFAVOR
 	public boolean macOS = true;//true -> macOS / false -> Windows
-
-	/*
-	 * protected Administrador objAdministrador = new Administrador(); protected
-	 * Colaborador objColaborador = new Colaborador(); protected Tablero objTablero
-	 * = new Tablero(); protected Lista objLista = new Lista(); protected Tarea
-	 * objTarea = new Tarea(); private ArrayList<Persona> listaPersonasGlobal = new
-	 * ArrayList<>();
-	 */
+	
+	/*/ TODO: Añade el este if cuando crees botones pls: 
+	
+		if(macOS) {
+	    	nombreDelBoton.setOpaque(true);//No transparente
+	    	nombreDelBoton.setBorder(macOSBorde);//Borde negro fino
+	    }
+    
+    //*/
 
 	private ArrayList<Tablero> listaDeTablerosGlobal = new ArrayList<>();
 	private ArrayList<Lista> listaDeListasGlobal = new ArrayList<>();
@@ -41,19 +39,28 @@ public class Controlador {
 	private Tarea tareaAbierta;
 	private Colaborador colaboradorAbierto;
 
+	public void run() {
+		
+		crearEjemplosPersona();
+		
+		/*/ <- Agrega * entre barras para comentar
+		new Login();//El this envía esta instancia del controlador a esa ventana.
+		//*/
+		
+		// <- Agrega * entre barras para comentar
+		new Principal(this);//El this envía esta instancia del controlador a esa ventana.
+		//*/
+		
+		/*/ <- Agrega * entre barras para comentar
+		new FrameTablero(this);//El this envía esta instancia del controlador a esa ventana.
+		//*/
+		
+	}
+	// run
+	
 	// > > > > > > > > > > > > > > > > > > > < < < < < < < < < < < < < < < < < < //
 	// > > > > > > > > > > > > > > > > M E T O D O S < < < < < < < < < < < < < < //
 	// > > > > > > > > > > > > > > > > > > > < < < < < < < < < < < < < < < < < < //
-	public void run() {
-		crearEjemplosPersona();
-		// crear Administrador
-		String nombre = Vista.pedirString("su nombre");
-		String correo = Vista.pedirString("su correo");
-		objAdministrador = new Administrador(nombre, correo, "Administrador");
-
-		ejecutarMenuPrincipal();
-	}
-	// run
 	
 	public void ejecutarMenuPrincipal() {
 		while (true) {
@@ -99,8 +106,8 @@ public class Controlador {
 	 * Metodos de crear objetos Tablero, Lista, Tarea y Persona. -crearPersona() se
 	 * utiliza unicamente en el método crearTarea.
 	 */
-	public Tablero crearTablero(String nombreTablero) {
-		Tablero tablero = new Tablero(nombreTablero);
+	public Tablero crearTablero(String nombreTablero, String nombreAdministrador) {
+		Tablero tablero = new Tablero(nombreTablero, nombreAdministrador);
 		listaDeTablerosGlobal.add(tablero);
 		return tablero;
 	}
@@ -329,45 +336,23 @@ public class Controlador {
 	 * que a los metodos de abrir clases se les puede quitar el if del is.empty,
 	 * menos al de tablero.
 	 */
-	public String abrirAdministrador() {
-		//TODO: Esto es temporal mientras se implementa el Login
-		crearEjemplosPersona();
-		administradorAbierto = (Administrador) listaDePersonasGlobal.get(0);
+	public String getNombreAdministradorAbierto() {
+		administradorAbierto = (Administrador) listaDePersonasGlobal.get(0);//Abre administrador //TODO: Implementar con Login
 		return administradorAbierto.getNombre();
 	}
 	//abrirAdministrador
 	
-	public Tablero abrirTablero() {
-		boolean encontrado = false;
-
-		Tablero tableroAbierto = null;
-
-		if (listaDeTablerosGlobal.isEmpty()) {
-			Vista.mostrarMensaje("No hay tableros creados para abrir.");
-			return null;
-		} else {
-			while (!encontrado) {
-				mostrarTablero();
-				String nombreBusqueda = Vista.pedirString("El nombre del tablero que desea abrir.");
-
-				for (Tablero tablero : listaDeTablerosGlobal) {
-					if (tablero.getNombreTablero().equalsIgnoreCase(nombreBusqueda)) {
-						encontrado = true;
-						tableroAbierto = tablero;
-						break;
-					}
-				}
-
-				if (!encontrado) {
-					Vista.mostrarMensaje("El tablero ingresado no existe, intente de nuevo.");
-				}
-
-			}
-
-			return tableroAbierto;
-		}
+	public String getNombreTableroAbierto() {
+		String nombreTablero = tableroAbierto.getNombreTablero();
+		return nombreTablero;
 	}
-	// abrirTablero
+	// getNombreTableroAbierto
+	
+	public String getNombreAdministradorDeTableroAbierto() {
+		String nombreAdministrador = tableroAbierto.getNombreAdministrador();
+		return nombreAdministrador;
+	}
+	// getNombreTableroAbierto
 
 	public Lista abrirLista() {
 		
@@ -528,6 +513,7 @@ public class Controlador {
 		listaDePersonasGlobal.add(new Colaborador("Juan Perez", "juan.perez@example.com", "Colaborador"));
 		listaDePersonasGlobal.add(new Colaborador("Pedro Lopez", "pedro.lopez@example.com", "Colaborador"));
 		listaDePersonasGlobal.add(new Colaborador("Maria Guzman", "maria.garcia@example.com", "Colaborador"));
+		
 	}
 	
 	public boolean asignarTarea(Persona persona) {//TODO: Crear lista de personas global
@@ -593,7 +579,7 @@ public class Controlador {
 		}
 		
 	    if(!Principal.getFramePrincipal().isActive()) {//Si no está abierto
-	    	new Principal();//Crea nuevo
+	    	new Principal(this);//Crea nuevo, el this envía esta instancia del controlador a esa ventana.
 	    }
 	    
 	}
@@ -652,11 +638,12 @@ public class Controlador {
 			timer.start();
 		} else {
 			String nombreTablero = Principal.getTxtFieldIngresarNombreEmergenteCrearTablero().getText(); // Obtiene el texto
-		    tableroAbierto = crearTablero(nombreTablero);//Crea el tablero lógico y lo guarda
+			String nombreAdministrador = administradorAbierto.getNombre();
+		    tableroAbierto = crearTablero(nombreTablero, nombreAdministrador);//Crea el tablero lógico y lo guarda
 
 		    Principal.getFramePrincipal().dispose();//Cierra el frame principal
 
-		    new FrameTablero();//Crea nuevo
+		    new FrameTablero(this);//Crea nuevo
 		    
 		}//if crearTablero
 	}

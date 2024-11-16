@@ -12,11 +12,11 @@ import co.edu.konradlorenz.controller.*;
 public class Principal extends JFrame {
 	
 	//CONTROLADOR
-	private static Controlador ctrl = new Controlador();
+	private static Controlador ctrl;
 	
 	//MOSTRAR DETALLES
-	private static boolean detalles = ctrl.detalles;//Ahora se cambia en el Controller para que actue en todo el GUI.
-	private static boolean macOS = ctrl.macOS;	//Ahora se cambia en el Controller para que actue en todo el GUI.
+	private static boolean detalles;
+	private static boolean macOS;
 
 	//FRAMES
 	private static JFrame framePrincipal;
@@ -82,8 +82,12 @@ public class Principal extends JFrame {
 	// -- // -- // -- // -- // -- // -- //
 	
     //Abre: Constructor del frame Principal
-    public Principal(){
+    public Principal(Controlador controlador){
 
+    	ctrl = controlador;//Llama al controller del AplMain
+    	detalles = ctrl.detalles;//Ahora se cambia en el Controller para que actue en todo el GUI.
+    	macOS = ctrl.macOS;	//Ahora se cambia en el Controller para que actue en todo el GUI.
+    	
     	framePrincipal = new JFrame();
     	framePrincipal.setDefaultCloseOperation(EXIT_ON_CLOSE); //Terminar la ejecución si se cierra la ventana
     	framePrincipal.setTitle("Krello - Mis Tableros");//Título de la ventana
@@ -172,7 +176,7 @@ public class Principal extends JFrame {
 	        panelHolaUser.add(lblHola);//Añade lblHola
 
         		//Abrir: lblUser
-	        	String nombreUsuario = ctrl.abrirAdministrador();
+	        	String nombreUsuario = ctrl.getNombreAdministradorAbierto();
 		        JLabel lblUser = new JLabel(nombreUsuario);//Crea nuevo //TODO: Agregar nombre genérico xd
 		        lblUser.setFont(new Font("Arial", Font.ITALIC, 22));//Cambia la letra del interior
 		        lblUser.setBackground(petroleo);//Color de fondo
@@ -272,8 +276,8 @@ public class Principal extends JFrame {
 	    	panelMisTableros.setOpaque(detalles);//Mostrar detalles
     	
 	        	//Abre: lblMisTableros
-		        JLabel lblMisTableros = new JLabel("Mis Tableros");//Crea nuevo
-		        lblMisTableros.setFont(new Font("Arial", Font.PLAIN, 30));//Cambia la letra del interior
+		        JLabel lblMisTableros = new JLabel("MIS TABLEROS");//Crea nuevo
+		        lblMisTableros.setFont(new Font("Inter", Font.PLAIN, 40));//Cambia la letra del interior
 		        lblMisTableros.setBackground(limon);//Color de fondo
 		        lblMisTableros.setOpaque(detalles);//Mostrar detalles
 		    	//Cierra: lblMisTableros
@@ -760,6 +764,14 @@ public class Principal extends JFrame {
 	 // -- // -- // GET & SET// -- // -- //
 	// -- // -- // -- // -- // -- // -- //
 
+	public static Controlador getCtrl() {
+		return ctrl;
+	}
+
+	public static void setCtrl(Controlador ctrl) {
+		Principal.ctrl = ctrl;
+	}
+
 	public static boolean isDetalles() {
 		return detalles;
 	}
@@ -774,14 +786,6 @@ public class Principal extends JFrame {
 
 	public static void setMacOS(boolean macOS) {
 		Principal.macOS = macOS;
-	}
-
-	public static Controlador getCtrl() {
-		return ctrl;
-	}
-
-	public static void setCtrl(Controlador ctrl) {
-		Principal.ctrl = ctrl;
 	}
 
 	public static JFrame getFramePrincipal() {
@@ -848,6 +852,30 @@ public class Principal extends JFrame {
 	public static void setTxtFieldIngresarCorreoEmergenteAgregarInvitados(
 			JTextField txtFieldIngresarCorreoEmergenteAgregarInvitados) {
 		Principal.txtFieldIngresarCorreoEmergenteAgregarInvitados = txtFieldIngresarCorreoEmergenteAgregarInvitados;
+	}
+
+	public static JLabel getLblKrelloLogo() {
+		return lblKrelloLogo;
+	}
+
+	public static void setLblKrelloLogo(JLabel lblKrelloLogo) {
+		Principal.lblKrelloLogo = lblKrelloLogo;
+	}
+
+	public static JLabel getLblCasaLogo() {
+		return lblCasaLogo;
+	}
+
+	public static void setLblCasaLogo(JLabel lblCasaLogo) {
+		Principal.lblCasaLogo = lblCasaLogo;
+	}
+
+	public static JLabel getLblCerrarSesion() {
+		return lblCerrarSesion;
+	}
+
+	public static void setLblCerrarSesion(JLabel lblCerrarSesion) {
+		Principal.lblCerrarSesion = lblCerrarSesion;
 	}
 
 	public static JButton getBtnCrearTablero() {
@@ -1058,6 +1086,6 @@ public class Principal extends JFrame {
 	public static void setMensajeIngresarCorreo(String mensajeIngresarCorreo) {
 		Principal.mensajeIngresarCorreo = mensajeIngresarCorreo;
 	}
- 
+	
 }
 //class

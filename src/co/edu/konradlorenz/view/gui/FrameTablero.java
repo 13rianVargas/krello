@@ -12,11 +12,11 @@ import co.edu.konradlorenz.controller.*;
 public class FrameTablero extends JFrame{
 	
 	//CONTROLADOR
-	private static Controlador ctrl = new Controlador();
+	private static Controlador ctrl;
 	
 	//MOSTRAR DETALLES
-	private static boolean detalles = ctrl.detalles;//Ahora se cambia en el Controller para que actue en todo el GUI.
-	private static boolean macOS = ctrl.macOS;	//Ahora se cambia en el Controller para que actue en todo el GUI.
+	private static boolean detalles;
+	private static boolean macOS;
 
 	//FRAMES
 	private static JFrame frameTablero;
@@ -91,7 +91,11 @@ public class FrameTablero extends JFrame{
 	// -- // -- // -- // -- // -- // -- //
 	
     //Abre: Constructor del frame Tablero
- 	public FrameTablero(){
+ 	public FrameTablero(Controlador controlador){
+ 		
+    	ctrl = controlador;//Llama al controller del AplMain
+    	detalles = ctrl.detalles;//Ahora se cambia en el Controller para que actue en todo el GUI.
+    	macOS = ctrl.macOS;	//Ahora se cambia en el Controller para que actue en todo el GUI.
 
  		frameTablero = new JFrame();
 		frameTablero.setDefaultCloseOperation(EXIT_ON_CLOSE); //Terminar la ejecución si se cierra la ventana
@@ -145,7 +149,8 @@ public class FrameTablero extends JFrame{
 		    	panelTitulos.setOpaque(detalles);//Mostrar detalles
 	        
 		        	//Abre: lblTituloTablero
-			    	JLabel lblTituloTablero = new JLabel("Nombre del proyecto:(");//Crea nuevo //TODO: Debe ir el nombre del proyecto
+		    		String nombreTablerto = ctrl.getNombreTableroAbierto();
+			    	JLabel lblTituloTablero = new JLabel(nombreTablerto);//Crea nuevo
 			    	lblTituloTablero.setFont(new Font("Arial", Font.BOLD, 24));//Cambia la letra del interior
 			    	lblTituloTablero.setForeground(negro);//Color de letra
 			    	lblTituloTablero.setBackground(verde);//Color de fondo
@@ -155,9 +160,10 @@ public class FrameTablero extends JFrame{
 		    	panelTitulos.add(lblTituloTablero);//Añade lblTituloTablero
 			    	
 			    	//Abre: lblAdminTablero
-			    	JLabel lblAdminTablero = new JLabel("Tablero de: "+" administrador :(");//Crea nuevo //TODO: Agregar el nombre del dueño
+		    		String nombreAdministrador = ctrl.getNombreAdministradorDeTableroAbierto();
+			    	JLabel lblAdminTablero = new JLabel("Tablero de: " + nombreAdministrador);//Crea nuevo //TODO: Agregar el nombre del dueño
 			    	lblAdminTablero.setFont(new Font("Arial", Font.ITALIC, 14));//Cambia la letra del interior
-			    	lblAdminTablero.setForeground(grisClaro);//Color de letra
+			    	lblAdminTablero.setForeground(gris);//Color de letra
 			    	lblAdminTablero.setBackground(negro);//Color de fondo
 			    	lblAdminTablero.setOpaque(detalles);//Mostrar detalles
 			    	//Cierra: lblAdminTablero
