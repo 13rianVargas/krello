@@ -2,6 +2,7 @@ package co.edu.konradlorenz.controller;
 
 import java.awt.Color;
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.FocusListener;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -13,6 +14,7 @@ import javax.swing.border.Border;
 
 import co.edu.konradlorenz.view.Vista;
 import co.edu.konradlorenz.view.gui.FrameTablero;
+import co.edu.konradlorenz.view.gui.Login;
 import co.edu.konradlorenz.view.gui.Principal;
 import co.edu.konradlorenz.model.*;
 
@@ -628,6 +630,67 @@ public class Controlador {
 	}
 	//Cierra: actionBtnCancelarEmergenteCrearTablero
 
+	//Abre: actionBtnContinuarLogin
+	/*public void actionBtnContinuarLogin(ActionEvent evento) {
+		ActionListener enterLogin = new ActionListener() {
+	            
+	            String correo = Login.getTxtLoginCorreo().getText();
+	            String pin = new String(Login.getPwdContraseña().getPassword());
+	            
+				boolean validacion = controlador.validarCredenciales(numeroTarjeta, pin);
+				if(validacion) {
+					konradBank.remove(bodyLogin);//Elimina panel actual
+					konradBank.add(bodyMenuPrincipal());//Agrega nuevo panel
+					konradBank.revalidate();//Recargar
+					konradBank.repaint();//Recargar
+				} else {
+					//Inicializo los bordes
+					Border redBorder = BorderFactory.createLineBorder(Color.RED, 3);
+					Border blueBorder = BorderFactory.createLineBorder(Color.BLUE, 2);
+					
+					//Inicializo colores para el botón
+					Color redColor = Color.RED;
+					Color blueColor = Color.BLUE;
+					
+					//Agrego los colores y bordes
+					btnIngresar.setBorder(redBorder);
+					btnIngresar.setBackground(redColor);
+					txtField.setBorder(redBorder);
+					pwdField.setBorder(redBorder);
+					
+					
+					//Contador para alternar bordes
+					final int[] contador = {0};
+					
+					//Alternador de bordes
+					Timer timer = new Timer(150, event -> { // Cambia cada 150 ms
+			            if (contador[0] < 6) { // Se repetirá 3 veces, 3 rojas y 3 azules = 6
+			                Border bordeActual = (contador[0] % 2 == 0) ? redBorder : blueBorder; //Op ternario
+			                Color colorActual = (contador[0] % 2 == 0) ? redColor : blueColor; //Op ternario x2
+			                txtField.setBorder(bordeActual);
+			                pwdField.setBorder(bordeActual);
+			                btnIngresar.setBorder(bordeActual);
+			                btnIngresar.setBackground(colorActual);
+			                
+			                contador[0]++;
+			            } else {
+			                ((Timer) event.getSource()).stop(); //Detiene el Timer
+			            }
+			        });
+					
+					timer.start();
+				}
+				
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					// TODO Auto-generated method stub
+					
+				}
+	        
+	    };
+	
+	}*/
+	//Cierra: actionBtnContinuarLogin
 	
 	
 	//AGREGAR INVITADOS

@@ -4,46 +4,45 @@ package co.edu.konradlorenz.view.gui;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Image;
+import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 
 import javax.swing.*;
 import javax.swing.border.*;
-
-import co.edu.konradlorenz.controller.FocusEvent;
 
 @SuppressWarnings("serial")
 public class Login extends JFrame {
 	
 	
 	//FRAMES
-	JFrame frameLogin = new JFrame();
+	private static JFrame frameLogin = new JFrame();
 	
 	//PANELS
 	//JPanel invisiblePanel = new JPanel(); //PENDIENTE -> Este JPanel permite que el autofocus no sea el primer campo de texto. 
-	JPanel panelLoginHead;
-	JPanel panelLoginBody;
-	JPanel panelRegisterBody;
+	private static JPanel panelLoginHead;
+	private static JPanel panelLoginBody;
+	private static JPanel panelRegisterBody;
 	
 	//LABELS
-	JLabel lblLogin;
+	private static JLabel lblLogin;
 	
 	//TEXTFIELDS
-	JTextField txtLoginCorreo;
-	JTextField txtLoginNombre;
-	JTextField txtRegisterCorreo;
-	JTextField txtRegisterNombre;
+	private static JTextField txtLoginCorreo;
+	private static JTextField txtLoginNombre;
+	private static JTextField txtRegisterCorreo;
+	private static JTextField txtRegisterNombre;
 	
 	//PASSWORDFIELDS
-	JPasswordField pwdContraseña;
-	JPasswordField pwdReContraseña;
-	JPasswordField pwdReContraseñaDos;
+	private static JPasswordField pwdContraseña;
+	private static JPasswordField pwdReContraseña;
+	private static JPasswordField pwdReContraseñaDos;
 	
 	//BUTTONS
-	JButton btnLoginContinuar;
-	JButton btnLoginPanelCrearCuenta;
-	JButton btnLoginCrearCuenta;
-	JButton btnLoginRegresar;
-	JButton btnRegisterCrearCuenta;
+	private static JButton btnLoginContinuar;
+	private static JButton btnLoginPanelCrearCuenta;
+	private static JButton btnLoginCrearCuenta;
+	private static JButton btnLoginRegresar;
+	private static JButton btnRegisterCrearCuenta;
 	
 	//Colores
 	private static Color blanquito = new Color(255, 255, 255);
@@ -51,10 +50,11 @@ public class Login extends JFrame {
 	private static Color azulito = new Color(31, 165, 163);
 	
 	//Strings
-	private String mensajeIniciarSesionLogin="Inicia sesión para continuar", mensajeIngresarCorreoLogin="Ingresa tu correo", mensajeIngresarContraseñaLogin="Ingresa tu contraseña"
-			, mensajeBtnContinuarLogin="Continuar", mensajeBtnCrearCuentaLogin="Crear cuenta";
-	private String mensajeCrearCuentaRegister="Crear una cuenta", ingresarCorreoRegister="Ingresa tu correo", ingresarNombreRegister="Ingresa tu nombre",
-			ingresarContraseñaRegister="Ingresa tu contraseña", ingresarReContraseñaRegister="Re-ingresa tu contraseña", mensajeBtnCrearCuentaRegister="Crear cuenta", mensajeBtnRegresarRegistrar="< Regresar";
+		private static String mensajeIniciarSesionLogin="Inicia sesión para continuar", mensajeIngresarCorreoLogin="Ingresa tu correo", mensajeIngresarContraseñaLogin="Ingresa tu contraseña"
+				, mensajeBtnContinuarLogin="Continuar", mensajeBtnCrearCuentaLogin="Crear cuenta";
+		private static String mensajeCrearCuentaRegister="Crear una cuenta", ingresarCorreoRegister="Ingresa tu correo", ingresarNombreRegister="Ingresa tu nombre",
+				ingresarContraseñaRegister="Ingresa tu contraseña", ingresarReContraseñaRegister="Re-ingresa tu contraseña", mensajeBtnCrearCuentaRegister="Crear cuenta", mensajeBtnRegresarRegistrar="< Regresar";
+		
 	
 	//Método constructor del frame Login
 	public Login () {
@@ -70,8 +70,8 @@ public class Login extends JFrame {
 		panelLoginHead = panelLoginHead();
 		frameLogin.add(panelLoginHead);
 		
-		panelLoginBody = panelLoginBody();
-		frameLogin.add(panelLoginBody);
+		//panelLoginBody = panelLoginBody();
+		//frameLogin.add(panelLoginBody);
 		
 		panelRegisterBody = panelRegisterBody();
 		frameLogin.add(panelRegisterBody);
@@ -81,30 +81,33 @@ public class Login extends JFrame {
 	//*/Login
 	
 	//Método para crear panelLoginHead
-	private JPanel panelLoginHead() {
-		
-		JPanel panelLoginHead = new JPanel();
-		panelLoginHead.setLayout(null);//Desactiva el control automático de paneles	   
-		panelLoginHead.setBounds(0, 0, 405, 150);//x,y,ancho,alto
-		panelLoginHead.setBackground(Color.white);//Fondo del panel
-		panelLoginHead.setOpaque(true);//false -> transparente
-		
-			JLabel lblKrelloLogo = new JLabel();
-			ImageIcon logo= new ImageIcon(getClass().getResource("/co/edu/konradlorenz/view/img/KrelloLogo187x60.png"));//Ruta de la imagen
-			Image logored= logo.getImage();
-			logored= logored.getScaledInstance(220, 70, logored.SCALE_SMOOTH);
-			lblKrelloLogo.setIcon(new ImageIcon(logored));
-			lblKrelloLogo.setBounds(0, 5, 405, 150);//x,y,ancho,altura
-			lblKrelloLogo.setHorizontalAlignment(SwingConstants.CENTER);//Centrar Horizontalmente
-	        
-			panelLoginHead.add(lblKrelloLogo);
-	        
-		return panelLoginHead;
-	}
+	public static JPanel panelLoginHead() {
+	    JPanel panelLoginHead = new JPanel();
+	    panelLoginHead.setLayout(null); // Desactiva el control automático de paneles
+	    panelLoginHead.setBounds(0, 0, 405, 150); // x, y, ancho, alto
+	    panelLoginHead.setBackground(Color.white); // Fondo del panel
+	    panelLoginHead.setOpaque(true); // false -> transparente
+
+	    JLabel lblKrelloLogo = new JLabel();
+	    // Usa la clase específica en lugar de getClass()
+	    ImageIcon logo = new ImageIcon(Login.class.getResource("/co/edu/konradlorenz/view/img/KrelloLogo187x60.png"));
+	    if (logo.getImage() == null) {
+	        System.err.println("No se pudo cargar el recurso: KrelloLogo187x60.png");
+	    }
+	    Image logored = logo.getImage();
+	    logored = logored.getScaledInstance(220, 70, Image.SCALE_SMOOTH); // Cambiar "logored.SCALE_SMOOTH" a "Image.SCALE_SMOOTH"
+	    lblKrelloLogo.setIcon(new ImageIcon(logored));
+	    lblKrelloLogo.setBounds(0, 5, 405, 150); // x, y, ancho, altura
+	    lblKrelloLogo.setHorizontalAlignment(SwingConstants.CENTER); // Centrar Horizontalmente
+
+	    panelLoginHead.add(lblKrelloLogo);
+
+	    return panelLoginHead;
+	} 
 	//*/panelLoginHead
 	
 	//Método para crear panelLoginBody
-	private JPanel panelLoginBody() {
+	public static JPanel panelLoginBody() {
 		
 		JPanel panelLoginBody= new JPanel();
 		panelLoginBody.setLayout(null);//Desacriva el control automatico de paneles
@@ -129,17 +132,58 @@ public class Login extends JFrame {
 			txtLoginCorreo.setFont(new Font("Calibri", Font.ITALIC, 15));
 			txtLoginCorreo.setForeground(Color.gray);
 			
+			txtLoginCorreo.addFocusListener(new FocusListener() {
+		        @Override
+		        public void focusGained(FocusEvent e) {
+		            if (new String(txtLoginCorreo.getText()).equals(mensajeIngresarCorreoLogin)) {
+		            	txtLoginCorreo.setText("");
+		            	txtLoginCorreo.setForeground(Color.BLACK);
+		            }
+		        }
+
+		        @Override
+		        public void focusLost(FocusEvent e) {
+		            //Si el campo de texto está vacío al perder el foco, restaurar el placeholder
+		            if (txtLoginCorreo.getText().length() == 0) {
+		            	txtLoginCorreo.setForeground(Color.GRAY);
+		            	txtLoginCorreo.setText(mensajeIngresarCorreoLogin);//Restaurar el texto placeholder
+		            }
+		        }
+		    });
+		    //TODO
+			//txtLoginCorreo.addActionListener(enterLogin);
+			
 		panelLoginBody.add(txtLoginCorreo);
 		
-		
-			//Revisar el focus para que el mensaje se revise correctamente :)
 			pwdContraseña= new JPasswordField(mensajeIngresarContraseñaLogin);
 			pwdContraseña.setHorizontalAlignment(SwingConstants.CENTER);
 			pwdContraseña.setBackground(Color.LIGHT_GRAY);
 			pwdContraseña.setBounds(47, 220, 295, 40);
 			pwdContraseña.setFont(new Font("Calibri", Font.ITALIC, 15));
 			pwdContraseña.setForeground(Color.gray);
-		
+			
+			pwdContraseña.addFocusListener(new FocusListener() {
+		        @Override
+		        public void focusGained(FocusEvent e) {
+		            if (new String(pwdContraseña.getPassword()).equals(mensajeIngresarContraseñaLogin)) {
+		            	pwdContraseña.setText("");
+		            	pwdContraseña.setForeground(Color.BLACK);
+		            	pwdContraseña.setEchoChar('•');//Mostrar puntos
+		            }
+		        }
+
+		        @Override
+		        public void focusLost(FocusEvent e) {
+		            //Si el campo de texto está vacío al perder el foco, restaurar el placeholder
+		            if (pwdContraseña.getPassword().length == 0) {
+		            	pwdContraseña.setForeground(Color.GRAY);
+		            	pwdContraseña.setText(mensajeIngresarContraseñaLogin);//Restaurar el texto placeholder
+		            	pwdContraseña.setEchoChar((char) 0);//No mostrar puntos
+		            }
+		        }
+		    });
+		    //TODO
+			//pwdContraseña.addActionListener(enterLogin);		
 		panelLoginBody.add(pwdContraseña);
 		
 			btnLoginContinuar = new JButton(mensajeBtnContinuarLogin);
@@ -171,7 +215,7 @@ public class Login extends JFrame {
 	
 	//Register
 		//Panel registerBody
-	private JPanel panelRegisterBody() {
+	public static  JPanel panelRegisterBody() {
 		JPanel panelRegisterBody= new JPanel();
 		panelRegisterBody.setLayout(null);
 		panelRegisterBody.setBounds(0, 100, 405, 530);
@@ -193,6 +237,27 @@ public class Login extends JFrame {
 			txtRegisterCorreo.setFont(new Font("Arial", Font.ITALIC, 15));
 			txtRegisterCorreo.setForeground(Color.gray);
 			
+			txtRegisterCorreo.addFocusListener(new FocusListener() {
+		        @Override
+		        public void focusGained(FocusEvent e) {
+		            if (new String(txtRegisterCorreo.getText()).equals(ingresarCorreoRegister)) {
+		            	txtRegisterCorreo.setText("");
+		            	txtRegisterCorreo.setForeground(Color.BLACK);
+		            }
+		        }
+
+		        @Override
+		        public void focusLost(FocusEvent e) {
+		            //Si el campo de texto está vacío al perder el foco, restaurar el placeholder
+		            if (txtRegisterCorreo.getText().length() == 0) {
+		            	txtRegisterCorreo.setForeground(Color.GRAY);
+		            	txtRegisterCorreo.setText(ingresarCorreoRegister);//Restaurar el texto placeholder
+		            }
+		        }
+		    });
+		    //TODO
+			//txtRegisterCorreo.addActionListener(enterLogin);
+			
 			panelRegisterBody.add(txtRegisterCorreo);
 			
 			txtRegisterNombre= new JTextField(ingresarNombreRegister);
@@ -202,6 +267,27 @@ public class Login extends JFrame {
 			txtRegisterNombre.setFont(new Font("Arial", Font.ITALIC, 15));
 			txtRegisterNombre.setForeground(Color.gray);
 			
+			txtRegisterNombre.addFocusListener(new FocusListener() {
+		        @Override
+		        public void focusGained(FocusEvent e) {
+		            if (new String(txtRegisterNombre.getText()).equals(ingresarNombreRegister)) {
+		            	txtRegisterNombre.setText("");
+		            	txtRegisterNombre.setForeground(Color.BLACK);
+		            }
+		        }
+
+		        @Override
+		        public void focusLost(FocusEvent e) {
+		            //Si el campo de texto está vacío al perder el foco, restaurar el placeholder
+		            if (txtRegisterNombre.getText().length() == 0) {
+		            	txtRegisterNombre.setForeground(Color.GRAY);
+		            	txtRegisterNombre.setText(ingresarNombreRegister);//Restaurar el texto placeholder
+		            }
+		        }
+		    });
+		    //TODO
+		    //pwdField.addActionListener(enterLogin);
+
 			panelRegisterBody.add(txtRegisterNombre);
 			
 			pwdReContraseña= new JPasswordField(ingresarContraseñaRegister);
@@ -210,6 +296,30 @@ public class Login extends JFrame {
 			pwdReContraseña.setBounds(47, 260, 295, 40);
 			pwdReContraseña.setFont(new Font("Calibri", Font.ITALIC, 15));
 			pwdReContraseña.setForeground(Color.GRAY);
+			
+			pwdReContraseña.addFocusListener(new FocusListener() {
+		        @Override
+		        public void focusGained(FocusEvent e) {
+		            if (new String(pwdReContraseña.getPassword()).equals(ingresarContraseñaRegister)) {
+		            	pwdReContraseña.setText("");
+		            	pwdReContraseña.setForeground(Color.BLACK);
+		            	pwdReContraseña.setEchoChar('•');//Mostrar puntos
+		            }
+		        }
+
+		        @Override
+		        public void focusLost(FocusEvent e) {
+		            //Si el campo de texto está vacío al perder el foco, restaurar el placeholder
+		            if (pwdReContraseña.getPassword().length == 0) {
+		            	pwdReContraseña.setForeground(Color.GRAY);
+		                pwdReContraseña.setText(ingresarContraseñaRegister);//Restaurar el texto placeholder
+		                pwdReContraseña.setEchoChar((char) 0);//No mostrar puntos
+		            }
+		        }
+		    });
+		    //TODO crear metodo para que parpadee
+			//pwdReContraseña.addActionListener(enterLogin);
+			
 			
 			panelRegisterBody.add(pwdReContraseña);
 			
@@ -220,6 +330,29 @@ public class Login extends JFrame {
 			pwdReContraseñaDos.setFont(new Font("Calibri", Font.ITALIC, 15));
 			pwdReContraseñaDos.setForeground(Color.GRAY);
 			
+			pwdReContraseñaDos.addFocusListener(new FocusListener() {
+		        @Override
+		        public void focusGained(FocusEvent e) {
+		            if (new String(pwdReContraseñaDos.getPassword()).equals(ingresarReContraseñaRegister)) {
+		            	pwdReContraseñaDos.setText("");
+		            	pwdReContraseñaDos.setForeground(Color.BLACK);
+		            	pwdReContraseñaDos.setEchoChar('•');//Mostrar puntos
+		            }
+		        }
+
+		        @Override
+		        public void focusLost(FocusEvent e) {
+		            //Si el campo de texto está vacío al perder el foco, restaurar el placeholder
+		            if (pwdReContraseñaDos.getPassword().length == 0) {
+		            	pwdReContraseñaDos.setForeground(Color.GRAY);
+		            	pwdReContraseñaDos.setText(ingresarReContraseñaRegister);//Restaurar el texto placeholder
+		            	pwdReContraseñaDos.setEchoChar((char) 0);//No mostrar puntos
+		            }
+		        }
+		    });
+		    
+			//TODO
+			//pwdReContraseñaDos.addActionListener(enterLogin);
 			panelRegisterBody.add(pwdReContraseñaDos);
 		
 			btnRegisterCrearCuenta= new JButton(mensajeBtnCrearCuentaRegister);
@@ -244,142 +377,141 @@ public class Login extends JFrame {
 			return panelRegisterBody;		
 	}
 
-	
-	
-	public JFrame getFrameLogin() {
+	//Getters and Setters
+	public static JFrame getFrameLogin() {
 		return frameLogin;
 	}
 
-	public void setFrameLogin(JFrame frameLogin) {
-		this.frameLogin = frameLogin;
+	public static void setFrameLogin(JFrame frameLogin) {
+		Login.frameLogin = frameLogin;
 	}
-
-	public JPanel getPanelLoginHead() {
+	
+	public static JPanel getPanelLoginHead() {
 		return panelLoginHead;
 	}
 
-	public void setPanelLoginHead(JPanel panelLoginHead) {
-		this.panelLoginHead = panelLoginHead;
+	public static void setPanelLoginHead(JPanel panelLoginHead) {
+		Login.panelLoginHead = panelLoginHead;
 	}
 
-	public JPanel getPanelLoginBody() {
+	public static JPanel getPanelLoginBody() {
 		return panelLoginBody;
 	}
 
-	public void setPanelLoginBody(JPanel panelLoginBody) {
-		this.panelLoginBody = panelLoginBody;
+	public static void setPanelLoginBody(JPanel panelLoginBody) {
+		Login.panelLoginBody = panelLoginBody;
 	}
 
-	public JPanel getPanelRegisterBody() {
+	public static JPanel getPanelRegisterBody() {
 		return panelRegisterBody;
 	}
 
-	public void setPanelRegisterBody(JPanel panelRegisterBody) {
-		this.panelRegisterBody = panelRegisterBody;
+	public static void setPanelRegisterBody(JPanel panelRegisterBody) {
+		Login.panelRegisterBody = panelRegisterBody;
 	}
 
-	public JLabel getLblLogin() {
+	public static JLabel getLblLogin() {
 		return lblLogin;
 	}
 
-	public void setLblLogin(JLabel lblLogin) {
-		this.lblLogin = lblLogin;
+	public static void setLblLogin(JLabel lblLogin) {
+		Login.lblLogin = lblLogin;
 	}
 
-	public JTextField getTxtLoginCorreo() {
+	public static JTextField getTxtLoginCorreo() {
 		return txtLoginCorreo;
 	}
 
-	public void setTxtLoginCorreo(JTextField txtLoginCorreo) {
-		this.txtLoginCorreo = txtLoginCorreo;
+	public static void setTxtLoginCorreo(JTextField txtLoginCorreo) {
+		Login.txtLoginCorreo = txtLoginCorreo;
 	}
 
-	public JTextField getTxtLoginNombre() {
+	public static JTextField getTxtLoginNombre() {
 		return txtLoginNombre;
 	}
 
-	public void setTxtLoginNombre(JTextField txtLoginNombre) {
-		this.txtLoginNombre = txtLoginNombre;
+	public static void setTxtLoginNombre(JTextField txtLoginNombre) {
+		Login.txtLoginNombre = txtLoginNombre;
 	}
 
-	public JTextField getTxtRegisterCorreo() {
+	public static JTextField getTxtRegisterCorreo() {
 		return txtRegisterCorreo;
 	}
 
-	public void setTxtRegisterCorreo(JTextField txtRegisterCorreo) {
-		this.txtRegisterCorreo = txtRegisterCorreo;
+	public static void setTxtRegisterCorreo(JTextField txtRegisterCorreo) {
+		Login.txtRegisterCorreo = txtRegisterCorreo;
 	}
 
-	public JTextField getTxtRegisterNombre() {
+	public static JTextField getTxtRegisterNombre() {
 		return txtRegisterNombre;
 	}
 
-	public void setTxtRegisterNombre(JTextField txtRegisterNombre) {
-		this.txtRegisterNombre = txtRegisterNombre;
+	public static void setTxtRegisterNombre(JTextField txtRegisterNombre) {
+		Login.txtRegisterNombre = txtRegisterNombre;
 	}
 
-	public JPasswordField getPwdContraseña() {
+	public static JPasswordField getPwdContraseña() {
 		return pwdContraseña;
 	}
 
-	public void setPwdContraseña(JPasswordField pwdContraseña) {
-		this.pwdContraseña = pwdContraseña;
+	public static void setPwdContraseña(JPasswordField pwdContraseña) {
+		Login.pwdContraseña = pwdContraseña;
 	}
 
-	public JPasswordField getPwdReContraseña() {
+	public static JPasswordField getPwdReContraseña() {
 		return pwdReContraseña;
 	}
 
-	public void setPwdReContraseña(JPasswordField pwdReContraseña) {
-		this.pwdReContraseña = pwdReContraseña;
+	public static void setPwdReContraseña(JPasswordField pwdReContraseña) {
+		Login.pwdReContraseña = pwdReContraseña;
 	}
 
-	public JPasswordField getPwdReContraseñaDos() {
+	public static JPasswordField getPwdReContraseñaDos() {
 		return pwdReContraseñaDos;
 	}
 
-	public void setPwdReContraseñaDos(JPasswordField pwdReContraseñaDos) {
-		this.pwdReContraseñaDos = pwdReContraseñaDos;
+	public static void setPwdReContraseñaDos(JPasswordField pwdReContraseñaDos) {
+		Login.pwdReContraseñaDos = pwdReContraseñaDos;
 	}
 
-	public JButton getBtnLoginContinuar() {
+	public static JButton getBtnLoginContinuar() {
 		return btnLoginContinuar;
 	}
 
-	public void setBtnLoginContinuar(JButton btnLoginContinuar) {
-		this.btnLoginContinuar = btnLoginContinuar;
+	public static void setBtnLoginContinuar(JButton btnLoginContinuar) {
+		Login.btnLoginContinuar = btnLoginContinuar;
 	}
 
-	public JButton getBtnLoginPanelCrearCuenta() {
+	public static JButton getBtnLoginPanelCrearCuenta() {
 		return btnLoginPanelCrearCuenta;
 	}
 
-	public void setBtnLoginPanelCrearCuenta(JButton btnLoginPanelCrearCuenta) {
-		this.btnLoginPanelCrearCuenta = btnLoginPanelCrearCuenta;
+	public static void setBtnLoginPanelCrearCuenta(JButton btnLoginPanelCrearCuenta) {
+		Login.btnLoginPanelCrearCuenta = btnLoginPanelCrearCuenta;
 	}
 
-	public JButton getBtnLoginCrearCuenta() {
+	public static JButton getBtnLoginCrearCuenta() {
 		return btnLoginCrearCuenta;
 	}
 
-	public void setBtnLoginCrearCuenta(JButton btnLoginCrearCuenta) {
-		this.btnLoginCrearCuenta = btnLoginCrearCuenta;
+	public static void setBtnLoginCrearCuenta(JButton btnLoginCrearCuenta) {
+		Login.btnLoginCrearCuenta = btnLoginCrearCuenta;
 	}
 
-	public JButton getBtnLoginRegresar() {
+	public static JButton getBtnLoginRegresar() {
 		return btnLoginRegresar;
 	}
 
-	public void setBtnLoginRegresar(JButton btnLoginRegresar) {
-		this.btnLoginRegresar = btnLoginRegresar;
+	public static void setBtnLoginRegresar(JButton btnLoginRegresar) {
+		Login.btnLoginRegresar = btnLoginRegresar;
 	}
 
-	public JButton getBtnRegisterCrearCuenta() {
+	public static JButton getBtnRegisterCrearCuenta() {
 		return btnRegisterCrearCuenta;
 	}
 
-	public void setBtnRegisterCrearCuenta(JButton btnRegisterCrearCuenta) {
-		this.btnRegisterCrearCuenta = btnRegisterCrearCuenta;
+	public static void setBtnRegisterCrearCuenta(JButton btnRegisterCrearCuenta) {
+		Login.btnRegisterCrearCuenta = btnRegisterCrearCuenta;
 	}
 
 	public static Color getBlanquito() {
@@ -406,102 +538,106 @@ public class Login extends JFrame {
 		Login.azulito = azulito;
 	}
 
+	
 	public String getMensajeIniciarSesionLogin() {
 		return mensajeIniciarSesionLogin;
 	}
 
-	public void setMensajeIniciarSesionLogin(String mensajeIniciarSesionLogin) {
-		this.mensajeIniciarSesionLogin = mensajeIniciarSesionLogin;
-	}
+	
 
-	public String getMensajeIngresarCorreoLogin() {
+	public static String getMensajeIngresarCorreoLogin() {
 		return mensajeIngresarCorreoLogin;
 	}
 
-	public void setMensajeIngresarCorreoLogin(String mensajeIngresarCorreoLogin) {
-		this.mensajeIngresarCorreoLogin = mensajeIngresarCorreoLogin;
+	public static void setMensajeIngresarCorreoLogin(String mensajeIngresarCorreoLogin) {
+		Login.mensajeIngresarCorreoLogin = mensajeIngresarCorreoLogin;
 	}
 
-
-
-	public String getMensajeBtnContinuarLogin() {
-		return mensajeBtnContinuarLogin;
-	}
-
-	public void setMensajeBtnContinuarLogin(String mensajeBtnContinuarLogin) {
-		this.mensajeBtnContinuarLogin = mensajeBtnContinuarLogin;
-	}
-
-	public String getMensajeBtnCrearCuentaLogin() {
-		return mensajeBtnCrearCuentaLogin;
-	}
-
-	public void setMensajeBtnCrearCuentaLogin(String mensajeBtnCrearCuentaLogin) {
-		this.mensajeBtnCrearCuentaLogin = mensajeBtnCrearCuentaLogin;
-	}
-
-	public String getMensajeCrearCuentaRegister() {
-		return mensajeCrearCuentaRegister;
-	}
-
-	public void setMensajeCrearCuentaRegister(String mensajeCrearCuentaRegister) {
-		this.mensajeCrearCuentaRegister = mensajeCrearCuentaRegister;
-	}
-
-	public String getIngresarCorreoRegister() {
-		return ingresarCorreoRegister;
-	}
-
-	public void setIngresarCorreoRegister(String ingresarCorreoRegister) {
-		this.ingresarCorreoRegister = ingresarCorreoRegister;
-	}
-
-	public String getIngresarNombreRegister() {
-		return ingresarNombreRegister;
-	}
-
-	public void setIngresarNombreRegister(String ingresarNombreRegister) {
-		this.ingresarNombreRegister = ingresarNombreRegister;
-	}
-
-	public String getIngresarContraseñaRegister() {
-		return ingresarContraseñaRegister;
-	}
-
-	public void setIngresarContraseñaRegister(String ingresarContraseñaRegister) {
-		this.ingresarContraseñaRegister = ingresarContraseñaRegister;
-	}
-
-	public String getIngresarReContraseñaRegister() {
-		return ingresarReContraseñaRegister;
-	}
-
-	public void setIngresarReContraseñaRegister(String ingresarReContraseñaRegister) {
-		this.ingresarReContraseñaRegister = ingresarReContraseñaRegister;
-	}
-
-	public String getMensajeBtnCrearCuentaRegister() {
-		return mensajeBtnCrearCuentaRegister;
-	}
-
-	public void setMensajeBtnCrearCuentaRegister(String mensajeBtnCrearCuentaRegister) {
-		this.mensajeBtnCrearCuentaRegister = mensajeBtnCrearCuentaRegister;
-	}
-
-	public String getMensajeIngresarContraseñaLogin() {
+	public static String getMensajeIngresarContraseñaLogin() {
 		return mensajeIngresarContraseñaLogin;
 	}
 
-	public void setMensajeIngresarContraseñaLogin(String mensajeIngresarContraseñaLogin) {
-		this.mensajeIngresarContraseñaLogin = mensajeIngresarContraseñaLogin;
+	public static void setMensajeIngresarContraseñaLogin(String mensajeIngresarContraseñaLogin) {
+		Login.mensajeIngresarContraseñaLogin = mensajeIngresarContraseñaLogin;
 	}
 
-	public String getMensajeBtnRegresarRegistrar() {
+	public static String getMensajeBtnContinuarLogin() {
+		return mensajeBtnContinuarLogin;
+	}
+
+	public static void setMensajeBtnContinuarLogin(String mensajeBtnContinuarLogin) {
+		Login.mensajeBtnContinuarLogin = mensajeBtnContinuarLogin;
+	}
+
+	public static String getMensajeBtnCrearCuentaLogin() {
+		return mensajeBtnCrearCuentaLogin;
+	}
+
+	public static void setMensajeBtnCrearCuentaLogin(String mensajeBtnCrearCuentaLogin) {
+		Login.mensajeBtnCrearCuentaLogin = mensajeBtnCrearCuentaLogin;
+	}
+
+	public static void setMensajeIniciarSesionLogin(String mensajeIniciarSesionLogin) {
+		Login.mensajeIniciarSesionLogin = mensajeIniciarSesionLogin;
+	}
+
+	public static String getMensajeCrearCuentaRegister() {
+		return mensajeCrearCuentaRegister;
+	}
+
+	public static void setMensajeCrearCuentaRegister(String mensajeCrearCuentaRegister) {
+		Login.mensajeCrearCuentaRegister = mensajeCrearCuentaRegister;
+	}
+
+	public static String getIngresarCorreoRegister() {
+		return ingresarCorreoRegister;
+	}
+
+	public static void setIngresarCorreoRegister(String ingresarCorreoRegister) {
+		Login.ingresarCorreoRegister = ingresarCorreoRegister;
+	}
+
+	public static String getIngresarNombreRegister() {
+		return ingresarNombreRegister;
+	}
+
+	public static void setIngresarNombreRegister(String ingresarNombreRegister) {
+		Login.ingresarNombreRegister = ingresarNombreRegister;
+	}
+
+	public static String getIngresarContraseñaRegister() {
+		return ingresarContraseñaRegister;
+	}
+
+	public static void setIngresarContraseñaRegister(String ingresarContraseñaRegister) {
+		Login.ingresarContraseñaRegister = ingresarContraseñaRegister;
+	}
+
+	public static String getIngresarReContraseñaRegister() {
+		return ingresarReContraseñaRegister;
+	}
+
+	public static void setIngresarReContraseñaRegister(String ingresarReContraseñaRegister) {
+		Login.ingresarReContraseñaRegister = ingresarReContraseñaRegister;
+	}
+
+	public static String getMensajeBtnCrearCuentaRegister() {
+		return mensajeBtnCrearCuentaRegister;
+	}
+
+	public static void setMensajeBtnCrearCuentaRegister(String mensajeBtnCrearCuentaRegister) {
+		Login.mensajeBtnCrearCuentaRegister = mensajeBtnCrearCuentaRegister;
+	}
+
+	public static String getMensajeBtnRegresarRegistrar() {
 		return mensajeBtnRegresarRegistrar;
 	}
 
-	public void setMensajeBtnRegresarRegistrar(String mensajeBtnRegresarRegistrar) {
-		this.mensajeBtnRegresarRegistrar = mensajeBtnRegresarRegistrar;
+	public static void setMensajeBtnRegresarRegistrar(String mensajeBtnRegresarRegistrar) {
+		Login.mensajeBtnRegresarRegistrar = mensajeBtnRegresarRegistrar;
 	}
+
+	//Mensajes y textos
+	
 }	
 
