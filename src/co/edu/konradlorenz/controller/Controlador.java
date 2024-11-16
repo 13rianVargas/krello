@@ -2,6 +2,7 @@ package co.edu.konradlorenz.controller;
 
 import java.awt.Color;
 import java.awt.event.ActionEvent;
+import java.awt.event.FocusListener;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
@@ -630,6 +631,7 @@ public class Controlador {
 	}
 	//*///actionBtnAgregarInvitados
 	
+<<<<<<< Updated upstream
 	//Método para gestionar la tecla enter del txtFieldIngresarCorreoEmergenteAñadirInvitados
 	public void actionEnterTxtFieldIngresarCorreoEmergenteAñadirInvitados(ActionEvent evento) {
 		if(Principal.getTxtFieldIngresarCorreoEmergenteAñadirInvitados().getText().equals(Principal.getMensajeIngresarCorreo()) 
@@ -681,5 +683,13 @@ public class Controlador {
 	    Principal.setEmergenteAgregarInvitados(null);
 	}
 	//*///actionBtnCancelarEmergenteCrearTablero
+=======
+	
+		
+
+
+
+
+>>>>>>> Stashed changes
 }
 //class
