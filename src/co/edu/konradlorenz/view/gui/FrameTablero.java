@@ -12,7 +12,7 @@ import co.edu.konradlorenz.controller.Controlador;
 public class FrameTablero extends JFrame{
 	
 	//MOSTRAR DETALLES
-	private static boolean detalles = true;//true -> mostrar / false -> ocultar
+	private static boolean detalles = false;//true -> mostrar / false -> ocultar
 	private static boolean macOS = true;//true -> macOS / false -> Windows
 		
 	//CONTROLADOR
@@ -238,7 +238,7 @@ public class FrameTablero extends JFrame{
 	        
 	        panelIntermedio.add(separator, BorderLayout.PAGE_START);//Lo añade y lo ubica arriba
 	        
-	        	panelTableroBody();
+	        	panelTableroBody();//Crea el panelTableroBody
 	    	
 	    	panelIntermedio.add(panelTableroBody, BorderLayout.CENTER);//Lo añade y lo ubica en el centro
 	    	//Cierra: panelIntermedio
@@ -408,8 +408,7 @@ public class FrameTablero extends JFrame{
 		        	//Abre: Acción del btnCrearListaEmergenteCrearLista
 		        	btnCrearListaEmergenteCrearLista.addActionListener(new ActionListener() {
 			            public void actionPerformed(ActionEvent evento) {
-			            	//TODO:Crear método en el Controller
-			            	//ctrl.actionbtnCrearListaEmergenteCrearLista(evento);//Se llama el método del Controller que gestiona el evento. 
+			            	ctrl.actionEnterTxtFieldIngresarNombreEmergenteCrearLista(evento);//Se llama el método del Controller que gestiona el evento.
 			            }
 			        });
 					//Cierra: Acción del btnCrearListaEmergenteCrearLista
@@ -653,7 +652,9 @@ public class FrameTablero extends JFrame{
     
 	    emergenteEditarTablero.setVisible(true);//Hace visible la emergente
     }
+    //Cierra: Método para crear emergenteEditarTablero
     
+    //Abre: Método para crear emergenteColaboradores
     public static void emergenteColaboradores() {
     	
     	//JDialog hace que solo la emergente sea interactiva, las demás ventanas se bloquean.
@@ -771,7 +772,9 @@ public class FrameTablero extends JFrame{
 	    
 	        emergenteColaboradores.setVisible(true);//Hace visible la emergente
     }
-    
+    //Cierra: Método para crear emergenteColaboradores
+
+    //Abre: Método para crear emergenteEliminar
     public static void emergenteEliminar() {
     	
     	//JDialog hace que solo la emergente sea interactiva, las demás ventanas se bloquean.
@@ -878,7 +881,7 @@ public class FrameTablero extends JFrame{
 	    
 	        emergenteEliminar.setVisible(true);//Hace visible la emergente
     }
-    
+    //Cierra: Método para crear emergenteEliminar
     
 	  // -- // -- // -- // -- // -- // -- //
 	 // -- // -- // GET & SET// -- // -- //
