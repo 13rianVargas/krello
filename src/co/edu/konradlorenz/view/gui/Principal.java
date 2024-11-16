@@ -13,6 +13,7 @@ public class Principal extends JFrame {
 	
 	//MOSTRAR DETALLES
 	private static boolean detalles = true;//true -> mostrar / false -> ocultar
+	private static boolean macOS = true;//true -> macOS / false -> Windows
 		
 	//CONTROLADOR
 	private static Controlador ctrl = new Controlador();
@@ -31,7 +32,7 @@ public class Principal extends JFrame {
 	
 	//TEXTFIELDS
 	private static JTextField txtFieldIngresarNombreEmergenteCrearTablero;
-	private static JTextField txtFieldIngresarCorreoEmergenteAñadirInvitados;
+	private static JTextField txtFieldIngresarCorreoEmergenteAgregarInvitados;
 	
 	//PASSWORDFIELDS
 	
@@ -45,7 +46,7 @@ public class Principal extends JFrame {
 	private static JButton btnCancelarEmergenteCrearTablero;
 	private static JButton btnCrearTableroEmergenteCrearTablero;
 	private static JButton btnCancelarEmergenteAñadirInvitados;
-	private static JButton btnAgregarInvitadoEmergenteAñadirInvitados;
+	private static JButton btnAgregarInvitadoEmergenteAgregarInvitados;
 		
 	//COLORS
 	private static Color blanco = new Color(255, 255, 255);
@@ -64,7 +65,7 @@ public class Principal extends JFrame {
 	private static Color limon2 = new Color(180, 200, 0);//Para los títulos de las emergentes
 	
 	//BORDER macOS
-	private static Border macOS = BorderFactory.createLineBorder(negro, 1);//Borde de 1px para mac :)
+	private static Border macOSBorde = BorderFactory.createLineBorder(negro, 1);//Borde de 1px para mac :)
 
 	//STRINGS
 	private static String mensajeIngresarNombreTablero = " Ingrese nombre del tablero...";
@@ -251,10 +252,11 @@ public class Principal extends JFrame {
 	    	btnCrearTablero.setFont(new Font("Arial", Font.PLAIN, 80));//Cambia la letra del interior
 	    	btnCrearTablero.setCursor(new Cursor(Cursor.HAND_CURSOR));//Pone el cursor con una manita
 	    	btnCrearTablero.setPreferredSize(buttonSize);//Tamaño botón
-	    	//2 lineas para macOS:
-	    	btnCrearTablero.setOpaque(true);//No transparente
-			btnCrearTablero.setBorder(macOS);//Borde negro fino
-				
+	    	if(macOS) {
+	    		btnCrearTablero.setOpaque(true);//No transparente
+	    		btnCrearTablero.setBorder(macOSBorde);//Borde negro fino
+	    	}
+	    	
 				//Abre: Acción del btnCrearTablero
 				btnCrearTablero.addActionListener(new ActionListener() {
 		            public void actionPerformed(ActionEvent evento) {
@@ -274,10 +276,11 @@ public class Principal extends JFrame {
 	        btnAbrirTablero1.setFont(new Font("Inter", Font.BOLD, 18));//Cambia la letra del interior
 			btnAbrirTablero1.setCursor(new Cursor(Cursor.HAND_CURSOR));//Pone el cursor con una manita
 			btnAbrirTablero1.setPreferredSize(buttonSize);//Tamaño botón
-	        //2 lineas para macOS:
-	        btnAbrirTablero1.setOpaque(true);//No transparente
-	        btnAbrirTablero1.setBorder(macOS);//Borde negro fino
-	        
+			if(macOS) {
+				btnAbrirTablero1.setOpaque(true);//No transparente
+				btnAbrirTablero1.setBorder(macOSBorde);//Borde negro fino
+			}
+			
 		      	//Abre: Acción del btnAbrirTablero1
 	        	btnAbrirTablero1.addActionListener(new ActionListener() {
 		            public void actionPerformed(ActionEvent evento) {
@@ -298,9 +301,10 @@ public class Principal extends JFrame {
 	        btnAbrirTablero2.setFont(new Font("Inter", Font.BOLD, 18));//Cambia la letra del interior
 	        btnAbrirTablero2.setCursor(new Cursor(Cursor.HAND_CURSOR));//Pone el cursor con una manita
 	        btnAbrirTablero2.setPreferredSize(buttonSize);//Tamaño botón
-	        //2 lineas para macOS:
-	        btnAbrirTablero2.setOpaque(true);//No transparente
-	        btnAbrirTablero2.setBorder(macOS);//Borde negro fino
+	        if(macOS) {
+	        	btnAbrirTablero2.setOpaque(true);//No transparente
+	        	btnAbrirTablero2.setBorder(macOSBorde);//Borde negro fino
+	        }
 			
 		      	//Abre: Acción del btnAbrirTablero2
 				btnAbrirTablero2.addActionListener(new ActionListener() {
@@ -322,10 +326,11 @@ public class Principal extends JFrame {
 	        btnAbrirTablero3.setFont(new Font("Inter", Font.BOLD, 18));//Cambia la letra del interior
 	        btnAbrirTablero3.setCursor(new Cursor(Cursor.HAND_CURSOR));//Pone el cursor con una manita
 	        btnAbrirTablero3.setPreferredSize(buttonSize);//Tamaño botón
-	        //2 lineas para macOS:
-	        btnAbrirTablero3.setOpaque(true);//No transparente
-			btnAbrirTablero3.setBorder(macOS);//Borde negro fino
-			
+	        if(macOS) {
+	        	btnAbrirTablero3.setOpaque(true);//No transparente
+	        	btnAbrirTablero3.setBorder(macOSBorde);//Borde negro fino
+	        }
+	        
 		      	//Abre: Acción del btnAbrirTablero3
 				btnAbrirTablero3.addActionListener(new ActionListener() {
 		            public void actionPerformed(ActionEvent evento) {
@@ -408,9 +413,10 @@ public class Principal extends JFrame {
 		        txtFieldIngresarNombreEmergenteCrearTablero.setFont(new Font("Arial", Font.PLAIN, 20));//Cambia la letra del interior
 		        txtFieldIngresarNombreEmergenteCrearTablero.setBackground(grisClaro);//Color de fondo
 		        txtFieldIngresarNombreEmergenteCrearTablero.setCursor(new Cursor(Cursor.TEXT_CURSOR));//Pone el cursor modo escritura
-		        //2 lineas para macOS:
-		        txtFieldIngresarNombreEmergenteCrearTablero.setOpaque(true);//No transparente
-		        txtFieldIngresarNombreEmergenteCrearTablero.setBorder(macOS);//Borde negro fino
+		        if(macOS) {
+		        	txtFieldIngresarNombreEmergenteCrearTablero.setOpaque(true);//No transparente
+		        	txtFieldIngresarNombreEmergenteCrearTablero.setBorder(macOSBorde);//Borde negro fino
+		        }
 		        
 			        //Abre: Placeholder "mensaje previo"
 			        txtFieldIngresarNombreEmergenteCrearTablero.addFocusListener(new FocusListener() {
@@ -469,10 +475,10 @@ public class Principal extends JFrame {
 		        	btnAgregarInvitados.setPreferredSize(new Dimension(200, 40));//Tamaño botón
 		        	btnAgregarInvitados.setBackground(aguacate);//Color de fondo
 		        	btnAgregarInvitados.setCursor(new Cursor(Cursor.HAND_CURSOR));//Pone el cursor con una manita
-		        	//2 lineas para macOS:
-		        	btnAgregarInvitados.setOpaque(true);//No transparente
-		        	btnAgregarInvitados.setBorder(macOS);//Borde negro fino
-		        	
+		        	if(macOS) {
+		        		btnAgregarInvitados.setOpaque(true);//No transparente
+		        		btnAgregarInvitados.setBorder(macOSBorde);//Borde negro fino
+		        	}
 		        		//Abre: Acción del btnAgregarInvitados
 			    		btnAgregarInvitados.addActionListener(new ActionListener() {
 				            public void actionPerformed(ActionEvent evento) {
@@ -499,10 +505,11 @@ public class Principal extends JFrame {
 			        btnCancelarEmergenteCrearTablero.setPreferredSize(new Dimension(200, 40));//Tamaño botón
 			        btnCancelarEmergenteCrearTablero.setBackground(limon);//Color de fondo
 			        btnCancelarEmergenteCrearTablero.setCursor(new Cursor(Cursor.HAND_CURSOR));//Pone el cursor con una manita
-			        //2 lineas para macOS:
-			        btnCancelarEmergenteCrearTablero.setOpaque(true);//No transparente
-			        btnCancelarEmergenteCrearTablero.setBorder(macOS);//Borde negro fino
-		    		
+			        if(macOS) {
+			        	btnCancelarEmergenteCrearTablero.setOpaque(true);//No transparente
+			        	btnCancelarEmergenteCrearTablero.setBorder(macOSBorde);//Borde negro fino
+			        }
+			        
 		    			//Abre: Acción del btnCancelarEmergenteCrearTablero
 			    		btnCancelarEmergenteCrearTablero.addActionListener(new ActionListener() {
 				            public void actionPerformed(ActionEvent evento) {
@@ -514,14 +521,15 @@ public class Principal extends JFrame {
 		        	//Cierra: btnCancelarEmergenteCrearTablero
 		    		
 	    			//Abre: btnCrearTableroEmergenteCrearTablero	
-			        btnCrearTableroEmergenteCrearTablero = new JButton("Crear Tablero");
+			        btnCrearTableroEmergenteCrearTablero = new JButton("Crear Tablero");//Crear nuevo
 			        btnCrearTableroEmergenteCrearTablero.setFont(new Font("Arial", Font.PLAIN, 18));//Cambia la letra del interior
 			        btnCrearTableroEmergenteCrearTablero.setPreferredSize(new Dimension(200, 40));
 			        btnCrearTableroEmergenteCrearTablero.setBackground(limon);//Color de fondo
 			        btnCrearTableroEmergenteCrearTablero.setCursor(new Cursor(Cursor.HAND_CURSOR));//Pone el cursor con una manita
-			        //2 lineas para macOS:
-			        btnCrearTableroEmergenteCrearTablero.setOpaque(true);//No transparente
-			        btnCrearTableroEmergenteCrearTablero.setBorder(macOS);//Borde negro fino
+			        if(macOS) {
+			        	btnCrearTableroEmergenteCrearTablero.setOpaque(true);//No transparente
+			        	btnCrearTableroEmergenteCrearTablero.setBorder(macOSBorde);//Borde negro fino
+			        }
 			        
 			        	//Abre: Acción del btnCrearTableroEmergenteCrearTablero
 			    		btnCrearTableroEmergenteCrearTablero.addActionListener(new ActionListener() {
@@ -533,9 +541,9 @@ public class Principal extends JFrame {
 		    		
 	    			//Cierra: btnCrearTableroEmergenteCrearTablero
 		    		
-		        panelBotonesBasicos.add(btnCancelarEmergenteCrearTablero, BorderLayout.WEST);
-		        panelBotonesBasicos.add(btnCrearTableroEmergenteCrearTablero, BorderLayout.EAST);
-		        panelBotonesBasicos.setBorder(BorderFactory.createEmptyBorder(10, 30, 10, 30));// top, left, bottom, right -> Ajusta un borde por pixeles
+		        panelBotonesBasicos.add(btnCancelarEmergenteCrearTablero, BorderLayout.WEST);//Lo añade y lo ubica a la izquierda
+		        panelBotonesBasicos.add(btnCrearTableroEmergenteCrearTablero, BorderLayout.EAST);//Lo añade y lo ubica a la derecha
+		        panelBotonesBasicos.setBorder(BorderFactory.createEmptyBorder(10, 30, 10, 30));//top, left, bottom, right -> Ajusta un borde por pixeles
 		        //Cierra: panelBotonesBasicos
 
 		        
@@ -606,40 +614,41 @@ public class Principal extends JFrame {
 	    	panelIngresarCorreo.setOpaque(detalles);//Mostrar detalles
 	    	
 	    		//Abre: txtFieldIngresarCorreoEmergenteAñadirInvitados
-		    	txtFieldIngresarCorreoEmergenteAñadirInvitados = new JTextField(mensajeIngresarCorreo);//Crea nuevo
-		    	txtFieldIngresarCorreoEmergenteAñadirInvitados.setForeground(gris);//Color de letra
-		    	txtFieldIngresarCorreoEmergenteAñadirInvitados.setPreferredSize(new Dimension(400, 30));//Tamaño
-		        txtFieldIngresarCorreoEmergenteAñadirInvitados.setFont(new Font("Arial", Font.PLAIN, 20));//Cambia la letra del interior
-		        txtFieldIngresarCorreoEmergenteAñadirInvitados.setBackground(grisClaro);//Color de fondo
-		        txtFieldIngresarCorreoEmergenteAñadirInvitados.setCursor(new Cursor(Cursor.TEXT_CURSOR));//Pone el cursor modo escritura
-		        //2 lineas para macOS:
-		        txtFieldIngresarCorreoEmergenteAñadirInvitados.setOpaque(true);//No transparente
-		        txtFieldIngresarCorreoEmergenteAñadirInvitados.setBorder(macOS);//Borde negro fino
+	    		txtFieldIngresarCorreoEmergenteAgregarInvitados = new JTextField(mensajeIngresarCorreo);//Crea nuevo
+		    	txtFieldIngresarCorreoEmergenteAgregarInvitados.setForeground(gris);//Color de letra
+		    	txtFieldIngresarCorreoEmergenteAgregarInvitados.setPreferredSize(new Dimension(400, 30));//Tamaño
+		    	txtFieldIngresarCorreoEmergenteAgregarInvitados.setFont(new Font("Arial", Font.PLAIN, 20));//Cambia la letra del interior
+		        txtFieldIngresarCorreoEmergenteAgregarInvitados.setBackground(grisClaro);//Color de fondo
+		        txtFieldIngresarCorreoEmergenteAgregarInvitados.setCursor(new Cursor(Cursor.TEXT_CURSOR));//Pone el cursor modo escritura
+		        if(macOS) {
+		        	txtFieldIngresarCorreoEmergenteAgregarInvitados.setOpaque(true);//No transparente
+		        	txtFieldIngresarCorreoEmergenteAgregarInvitados.setBorder(macOSBorde);//Borde negro fino
+		        }
 		        
 			        //Abre: Placeholder "mensaje previo"
-			    	txtFieldIngresarCorreoEmergenteAñadirInvitados.addFocusListener(new FocusListener() {
+		        	txtFieldIngresarCorreoEmergenteAgregarInvitados.addFocusListener(new FocusListener() {
 			            @Override
 			            public void focusGained(FocusEvent e) {
-			                if (txtFieldIngresarCorreoEmergenteAñadirInvitados.getText().equals(mensajeIngresarCorreo)) {
-			                	txtFieldIngresarCorreoEmergenteAñadirInvitados.setText("");//Cambia el contenido del txtField
-			                	txtFieldIngresarCorreoEmergenteAñadirInvitados.setForeground(negro);//Color de letra
+			                if (txtFieldIngresarCorreoEmergenteAgregarInvitados.getText().equals(mensajeIngresarCorreo)) {
+			                	txtFieldIngresarCorreoEmergenteAgregarInvitados.setText("");//Cambia el contenido del txtField
+			                	txtFieldIngresarCorreoEmergenteAgregarInvitados.setForeground(negro);//Color de letra
 			                }
 			            }
 			            @Override
 			            public void focusLost(FocusEvent e) {
 			                //Si el campo de texto está vacío al perder el foco, restaura el placeholder
-			                if (txtFieldIngresarCorreoEmergenteAñadirInvitados.getText().isEmpty()) {
-			                	txtFieldIngresarCorreoEmergenteAñadirInvitados.setText(mensajeIngresarCorreo);//Cambia el contenido del txtField
-			                	txtFieldIngresarCorreoEmergenteAñadirInvitados.setForeground(gris);//Color de letra
+			                if (txtFieldIngresarCorreoEmergenteAgregarInvitados.getText().isEmpty()) {
+			                	txtFieldIngresarCorreoEmergenteAgregarInvitados.setText(mensajeIngresarCorreo);//Cambia el contenido del txtField
+			                	txtFieldIngresarCorreoEmergenteAgregarInvitados.setForeground(gris);//Color de letra
 			                }
 			            }
 			        });
 			        //Cierra: Placeholder "mensaje previo"
 		        
 			    	//Abre: Acción del txtFieldIngresarCorreoEmergenteAñadirInvitados
-			        txtFieldIngresarCorreoEmergenteAñadirInvitados.addActionListener(new ActionListener() {
+		        	txtFieldIngresarCorreoEmergenteAgregarInvitados.addActionListener(new ActionListener() {
 			            public void actionPerformed(ActionEvent evento) {
-			            	ctrl.actionEnterTxtFieldIngresarCorreoEmergenteAñadirInvitados(evento);//Se llama el método del Controller que gestiona el evento.
+			            	ctrl.actionEnterTxtFieldIngresarCorreoEmergenteAgregarInvitados(evento);//Se llama el método del Controller que gestiona el evento.
 			            }
 			        });
 			    	//Cierra: Acción del txtFieldIngresarCorreoEmergenteAñadirInvitados
@@ -647,7 +656,7 @@ public class Principal extends JFrame {
 	    		//Cierra: txtFieldIngresarCorreoEmergenteAñadirInvitados
 			        
 	        panelIngresarCorreo.add(Box.createVerticalGlue());//Agrega espacio flexible antes
-	        panelIngresarCorreo.add(txtFieldIngresarCorreoEmergenteAñadirInvitados);//Añade txtFieldIngresarCorreoEmergenteAñadirInvitados
+	        panelIngresarCorreo.add(txtFieldIngresarCorreoEmergenteAgregarInvitados);//Añade txtFieldIngresarCorreoEmergenteAñadirInvitados
 	        panelIngresarCorreo.add(Box.createVerticalGlue());//Agrega espacio flexible después
 	        panelIngresarCorreo.setBorder(BorderFactory.createEmptyBorder(40, 0, 40, 0));// top, left, bottom, right -> Ajusta un borde por pixeles
 		    //Cierra: panelIngresarCorreo
@@ -668,14 +677,15 @@ public class Principal extends JFrame {
 		        btnCancelarEmergenteAñadirInvitados.setPreferredSize(new Dimension(200, 40));//Tamaño
 		        btnCancelarEmergenteAñadirInvitados.setBackground(limon);//Color de fondo
 		        btnCancelarEmergenteAñadirInvitados.setCursor(new Cursor(Cursor.HAND_CURSOR));//Pone el cursor con una manita
-		        //2 lineas para macOS:
-		        btnCancelarEmergenteAñadirInvitados.setOpaque(true);//No transparente
-		        btnCancelarEmergenteAñadirInvitados.setBorder(macOS);//Borde negro fino
+		        if(macOS) {
+		        	btnCancelarEmergenteAñadirInvitados.setOpaque(true);//No transparente
+		        	btnCancelarEmergenteAñadirInvitados.setBorder(macOSBorde);//Borde negro fino
+		        }
 		        
 		        	//Abre: Acción del btnCancelarEmergenteAñadirInvitados
 			        btnCancelarEmergenteAñadirInvitados.addActionListener(new ActionListener() {
 			            public void actionPerformed(ActionEvent evento) {
-			            	ctrl.actionBtnCancelarEmergenteAñadirInvitados(evento);//Se llama el método del Controller que gestiona el evento.
+			            	ctrl.actionBtnCancelarEmergenteAgregarInvitados(evento);//Se llama el método del Controller que gestiona el evento.
 			            }
 			        });
 		        	//Cierra: Acción del btnCancelarEmergenteAñadirInvitados
@@ -683,20 +693,21 @@ public class Principal extends JFrame {
 	        	//Cierra: btnCancelarEmergenteAñadirInvitados
 		        
 			    //Abre: btnAgregarInvitadoEmergenteAñadirInvitados
-		        btnAgregarInvitadoEmergenteAñadirInvitados = new JButton("Agregar Invitado");//Crea nuevo
-		        btnAgregarInvitadoEmergenteAñadirInvitados.setFont(new Font("Arial", Font.PLAIN, 18));//Cambia la letra del interior
-		        btnAgregarInvitadoEmergenteAñadirInvitados.setPreferredSize(new Dimension(200, 40));//Tamaño
-		        btnAgregarInvitadoEmergenteAñadirInvitados.setBackground(limon);//Color de fondo
-		        btnAgregarInvitadoEmergenteAñadirInvitados.setCursor(new Cursor(Cursor.HAND_CURSOR));//Pone el cursor con una manita
-		        //2 lineas para macOS:
-		        btnAgregarInvitadoEmergenteAñadirInvitados.setOpaque(true);//No transparente
-		        btnAgregarInvitadoEmergenteAñadirInvitados.setBorder(macOS);//Borde negro fino
+		        btnAgregarInvitadoEmergenteAgregarInvitados = new JButton("Agregar Invitado");//Crea nuevo
+		        btnAgregarInvitadoEmergenteAgregarInvitados.setFont(new Font("Arial", Font.PLAIN, 18));//Cambia la letra del interior
+		        btnAgregarInvitadoEmergenteAgregarInvitados.setPreferredSize(new Dimension(200, 40));//Tamaño
+		        btnAgregarInvitadoEmergenteAgregarInvitados.setBackground(limon);//Color de fondo
+		        btnAgregarInvitadoEmergenteAgregarInvitados.setCursor(new Cursor(Cursor.HAND_CURSOR));//Pone el cursor con una manita
+		        if(macOS) {
+		        	btnAgregarInvitadoEmergenteAgregarInvitados.setOpaque(true);//No transparente
+		        	btnAgregarInvitadoEmergenteAgregarInvitados.setBorder(macOSBorde);//Borde negro fino
+		        }
 		        
 		        	//Abre: Acción del btnAgregarInvitadoEmergenteAñadirInvitados
-			        btnAgregarInvitadoEmergenteAñadirInvitados.addActionListener(new ActionListener() {
+		        	btnAgregarInvitadoEmergenteAgregarInvitados.addActionListener(new ActionListener() {
 			            public void actionPerformed(ActionEvent evento) {
 			                //IMPORTANTE -> Aquí se llama a un método que maneja el evento desde el Controller.
-			            	ctrl.actionEnterTxtFieldIngresarCorreoEmergenteAñadirInvitados(evento);
+			            	ctrl.actionEnterTxtFieldIngresarCorreoEmergenteAgregarInvitados(evento);
 			            }
 			        });
 		        	//Cierra: Acción del btnAgregarInvitadoEmergenteAñadirInvitados
@@ -705,15 +716,15 @@ public class Principal extends JFrame {
 			        
 	        panelBotonesBasicos.setBorder(BorderFactory.createEmptyBorder(10, 30, 10, 30));// top, left, bottom, right -> Ajusta un borde por pixeles
 	        panelBotonesBasicos.add(btnCancelarEmergenteAñadirInvitados, BorderLayout.WEST);//Lo añade y lo ubica a la izquierda
-	        panelBotonesBasicos.add(btnAgregarInvitadoEmergenteAñadirInvitados, BorderLayout.EAST);//Lo añade y lo ubica a la derecha
+	        panelBotonesBasicos.add(btnAgregarInvitadoEmergenteAgregarInvitados, BorderLayout.EAST);//Lo añade y lo ubica a la derecha
 		    //Cierra: panelBotonesBasicos
 	        
         emergenteAgregarInvitados.add(panelBotonesBasicos, BorderLayout.SOUTH);//Lo añade y lo ubica abajo
 
         //Abre: Funcionalidad cambiar el foco automático al abrir la emergente
-        txtFieldIngresarCorreoEmergenteAñadirInvitados.setEnabled(false);
+        txtFieldIngresarCorreoEmergenteAgregarInvitados.setEnabled(false);
         Timer timer = new Timer(100, e -> {
-        	txtFieldIngresarCorreoEmergenteAñadirInvitados.setEnabled(true);
+        	txtFieldIngresarCorreoEmergenteAgregarInvitados.setEnabled(true);
         });//Temporizador
         timer.setRepeats(false);//Evita que el temporizador se repita
         timer.start();//Inicia el temporizador
@@ -739,6 +750,14 @@ public class Principal extends JFrame {
 
 	public static void setDetalles(boolean detalles) {
 		Principal.detalles = detalles;
+	}
+
+	public static boolean isMacOS() {
+		return macOS;
+	}
+
+	public static void setMacOS(boolean macOS) {
+		Principal.macOS = macOS;
 	}
 
 	public static Controlador getCtrl() {
@@ -806,13 +825,13 @@ public class Principal extends JFrame {
 		Principal.txtFieldIngresarNombreEmergenteCrearTablero = txtFieldIngresarNombreEmergenteCrearTablero;
 	}
 
-	public static JTextField getTxtFieldIngresarCorreoEmergenteAñadirInvitados() {
-		return txtFieldIngresarCorreoEmergenteAñadirInvitados;
+	public static JTextField getTxtFieldIngresarCorreoEmergenteAgregarInvitados() {
+		return txtFieldIngresarCorreoEmergenteAgregarInvitados;
 	}
 
-	public static void setTxtFieldIngresarCorreoEmergenteAñadirInvitados(
-			JTextField txtFieldIngresarCorreoEmergenteAñadirInvitados) {
-		Principal.txtFieldIngresarCorreoEmergenteAñadirInvitados = txtFieldIngresarCorreoEmergenteAñadirInvitados;
+	public static void setTxtFieldIngresarCorreoEmergenteAgregarInvitados(
+			JTextField txtFieldIngresarCorreoEmergenteAgregarInvitados) {
+		Principal.txtFieldIngresarCorreoEmergenteAgregarInvitados = txtFieldIngresarCorreoEmergenteAgregarInvitados;
 	}
 
 	public static JButton getBtnCrearTablero() {
@@ -880,12 +899,12 @@ public class Principal extends JFrame {
 	}
 
 	public static JButton getBtnAgregarInvitadoEmergenteAñadirInvitados() {
-		return btnAgregarInvitadoEmergenteAñadirInvitados;
+		return btnAgregarInvitadoEmergenteAgregarInvitados;
 	}
 
-	public static void setBtnAgregarInvitadoEmergenteAñadirInvitados(
-			JButton btnAgregarInvitadoEmergenteAñadirInvitados) {
-		Principal.btnAgregarInvitadoEmergenteAñadirInvitados = btnAgregarInvitadoEmergenteAñadirInvitados;
+	public static void setBtnAgregarInvitadoEmergenteAgregarInvitados(
+			JButton btnAgregarInvitadoEmergenteAgregarInvitados) {
+		Principal.btnAgregarInvitadoEmergenteAgregarInvitados = btnAgregarInvitadoEmergenteAgregarInvitados;
 	}
 
 	public static Color getBlanco() {
@@ -1000,12 +1019,12 @@ public class Principal extends JFrame {
 		Principal.limon2 = limon2;
 	}
 
-	public static Border getMacOS() {
-		return macOS;
+	public static Border getMacOSBorde() {
+		return macOSBorde;
 	}
 
-	public static void setMacOS(Border macOS) {
-		Principal.macOS = macOS;
+	public static void setMacOSBorde(Border macOSBorde) {
+		Principal.macOSBorde = macOSBorde;
 	}
 
 	public static String getMensajeIngresarNombreTablero() {
@@ -1023,6 +1042,6 @@ public class Principal extends JFrame {
 	public static void setMensajeIngresarCorreo(String mensajeIngresarCorreo) {
 		Principal.mensajeIngresarCorreo = mensajeIngresarCorreo;
 	}
-   
+ 
 }
 //class
