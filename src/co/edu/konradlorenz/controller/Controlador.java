@@ -2,6 +2,7 @@ package co.edu.konradlorenz.controller;
 
 import java.awt.Color;
 import java.awt.event.ActionEvent;
+import java.awt.event.FocusListener;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 

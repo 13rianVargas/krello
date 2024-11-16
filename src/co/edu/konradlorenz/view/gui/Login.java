@@ -4,11 +4,16 @@ package co.edu.konradlorenz.view.gui;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Image;
+import java.awt.event.FocusListener;
+
 import javax.swing.*;
 import javax.swing.border.*;
 
+import co.edu.konradlorenz.controller.FocusEvent;
+
 @SuppressWarnings("serial")
 public class Login extends JFrame {
+	
 	
 	//FRAMES
 	JFrame frameLogin = new JFrame();
@@ -45,6 +50,12 @@ public class Login extends JFrame {
 	private static Color moradito = new Color(98, 20, 109); 
 	private static Color azulito = new Color(31, 165, 163);
 	
+	//Strings
+	private String mensajeIniciarSesionLogin="Inicia sesión para continuar", mensajeIngresarCorreoLogin="Ingresa tu correo", mensajeIngresarContraseñaLogin="Ingresa tu contraseña"
+			, mensajeBtnContinuarLogin="Continuar", mensajeBtnCrearCuentaLogin="Crear cuenta";
+	private String mensajeCrearCuentaRegister="Crear una cuenta", ingresarCorreoRegister="Ingresa tu correo", ingresarNombreRegister="Ingresa tu nombre",
+			ingresarContraseñaRegister="Ingresa tu contraseña", ingresarReContraseñaRegister="Re-ingresa tu contraseña", mensajeBtnCrearCuentaRegister="Crear cuenta", mensajeBtnRegresarRegistrar="< Regresar";
+	
 	//Método constructor del frame Login
 	public Login () {
 		
@@ -59,8 +70,8 @@ public class Login extends JFrame {
 		panelLoginHead = panelLoginHead();
 		frameLogin.add(panelLoginHead);
 		
-		//panelLoginBody = panelLoginBody();
-		//frameLogin.add(panelLoginBody);
+		panelLoginBody = panelLoginBody();
+		frameLogin.add(panelLoginBody);
 		
 		panelRegisterBody = panelRegisterBody();
 		frameLogin.add(panelRegisterBody);
@@ -101,7 +112,8 @@ public class Login extends JFrame {
 		panelLoginBody.setBackground(Color.white);//Fondo del panel
 		panelLoginBody.setOpaque(true);//false -> transparente
 		
-			lblLogin = new JLabel("Inicia sesión para continuar");
+		
+			lblLogin = new JLabel(mensajeIniciarSesionLogin);
 			lblLogin.setHorizontalAlignment(SwingConstants.CENTER);
 			lblLogin.setBackground(Color.black);
 			lblLogin.setBounds(67, 60, 250, 100);
@@ -110,7 +122,7 @@ public class Login extends JFrame {
 		panelLoginBody.add(lblLogin);
 		
 			//Revisar para que se borre el mensaje al escribir
-			txtLoginCorreo= new JTextField("Ingresa tu correo");
+			txtLoginCorreo= new JTextField(mensajeIngresarCorreoLogin);
 			txtLoginCorreo.setHorizontalAlignment(SwingConstants.CENTER);
 			txtLoginCorreo.setBackground(Color.LIGHT_GRAY);
 			txtLoginCorreo.setBounds(47, 140, 295, 40);
@@ -121,7 +133,7 @@ public class Login extends JFrame {
 		
 		
 			//Revisar el focus para que el mensaje se revise correctamente :)
-			pwdContraseña= new JPasswordField("Ingresa tu contraseña");
+			pwdContraseña= new JPasswordField(mensajeIngresarContraseñaLogin);
 			pwdContraseña.setHorizontalAlignment(SwingConstants.CENTER);
 			pwdContraseña.setBackground(Color.LIGHT_GRAY);
 			pwdContraseña.setBounds(47, 220, 295, 40);
@@ -130,7 +142,7 @@ public class Login extends JFrame {
 		
 		panelLoginBody.add(pwdContraseña);
 		
-			btnLoginContinuar = new JButton("Continuar");
+			btnLoginContinuar = new JButton(mensajeBtnContinuarLogin);
 			btnLoginContinuar.setHorizontalAlignment(SwingConstants.CENTER);
 			btnLoginContinuar.setBackground(moradito);
 			btnLoginContinuar.setBounds(47, 300, 295, 40);
@@ -144,7 +156,7 @@ public class Login extends JFrame {
 			
 		panelLoginBody.add(btnLoginContinuar);
 		
-			btnLoginCrearCuenta= new JButton("Crear una cuenta");
+			btnLoginCrearCuenta= new JButton(mensajeBtnCrearCuentaLogin);
 			btnLoginCrearCuenta.setHorizontalAlignment(SwingConstants.CENTER);
 			btnLoginCrearCuenta.setBackground(Color.WHITE);
 			btnLoginCrearCuenta.setBounds(47, 360, 295, 40);
@@ -156,8 +168,8 @@ public class Login extends JFrame {
 		
 		return panelLoginBody;
 	}	
-	//Register
 	
+	//Register
 		//Panel registerBody
 	private JPanel panelRegisterBody() {
 		JPanel panelRegisterBody= new JPanel();
@@ -166,7 +178,7 @@ public class Login extends JFrame {
 		panelRegisterBody.setBackground(blanquito);
 		panelRegisterBody.setOpaque(true);
 			
-			lblLogin = new JLabel("Crear una cuenta");
+			lblLogin = new JLabel(mensajeCrearCuentaRegister);
 			lblLogin.setHorizontalAlignment(SwingConstants.CENTER);
 			lblLogin.setBackground(Color.black);
 			lblLogin.setBounds(67, 60, 250, 100);
@@ -174,7 +186,7 @@ public class Login extends JFrame {
 			
 			panelRegisterBody.add(lblLogin);
 			
-			txtRegisterCorreo= new JTextField("Ingresa tu correo");
+			txtRegisterCorreo= new JTextField(ingresarCorreoRegister);
 			txtRegisterCorreo.setHorizontalAlignment(SwingConstants.CENTER);
 			txtRegisterCorreo.setBackground(Color.lightGray);
 			txtRegisterCorreo.setBounds(47, 140, 295, 40);
@@ -183,7 +195,7 @@ public class Login extends JFrame {
 			
 			panelRegisterBody.add(txtRegisterCorreo);
 			
-			txtRegisterNombre= new JTextField("Ingresa tu nombre");
+			txtRegisterNombre= new JTextField(ingresarNombreRegister);
 			txtRegisterNombre.setHorizontalAlignment(SwingConstants.CENTER);
 			txtRegisterNombre.setBackground(Color.lightGray);
 			txtRegisterNombre.setBounds(47, 200, 295, 40);
@@ -192,7 +204,7 @@ public class Login extends JFrame {
 			
 			panelRegisterBody.add(txtRegisterNombre);
 			
-			pwdReContraseña= new JPasswordField("Ingresa tu contraseña");
+			pwdReContraseña= new JPasswordField(ingresarContraseñaRegister);
 			pwdReContraseña.setHorizontalAlignment(SwingConstants.CENTER);
 			pwdReContraseña.setBackground(Color.LIGHT_GRAY);
 			pwdReContraseña.setBounds(47, 260, 295, 40);
@@ -201,7 +213,7 @@ public class Login extends JFrame {
 			
 			panelRegisterBody.add(pwdReContraseña);
 			
-			pwdReContraseñaDos= new JPasswordField("Ingresa tu contraseña");
+			pwdReContraseñaDos= new JPasswordField(ingresarReContraseñaRegister);
 			pwdReContraseñaDos.setHorizontalAlignment(SwingConstants.CENTER);
 			pwdReContraseñaDos.setBackground(Color.LIGHT_GRAY);
 			pwdReContraseñaDos.setBounds(47, 320, 295, 40);
@@ -210,7 +222,7 @@ public class Login extends JFrame {
 			
 			panelRegisterBody.add(pwdReContraseñaDos);
 		
-			btnRegisterCrearCuenta= new JButton("Crear cuenta");
+			btnRegisterCrearCuenta= new JButton(mensajeBtnCrearCuentaRegister);
 			btnRegisterCrearCuenta.setHorizontalAlignment(SwingConstants.CENTER);
 			btnRegisterCrearCuenta.setBackground(moradito);
 			btnRegisterCrearCuenta.setBounds(47, 380, 295, 40);
@@ -219,7 +231,7 @@ public class Login extends JFrame {
 			
 			panelRegisterBody.add(btnRegisterCrearCuenta);
 		
-			btnLoginRegresar= new JButton("< Regresar");
+			btnLoginRegresar= new JButton(mensajeBtnRegresarRegistrar);
 			btnLoginRegresar.setHorizontalAlignment(SwingConstants.LEFT);
 			btnLoginRegresar.setBackground(Color.WHITE);
 			btnLoginRegresar.setBounds(47, 460, 295, 40);
@@ -232,5 +244,264 @@ public class Login extends JFrame {
 			return panelRegisterBody;		
 	}
 
+	
+	
+	public JFrame getFrameLogin() {
+		return frameLogin;
+	}
+
+	public void setFrameLogin(JFrame frameLogin) {
+		this.frameLogin = frameLogin;
+	}
+
+	public JPanel getPanelLoginHead() {
+		return panelLoginHead;
+	}
+
+	public void setPanelLoginHead(JPanel panelLoginHead) {
+		this.panelLoginHead = panelLoginHead;
+	}
+
+	public JPanel getPanelLoginBody() {
+		return panelLoginBody;
+	}
+
+	public void setPanelLoginBody(JPanel panelLoginBody) {
+		this.panelLoginBody = panelLoginBody;
+	}
+
+	public JPanel getPanelRegisterBody() {
+		return panelRegisterBody;
+	}
+
+	public void setPanelRegisterBody(JPanel panelRegisterBody) {
+		this.panelRegisterBody = panelRegisterBody;
+	}
+
+	public JLabel getLblLogin() {
+		return lblLogin;
+	}
+
+	public void setLblLogin(JLabel lblLogin) {
+		this.lblLogin = lblLogin;
+	}
+
+	public JTextField getTxtLoginCorreo() {
+		return txtLoginCorreo;
+	}
+
+	public void setTxtLoginCorreo(JTextField txtLoginCorreo) {
+		this.txtLoginCorreo = txtLoginCorreo;
+	}
+
+	public JTextField getTxtLoginNombre() {
+		return txtLoginNombre;
+	}
+
+	public void setTxtLoginNombre(JTextField txtLoginNombre) {
+		this.txtLoginNombre = txtLoginNombre;
+	}
+
+	public JTextField getTxtRegisterCorreo() {
+		return txtRegisterCorreo;
+	}
+
+	public void setTxtRegisterCorreo(JTextField txtRegisterCorreo) {
+		this.txtRegisterCorreo = txtRegisterCorreo;
+	}
+
+	public JTextField getTxtRegisterNombre() {
+		return txtRegisterNombre;
+	}
+
+	public void setTxtRegisterNombre(JTextField txtRegisterNombre) {
+		this.txtRegisterNombre = txtRegisterNombre;
+	}
+
+	public JPasswordField getPwdContraseña() {
+		return pwdContraseña;
+	}
+
+	public void setPwdContraseña(JPasswordField pwdContraseña) {
+		this.pwdContraseña = pwdContraseña;
+	}
+
+	public JPasswordField getPwdReContraseña() {
+		return pwdReContraseña;
+	}
+
+	public void setPwdReContraseña(JPasswordField pwdReContraseña) {
+		this.pwdReContraseña = pwdReContraseña;
+	}
+
+	public JPasswordField getPwdReContraseñaDos() {
+		return pwdReContraseñaDos;
+	}
+
+	public void setPwdReContraseñaDos(JPasswordField pwdReContraseñaDos) {
+		this.pwdReContraseñaDos = pwdReContraseñaDos;
+	}
+
+	public JButton getBtnLoginContinuar() {
+		return btnLoginContinuar;
+	}
+
+	public void setBtnLoginContinuar(JButton btnLoginContinuar) {
+		this.btnLoginContinuar = btnLoginContinuar;
+	}
+
+	public JButton getBtnLoginPanelCrearCuenta() {
+		return btnLoginPanelCrearCuenta;
+	}
+
+	public void setBtnLoginPanelCrearCuenta(JButton btnLoginPanelCrearCuenta) {
+		this.btnLoginPanelCrearCuenta = btnLoginPanelCrearCuenta;
+	}
+
+	public JButton getBtnLoginCrearCuenta() {
+		return btnLoginCrearCuenta;
+	}
+
+	public void setBtnLoginCrearCuenta(JButton btnLoginCrearCuenta) {
+		this.btnLoginCrearCuenta = btnLoginCrearCuenta;
+	}
+
+	public JButton getBtnLoginRegresar() {
+		return btnLoginRegresar;
+	}
+
+	public void setBtnLoginRegresar(JButton btnLoginRegresar) {
+		this.btnLoginRegresar = btnLoginRegresar;
+	}
+
+	public JButton getBtnRegisterCrearCuenta() {
+		return btnRegisterCrearCuenta;
+	}
+
+	public void setBtnRegisterCrearCuenta(JButton btnRegisterCrearCuenta) {
+		this.btnRegisterCrearCuenta = btnRegisterCrearCuenta;
+	}
+
+	public static Color getBlanquito() {
+		return blanquito;
+	}
+
+	public static void setBlanquito(Color blanquito) {
+		Login.blanquito = blanquito;
+	}
+
+	public static Color getMoradito() {
+		return moradito;
+	}
+
+	public static void setMoradito(Color moradito) {
+		Login.moradito = moradito;
+	}
+
+	public static Color getAzulito() {
+		return azulito;
+	}
+
+	public static void setAzulito(Color azulito) {
+		Login.azulito = azulito;
+	}
+
+	public String getMensajeIniciarSesionLogin() {
+		return mensajeIniciarSesionLogin;
+	}
+
+	public void setMensajeIniciarSesionLogin(String mensajeIniciarSesionLogin) {
+		this.mensajeIniciarSesionLogin = mensajeIniciarSesionLogin;
+	}
+
+	public String getMensajeIngresarCorreoLogin() {
+		return mensajeIngresarCorreoLogin;
+	}
+
+	public void setMensajeIngresarCorreoLogin(String mensajeIngresarCorreoLogin) {
+		this.mensajeIngresarCorreoLogin = mensajeIngresarCorreoLogin;
+	}
+
+
+
+	public String getMensajeBtnContinuarLogin() {
+		return mensajeBtnContinuarLogin;
+	}
+
+	public void setMensajeBtnContinuarLogin(String mensajeBtnContinuarLogin) {
+		this.mensajeBtnContinuarLogin = mensajeBtnContinuarLogin;
+	}
+
+	public String getMensajeBtnCrearCuentaLogin() {
+		return mensajeBtnCrearCuentaLogin;
+	}
+
+	public void setMensajeBtnCrearCuentaLogin(String mensajeBtnCrearCuentaLogin) {
+		this.mensajeBtnCrearCuentaLogin = mensajeBtnCrearCuentaLogin;
+	}
+
+	public String getMensajeCrearCuentaRegister() {
+		return mensajeCrearCuentaRegister;
+	}
+
+	public void setMensajeCrearCuentaRegister(String mensajeCrearCuentaRegister) {
+		this.mensajeCrearCuentaRegister = mensajeCrearCuentaRegister;
+	}
+
+	public String getIngresarCorreoRegister() {
+		return ingresarCorreoRegister;
+	}
+
+	public void setIngresarCorreoRegister(String ingresarCorreoRegister) {
+		this.ingresarCorreoRegister = ingresarCorreoRegister;
+	}
+
+	public String getIngresarNombreRegister() {
+		return ingresarNombreRegister;
+	}
+
+	public void setIngresarNombreRegister(String ingresarNombreRegister) {
+		this.ingresarNombreRegister = ingresarNombreRegister;
+	}
+
+	public String getIngresarContraseñaRegister() {
+		return ingresarContraseñaRegister;
+	}
+
+	public void setIngresarContraseñaRegister(String ingresarContraseñaRegister) {
+		this.ingresarContraseñaRegister = ingresarContraseñaRegister;
+	}
+
+	public String getIngresarReContraseñaRegister() {
+		return ingresarReContraseñaRegister;
+	}
+
+	public void setIngresarReContraseñaRegister(String ingresarReContraseñaRegister) {
+		this.ingresarReContraseñaRegister = ingresarReContraseñaRegister;
+	}
+
+	public String getMensajeBtnCrearCuentaRegister() {
+		return mensajeBtnCrearCuentaRegister;
+	}
+
+	public void setMensajeBtnCrearCuentaRegister(String mensajeBtnCrearCuentaRegister) {
+		this.mensajeBtnCrearCuentaRegister = mensajeBtnCrearCuentaRegister;
+	}
+
+	public String getMensajeIngresarContraseñaLogin() {
+		return mensajeIngresarContraseñaLogin;
+	}
+
+	public void setMensajeIngresarContraseñaLogin(String mensajeIngresarContraseñaLogin) {
+		this.mensajeIngresarContraseñaLogin = mensajeIngresarContraseñaLogin;
+	}
+
+	public String getMensajeBtnRegresarRegistrar() {
+		return mensajeBtnRegresarRegistrar;
+	}
+
+	public void setMensajeBtnRegresarRegistrar(String mensajeBtnRegresarRegistrar) {
+		this.mensajeBtnRegresarRegistrar = mensajeBtnRegresarRegistrar;
+	}
 }	
 
