@@ -6,16 +6,16 @@ public class AplMain {
 
 	public static void main(String[] args) {
 		
+		/*/ <- Agrega * entre barras para comentar
+		new Login();
+		//*/
+		
 		// <- Agrega * entre barras para comentar
-		Login frameLogin = new Login();
+		new Principal();
 		//*/
 		
 		/*/ <- Agrega * entre barras para comentar
-		Principal framePrincipal = new Principal();
-		//*/
-		
-		/*/ <- Agrega * entre barras para comentar
-		FrameTablero frameTablero = new FrameTablero();
+		new FrameTablero();
 		//*/
 		
 		/*/ <- Agrega * entre barras para comentar

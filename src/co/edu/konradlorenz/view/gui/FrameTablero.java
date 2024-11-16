@@ -6,20 +6,20 @@ import java.awt.event.*;
 import javax.swing.*;
 import javax.swing.border.*;
 
-import co.edu.konradlorenz.controller.Controlador;
+import co.edu.konradlorenz.controller.*;
 
 @SuppressWarnings("serial")
 public class FrameTablero extends JFrame{
 	
-	//MOSTRAR DETALLES
-	private static boolean detalles = false;//true -> mostrar / false -> ocultar
-	private static boolean macOS = true;//true -> macOS / false -> Windows
-		
 	//CONTROLADOR
 	private static Controlador ctrl = new Controlador();
+	
+	//MOSTRAR DETALLES
+	private static boolean detalles = ctrl.detalles;//Ahora se cambia en el Controller para que actue en todo el GUI.
+	private static boolean macOS = ctrl.macOS;	//Ahora se cambia en el Controller para que actue en todo el GUI.
 
 	//FRAMES
-	private static JFrame frameTablero = new JFrame();
+	private static JFrame frameTablero;
 	
 	//EMERGENTES
 	private static JDialog emergenteCrearLista;
@@ -83,6 +83,7 @@ public class FrameTablero extends JFrame{
 	
 	
 	
+	
 	  // -- // -- // -- // -- // -- // -- //
 	 // -- // -- // VENTANAS // -- // -- //
 	// -- // -- // -- // -- // -- // -- //
@@ -90,6 +91,7 @@ public class FrameTablero extends JFrame{
     //Abre: Constructor del frame Tablero
  	public FrameTablero(){
 
+ 		frameTablero = new JFrame();
 		frameTablero.setDefaultCloseOperation(EXIT_ON_CLOSE); //Terminar la ejecución si se cierra la ventana
 		frameTablero.setTitle("Krello - Tablero");//Título de la ventana
 		frameTablero.setSize(1280, 720);//ancho, alto
@@ -110,11 +112,11 @@ public class FrameTablero extends JFrame{
 		frameTablero.setVisible(true); //IMPORTANTE -> Siempre dejar esto de últimas.
     }
 	//Cierra: Constructor del frame Tablero
-    
-    
-    
-    
-    
+        
+ 	
+ 	
+ 	
+ 	
 	  // -- // -- // -- // -- // -- // -- //
 	 // -- // -- // PANELES  // -- // -- //
 	// -- // -- // -- // -- // -- // -- //
@@ -135,7 +137,8 @@ public class FrameTablero extends JFrame{
 	    	panelSuperior.setOpaque(detalles);//Mostrar detalles
 	    	
 	    		//Abre: panelTitulos
-		    	JPanel panelTitulos = new JPanel(new FlowLayout(FlowLayout.LEFT));//Diseño: Flujo a la izquierda
+		    	JPanel panelTitulos = new JPanel();//Crea nuevo
+		    	panelTitulos.setLayout(new FlowLayout(FlowLayout.LEFT));//Diseño: Flujo a la izquierda (espacio horizontal),(espacio vertical)
 		    	panelTitulos.setBackground(petroleo);//Color de fondo
 		    	panelTitulos.setOpaque(detalles);//Mostrar detalles
 	        
@@ -187,7 +190,7 @@ public class FrameTablero extends JFrame{
 			    		//Abrir: Acción del btnCrearLista
 			    	btnEditarTablero.addActionListener(new ActionListener() {
 			    			public void actionPerformed(ActionEvent evento) {
-			    				ctrl.actionBtnEditarTablero(evento);//Se llama el método del Controller que gestiona el evento.
+			    				ctrl.actionBtnEditarTablero();//Se llama el método del Controller que gestiona el evento.
 			    			}
 			    		});
 			    		//Cierra: Acción del btnCrearLista
@@ -211,7 +214,7 @@ public class FrameTablero extends JFrame{
 			    		//Abrir: Acción del btnCrearLista
 				    	btnCrearLista.addActionListener(new ActionListener() {
 				            public void actionPerformed(ActionEvent evento) {
-				            	ctrl.actionBtnCrearLista(evento);//Se llama el método del Controller que gestiona el evento.
+				            	ctrl.actionBtnCrearLista();//Se llama el método del Controller que gestiona el evento.
 				            }
 				        });
 				    	//Cierra: Acción del btnCrearLista
@@ -254,7 +257,7 @@ public class FrameTablero extends JFrame{
     public void panelTableroBody() {
         panelTableroBody = new JPanel();
         panelTableroBody.setBackground(grisClaro);
-        panelTableroBody.setBorder(new EmptyBorder(10, 10, 10, 10)); // Borde externo para todo el contenedor
+        panelTableroBody.setBorder(new EmptyBorder(10, 10, 10, 10));//top, left, bottom, right -> Ajusta un borde por pixeles
         panelTableroBody.setLayout(new BoxLayout(panelTableroBody, BoxLayout.X_AXIS));
 
         panelLista();
@@ -264,7 +267,7 @@ public class FrameTablero extends JFrame{
     }
     //Cierra: Método para crear el panelTableroBody
 
-    //Abre: 
+    //Abre: Método para crear el panelLista
     public void panelLista() {
         JPanel panelLista = new JPanel();
         panelLista.setBackground(petroleoOscuro);
@@ -280,8 +283,12 @@ public class FrameTablero extends JFrame{
 
         panelTableroBody.add(panelWrapper);
     }
-    //Cierra: 
+    //Cierra: Método para crear el panelLista
 
+    
+    
+    
+    
 	  // -- // -- // -- // -- // -- // -- //
 	 // -- // -- //EMERGENTES// -- // -- //
 	// -- // -- // -- // -- // -- // -- //
@@ -367,7 +374,7 @@ public class FrameTablero extends JFrame{
 			        //Abre: Acción del txtFieldIngresarNombreEmergenteCrearLista
 			        txtFieldIngresarNombreEmergenteCrearLista.addActionListener(new ActionListener() {
 			            public void actionPerformed(ActionEvent evento) {
-			            	ctrl.actionEnterTxtFieldIngresarNombreEmergenteCrearLista(evento);//Se llama el método del Controller que gestiona el evento.
+			            	ctrl.actionEnterTxtFieldIngresarNombreEmergenteCrearLista();//Se llama el método del Controller que gestiona el evento.
 			            }
 			        });
 			        //Cierra: Acción del txtFieldIngresarNombreEmergenteCrearLista
@@ -386,57 +393,57 @@ public class FrameTablero extends JFrame{
 	    	panelInferior.setBackground(blanco);//Color de fondo
 	    	panelInferior.setOpaque(detalles);//Mostrar detalles
     
-	        //Abre: panelBotonesBasicos
-	        JPanel panelBotonesBasicos = new JPanel(new BorderLayout());
-	        panelBotonesBasicos.setBackground(cyan);//Color de fondo
-	        panelBotonesBasicos.setOpaque(detalles);//Mostrar detalles
-        
-	        	//Abre: btnCancelarEmergenteCrearTablero
-		        btnCancelarEmergenteCrearLista = new JButton("Cancelar");//Crea nuevo
-		        btnCancelarEmergenteCrearLista.setFont(new Font("Arial", Font.PLAIN, 18));//Cambia la letra del interior
-		        btnCancelarEmergenteCrearLista.setPreferredSize(new Dimension(200, 40));//Tamaño botón
-		        btnCancelarEmergenteCrearLista.setBackground(limon);//Color de fondo
-		        btnCancelarEmergenteCrearLista.setCursor(new Cursor(Cursor.HAND_CURSOR));//Pone el cursor con una manita
-		        if(macOS){
-		        	btnCancelarEmergenteCrearLista.setOpaque(true);//No transparente
-		        	btnCancelarEmergenteCrearLista.setBorder(macOSBorde);//Borde negro fino
-		        }
+		        //Abre: panelBotonesBasicos
+		        JPanel panelBotonesBasicos = new JPanel(new BorderLayout());
+		        panelBotonesBasicos.setBackground(cyan);//Color de fondo
+		        panelBotonesBasicos.setOpaque(detalles);//Mostrar detalles
 	        
-    				//Abre: Acción del btnCancelarEmergenteCrearLista
-			        btnCancelarEmergenteCrearLista.addActionListener(new ActionListener() {
-			            public void actionPerformed(ActionEvent evento) {
-			            	ctrl.actionBtnCancelarEmergenteCrearLista(evento);//Se llama el método del Controller que gestiona el evento.
-			            }
-			        });
-    				//Cierra: Acción del btnCancelarEmergenteCrearLista
-			        
-			    //Cierra: btnCancelarEmergenteCrearTablero
-    		
-		        //Abre: btnCrearListaEmergenteCrearLista    
-		        btnCrearListaEmergenteCrearLista = new JButton("Crear Lista");//Crea nuevo
-		        btnCrearListaEmergenteCrearLista.setFont(new Font("Arial", Font.PLAIN, 18));//Cambia la letra del interior
-		        btnCrearListaEmergenteCrearLista.setPreferredSize(new Dimension(200, 40));//Tamaño
-		        btnCrearListaEmergenteCrearLista.setBackground(limon);//Color de fondo
-		        btnCrearListaEmergenteCrearLista.setCursor(new Cursor(Cursor.HAND_CURSOR));//Pone el cursor con una manita
-		        if(macOS){
-		        	btnCrearListaEmergenteCrearLista.setOpaque(true);//No transparente
-		        	btnCrearListaEmergenteCrearLista.setBorder(macOSBorde);//Borde negro fino
-		        }
-	        
-		        	//Abre: Acción del btnCrearListaEmergenteCrearLista
-		        	btnCrearListaEmergenteCrearLista.addActionListener(new ActionListener() {
-			            public void actionPerformed(ActionEvent evento) {
-			            	ctrl.actionEnterTxtFieldIngresarNombreEmergenteCrearLista(evento);//Se llama el método del Controller que gestiona el evento.
-			            }
-			        });
-					//Cierra: Acción del btnCrearListaEmergenteCrearLista
-	        
-		        //Cierra: btnCrearListaEmergenteCrearLista
-    		
-	        panelBotonesBasicos.add(btnCancelarEmergenteCrearLista, BorderLayout.WEST);//Lo añade y lo ubica a la izquierda
-	        panelBotonesBasicos.add(btnCrearListaEmergenteCrearLista, BorderLayout.EAST);//Lo añade y lo ubica a la derecha
-	        panelBotonesBasicos.setBorder(BorderFactory.createEmptyBorder(10, 30, 10, 30));// top, left, bottom, right -> Ajusta un borde por pixeles
-	        //Cierra: panelBotonesBasicos
+		        	//Abre: btnCancelarEmergenteCrearTablero
+			        btnCancelarEmergenteCrearLista = new JButton("Cancelar");//Crea nuevo
+			        btnCancelarEmergenteCrearLista.setFont(new Font("Arial", Font.PLAIN, 18));//Cambia la letra del interior
+			        btnCancelarEmergenteCrearLista.setPreferredSize(new Dimension(200, 40));//Tamaño botón
+			        btnCancelarEmergenteCrearLista.setBackground(limon);//Color de fondo
+			        btnCancelarEmergenteCrearLista.setCursor(new Cursor(Cursor.HAND_CURSOR));//Pone el cursor con una manita
+			        if(macOS){
+			        	btnCancelarEmergenteCrearLista.setOpaque(true);//No transparente
+			        	btnCancelarEmergenteCrearLista.setBorder(macOSBorde);//Borde negro fino
+			        }
+		        
+	    				//Abre: Acción del btnCancelarEmergenteCrearLista
+				        btnCancelarEmergenteCrearLista.addActionListener(new ActionListener() {
+				            public void actionPerformed(ActionEvent evento) {
+				            	ctrl.actionBtnCancelarEmergenteCrearLista();//Se llama el método del Controller que gestiona el evento.
+				            }
+				        });
+	    				//Cierra: Acción del btnCancelarEmergenteCrearLista
+				        
+				    //Cierra: btnCancelarEmergenteCrearTablero
+	    		
+			        //Abre: btnCrearListaEmergenteCrearLista    
+			        btnCrearListaEmergenteCrearLista = new JButton("Crear Lista");//Crea nuevo
+			        btnCrearListaEmergenteCrearLista.setFont(new Font("Arial", Font.PLAIN, 18));//Cambia la letra del interior
+			        btnCrearListaEmergenteCrearLista.setPreferredSize(new Dimension(200, 40));//Tamaño
+			        btnCrearListaEmergenteCrearLista.setBackground(limon);//Color de fondo
+			        btnCrearListaEmergenteCrearLista.setCursor(new Cursor(Cursor.HAND_CURSOR));//Pone el cursor con una manita
+			        if(macOS){
+			        	btnCrearListaEmergenteCrearLista.setOpaque(true);//No transparente
+			        	btnCrearListaEmergenteCrearLista.setBorder(macOSBorde);//Borde negro fino
+			        }
+		        
+			        	//Abre: Acción del btnCrearListaEmergenteCrearLista
+			        	btnCrearListaEmergenteCrearLista.addActionListener(new ActionListener() {
+				            public void actionPerformed(ActionEvent evento) {
+				            	ctrl.actionEnterTxtFieldIngresarNombreEmergenteCrearLista();//Se llama el método del Controller que gestiona el evento.
+				            }
+				        });
+						//Cierra: Acción del btnCrearListaEmergenteCrearLista
+		        
+			        //Cierra: btnCrearListaEmergenteCrearLista
+	    		
+		        panelBotonesBasicos.add(btnCancelarEmergenteCrearLista, BorderLayout.WEST);//Lo añade y lo ubica a la izquierda
+		        panelBotonesBasicos.add(btnCrearListaEmergenteCrearLista, BorderLayout.EAST);//Lo añade y lo ubica a la derecha
+		        panelBotonesBasicos.setBorder(BorderFactory.createEmptyBorder(10, 30, 10, 30));// top, left, bottom, right -> Ajusta un borde por pixeles
+		        //Cierra: panelBotonesBasicos
 
 	        panelInferior.add(panelBotonesBasicos, BorderLayout.SOUTH);//Lo añade y lo ubica abajo
         	//Cierra: panelInferior
@@ -485,8 +492,8 @@ public class FrameTablero extends JFrame{
 	        	lblTituloEditarTablero.setOpaque(detalles);//Mostrar detalles
 	        	//Cierra: lblTituloCrearLista
 	        
-	        	panelTituloEditarTablero.add(lblTituloEditarTablero);
-	        	//Cierra: panelTituloCrearLista
+        	panelTituloEditarTablero.add(lblTituloEditarTablero);
+        	//Cierra: panelTituloEditarTablero
     
 	    emergenteEditarTablero.add(panelTituloEditarTablero, BorderLayout.NORTH);//Ubica arriba
     	
@@ -498,101 +505,101 @@ public class FrameTablero extends JFrame{
 			panelCentral.setOpaque(detalles);//Mostrar detalles
 			
 			
-			//Abre: txtFieldIngresarNombreEmergenteEditarTablero
-			txtFieldIngresarNombreEmergenteEditarTablero = new JTextField(mensajeEditarNombreTablero);//Crea nuevo
-			txtFieldIngresarNombreEmergenteEditarTablero.setForeground(gris);//Color de letra
-			txtFieldIngresarNombreEmergenteEditarTablero.setPreferredSize(new Dimension(198, 42));
-			txtFieldIngresarNombreEmergenteEditarTablero.setFont(new Font("Arial", Font.PLAIN, 20));//Cambia la letra del interior
-			txtFieldIngresarNombreEmergenteEditarTablero.setBackground(moradito);//Color de fondo
-			txtFieldIngresarNombreEmergenteEditarTablero.setCursor(new Cursor(Cursor.TEXT_CURSOR));//Pone el cursor modo escritura
-			if(macOS){
-				txtFieldIngresarNombreEmergenteEditarTablero.setOpaque(true);//No transparente
-				txtFieldIngresarNombreEmergenteEditarTablero.setBorder(macOSBorde);//Borde negro fino
-	        }
-			
-		        //Abre: Placeholder "mensaje previo"
-				txtFieldIngresarNombreEmergenteEditarTablero.addFocusListener(new FocusListener() {
-		            @Override
-		            public void focusGained(FocusEvent e) {
-		                if (txtFieldIngresarNombreEmergenteEditarTablero.getText().equals(mensajeEditarNombreTablero)) {
-		                	txtFieldIngresarNombreEmergenteEditarTablero.setText("");//Cambia el contenido del txtField
-		                	txtFieldIngresarNombreEmergenteEditarTablero.setForeground(negro);//Color de letra
-		                }
-		            }
-		            @Override
-		            public void focusLost(FocusEvent e) {
-		                //Si el campo de texto está vacío al perder el foco, restaura el placeholder
-		                if (txtFieldIngresarNombreEmergenteEditarTablero.getText().isEmpty()) {
-		                	txtFieldIngresarNombreEmergenteEditarTablero.setText(mensajeEditarNombreTablero);//Cambia el contenido del txtField
-		                	txtFieldIngresarNombreEmergenteEditarTablero.setForeground(gris);//Color de letra
-		                }
-		            }
-		        });
-		        //Cierra: Placeholder "mensaje previo"
-	        
-		        //Abre: Acción del txtFieldIngresarNombreEmergenteCrearTablero
-				txtFieldIngresarNombreEmergenteEditarTablero.addActionListener(new ActionListener() {
-		            public void actionPerformed(ActionEvent evento) {
-		            	ctrl.txtFieldIngresarNombreEmergenteEditarTablero(evento);//Se llama el método del Controller que gestiona el evento.
-		            }
-		        });
-		        //Cierra: Acción del txtFieldIngresarNombreEmergenteCrearTablero
-	        
-	        //Cierra: txtFieldIngresarNombreEmergenteCrearTablero
+				//Abre: txtFieldIngresarNombreEmergenteEditarTablero
+				txtFieldIngresarNombreEmergenteEditarTablero = new JTextField(mensajeEditarNombreTablero);//Crea nuevo
+				txtFieldIngresarNombreEmergenteEditarTablero.setForeground(gris);//Color de letra
+				txtFieldIngresarNombreEmergenteEditarTablero.setPreferredSize(new Dimension(198, 42));
+				txtFieldIngresarNombreEmergenteEditarTablero.setFont(new Font("Arial", Font.PLAIN, 20));//Cambia la letra del interior
+				txtFieldIngresarNombreEmergenteEditarTablero.setBackground(moradito);//Color de fondo
+				txtFieldIngresarNombreEmergenteEditarTablero.setCursor(new Cursor(Cursor.TEXT_CURSOR));//Pone el cursor modo escritura
+				if(macOS){
+					txtFieldIngresarNombreEmergenteEditarTablero.setOpaque(true);//No transparente
+					txtFieldIngresarNombreEmergenteEditarTablero.setBorder(macOSBorde);//Borde negro fino
+		        }
 				
-			panelCentral.add(txtFieldIngresarNombreEmergenteEditarTablero, BorderLayout.NORTH);
-			
-			//Abre: btnColaboradoresEmergenteEditarTablero
-			btnColaboradoresEmergenteEditarTablero = new JButton("Colaboradores");//Crea nuevo
-			btnColaboradoresEmergenteEditarTablero.setFont(new Font("Arial", Font.PLAIN, 18));//Cambia la letra del interior
-			btnColaboradoresEmergenteEditarTablero.setPreferredSize(new Dimension(198, 42));//Tamaño botón
-			btnColaboradoresEmergenteEditarTablero.setBackground(rosita);//Color de fondo
-			btnColaboradoresEmergenteEditarTablero.setCursor(new Cursor(Cursor.HAND_CURSOR));//Pone el cursor con una manita
-			if(macOS){
-				btnColaboradoresEmergenteEditarTablero.setOpaque(true);//No transparente
-				btnColaboradoresEmergenteEditarTablero.setBorder(macOSBorde);//Borde negro fino
-	        }
-			
-        		//Abre: Acción del btnColaboradoresEmergenteEditarTablero
-				btnColaboradoresEmergenteEditarTablero.addActionListener(new ActionListener() {
-		            public void actionPerformed(ActionEvent evento) {
-		            	ctrl.actionBtnColaboradoresEmergenteEditarTablero(evento);//Se llama el método del Controller que gestiona el evento.
-		            }
-		        });
-        		//Cierra: Acción del btnColaboradoresEmergenteEditarTablero
-	    		
-	    	//Cierra: btnColaboradoresEmergenteEditarTablero
-	    		
-			panelCentral.add(btnColaboradoresEmergenteEditarTablero, BorderLayout.CENTER);
+			        //Abre: Placeholder "mensaje previo"
+					txtFieldIngresarNombreEmergenteEditarTablero.addFocusListener(new FocusListener() {
+			            @Override
+			            public void focusGained(FocusEvent e) {
+			                if (txtFieldIngresarNombreEmergenteEditarTablero.getText().equals(mensajeEditarNombreTablero)) {
+			                	txtFieldIngresarNombreEmergenteEditarTablero.setText("");//Cambia el contenido del txtField
+			                	txtFieldIngresarNombreEmergenteEditarTablero.setForeground(negro);//Color de letra
+			                }
+			            }
+			            @Override
+			            public void focusLost(FocusEvent e) {
+			                //Si el campo de texto está vacío al perder el foco, restaura el placeholder
+			                if (txtFieldIngresarNombreEmergenteEditarTablero.getText().isEmpty()) {
+			                	txtFieldIngresarNombreEmergenteEditarTablero.setText(mensajeEditarNombreTablero);//Cambia el contenido del txtField
+			                	txtFieldIngresarNombreEmergenteEditarTablero.setForeground(gris);//Color de letra
+			                }
+			            }
+			        });
+			        //Cierra: Placeholder "mensaje previo"
+		        
+			        //Abre: Acción del txtFieldIngresarNombreEmergenteCrearTablero
+					txtFieldIngresarNombreEmergenteEditarTablero.addActionListener(new ActionListener() {
+			            public void actionPerformed(ActionEvent evento) {
+			            	ctrl.txtFieldIngresarNombreEmergenteEditarTablero();//Se llama el método del Controller que gestiona el evento.
+			            }
+			        });
+			        //Cierra: Acción del txtFieldIngresarNombreEmergenteCrearTablero
+		        
+		        //Cierra: txtFieldIngresarNombreEmergenteCrearTablero
+					
+				panelCentral.add(txtFieldIngresarNombreEmergenteEditarTablero, BorderLayout.NORTH);
+				
+				//Abre: btnColaboradoresEmergenteEditarTablero
+				btnColaboradoresEmergenteEditarTablero = new JButton("Colaboradores");//Crea nuevo
+				btnColaboradoresEmergenteEditarTablero.setFont(new Font("Arial", Font.PLAIN, 18));//Cambia la letra del interior
+				btnColaboradoresEmergenteEditarTablero.setPreferredSize(new Dimension(198, 42));//Tamaño botón
+				btnColaboradoresEmergenteEditarTablero.setBackground(rosita);//Color de fondo
+				btnColaboradoresEmergenteEditarTablero.setCursor(new Cursor(Cursor.HAND_CURSOR));//Pone el cursor con una manita
+				if(macOS){
+					btnColaboradoresEmergenteEditarTablero.setOpaque(true);//No transparente
+					btnColaboradoresEmergenteEditarTablero.setBorder(macOSBorde);//Borde negro fino
+		        }
+				
+	        		//Abre: Acción del btnColaboradoresEmergenteEditarTablero
+					btnColaboradoresEmergenteEditarTablero.addActionListener(new ActionListener() {
+			            public void actionPerformed(ActionEvent evento) {
+			            	ctrl.actionBtnColaboradoresEmergenteEditarTablero();//Se llama el método del Controller que gestiona el evento.
+			            }
+			        });
+	        		//Cierra: Acción del btnColaboradoresEmergenteEditarTablero
+		    		
+		    	//Cierra: btnColaboradoresEmergenteEditarTablero
+		    		
+				panelCentral.add(btnColaboradoresEmergenteEditarTablero, BorderLayout.CENTER);
+	
+				//Abre: btnEliminarEmergenteEditarTablero
+				btnEliminarEmergenteEditarTablero = new JButton("Eliminar");//Crea nuevo
+				btnEliminarEmergenteEditarTablero.setFont(new Font("Arial", Font.PLAIN, 18));//Cambia la letra del interior
+				btnEliminarEmergenteEditarTablero.setPreferredSize(new Dimension(198, 42));//Tamaño botón
+				btnEliminarEmergenteEditarTablero.setBackground(moradito);//Color de fondo
+				btnEliminarEmergenteEditarTablero.setCursor(new Cursor(Cursor.HAND_CURSOR));//Pone el cursor con una manita
+				if(macOS){
+					btnEliminarEmergenteEditarTablero.setOpaque(true);//No transparente
+					btnEliminarEmergenteEditarTablero.setBorder(macOSBorde);//Borde negro fino
+		        }
+				
+	        		//Abre: Acción del btnEliminarEmergenteEditarTablero
+					btnEliminarEmergenteEditarTablero.addActionListener(new ActionListener() {
+			            public void actionPerformed(ActionEvent evento) {
+			            	ctrl.actionBtnEliminarEmergenteEditarTablero();//Se llama el método del Controller que gestiona el evento.
+			            }
+			        });
+	        		//Cierra: Acción del btnEliminarEmergenteEditarTablero
+		    		
+		    	//Cierra: btnEliminarEmergenteEditarTablero
+		    		
+				panelCentral.add(btnEliminarEmergenteEditarTablero, BorderLayout.SOUTH);
+				
+				//panelCentral.setBorder(BorderFactory.createEmptyBorder(3, 0, 0, 0));// top, left, bottom, right -> Ajusta un borde por pixeles
 
-			//Abre: btnEliminarEmergenteEditarTablero
-			btnEliminarEmergenteEditarTablero = new JButton("Eliminar");//Crea nuevo
-			btnEliminarEmergenteEditarTablero.setFont(new Font("Arial", Font.PLAIN, 18));//Cambia la letra del interior
-			btnEliminarEmergenteEditarTablero.setPreferredSize(new Dimension(198, 42));//Tamaño botón
-			btnEliminarEmergenteEditarTablero.setBackground(moradito);//Color de fondo
-			btnEliminarEmergenteEditarTablero.setCursor(new Cursor(Cursor.HAND_CURSOR));//Pone el cursor con una manita
-			if(macOS){
-				btnEliminarEmergenteEditarTablero.setOpaque(true);//No transparente
-				btnEliminarEmergenteEditarTablero.setBorder(macOSBorde);//Borde negro fino
-	        }
+			//Cierra: panelCentral
 			
-        		//Abre: Acción del btnEliminarEmergenteEditarTablero
-				btnEliminarEmergenteEditarTablero.addActionListener(new ActionListener() {
-		            public void actionPerformed(ActionEvent evento) {
-		            	ctrl.actionBtnEliminarEmergenteEditarTablero(evento);//Se llama el método del Controller que gestiona el evento.
-		            }
-		        });
-        		//Cierra: Acción del btnEliminarEmergenteEditarTablero
-	    		
-	    	//Cierra: btnEliminarEmergenteEditarTablero
-	    		
-			panelCentral.add(btnEliminarEmergenteEditarTablero, BorderLayout.SOUTH);
-			
-			
-			//panelCentral.setBorder(BorderFactory.createEmptyBorder(3, 0, 0, 0));// top, left, bottom, right -> Ajusta un borde por pixeles
-		        //Cierra: panelIngresarNombreLista
-			
-			emergenteEditarTablero.add(panelCentral, BorderLayout.CENTER);//Lo añade y lo ubica abajo
+		emergenteEditarTablero.add(panelCentral, BorderLayout.CENTER);//Lo añade y lo ubica abajo
 		    
 			
 	    
@@ -601,58 +608,58 @@ public class FrameTablero extends JFrame{
     		panelInferior.setBackground(blanco);//Color de fondo
     		panelInferior.setOpaque(detalles);//Mostrar detalles
 
-    		//Abre: panelBotonesBasicos
-    		JPanel panelBotonesBasicos = new JPanel(new BorderLayout());
-    		panelBotonesBasicos.setBackground(cyan);//Color de fondo
-    		panelBotonesBasicos.setOpaque(detalles);//Mostrar detalles
-    
-        		//Abre: btnCancelarEmergenteEditarTablero
-	        	btnCancelarEmergenteEditarTablero = new JButton("Cancelar");//Crea nuevo
-	        	btnCancelarEmergenteEditarTablero.setFont(new Font("Arial", Font.PLAIN, 18));//Cambia la letra del interior
-	        	btnCancelarEmergenteEditarTablero.setPreferredSize(new Dimension(200, 40));//Tamaño botón
-	        	btnCancelarEmergenteEditarTablero.setBackground(limon);//Color de fondo
-	        	btnCancelarEmergenteEditarTablero.setCursor(new Cursor(Cursor.HAND_CURSOR));//Pone el cursor con una manita
-	        	if(macOS){
-	        		btnCancelarEmergenteEditarTablero.setOpaque(true);//No transparente
-	        		btnCancelarEmergenteEditarTablero.setBorder(macOSBorde);//Borde negro fino
-	        	}
-        
-				//Abre: Acción del btnCancelarEmergenteEditarTablero
-	        	btnCancelarEmergenteEditarTablero.addActionListener(new ActionListener() {
-		            public void actionPerformed(ActionEvent evento) {
-		            	ctrl.actionBtnCancelarEmergenteEditarTablero(evento);//Se llama el método del Controller que gestiona el evento.
-		            }
-		        });
-				//Cierra: Acción del btnCancelarEmergenteEditarTablero
-		        
-		    //Cierra: btnCancelarEmergenteEditarTablero
-		
-		        //Abre: btnEliminarEmergenteEditarTablero    
-		        btnGuardarEmergenteEditarTablero = new JButton("Guardar");//Crea nuevo
-		        btnGuardarEmergenteEditarTablero.setFont(new Font("Arial", Font.PLAIN, 18));//Cambia la letra del interior
-		        btnGuardarEmergenteEditarTablero.setPreferredSize(new Dimension(200, 40));//Tamaño
-		        btnGuardarEmergenteEditarTablero.setBackground(limon);//Color de fondo
-		        btnGuardarEmergenteEditarTablero.setCursor(new Cursor(Cursor.HAND_CURSOR));//Pone el cursor con una manita
-		        if(macOS){
-		        	btnGuardarEmergenteEditarTablero.setOpaque(true);//No transparente
-		        	btnGuardarEmergenteEditarTablero.setBorder(macOSBorde);//Borde negro fino
-		        }
-        
-	        	//Abre: Acción del btnCrearListaEmergenteCrearLista
-		        btnGuardarEmergenteEditarTablero.addActionListener(new ActionListener() {
-		            public void actionPerformed(ActionEvent evento) {
-		            	//TODO:Crear método en el Controller
-		            	//ctrl.GuardarEmergenteEditarTablero(evento);//Se llama el método del Controller que gestiona el evento. 
-		            }
-		        });
-				//Cierra: Acción del btnCrearListaEmergenteCrearLista
-        
-	        //Cierra: btnGuardarEmergenteEditarTablero
-		
-	       	panelBotonesBasicos.add(btnCancelarEmergenteEditarTablero, BorderLayout.WEST);//Lo añade y lo ubica a la izquierda
-	        panelBotonesBasicos.add(btnGuardarEmergenteEditarTablero, BorderLayout.EAST);//Lo añade y lo ubica a la derecha
-	        panelBotonesBasicos.setBorder(BorderFactory.createEmptyBorder(10, 30, 10, 30));// top, left, bottom, right -> Ajusta un borde por pixeles
-	        //Cierra: panelBotonesBasicos
+	    		//Abre: panelBotonesBasicos
+	    		JPanel panelBotonesBasicos = new JPanel(new BorderLayout());
+	    		panelBotonesBasicos.setBackground(cyan);//Color de fondo
+	    		panelBotonesBasicos.setOpaque(detalles);//Mostrar detalles
+	    
+	        		//Abre: btnCancelarEmergenteEditarTablero
+		        	btnCancelarEmergenteEditarTablero = new JButton("Cancelar");//Crea nuevo
+		        	btnCancelarEmergenteEditarTablero.setFont(new Font("Arial", Font.PLAIN, 18));//Cambia la letra del interior
+		        	btnCancelarEmergenteEditarTablero.setPreferredSize(new Dimension(200, 40));//Tamaño botón
+		        	btnCancelarEmergenteEditarTablero.setBackground(limon);//Color de fondo
+		        	btnCancelarEmergenteEditarTablero.setCursor(new Cursor(Cursor.HAND_CURSOR));//Pone el cursor con una manita
+		        	if(macOS){
+		        		btnCancelarEmergenteEditarTablero.setOpaque(true);//No transparente
+		        		btnCancelarEmergenteEditarTablero.setBorder(macOSBorde);//Borde negro fino
+		        	}
+	        
+						//Abre: Acción del btnCancelarEmergenteEditarTablero
+			        	btnCancelarEmergenteEditarTablero.addActionListener(new ActionListener() {
+				            public void actionPerformed(ActionEvent evento) {
+				            	ctrl.actionBtnCancelarEmergenteEditarTablero();//Se llama el método del Controller que gestiona el evento.
+				            }
+				        });
+						//Cierra: Acción del btnCancelarEmergenteEditarTablero
+			        
+		        	//Cierra: btnCancelarEmergenteEditarTablero
+			
+			        //Abre: btnEliminarEmergenteEditarTablero    
+			        btnGuardarEmergenteEditarTablero = new JButton("Guardar");//Crea nuevo
+			        btnGuardarEmergenteEditarTablero.setFont(new Font("Arial", Font.PLAIN, 18));//Cambia la letra del interior
+			        btnGuardarEmergenteEditarTablero.setPreferredSize(new Dimension(200, 40));//Tamaño
+			        btnGuardarEmergenteEditarTablero.setBackground(limon);//Color de fondo
+			        btnGuardarEmergenteEditarTablero.setCursor(new Cursor(Cursor.HAND_CURSOR));//Pone el cursor con una manita
+			        if(macOS){
+			        	btnGuardarEmergenteEditarTablero.setOpaque(true);//No transparente
+			        	btnGuardarEmergenteEditarTablero.setBorder(macOSBorde);//Borde negro fino
+			        }
+	        
+			        	//Abre: Acción del btnCrearListaEmergenteCrearLista
+				        btnGuardarEmergenteEditarTablero.addActionListener(new ActionListener() {
+				            public void actionPerformed(ActionEvent evento) {
+				            	//TODO:Crear método en el Controller
+				            	//ctrl.GuardarEmergenteEditarTablero();//Se llama el método del Controller que gestiona el evento. 
+				            }
+				        });
+						//Cierra: Acción del btnCrearListaEmergenteCrearLista
+	        
+			        //Cierra: btnGuardarEmergenteEditarTablero
+			
+		       	panelBotonesBasicos.add(btnCancelarEmergenteEditarTablero, BorderLayout.WEST);//Lo añade y lo ubica a la izquierda
+		        panelBotonesBasicos.add(btnGuardarEmergenteEditarTablero, BorderLayout.EAST);//Lo añade y lo ubica a la derecha
+		        panelBotonesBasicos.setBorder(BorderFactory.createEmptyBorder(10, 30, 10, 30));// top, left, bottom, right -> Ajusta un borde por pixeles
+		        //Cierra: panelBotonesBasicos
 
 	        panelInferior.add(panelBotonesBasicos, BorderLayout.SOUTH);//Lo añade y lo ubica abajo
 	        //Cierra: panelInferior
@@ -721,58 +728,58 @@ public class FrameTablero extends JFrame{
     		panelInferior.setBackground(blanco);//Color de fondo
     		panelInferior.setOpaque(detalles);//Mostrar detalles
 
-    		//Abre: panelBotonesBasicos
-    		JPanel panelBotonesBasicos = new JPanel(new BorderLayout());
-    		panelBotonesBasicos.setBackground(cyan);//Color de fondo
-    		panelBotonesBasicos.setOpaque(detalles);//Mostrar detalles
-    
-        		//Abre: btnCancelarEmergenteEditarTablero
-	        	btnCancelarEmergenteColaboradores = new JButton("Cancelar");//Crea nuevo
-	        	btnCancelarEmergenteColaboradores.setFont(new Font("Arial", Font.PLAIN, 18));//Cambia la letra del interior
-	        	btnCancelarEmergenteColaboradores.setPreferredSize(new Dimension(200, 40));//Tamaño botón
-	        	btnCancelarEmergenteColaboradores.setBackground(limon);//Color de fondo
-	        	btnCancelarEmergenteColaboradores.setCursor(new Cursor(Cursor.HAND_CURSOR));//Pone el cursor con una manita
-	        	if(macOS){
-	        		btnCancelarEmergenteColaboradores.setOpaque(true);//No transparente
-	        		btnCancelarEmergenteColaboradores.setBorder(macOSBorde);//Borde negro fino
-	        	}
-        
-				//Abre: Acción del btnCancelarEmergenteColaboradores
-	        	btnCancelarEmergenteColaboradores.addActionListener(new ActionListener() {
-		            public void actionPerformed(ActionEvent evento) {
-		            	ctrl.actionBtnCancelarEmergenteColaboradores(evento);//Se llama el método del Controller que gestiona el evento.
-		            }
-		        });
-				//Cierra: Acción del btnCancelarEmergenteColaboradores
-		        
-		    //Cierra: btnCancelarEmergenteColaboradores
-		
-		        //Abre: btnConfirmarEmergenteColaboradores    
-	        	btnConfirmarEmergenteColaboradores = new JButton("Confirmar");//Crea nuevo
-	        	btnConfirmarEmergenteColaboradores.setFont(new Font("Arial", Font.PLAIN, 18));//Cambia la letra del interior
-	        	btnConfirmarEmergenteColaboradores.setPreferredSize(new Dimension(200, 40));//Tamaño
-	        	btnConfirmarEmergenteColaboradores.setBackground(limon);//Color de fondo
-	        	btnConfirmarEmergenteColaboradores.setCursor(new Cursor(Cursor.HAND_CURSOR));//Pone el cursor con una manita
-		        if(macOS){
-		        	btnConfirmarEmergenteColaboradores.setOpaque(true);//No transparente
-		        	btnConfirmarEmergenteColaboradores.setBorder(macOSBorde);//Borde negro fino
-		        }
-        
-	        	//Abre: Acción del btnCrearListaEmergenteCrearLista
-		        btnConfirmarEmergenteColaboradores.addActionListener(new ActionListener() {
-		            public void actionPerformed(ActionEvent evento) {
-		            	//TODO:Crear método en el Controller
-		            	//ctrl.ConfirmarEmergenteColaboradores(evento);//Se llama el método del Controller que gestiona el evento. 
-		            }
-		        });
-				//Cierra: Acción del btnConfirmarEmergenteColaboradores
-        
-	        //Cierra: btnConfirmarEmergenteColaboradores
-		
-	       	panelBotonesBasicos.add(btnCancelarEmergenteColaboradores, BorderLayout.WEST);//Lo añade y lo ubica a la izquierda
-	        panelBotonesBasicos.add(btnConfirmarEmergenteColaboradores, BorderLayout.EAST);//Lo añade y lo ubica a la derecha
-	        panelBotonesBasicos.setBorder(BorderFactory.createEmptyBorder(10, 30, 10, 30));// top, left, bottom, right -> Ajusta un borde por pixeles
-	        //Cierra: panelBotonesBasicos
+	    		//Abre: panelBotonesBasicos
+	    		JPanel panelBotonesBasicos = new JPanel(new BorderLayout());
+	    		panelBotonesBasicos.setBackground(cyan);//Color de fondo
+	    		panelBotonesBasicos.setOpaque(detalles);//Mostrar detalles
+	    
+	        		//Abre: btnCancelarEmergenteEditarTablero
+		        	btnCancelarEmergenteColaboradores = new JButton("Cancelar");//Crea nuevo
+		        	btnCancelarEmergenteColaboradores.setFont(new Font("Arial", Font.PLAIN, 18));//Cambia la letra del interior
+		        	btnCancelarEmergenteColaboradores.setPreferredSize(new Dimension(200, 40));//Tamaño botón
+		        	btnCancelarEmergenteColaboradores.setBackground(limon);//Color de fondo
+		        	btnCancelarEmergenteColaboradores.setCursor(new Cursor(Cursor.HAND_CURSOR));//Pone el cursor con una manita
+		        	if(macOS){
+		        		btnCancelarEmergenteColaboradores.setOpaque(true);//No transparente
+		        		btnCancelarEmergenteColaboradores.setBorder(macOSBorde);//Borde negro fino
+		        	}
+	        
+						//Abre: Acción del btnCancelarEmergenteColaboradores
+			        	btnCancelarEmergenteColaboradores.addActionListener(new ActionListener() {
+				            public void actionPerformed(ActionEvent evento) {
+				            	ctrl.actionBtnCancelarEmergenteColaboradores();//Se llama el método del Controller que gestiona el evento.
+				            }
+				        });
+						//Cierra: Acción del btnCancelarEmergenteColaboradores
+			        
+		        	//Cierra: btnCancelarEmergenteColaboradores
+			
+			        //Abre: btnConfirmarEmergenteColaboradores    
+		        	btnConfirmarEmergenteColaboradores = new JButton("Confirmar");//Crea nuevo
+		        	btnConfirmarEmergenteColaboradores.setFont(new Font("Arial", Font.PLAIN, 18));//Cambia la letra del interior
+		        	btnConfirmarEmergenteColaboradores.setPreferredSize(new Dimension(200, 40));//Tamaño
+		        	btnConfirmarEmergenteColaboradores.setBackground(limon);//Color de fondo
+		        	btnConfirmarEmergenteColaboradores.setCursor(new Cursor(Cursor.HAND_CURSOR));//Pone el cursor con una manita
+			        if(macOS){
+			        	btnConfirmarEmergenteColaboradores.setOpaque(true);//No transparente
+			        	btnConfirmarEmergenteColaboradores.setBorder(macOSBorde);//Borde negro fino
+			        }
+	        
+			        	//Abre: Acción del btnCrearListaEmergenteCrearLista
+				        btnConfirmarEmergenteColaboradores.addActionListener(new ActionListener() {
+				            public void actionPerformed(ActionEvent evento) {
+				            	//TODO:Crear método en el Controller
+				            	//ctrl.ConfirmarEmergenteColaboradores();//Se llama el método del Controller que gestiona el evento. 
+				            }
+				        });
+						//Cierra: Acción del btnConfirmarEmergenteColaboradores
+	        
+			        //Cierra: btnConfirmarEmergenteColaboradores
+			
+		       	panelBotonesBasicos.add(btnCancelarEmergenteColaboradores, BorderLayout.WEST);//Lo añade y lo ubica a la izquierda
+		        panelBotonesBasicos.add(btnConfirmarEmergenteColaboradores, BorderLayout.EAST);//Lo añade y lo ubica a la derecha
+		        panelBotonesBasicos.setBorder(BorderFactory.createEmptyBorder(10, 30, 10, 30));// top, left, bottom, right -> Ajusta un borde por pixeles
+		        //Cierra: panelBotonesBasicos
 
 	        panelInferior.add(panelBotonesBasicos, BorderLayout.SOUTH);//Lo añade y lo ubica abajo
 	        //Cierra: panelInferior
@@ -820,68 +827,68 @@ public class FrameTablero extends JFrame{
 	        	lblTituloEliminarTablero.setOpaque(detalles);//Mostrar detalles
 	        	//Cierra: lblTituloEliminarTablero
 	        
-	        	panelTituloEliminarTablero.add(lblTituloEliminarTablero);
-	        	//Cierra: panelTituloEliminarTablero
+        	panelTituloEliminarTablero.add(lblTituloEliminarTablero);
+        	//Cierra: panelTituloEliminarTablero
     
 	        emergenteEliminar.add(panelTituloEliminarTablero, BorderLayout.NORTH);//Ubica arriba
 	        
-	      //Abre: panelInferior
+	        //Abre: panelInferior
     		JPanel panelInferior = new JPanel(new BorderLayout());//Crea nuevo
     		panelInferior.setBackground(blanco);//Color de fondo
     		panelInferior.setOpaque(detalles);//Mostrar detalles
 
-    		//Abre: panelBotonesBasicos
-    		JPanel panelBotonesBasicos = new JPanel(new BorderLayout());
-    		panelBotonesBasicos.setBackground(cyan);//Color de fondo
-    		panelBotonesBasicos.setOpaque(detalles);//Mostrar detalles
-    
-        		//Abre: btnCancelarEmergenteEditarTablero
-	        	btnCancelarEmergenteEliminar = new JButton("Cancelar");//Crea nuevo
-	        	btnCancelarEmergenteEliminar.setFont(new Font("Arial", Font.PLAIN, 18));//Cambia la letra del interior
-	        	btnCancelarEmergenteEliminar.setPreferredSize(new Dimension(200, 40));//Tamaño botón
-	        	btnCancelarEmergenteEliminar.setBackground(limon);//Color de fondo
-	        	btnCancelarEmergenteEliminar.setCursor(new Cursor(Cursor.HAND_CURSOR));//Pone el cursor con una manita
-	        	if(macOS){
-	        		btnCancelarEmergenteEliminar.setOpaque(true);//No transparente
-	        		btnCancelarEmergenteEliminar.setBorder(macOSBorde);//Borde negro fino
-	        	}
-        
-				//Abre: Acción del btnCancelarEmergenteEliminar
-	        	btnCancelarEmergenteEliminar.addActionListener(new ActionListener() {
-		            public void actionPerformed(ActionEvent evento) {
-		            	ctrl.actionBtnCancelarEmergenteEliminar(evento);//Se llama el método del Controller que gestiona el evento.
-		            }
-		        });
-				//Cierra: Acción del btnCancelarEmergenteEliminar
-		        
-		    //Cierra: btnCancelarEmergenteEliminar
-		
-		        //Abre: btnBorrarEmergenteEliminar    
-	        	btnBorrarEmergenteEliminar = new JButton("Borrar");//Crea nuevo
-	        	btnBorrarEmergenteEliminar.setFont(new Font("Arial", Font.PLAIN, 18));//Cambia la letra del interior
-	        	btnBorrarEmergenteEliminar.setPreferredSize(new Dimension(200, 40));//Tamaño
-	        	btnBorrarEmergenteEliminar.setBackground(rojo);//Color de fondo
-	        	btnBorrarEmergenteEliminar.setCursor(new Cursor(Cursor.HAND_CURSOR));//Pone el cursor con una manita
-		        if(macOS){
-		        	btnBorrarEmergenteEliminar.setOpaque(true);//No transparente
-		        	btnBorrarEmergenteEliminar.setBorder(macOSBorde);//Borde negro fino
-		        }
-        
-	        	//Abre: Acción del btnCrearListaEmergenteCrearLista
-		        btnBorrarEmergenteEliminar.addActionListener(new ActionListener() {
-		            public void actionPerformed(ActionEvent evento) {
-		            	//TODO:Crear método en el Controller
-		            	//ctrl.BorrarEmergenteEliminar(evento);//Se llama el método del Controller que gestiona el evento. 
-		            }
-		        });
-				//Cierra: Acción del btnBorrarEmergenteEliminar
-        
-	        //Cierra: btnBorrarEmergenteEliminar
-		
-	       	panelBotonesBasicos.add(btnCancelarEmergenteEliminar, BorderLayout.WEST);//Lo añade y lo ubica a la izquierda
-	        panelBotonesBasicos.add(btnBorrarEmergenteEliminar, BorderLayout.EAST);//Lo añade y lo ubica a la derecha
-	        panelBotonesBasicos.setBorder(BorderFactory.createEmptyBorder(10, 30, 10, 30));// top, left, bottom, right -> Ajusta un borde por pixeles
-	        //Cierra: panelBotonesBasicos
+	    		//Abre: panelBotonesBasicos
+	    		JPanel panelBotonesBasicos = new JPanel(new BorderLayout());
+	    		panelBotonesBasicos.setBackground(cyan);//Color de fondo
+	    		panelBotonesBasicos.setOpaque(detalles);//Mostrar detalles
+	    
+	        		//Abre: btnCancelarEmergenteEditarTablero
+		        	btnCancelarEmergenteEliminar = new JButton("Cancelar");//Crea nuevo
+		        	btnCancelarEmergenteEliminar.setFont(new Font("Arial", Font.PLAIN, 18));//Cambia la letra del interior
+		        	btnCancelarEmergenteEliminar.setPreferredSize(new Dimension(200, 40));//Tamaño botón
+		        	btnCancelarEmergenteEliminar.setBackground(limon);//Color de fondo
+		        	btnCancelarEmergenteEliminar.setCursor(new Cursor(Cursor.HAND_CURSOR));//Pone el cursor con una manita
+		        	if(macOS) {
+		        		btnCancelarEmergenteEliminar.setOpaque(true);//No transparente
+		        		btnCancelarEmergenteEliminar.setBorder(macOSBorde);//Borde negro fino
+		        	}
+	        
+						//Abre: Acción del btnCancelarEmergenteEliminar
+			        	btnCancelarEmergenteEliminar.addActionListener(new ActionListener() {
+				            public void actionPerformed(ActionEvent evento) {
+				            	ctrl.actionBtnCancelarEmergenteEliminar();//Se llama el método del Controller que gestiona el evento.
+				            }
+				        });
+						//Cierra: Acción del btnCancelarEmergenteEliminar
+			        
+			        //Cierra: btnCancelarEmergenteEliminar
+			
+			        //Abre: btnBorrarEmergenteEliminar    
+		        	btnBorrarEmergenteEliminar = new JButton("Borrar");//Crea nuevo
+		        	btnBorrarEmergenteEliminar.setFont(new Font("Arial", Font.PLAIN, 18));//Cambia la letra del interior
+		        	btnBorrarEmergenteEliminar.setPreferredSize(new Dimension(200, 40));//Tamaño
+		        	btnBorrarEmergenteEliminar.setBackground(rojo);//Color de fondo
+		        	btnBorrarEmergenteEliminar.setCursor(new Cursor(Cursor.HAND_CURSOR));//Pone el cursor con una manita
+			        if(macOS) {
+			        	btnBorrarEmergenteEliminar.setOpaque(true);//No transparente
+			        	btnBorrarEmergenteEliminar.setBorder(macOSBorde);//Borde negro fino
+			        }
+	        
+			        	//Abre: Acción del btnCrearListaEmergenteCrearLista
+				        btnBorrarEmergenteEliminar.addActionListener(new ActionListener() {
+				            public void actionPerformed(ActionEvent evento) {
+				            	//TODO:Crear método en el Controller
+				            	//ctrl.BorrarEmergenteEliminar();//Se llama el método del Controller que gestiona el evento. 
+				            }
+				        });
+						//Cierra: Acción del btnBorrarEmergenteEliminar
+	        
+			        //Cierra: btnBorrarEmergenteEliminar
+			
+		       	panelBotonesBasicos.add(btnCancelarEmergenteEliminar, BorderLayout.WEST);//Lo añade y lo ubica a la izquierda
+		        panelBotonesBasicos.add(btnBorrarEmergenteEliminar, BorderLayout.EAST);//Lo añade y lo ubica a la derecha
+		        panelBotonesBasicos.setBorder(BorderFactory.createEmptyBorder(10, 30, 10, 30));// top, left, bottom, right -> Ajusta un borde por pixeles
+		        //Cierra: panelBotonesBasicos
 
 	        panelInferior.add(panelBotonesBasicos, BorderLayout.SOUTH);//Lo añade y lo ubica abajo
 	        //Cierra: panelInferior
@@ -900,6 +907,10 @@ public class FrameTablero extends JFrame{
 	        emergenteEliminar.setVisible(true);//Hace visible la emergente
     }
     //Cierra: Método para crear emergenteEliminar
+    
+    
+    
+    
     
 	  // -- // -- // -- // -- // -- // -- //
 	 // -- // -- // GET & SET// -- // -- //

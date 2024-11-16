@@ -8,17 +8,18 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 import javax.swing.BorderFactory;
-import javax.swing.JDialog;
 import javax.swing.Timer;
 import javax.swing.border.Border;
 
-import co.edu.konradlorenz.view.Vista;
-import co.edu.konradlorenz.view.gui.FrameTablero;
-import co.edu.konradlorenz.view.gui.Login;
-import co.edu.konradlorenz.view.gui.Principal;
+import co.edu.konradlorenz.view.*;
+import co.edu.konradlorenz.view.gui.*;
 import co.edu.konradlorenz.model.*;
 
 public class Controlador {
+	
+	//MOSTRAR DETALLES
+	public boolean detalles = true;//true -> mostrar / false -> ocultar
+	public boolean macOS = true;//true -> macOS / false -> Windows
 
 	/*
 	 * protected Administrador objAdministrador = new Administrador(); protected
@@ -31,9 +32,10 @@ public class Controlador {
 	private ArrayList<Tablero> listaDeTablerosGlobal = new ArrayList<>();
 	private ArrayList<Lista> listaDeListasGlobal = new ArrayList<>();
 	private ArrayList<Tarea> listaDeTareasGlobal = new ArrayList<>();
-	private ArrayList<Persona> listaDePersonaGlobal = new ArrayList<>();
+	private ArrayList<Persona> listaDePersonasGlobal = new ArrayList<>();
 	private Administrador objAdministrador;
 
+	private Administrador administradorAbierto;
 	private Tablero tableroAbierto;
 	private Lista listaAbierta;
 	private Tarea tareaAbierta;
@@ -97,14 +99,10 @@ public class Controlador {
 	 * Metodos de crear objetos Tablero, Lista, Tarea y Persona. -crearPersona() se
 	 * utiliza unicamente en el método crearTarea.
 	 */
-	public void crearTablero(String nombreTablero, ArrayList<Persona> listaDeInvitados) {
-		Tablero tablero;
-		if(listaDeInvitados.size() == 0) {//Si no ingresó invitados
-			tablero = new Tablero(nombreTablero);
-		}else {//Si sí ingresó invitados
-			tablero = new Tablero(nombreTablero, listaDeInvitados);
-		}
+	public Tablero crearTablero(String nombreTablero) {
+		Tablero tablero = new Tablero(nombreTablero);
 		listaDeTablerosGlobal.add(tablero);
+		return tablero;
 	}
 	// crearTablero
 
@@ -127,17 +125,17 @@ public class Controlador {
 		objTarea.setCasilla(false);
 		ArrayList<Persona> listaDelegados = new ArrayList<>();
 		objTarea.setListaDelegados(listaDelegados);
-		mostrarPersonas(listaDePersonaGlobal);
+		mostrarPersonas(listaDePersonasGlobal);
 		boolean disponible = false;
 		boolean vacia = false;
-		if (listaDePersonaGlobal.isEmpty()) {
+		if (listaDePersonasGlobal.isEmpty()) {
 			int indice = Integer.parseInt(Vista.pedirString("cuantos delegados tiene la tarea"));
 			for (int i = 1; i <= indice; i++) {
 				listaDelegados.add(crearPersona());
 			}
 		}else {
 			String correoBusqueda = Vista.pedirString("el correo del delegado a asignar la tarea");
-			for (Persona persona : listaDePersonaGlobal) {
+			for (Persona persona : listaDePersonasGlobal) {
 				if (persona.getCorreo().equals(correoBusqueda)) {
 					colaboradorAbierto= (Colaborador)persona;
 					break;
@@ -331,6 +329,14 @@ public class Controlador {
 	 * que a los metodos de abrir clases se les puede quitar el if del is.empty,
 	 * menos al de tablero.
 	 */
+	public String abrirAdministrador() {
+		//TODO: Esto es temporal mientras se implementa el Login
+		crearEjemplosPersona();
+		administradorAbierto = (Administrador) listaDePersonasGlobal.get(0);
+		return administradorAbierto.getNombre();
+	}
+	//abrirAdministrador
+	
 	public Tablero abrirTablero() {
 		boolean encontrado = false;
 
@@ -513,9 +519,15 @@ public class Controlador {
 	// modificarNombreTablero
 
 	public void crearEjemplosPersona() {
-		listaDePersonaGlobal.add(new Colaborador("Juan Perez", "juan.perez@example.com", "Colaborador"));
-		listaDePersonaGlobal.add(new Colaborador("Pedro Lopez", "pedro.lopez@example.com", "Colaborador"));
-		listaDePersonaGlobal.add(new Colaborador("Maria Guzman", "maria.garcia@example.com", "Colaborador"));
+		
+		listaDePersonasGlobal.add(new Administrador("Alejandra Durán", "alejaqt@gmail.com", "Administrador"));
+		listaDePersonasGlobal.add(new Administrador("Sharon Cruz", "sharina@gmail.com", "Administrador"));
+		listaDePersonasGlobal.add(new Administrador("Brian Vargas", "briscuit@gmail.com", "Administrador"));
+		listaDePersonasGlobal.add(new Administrador("Alexander Chacon", "alexito@gmail.com", "Administrador"));
+		
+		listaDePersonasGlobal.add(new Colaborador("Juan Perez", "juan.perez@example.com", "Colaborador"));
+		listaDePersonasGlobal.add(new Colaborador("Pedro Lopez", "pedro.lopez@example.com", "Colaborador"));
+		listaDePersonasGlobal.add(new Colaborador("Maria Guzman", "maria.garcia@example.com", "Colaborador"));
 	}
 	
 	public boolean asignarTarea(Persona persona) {//TODO: Crear lista de personas global
@@ -569,17 +581,40 @@ public class Controlador {
   
 	
 	
+	//CREAR PRINCIPAL
+	
+	//Abre: actionVolverPrincipal
+	public void actionVolverPrincipal() {
+		 
+		if(FrameTablero.getFrameTablero() == null) {
+			//Literalmente que no haga nada
+		} else if(FrameTablero.getFrameTablero().isActive()) {//Si está abierto
+			FrameTablero.getFrameTablero().dispose();//Cierra el frame del tablero
+		}
+		
+	    if(!Principal.getFramePrincipal().isActive()) {//Si no está abierto
+	    	new Principal();//Crea nuevo
+	    }
+	    
+	}
+	//Cierra: actionVolverPrincipal
+	
+	
+	
 	//CREAR TABLERO
 	
 	//Abre: actionBtnCrearTablero
-	public void actionBtnCrearTablero(ActionEvent evento) {
+	public void actionBtnCrearTablero() {
 		Principal.emergenteCrearTablero();
 	}
 	//Cierra: actionBtnCrearTablero
 
 	//Abre: actionEnterTxtFieldIngresarNombreEmergenteCrearTablero
-	public void actionEnterTxtFieldIngresarNombreEmergenteCrearTablero(ActionEvent evento) {
-		if(Principal.getTxtFieldIngresarNombreEmergenteCrearTablero().getText().equals(Principal.getMensajeIngresarNombreTablero()) 
+	public void actionEnterTxtFieldIngresarNombreEmergenteCrearTablero() {
+		
+		String placeholder = Principal.getMensajeIngresarNombreTablero();
+		
+		if(Principal.getTxtFieldIngresarNombreEmergenteCrearTablero().getText().equals(placeholder) 
 				|| Principal.getTxtFieldIngresarNombreEmergenteCrearTablero().getText().equals("")){
 			//IMPORTANTE: Este if es el que hace parpadear de rojo xd, el else crea el tablero
 			//Inicializo colores
@@ -610,21 +645,25 @@ public class Controlador {
 	                
 	                contador[0]++;
 	            } else {
-	                ((Timer) event.getSource()).stop(); //Detiene el Timer
+	                ((Timer) event.getSource()).stop();//Detiene el Timer
 	            }
 	        });
 			
 			timer.start();
 		} else {
-			String nombreTablero = Principal.getTxtFieldIngresarNombreEmergenteCrearTablero().getText();//Obtiene el texto
-		  	ArrayList<Persona> listaDeInvitados = null;//TODO: Obtener la lista de invitados.
-		  	crearTablero(nombreTablero, listaDeInvitados);//Envía el nombre al método crearTablero
+			String nombreTablero = Principal.getTxtFieldIngresarNombreEmergenteCrearTablero().getText(); // Obtiene el texto
+		    tableroAbierto = crearTablero(nombreTablero);//Crea el tablero lógico y lo guarda
+
+		    Principal.getFramePrincipal().dispose();//Cierra el frame principal
+
+		    new FrameTablero();//Crea nuevo
+		    
 		}//if crearTablero
 	}
 	//Cierra: actionEnterTxtFieldIngresarNombreEmergenteCrearTablero
 
 	//Abre: actionBtnCancelarEmergenteCrearTablero
-	public void actionBtnCancelarEmergenteCrearTablero(ActionEvent evento) {
+	public void actionBtnCancelarEmergenteCrearTablero() {
 	    Principal.getEmergenteCrearTablero().dispose();
 	    Principal.setEmergenteCrearTablero(null);
 	}
@@ -696,14 +735,18 @@ public class Controlador {
 	//AGREGAR INVITADOS
 	
 	//Abre: actionBtnAgregarInvitados
-	public void actionBtnAgregarInvitados(ActionEvent evento) {
+	public void actionBtnAgregarInvitados() {
 		Principal.emergenteAgregarInvitados();
 	}
 	//Cierra: actionBtnAgregarInvitados
 	
 	//Abre: actionEnterTxtFieldIngresarCorreoEmergenteAgregarInvitados
-	public void actionEnterTxtFieldIngresarCorreoEmergenteAgregarInvitados(ActionEvent evento) {
-		if(Principal.getTxtFieldIngresarCorreoEmergenteAgregarInvitados().getText().equals(Principal.getMensajeIngresarCorreo()) 
+	//TODO: Método sin implementar
+	public Persona actionEnterTxtFieldIngresarCorreoEmergenteAgregarInvitados() {
+		
+		String placeholder = Principal.getMensajeIngresarCorreo();
+		
+		if(Principal.getTxtFieldIngresarCorreoEmergenteAgregarInvitados().getText().equals(placeholder) 
 				|| Principal.getTxtFieldIngresarCorreoEmergenteAgregarInvitados().getText().equals("")){
 			//IMPORTANTE: Este if es el que hace parpadear de rojo xd, el else crea el tablero
 			//Inicializo colores
@@ -740,14 +783,22 @@ public class Controlador {
 			
 			timer.start();
 		} else {
-			String nombreInvitado = Principal.getTxtFieldIngresarCorreoEmergenteAgregarInvitados().getText();//Obtiene el texto
-		  	//TODO: Agregar persona a la lista de invitados.
+			String correoInvitado = Principal.getTxtFieldIngresarCorreoEmergenteAgregarInvitados().getText();//Obtiene el texto
+			
+			for (Persona personita : listaDePersonasGlobal) {
+				if(personita.getCorreo().equals(correoInvitado)) {
+					actionBtnCancelarEmergenteAgregarInvitados();
+					return personita;
+				}
+				
+			}
 		}//if crearTablero
+		return null;
 	}
 	//Cierra: actionEnterTxtFieldIngresarCorreoEmergenteAgregarInvitados
 	
 	//Abre: actionBtnCancelarEmergenteAgregarInvitados
-	public void actionBtnCancelarEmergenteAgregarInvitados(ActionEvent evento) {
+	public void actionBtnCancelarEmergenteAgregarInvitados() {
 	    Principal.getEmergenteAgregarInvitados().dispose();
 	    Principal.setEmergenteAgregarInvitados(null);
 	}
@@ -758,14 +809,17 @@ public class Controlador {
 	//CREAR LISTA
 	
 	//Abre: actionBtnCrearLista
-	public void actionBtnCrearLista(ActionEvent evento) {                                             
+	public void actionBtnCrearLista( ) {                                             
 		FrameTablero.emergenteCrearLista();
 	}
 	//Cierra: actionBtnCrearLista
 	
 	//Abre: actionEnterTxtFieldIngresarNombreEmergenteCrearLista
-	public void actionEnterTxtFieldIngresarNombreEmergenteCrearLista(ActionEvent evento) {
-		if(FrameTablero.getTxtFieldIngresarNombreEmergenteCrearLista().getText().equals(FrameTablero.getMensajeIngresarNombreLista()) 
+	public void actionEnterTxtFieldIngresarNombreEmergenteCrearLista() {
+		
+		String placeholder = FrameTablero.getMensajeIngresarNombreLista();
+		
+		if(FrameTablero.getTxtFieldIngresarNombreEmergenteCrearLista().getText().equals(placeholder) 
 				|| FrameTablero.getTxtFieldIngresarNombreEmergenteCrearLista().getText().equals("")){
 			//IMPORTANTE: Este if es el que hace parpadear de rojo xd, el else crea el tablero
 			//Inicializo colores
@@ -809,7 +863,7 @@ public class Controlador {
 	//Cierra: actionEnterTxtFieldIngresarNombreEmergenteCrearLista
 	
 	//Abre: actionBtnCancelarEmergenteCrearLista
-	public void actionBtnCancelarEmergenteCrearLista(ActionEvent evento) {
+	public void actionBtnCancelarEmergenteCrearLista() {
 		FrameTablero.getEmergenteCrearLista().dispose();
 	}
 	//Cierra: actionBtnCancelarEmergenteCrearLista
@@ -819,14 +873,17 @@ public class Controlador {
 	//EDITAR TABLERO
 		
 	//Abre: actionBtnEditarTablero
-	public void actionBtnEditarTablero(ActionEvent evento) {                                             
+	public void actionBtnEditarTablero() {                                             
 		FrameTablero.emergenteEditarTablero();
 	}
 	//Cierra: actionBtnEditarTablero
 		
 	//Abre: txtFieldIngresarNombreEmergenteEditarTablero
-	public void txtFieldIngresarNombreEmergenteEditarTablero(ActionEvent evento) {
-		if(FrameTablero.getTxtFieldIngresarNombreEmergenteEditarTablero().getText().equals(FrameTablero.getMensajeEditarNombreTablero()) 
+	public void txtFieldIngresarNombreEmergenteEditarTablero() {
+		
+		String placeholder = FrameTablero.getMensajeEditarNombreTablero();
+		
+		if(FrameTablero.getTxtFieldIngresarNombreEmergenteEditarTablero().getText().equals(placeholder) 
 				|| FrameTablero.getTxtFieldIngresarNombreEmergenteEditarTablero().getText().equals("")){
 			//IMPORTANTE: Este if es el que hace parpadear de rojo xd, el else crea el tablero
 			//Inicializo colores
@@ -870,19 +927,19 @@ public class Controlador {
 	//Cierra: txtFieldIngresarNombreEmergenteEditarTablero
 		
 	//Abre: actionBtnColaboradoresEmergenteEditarTablero
-	public void actionBtnColaboradoresEmergenteEditarTablero(ActionEvent evento) {
+	public void actionBtnColaboradoresEmergenteEditarTablero() {
 		FrameTablero.emergenteColaboradores();
 	}
 	//Cierra: actionBtnColaboradoresEmergenteEditarTablero
 	
 	//Abre: actionBtnEliminarEmergenteEditarTablero
-	public void actionBtnEliminarEmergenteEditarTablero(ActionEvent evento) {
+	public void actionBtnEliminarEmergenteEditarTablero() {
 		FrameTablero.emergenteEliminar();
 	}
 	//Cierra: actionBtnEliminarEmergenteEditarTablero
 		
 	//Abre: actionBtnCancelarEmergenteEditarTablero
-	public void actionBtnCancelarEmergenteEditarTablero(ActionEvent evento) {
+	public void actionBtnCancelarEmergenteEditarTablero() {
 		FrameTablero.getEmergenteEditarTablero().dispose();
 	}
 	//Cierra: actionBtnCancelarEmergenteEditarTablero
@@ -892,7 +949,7 @@ public class Controlador {
 	//COLABORADORES TABLERO
 		
 	//Abre: actionBtnCancelarEmergenteColaboradores
-	public void actionBtnCancelarEmergenteColaboradores(ActionEvent evento) {
+	public void actionBtnCancelarEmergenteColaboradores() {
 		FrameTablero.getEmergenteColaboradores().dispose();
 	}
 	//Cierra: actionBtnCancelarEmergenteColaboradores
@@ -902,7 +959,7 @@ public class Controlador {
 	//ELIMINAR TABLERO
 		
 	//Abre: actionBtnCancelarEmergenteEliminar
-	public void actionBtnCancelarEmergenteEliminar(ActionEvent evento) {
+	public void actionBtnCancelarEmergenteEliminar() {
 		FrameTablero.getEmergenteEliminar().dispose();
 	}
 	//Cierra: actionBtnCancelarEmergenteEliminar

@@ -1,14 +1,13 @@
 package co.edu.konradlorenz.view.gui;
 
 
-import java.awt.Color;
-import java.awt.Font;
-import java.awt.Image;
-import java.awt.event.FocusEvent;
-import java.awt.event.FocusListener;
+import java.awt.*;
+import java.awt.event.*;
 
 import javax.swing.*;
 import javax.swing.border.*;
+
+import co.edu.konradlorenz.controller.Controlador;
 
 @SuppressWarnings("serial")
 public class Login extends JFrame {
