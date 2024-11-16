@@ -143,7 +143,7 @@ public class FrameTablero extends JFrame{
 		    	panelTitulos.setOpaque(detalles);//Mostrar detalles
 	        
 		        	//Abre: lblTituloTablero
-			    	JLabel lblTituloTablero = new JLabel("Proyecto Final Técnicas II");//Crea nuevo
+			    	JLabel lblTituloTablero = new JLabel("Nombre del proyecto:(");//Crea nuevo //TODO: Debe ir el nombre del proyecto
 			    	lblTituloTablero.setFont(new Font("Arial", Font.BOLD, 24));//Cambia la letra del interior
 			    	lblTituloTablero.setForeground(negro);//Color de letra
 			    	lblTituloTablero.setBackground(verde);//Color de fondo
@@ -561,11 +561,14 @@ public class FrameTablero extends JFrame{
 			
 				//Abre: txtFieldIngresarNombreEmergenteEditarTablero
 				txtFieldIngresarNombreEmergenteEditarTablero = new JTextField(mensajeEditarNombreTablero);//Crea nuevo
-				txtFieldIngresarNombreEmergenteEditarTablero.setForeground(gris);//Color de letra
-				txtFieldIngresarNombreEmergenteEditarTablero.setPreferredSize(new Dimension(198, 42));
+				txtFieldIngresarNombreEmergenteEditarTablero.setForeground(blanco);//Color de letra
+				//txtFieldIngresarNombreEmergenteEditarTablero.setPreferredSize(new Dimension(198, 42));
+				txtFieldIngresarNombreEmergenteEditarTablero.setHorizontalAlignment(JTextField.CENTER);
+				txtFieldIngresarNombreEmergenteEditarTablero.setMaximumSize(new Dimension(250, 50));
 				txtFieldIngresarNombreEmergenteEditarTablero.setFont(new Font("Arial", Font.PLAIN, 20));//Cambia la letra del interior
 				txtFieldIngresarNombreEmergenteEditarTablero.setBackground(moradito);//Color de fondo
 				txtFieldIngresarNombreEmergenteEditarTablero.setCursor(new Cursor(Cursor.TEXT_CURSOR));//Pone el cursor modo escritura
+				txtFieldIngresarNombreEmergenteEditarTablero.setAlignmentX(Component.CENTER_ALIGNMENT);//lo centra???
 				if(macOS){
 					txtFieldIngresarNombreEmergenteEditarTablero.setOpaque(true);//No transparente
 					txtFieldIngresarNombreEmergenteEditarTablero.setBorder(macOSBorde);//Borde negro fino
@@ -600,15 +603,19 @@ public class FrameTablero extends JFrame{
 			        //Cierra: Acción del txtFieldIngresarNombreEmergenteCrearTablero
 		        
 		        //Cierra: txtFieldIngresarNombreEmergenteCrearTablero
-					
+				
 				panelCentral.add(txtFieldIngresarNombreEmergenteEditarTablero, BorderLayout.NORTH);
+				panelCentral.add(Box.createRigidArea(new Dimension(0, 20)));
 				
 				//Abre: btnColaboradoresEmergenteEditarTablero
 				btnColaboradoresEmergenteEditarTablero = new JButton("Colaboradores");//Crea nuevo
 				btnColaboradoresEmergenteEditarTablero.setFont(new Font("Arial", Font.PLAIN, 18));//Cambia la letra del interior
-				btnColaboradoresEmergenteEditarTablero.setPreferredSize(new Dimension(198, 42));//Tamaño botón
+				//btnColaboradoresEmergenteEditarTablero.setPreferredSize(new Dimension(198, 42));//Tamaño botón
+				btnColaboradoresEmergenteEditarTablero.setMaximumSize(new Dimension(250, 50));
 				btnColaboradoresEmergenteEditarTablero.setBackground(rosita);//Color de fondo
+				btnColaboradoresEmergenteEditarTablero.setForeground(blanco);
 				btnColaboradoresEmergenteEditarTablero.setCursor(new Cursor(Cursor.HAND_CURSOR));//Pone el cursor con una manita
+				btnColaboradoresEmergenteEditarTablero.setAlignmentX(Component.CENTER_ALIGNMENT);//lo centra???
 				if(macOS){
 					btnColaboradoresEmergenteEditarTablero.setOpaque(true);//No transparente
 					btnColaboradoresEmergenteEditarTablero.setBorder(macOSBorde);//Borde negro fino
@@ -625,13 +632,17 @@ public class FrameTablero extends JFrame{
 		    	//Cierra: btnColaboradoresEmergenteEditarTablero
 		    		
 				panelCentral.add(btnColaboradoresEmergenteEditarTablero, BorderLayout.CENTER);
+				panelCentral.add(Box.createRigidArea(new Dimension(0, 20)));
 	
 				//Abre: btnEliminarEmergenteEditarTablero
 				btnEliminarEmergenteEditarTablero = new JButton("Eliminar");//Crea nuevo
 				btnEliminarEmergenteEditarTablero.setFont(new Font("Arial", Font.PLAIN, 18));//Cambia la letra del interior
-				btnEliminarEmergenteEditarTablero.setPreferredSize(new Dimension(198, 42));//Tamaño botón
+				//btnEliminarEmergenteEditarTablero.setPreferredSize(new Dimension(198, 42));//Tamaño botón
+				btnEliminarEmergenteEditarTablero.setMaximumSize(new Dimension(250, 50));
 				btnEliminarEmergenteEditarTablero.setBackground(moradito);//Color de fondo
+				btnEliminarEmergenteEditarTablero.setForeground(blanco);
 				btnEliminarEmergenteEditarTablero.setCursor(new Cursor(Cursor.HAND_CURSOR));//Pone el cursor con una manita
+				btnEliminarEmergenteEditarTablero.setAlignmentX(Component.CENTER_ALIGNMENT);//lo centra???
 				if(macOS){
 					btnEliminarEmergenteEditarTablero.setOpaque(true);//No transparente
 					btnEliminarEmergenteEditarTablero.setBorder(macOSBorde);//Borde negro fino
@@ -648,6 +659,7 @@ public class FrameTablero extends JFrame{
 		    	//Cierra: btnEliminarEmergenteEditarTablero
 		    		
 				panelCentral.add(btnEliminarEmergenteEditarTablero, BorderLayout.SOUTH);
+				panelCentral.add(Box.createRigidArea(new Dimension(0, 30)));
 				
 				//panelCentral.setBorder(BorderFactory.createEmptyBorder(3, 0, 0, 0));// top, left, bottom, right -> Ajusta un borde por pixeles
 
