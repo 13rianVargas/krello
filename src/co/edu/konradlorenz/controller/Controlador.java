@@ -6,6 +6,7 @@ import java.util.ArrayList;
 
 import javax.swing.BorderFactory;
 import javax.swing.Timer;
+import javax.swing.UIManager;
 import javax.swing.border.Border;
 
 import co.edu.konradlorenz.view.*;
@@ -16,7 +17,7 @@ public class Controlador {
 	
 	//MOSTRAR DETALLES
 	public boolean detalles = false;//true -> mostrar / false -> ocultar //LEE EL TODO DE LA LINEA 21 PORFAVOR
-	public boolean macOS = true;//true -> macOS / false -> Windows
+	public boolean macOS = false;//true -> macOS / false -> Windows
 	
 	/*/ TODO: Añade el este if cuando crees botones pls: 
 	
@@ -41,10 +42,18 @@ public class Controlador {
 
 	public void run() {
 		
+		//Abre: Cambio de diseño de botones generales
+		try {
+			UIManager.setLookAndFeel("javax.swing.plaf.nimbus.NimbusLookAndFeel");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+		//Cierra: Cambio de diseño de botones generales
+		
 		crearEjemplosPersona();
 		
 		/*/ <- Agrega * entre barras para comentar
-		new Login();//El this envía esta instancia del controlador a esa ventana.
+		new Login(this);//El this envía esta instancia del controlador a esa ventana.
 		//*/
 		
 		// <- Agrega * entre barras para comentar
