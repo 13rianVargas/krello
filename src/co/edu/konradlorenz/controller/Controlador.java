@@ -117,14 +117,15 @@ public class Controlador {
 	 */
 	public Tablero crearTablero(String nombreTablero, String nombreAdministrador) {
 		Tablero tablero = new Tablero(nombreTablero, nombreAdministrador);
-		listaDeTablerosGlobal.add(tablero);
+		listaDeTablerosGlobal.add(tablero);//TODO: Cambiar por tableros de persona.
 		return tablero;
 	}
 	// crearTablero
 
-	public void crearLista(String nombreLista) {
-		Lista lista = new Lista(nombreLista, listaDeTareasGlobal);
-		listaDeListasGlobal.add(lista);
+	public Lista crearLista(String nombreLista) {
+		Lista lista = new Lista(nombreLista);//Crea la lista
+		tableroAbierto.getListaDeListas().add(lista);//Añade la lista al tablero abierto
+		return lista;
 	}
 	// crearLista
 
@@ -363,29 +364,9 @@ public class Controlador {
 	}
 	// getNombreTableroAbierto
 
-	public Lista abrirLista() {
-		
-		boolean encontrado = false;
-		if (tableroAbierto.getListaDeListas().isEmpty()) {
-			Vista.mostrarMensaje("No hay listas creadas para abrir.");
-			return null;
-		} else {
-			while (!encontrado) {
-				mostrarLista();
-				String nombreBusqueda = Vista.pedirString("el nombre de la lista que desea abrir.");
-				for (Lista lista : listaDeListasGlobal) {
-					if (lista.getNombreLista().equalsIgnoreCase(nombreBusqueda)) {
-						encontrado = true;
-						Vista.mostrarMensaje("La lista fue encontrada.");
-						return lista;
-					}
-				}
-				if (!encontrado) {
-					Vista.mostrarMensaje("La lista no fue encontrada, por favor intente de nuevo.");
-				}
-			}
-			return null;
-		}
+	public String getNombreListaAbierta() {
+		String nombreLista = listaAbierta.getNombreLista();
+		return nombreLista;
 	}
 	// abrirLista
 
@@ -524,6 +505,7 @@ public class Controlador {
 		listaDePersonasGlobal.add(new Colaborador("Maria Guzman", "maria.garcia@example.com", "Colaborador"));
 		
 	}
+	//crearEjemplosPersona
 	
 	public boolean asignarTarea(Persona persona) {//TODO: Crear lista de personas global
 		if (persona.getRol().equalsIgnoreCase("Colaborador")) {
@@ -537,6 +519,7 @@ public class Controlador {
 		}
 		return true;
 	}
+	// asignarTarea
 	
 	public int recorrerTarea(Persona PersonaComparar) {
 		int canTareas = 0;
@@ -552,6 +535,26 @@ public class Controlador {
 		return canTareas;
 	} 
 	// recorrerTarea
+	
+	public static String toCapitalCase(String text) {
+	    if (text == null || text.isEmpty()) {
+	        return text; // Retorna el texto original si es nulo o vacío
+	    }
+
+	    String[] words = text.trim().split("\\s+"); // Divide el texto por espacios
+	    StringBuilder capitalizedText = new StringBuilder();
+
+	    for (String word : words) {
+	        if (word.length() > 0) {
+	            capitalizedText.append(Character.toUpperCase(word.charAt(0))) // Primera letra en mayúscula
+	                          .append(word.substring(1).toLowerCase())        // Resto en minúscula
+	                          .append(" ");                                  // Añade un espacio
+	        }
+	    }
+
+	    return capitalizedText.toString().trim(); // Elimina el último espacio
+	}
+	//toCapitalCase
 
 	/*
 	 * Verificar funcionalidad de este tablero poque esta heavy, toca crear metodos
@@ -576,7 +579,7 @@ public class Controlador {
   
 	
 	
-	//CREAR PRINCIPAL
+	//VOLVER
 	
 	//Abre: actionVolverPrincipal
 	public void actionVolverPrincipal() {
@@ -646,7 +649,7 @@ public class Controlador {
 			
 			timer.start();
 		} else {
-			String nombreTablero = Principal.getTxtFieldIngresarNombreEmergenteCrearTablero().getText(); // Obtiene el texto
+			String nombreTablero = toCapitalCase(Principal.getTxtFieldIngresarNombreEmergenteCrearTablero().getText()); // Obtiene el texto y lo transforma a CapitalCase
 			String nombreAdministrador = administradorAbierto.getNombre();
 		    tableroAbierto = crearTablero(nombreTablero, nombreAdministrador);//Crea el tablero lógico y lo guarda
 
@@ -852,8 +855,13 @@ public class Controlador {
 				
 			timer.start();
 		} else {
-			String nombreLista = FrameTablero.getTxtFieldIngresarNombreEmergenteCrearLista().getText();//Obtiene el texto
-		  	crearLista(nombreLista);//Envía el nombre al método crearTablero
+			String nombreLista = toCapitalCase(FrameTablero.getTxtFieldIngresarNombreEmergenteCrearLista().getText());//Obtiene el texto y lo transfoma a Capital
+			listaAbierta = crearLista(nombreLista);//Envía el nombre al método crearLista
+			
+			FrameTablero.getEmergenteCrearLista().dispose();//Cierra el frame principal
+			
+			FrameTablero.panelLista();//Crea y añade el panelLista al panelTableroBody
+			
 		}//if crearLista
 	}
 	//Cierra: actionEnterTxtFieldIngresarNombreEmergenteCrearLista

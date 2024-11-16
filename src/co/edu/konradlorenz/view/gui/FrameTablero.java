@@ -128,7 +128,7 @@ public class FrameTablero extends JFrame{
 	// -- // -- // -- // -- // -- // -- //
 	
 	//Abre: Método para crear el panelTableroMiddle
-    public JPanel panelTableroMiddle() {
+    public static JPanel panelTableroMiddle() {
     	
     	panelTableroMiddle = new JPanel();//Crea nuevo
     	panelTableroMiddle.setLayout(new BorderLayout());//Diseño
@@ -262,19 +262,17 @@ public class FrameTablero extends JFrame{
     //Cierra: Método para crear el panelTableroMiddle
     
     //Abre: Método para crear el panelTableroBody
-    public void panelTableroBody() {
+    public static void panelTableroBody() {
         panelTableroBody = new JPanel();
         panelTableroBody.setBackground(grisClaro);
         panelTableroBody.setBorder(new EmptyBorder(5, 5,5, 5));//top, left, bottom, right -> Ajusta un borde por pixeles
-        panelTableroBody.setLayout(new FlowLayout(FlowLayout.LEFT, 20, 20)); 
-
-        panelLista();//Se utilizaria cuando se realice el evento boton crear lista, pero lo dejo para que vean como quedo
+        panelTableroBody.setLayout(new FlowLayout(FlowLayout.LEFT, 20, 20));
     }
     //Cierra: Método para crear el panelTableroBody
     
     
     //Abre: Método para crear el panelLista
-	public void panelLista() {
+	public static void panelLista() {
 		
 		JPanel panelLista = new JPanel();
 		panelLista.setBackground(petroleoOscuro);
@@ -283,13 +281,14 @@ public class FrameTablero extends JFrame{
 		panelLista.setCursor(new Cursor(Cursor.HAND_CURSOR));
 		panelLista.setBorder(new EmptyBorder(5, 5, 5, 5));
 		
-		panelLista.setPreferredSize(new Dimension(280, 420)); //Tamaño fijo, nohay de otra
+		panelLista.setPreferredSize(new Dimension(280, 420)); //Tamaño fijo, no hay de otra
 		panelLista.setAlignmentY(CENTER_ALIGNMENT);
 		
 		 JPanel panelSuperior = new JPanel(new FlowLayout(FlowLayout.LEFT, 10, 5));
 		    panelSuperior.setOpaque(false); 
 
-		    JLabel titulo = new JLabel("Nombre");
+		    String nombreLista  = ctrl.getNombreListaAbierta();
+		    JLabel titulo = new JLabel(nombreLista);
 		    titulo.setFont(new Font("Arial", Font.BOLD, 20));
 		    titulo.setForeground(Color.WHITE);
 
@@ -298,8 +297,16 @@ public class FrameTablero extends JFrame{
 		    
 		    btnCrear.setBackground(limon);
 		    btnCrear.setForeground(negro);
+		    if(macOS) {
+		    	btnCrear.setOpaque(true);//No transparente
+		    	btnCrear.setBorder(macOSBorde);//Borde negro fino
+		    }
 		    btnEditar.setBackground(morado);
 		    btnEditar.setForeground(blanco);
+		    if(macOS) {
+		    	btnEditar.setOpaque(true);//No transparente
+		    	btnEditar.setBorder(macOSBorde);//Borde negro fino
+		    }
 		    
 		    panelSuperior.add(titulo);
 		    panelSuperior.add(Box.createHorizontalStrut(50)); // Espacio centraldel título y los botones
@@ -310,14 +317,15 @@ public class FrameTablero extends JFrame{
 			
 		    panelTarea(panelLista); //Se utilizaria cuando se realice el evento boton crear tarea, pero lo dejo para que vean como quedo
 		    
-		    panelTableroBody.add(panelLista);
+		    panelTableroBody.add(panelLista);//Añade el panelLista al panelTableroBody
 		    
+		    panelTableroBody.revalidate();//Recarga el panelTableroBody para que se muestre la lista nueva
 		   
 	}
 	// Cierra: Método para crear el panelLista
 
 	// Abre: Método para crear el panelTarea
-	public void panelTarea(JPanel panelLista) {
+	public static void panelTarea(JPanel panelLista) {
 	    // Crear un nuevo panel para la tarea
 	    JPanel panelTarea = new JPanel();
 	    panelTarea.setLayout(new FlowLayout(FlowLayout.LEFT)); // Alineación hacia la izquierda
@@ -338,6 +346,11 @@ public class FrameTablero extends JFrame{
 	    JButton btnEditar = new JButton("･･･");
 	    btnEditar.setBackground(morado); // Color de fondo para el botón
 	    btnEditar.setForeground(blanco); // Color de texto para el botón
+	    if(macOS) {
+	    	btnEditar.setOpaque(true);//No transparente
+	    	btnEditar.setBorder(macOSBorde);//Borde negro fino
+	    }
+	    
 	    panelTarea.add(Box.createHorizontalStrut(100)); // Espacio  entre la tarea y el botón
 
 	    // Agregar el botón de editar después del espacio

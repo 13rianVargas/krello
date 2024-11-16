@@ -9,9 +9,8 @@ public class Lista {
     public Lista() {
     }
     
-    public Lista(String nombreLista, ArrayList<Tarea> listaDeTareas) {
+    public Lista(String nombreLista) {
         this.nombreLista = nombreLista;
-        this.listaDeTareas = listaDeTareas;
     }
 
     public String getNombreLista() {
