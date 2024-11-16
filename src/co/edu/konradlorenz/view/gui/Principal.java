@@ -45,7 +45,7 @@ public class Principal extends JFrame {
 	private static JButton btnAgregarInvitados;
 	private static JButton btnCancelarEmergenteCrearTablero;
 	private static JButton btnCrearTableroEmergenteCrearTablero;
-	private static JButton btnCancelarEmergenteAñadirInvitados;
+	private static JButton btnCancelarEmergenteAgregarInvitados;
 	private static JButton btnAgregarInvitadoEmergenteAgregarInvitados;
 		
 	//COLORS
@@ -613,7 +613,7 @@ public class Principal extends JFrame {
 	    	panelIngresarCorreo.setBackground(millos);//Color de fondo
 	    	panelIngresarCorreo.setOpaque(detalles);//Mostrar detalles
 	    	
-	    		//Abre: txtFieldIngresarCorreoEmergenteAñadirInvitados
+	    		//Abre: txtFieldIngresarCorreoEmergenteAgregarInvitados
 	    		txtFieldIngresarCorreoEmergenteAgregarInvitados = new JTextField(mensajeIngresarCorreo);//Crea nuevo
 		    	txtFieldIngresarCorreoEmergenteAgregarInvitados.setForeground(gris);//Color de letra
 		    	txtFieldIngresarCorreoEmergenteAgregarInvitados.setPreferredSize(new Dimension(400, 30));//Tamaño
@@ -645,18 +645,18 @@ public class Principal extends JFrame {
 			        });
 			        //Cierra: Placeholder "mensaje previo"
 		        
-			    	//Abre: Acción del txtFieldIngresarCorreoEmergenteAñadirInvitados
+			    	//Abre: Acción del txtFieldIngresarCorreoEmergenteAgregarInvitados
 		        	txtFieldIngresarCorreoEmergenteAgregarInvitados.addActionListener(new ActionListener() {
 			            public void actionPerformed(ActionEvent evento) {
 			            	ctrl.actionEnterTxtFieldIngresarCorreoEmergenteAgregarInvitados(evento);//Se llama el método del Controller que gestiona el evento.
 			            }
 			        });
-			    	//Cierra: Acción del txtFieldIngresarCorreoEmergenteAñadirInvitados
+			    	//Cierra: Acción del txtFieldIngresarCorreoEmergenteAgregarInvitados
 	        
-	    		//Cierra: txtFieldIngresarCorreoEmergenteAñadirInvitados
+	    		//Cierra: txtFieldIngresarCorreoEmergenteAgregarInvitados
 			        
 	        panelIngresarCorreo.add(Box.createVerticalGlue());//Agrega espacio flexible antes
-	        panelIngresarCorreo.add(txtFieldIngresarCorreoEmergenteAgregarInvitados);//Añade txtFieldIngresarCorreoEmergenteAñadirInvitados
+	        panelIngresarCorreo.add(txtFieldIngresarCorreoEmergenteAgregarInvitados);//Añade txtFieldIngresarCorreoEmergenteAgregarInvitados
 	        panelIngresarCorreo.add(Box.createVerticalGlue());//Agrega espacio flexible después
 	        panelIngresarCorreo.setBorder(BorderFactory.createEmptyBorder(40, 0, 40, 0));// top, left, bottom, right -> Ajusta un borde por pixeles
 		    //Cierra: panelIngresarCorreo
@@ -671,28 +671,28 @@ public class Principal extends JFrame {
 	        panelBotonesBasicos.setBackground(cyan);//Color de fondo
 	        panelBotonesBasicos.setOpaque(detalles);//Mostrar detalles
 	        
-	        	//Abre: btnCancelarEmergenteAñadirInvitados
-		        btnCancelarEmergenteAñadirInvitados = new JButton("Cancelar");//Crea nuevo
-		        btnCancelarEmergenteAñadirInvitados.setFont(new Font("Arial", Font.PLAIN, 18));//Cambia la letra del interior
-		        btnCancelarEmergenteAñadirInvitados.setPreferredSize(new Dimension(200, 40));//Tamaño
-		        btnCancelarEmergenteAñadirInvitados.setBackground(limon);//Color de fondo
-		        btnCancelarEmergenteAñadirInvitados.setCursor(new Cursor(Cursor.HAND_CURSOR));//Pone el cursor con una manita
+	        	//Abre: btnCancelarEmergenteAgregarInvitados
+		        btnCancelarEmergenteAgregarInvitados = new JButton("Cancelar");//Crea nuevo
+		        btnCancelarEmergenteAgregarInvitados.setFont(new Font("Arial", Font.PLAIN, 18));//Cambia la letra del interior
+		        btnCancelarEmergenteAgregarInvitados.setPreferredSize(new Dimension(200, 40));//Tamaño
+		        btnCancelarEmergenteAgregarInvitados.setBackground(limon);//Color de fondo
+		        btnCancelarEmergenteAgregarInvitados.setCursor(new Cursor(Cursor.HAND_CURSOR));//Pone el cursor con una manita
 		        if(macOS) {
-		        	btnCancelarEmergenteAñadirInvitados.setOpaque(true);//No transparente
-		        	btnCancelarEmergenteAñadirInvitados.setBorder(macOSBorde);//Borde negro fino
+		        	btnCancelarEmergenteAgregarInvitados.setOpaque(true);//No transparente
+		        	btnCancelarEmergenteAgregarInvitados.setBorder(macOSBorde);//Borde negro fino
 		        }
 		        
-		        	//Abre: Acción del btnCancelarEmergenteAñadirInvitados
-			        btnCancelarEmergenteAñadirInvitados.addActionListener(new ActionListener() {
+		        	//Abre: Acción del btnCancelarEmergenteAgregarInvitados
+			        btnCancelarEmergenteAgregarInvitados.addActionListener(new ActionListener() {
 			            public void actionPerformed(ActionEvent evento) {
 			            	ctrl.actionBtnCancelarEmergenteAgregarInvitados(evento);//Se llama el método del Controller que gestiona el evento.
 			            }
 			        });
-		        	//Cierra: Acción del btnCancelarEmergenteAñadirInvitados
+		        	//Cierra: Acción del btnCancelarEmergenteAgregarInvitados
 			        
-	        	//Cierra: btnCancelarEmergenteAñadirInvitados
+	        	//Cierra: btnCancelarEmergenteAgregarInvitados
 		        
-			    //Abre: btnAgregarInvitadoEmergenteAñadirInvitados
+			    //Abre: btnAgregarInvitadoEmergenteAgregarInvitados
 		        btnAgregarInvitadoEmergenteAgregarInvitados = new JButton("Agregar Invitado");//Crea nuevo
 		        btnAgregarInvitadoEmergenteAgregarInvitados.setFont(new Font("Arial", Font.PLAIN, 18));//Cambia la letra del interior
 		        btnAgregarInvitadoEmergenteAgregarInvitados.setPreferredSize(new Dimension(200, 40));//Tamaño
@@ -703,19 +703,19 @@ public class Principal extends JFrame {
 		        	btnAgregarInvitadoEmergenteAgregarInvitados.setBorder(macOSBorde);//Borde negro fino
 		        }
 		        
-		        	//Abre: Acción del btnAgregarInvitadoEmergenteAñadirInvitados
+		        	//Abre: Acción del btnAgregarInvitadoEmergenteAgregarInvitados
 		        	btnAgregarInvitadoEmergenteAgregarInvitados.addActionListener(new ActionListener() {
 			            public void actionPerformed(ActionEvent evento) {
 			                //IMPORTANTE -> Aquí se llama a un método que maneja el evento desde el Controller.
 			            	ctrl.actionEnterTxtFieldIngresarCorreoEmergenteAgregarInvitados(evento);
 			            }
 			        });
-		        	//Cierra: Acción del btnAgregarInvitadoEmergenteAñadirInvitados
+		        	//Cierra: Acción del btnAgregarInvitadoEmergenteAgregarInvitados
 		        
-		        //Cierra: btnAgregarInvitadoEmergenteAñadirInvitados
+		        //Cierra: btnAgregarInvitadoEmergenteAgregarInvitados
 			        
 	        panelBotonesBasicos.setBorder(BorderFactory.createEmptyBorder(10, 30, 10, 30));// top, left, bottom, right -> Ajusta un borde por pixeles
-	        panelBotonesBasicos.add(btnCancelarEmergenteAñadirInvitados, BorderLayout.WEST);//Lo añade y lo ubica a la izquierda
+	        panelBotonesBasicos.add(btnCancelarEmergenteAgregarInvitados, BorderLayout.WEST);//Lo añade y lo ubica a la izquierda
 	        panelBotonesBasicos.add(btnAgregarInvitadoEmergenteAgregarInvitados, BorderLayout.EAST);//Lo añade y lo ubica a la derecha
 		    //Cierra: panelBotonesBasicos
 	        
@@ -890,15 +890,15 @@ public class Principal extends JFrame {
 		Principal.btnCrearTableroEmergenteCrearTablero = btnCrearTableroEmergenteCrearTablero;
 	}
 
-	public static JButton getBtnCancelarEmergenteAñadirInvitados() {
-		return btnCancelarEmergenteAñadirInvitados;
+	public static JButton getBtnCancelarEmergenteAgregarInvitados() {
+		return btnCancelarEmergenteAgregarInvitados;
 	}
 
-	public static void setBtnCancelarEmergenteAñadirInvitados(JButton btnCancelarEmergenteAñadirInvitados) {
-		Principal.btnCancelarEmergenteAñadirInvitados = btnCancelarEmergenteAñadirInvitados;
+	public static void setBtnCancelarEmergenteAgregarInvitados(JButton btnCancelarEmergenteAgregarInvitados) {
+		Principal.btnCancelarEmergenteAgregarInvitados = btnCancelarEmergenteAgregarInvitados;
 	}
 
-	public static JButton getBtnAgregarInvitadoEmergenteAñadirInvitados() {
+	public static JButton getBtnAgregarInvitadoEmergenteAgregarInvitados() {
 		return btnAgregarInvitadoEmergenteAgregarInvitados;
 	}
 
