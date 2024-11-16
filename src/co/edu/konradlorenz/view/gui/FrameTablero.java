@@ -257,36 +257,90 @@ public class FrameTablero extends JFrame{
     public void panelTableroBody() {
         panelTableroBody = new JPanel();
         panelTableroBody.setBackground(grisClaro);
-        panelTableroBody.setBorder(new EmptyBorder(10, 10, 10, 10));//top, left, bottom, right -> Ajusta un borde por pixeles
-        panelTableroBody.setLayout(new BoxLayout(panelTableroBody, BoxLayout.X_AXIS));
+        panelTableroBody.setBorder(new EmptyBorder(5, 5,5, 5));//top, left, bottom, right -> Ajusta un borde por pixeles
+        panelTableroBody.setLayout(new FlowLayout(FlowLayout.LEFT, 20, 20)); 
 
-        panelLista();
-        panelLista();
-        panelLista();
+
         panelLista();
     }
     //Cierra: Método para crear el panelTableroBody
-
+    
+    
     //Abre: Método para crear el panelLista
-    public void panelLista() {
-        JPanel panelLista = new JPanel();
-        panelLista.setBackground(petroleoOscuro);
-        panelLista.setForeground(negro);
-        panelLista.setFont(new Font("Arial", Font.PLAIN, 80));
-        panelLista.setCursor(new Cursor(Cursor.HAND_CURSOR));
-        panelLista.setBorder(new EmptyBorder(10, 10, 10, 10)); 
-        
-        JPanel panelWrapper = new JPanel();
-        panelWrapper.setLayout(new BorderLayout());
-        panelWrapper.setBorder(new EmptyBorder(10, 10, 10, 10)); 
-        panelWrapper.add(panelLista);
+	public void panelLista() {
+		
+		JPanel panelLista = new JPanel();
+		panelLista.setBackground(petroleoOscuro);
+		panelLista.setForeground(negro);
+		panelLista.setFont(new Font("Arial", Font.PLAIN, 80));
+		panelLista.setCursor(new Cursor(Cursor.HAND_CURSOR));
+		panelLista.setBorder(new EmptyBorder(5, 5, 5, 5));
+		
+		panelLista.setPreferredSize(new Dimension(280, 420)); //Tamaño fijo, nohay de otra
+		panelLista.setAlignmentY(CENTER_ALIGNMENT);
+		
+		 JPanel panelSuperior = new JPanel(new FlowLayout(FlowLayout.LEFT, 10, 5));
+		    panelSuperior.setOpaque(false); 
 
-        panelTableroBody.add(panelWrapper);
-    }
-    //Cierra: Método para crear el panelLista
+		    JLabel titulo = new JLabel("Nombre");
+		    titulo.setFont(new Font("Arial", Font.BOLD, 20));
+		    titulo.setForeground(Color.WHITE);
 
-    
-    
+		    JButton btnCrear = new JButton("+");
+		    JButton btnEditar = new JButton("･･･");
+		    
+		    btnCrear.setBackground(limon);
+		    btnEditar.setBackground(morado);
+		    btnEditar.setForeground(blanco);
+		    
+		    panelSuperior.add(titulo);
+		    panelSuperior.add(Box.createHorizontalStrut(50)); // Espacio centraldel título y los botones
+		    panelSuperior.add(btnCrear);
+		    panelSuperior.add(btnEditar);
+
+		    panelLista.add(panelSuperior, BorderLayout.NORTH);
+			
+		    panelTarea(panelLista);
+		    
+		    panelTableroBody.add(panelLista);
+		    
+		   
+	}
+	// Cierra: Método para crear el panelLista
+
+	// Abre: Método para crear el panelTarea
+	public void panelTarea(JPanel panelLista) {
+	    // Crear un nuevo panel para la tarea
+	    JPanel panelTarea = new JPanel();
+	    panelTarea.setLayout(new FlowLayout(FlowLayout.LEFT)); // Alineación hacia la izquierda
+	    panelTarea.setBackground(limon2); // Fondo para la tarea
+	    panelTarea.setBorder(BorderFactory.createLineBorder(Color.GRAY)); // Borde gris
+
+	    // Crear un JCheckBox para la tarea
+	    JCheckBox checkBoxTarea = new JCheckBox();
+	    panelTarea.add(checkBoxTarea).setBackground(limon2); // Agregar el checkbox al panel de tarea
+
+	    // Crear una etiqueta con el nombre de la tarea
+	    JLabel tareaLabel = new JLabel("Tarea");
+	    tareaLabel.setFont(new Font("Arial", Font.PLAIN, 15));
+	    tareaLabel.setForeground(negro);
+	    panelTarea.add(tareaLabel); // Agregar la etiqueta al panel de tarea
+
+	    // Crear el botón de editar tarea
+	    JButton btnEditar = new JButton("･･･");
+	    btnEditar.setBackground(morado); // Color de fondo para el botón
+	    btnEditar.setForeground(blanco); // Color de texto para el botón
+	    panelTarea.add(Box.createHorizontalStrut(100)); // Espacio  entre la tarea y el botón
+
+	    // Agregar el botón de editar después del espacio
+	    panelTarea.add(btnEditar);
+
+	    // Añadir el panelTarea al panelLista en la sección central
+	    panelLista.add(panelTarea, BorderLayout.CENTER);
+	}
+	// Cierra: Método para crear el panelTarea
+
+
     
     
 	  // -- // -- // -- // -- // -- // -- //
