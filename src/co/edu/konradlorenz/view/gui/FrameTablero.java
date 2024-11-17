@@ -376,10 +376,11 @@ public class FrameTablero extends JFrame{
 			    	lblEditarLista.setIcon(new ImageIcon(Principal.class.getResource("/co/edu/konradlorenz/view/img/Tuerca25x25.png")));//Ruta de la imagen
 			    	lblEditarLista.setFont(new Font("Calibri", Font.PLAIN, 18));//Cambia la letra del interior
 			    	lblEditarLista.setCursor(new Cursor(Cursor.HAND_CURSOR));//Pone el cursor con una manita
-			    	lblEditarLista.setToolTipText("Editar Lista");
+			    	lblEditarLista.setToolTipText("Editar Lista");//Muestra mensaje al poner el mouse encima
 			    	
 			    		//Abrir: Acción del lblEditarLista
-			    		lblEditarTablero.addMouseListener(new MouseAdapter() {//FIXME: no se porq no funciona:(
+			    		lblEditarLista.addMouseListener(new MouseAdapter() {
+			    			@Override
 			    			public void mouseClicked(MouseEvent e) {
 			    				ctrl.actionLblEditarLista();//Se llama el método del Controller que gestiona el evento.
 			    			}
