@@ -171,7 +171,7 @@ public class Login extends JFrame {
 	    panelLoginHead.setLayout(null); // Desactiva el control automático de paneles
 	    panelLoginHead.setBounds(0, 0, 405, 150); // x, y, ancho, alto
 	    panelLoginHead.setBackground(limon);//Color de fondo
-	    panelLoginHead.setOpaque(detalles);//Mostrar detalles
+	    panelLoginHead.setOpaque(false);//Mostrar detalles
 
 	    JLabel lblKrelloLogo = new JLabel();
 	    // Usa la clase específica en lugar de getClass()
@@ -185,7 +185,7 @@ public class Login extends JFrame {
 	    lblKrelloLogo.setBounds(0, 5, 405, 110); // x, y, ancho, altura
 	    lblKrelloLogo.setHorizontalAlignment(SwingConstants.CENTER); // Centrar Horizontalmente
 	    lblKrelloLogo.setBackground(aguacate);//Color de fondo
-	    lblKrelloLogo.setOpaque(detalles);//Mostrar detalles
+	    lblKrelloLogo.setOpaque(false);//Mostrar detalles
 
 	    panelLoginHead.add(lblKrelloLogo);
 
@@ -200,14 +200,14 @@ public class Login extends JFrame {
 		panelLoginBody.setLayout(null);//Desacriva el control automatico de paneles
 		panelLoginBody.setBounds(0, 100, 405, 530);//x,y,ancho,alto
 		panelLoginBody.setBackground(rosa);//Color de fondo
-		panelLoginBody.setOpaque(detalles);//Mostrar detalles
+		panelLoginBody.setOpaque(false);//Mostrar detalles
 		
 			JLabel lblLogin = new JLabel(mensajeIniciarSesionLogin);
 			lblLogin.setHorizontalAlignment(SwingConstants.CENTER);
 			lblLogin.setFont(new Font("Calibri", Font.BOLD, 18));
 			lblLogin.setBounds(50, 100, 305, 40);//0, 50, 100
 			lblLogin.setBackground(cyan);//Color de fondo
-			lblLogin.setOpaque(detalles);//Mostrar detalles
+			lblLogin.setOpaque(false);//Mostrar detalles
 			
 		panelLoginBody.add(lblLogin);
 		
@@ -334,14 +334,14 @@ public class Login extends JFrame {
 		panelRegisterBody.setLayout(null);//Desacriva el control automatico de paneles
 		panelRegisterBody.setBounds(0, 100, 405, 530);
 		panelRegisterBody.setBackground(rosa);//Color de fondo
-		panelRegisterBody.setOpaque(detalles);//Mostrar detalles
+		panelRegisterBody.setOpaque(false);//Mostrar detalles
 			
 			JLabel lblLogin = new JLabel(mensajeCrearCuentaRegister);
 			lblLogin.setHorizontalAlignment(SwingConstants.CENTER);
 			lblLogin.setFont(new Font("Calibri", Font.BOLD, 18));
 			lblLogin.setBounds(50, 50, 305, 40);//0, 50, 100
 			lblLogin.setBackground(cyan);//Color de fondo
-			lblLogin.setOpaque(detalles);//Mostrar detalles
+			lblLogin.setOpaque(false);//Mostrar detalles
 			
 		panelRegisterBody.add(lblLogin);//(908/13)
 			
@@ -500,7 +500,7 @@ public class Login extends JFrame {
 			lblRegisterRegresar.setFont(new Font("Calibri", Font.PLAIN, 15));
 			lblRegisterRegresar.setForeground(azulito);
 			lblRegisterRegresar.setBackground(verde);//Color de fondo
-			lblRegisterRegresar.setOpaque(detalles);//Mostrar detalles
+			lblRegisterRegresar.setOpaque(false);//Mostrar detalles
 			lblRegisterRegresar.setCursor(new Cursor(Cursor.HAND_CURSOR));//Pone el cursor con una manita
 			
 			
@@ -949,6 +949,6 @@ public class Login extends JFrame {
 	public static void setMensajeBtnRegresarRegistrar(String mensajeBtnRegresarRegistrar) {
 		Login.mensajeBtnRegresarRegistrar = mensajeBtnRegresarRegistrar;
 	}
-		
+
 }	
 //class
