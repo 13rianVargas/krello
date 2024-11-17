@@ -1,10 +1,10 @@
 package co.edu.konradlorenz.view.gui;
 
-import org.jdatepicker.imp.*;//TODO: Descargar biblioteca
-
 import java.awt.*;
 import java.awt.event.*;
+
 import java.util.Properties;
+import java.util.Calendar;
 
 import javax.swing.*;
 import javax.swing.border.*;
@@ -32,6 +32,7 @@ public class FrameTablero extends JFrame{
 	private static JDialog emergenteEditarLista;
 	private static JDialog emergenteEliminarLista;
 	private static JDialog emergenteEliminarTarea;
+	private static JDialog emergenteDelegados;
 	
 	//PANELS 
 	private static JPanel panelTableroContent;
@@ -112,8 +113,6 @@ public class FrameTablero extends JFrame{
 	
 	
 	
-	
-	
 	  // -- // -- // -- // -- // -- // -- //
 	 // -- // -- // VENTANAS // -- // -- //
 	// -- // -- // -- // -- // -- // -- //
@@ -171,10 +170,8 @@ public class FrameTablero extends JFrame{
 		SwingUtilities.invokeLater(() -> btnCrearLista.requestFocusInWindow());//Enfoca un componente específico al abrir la ventana
     }
 	//Cierra: Constructor del frame Tablero
-        
- 	
- 	
- 	
+
+
  	
 	  // -- // -- // -- // -- // -- // -- //
 	 // -- // -- // PANELES  // -- // -- //
@@ -1136,6 +1133,121 @@ public class FrameTablero extends JFrame{
     }
     //Cierra: Método para crear emergenteEliminar
     
+	// Abre: Método para crear emergenteDelegados
+	public static void emergenteDelegados() {
+		// JDialog hace que solo la emergente sea interactiva, las demás ventanas se
+		// bloquean.
+		emergenteDelegados = new JDialog(frameTablero, "Invitados", true);// Crea nuevo (Dueño), (Título), (Bloquea
+																				// interacción mientras esté abierta)
+		emergenteDelegados.setSize(600, 300);// Tamaño
+		emergenteDelegados.setBackground(morado3);// Color de la barra superior
+		emergenteDelegados.getContentPane().setBackground(blanco);// Color del fondo del frame
+		emergenteDelegados.setResizable(false);// No permite modificar el tamaño de la ventana
+		emergenteDelegados.setLocationRelativeTo(frameTablero);// Se centra según el framePrincipal
+		emergenteDelegados.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);// Se cierra al dar click en la X
+		emergenteDelegados.setLayout(new BorderLayout());// Diseño
+
+		// Abre: panelTituloDelegados
+		JPanel panelTituloDelegados = new JPanel();// Crea nuevo
+		panelTituloDelegados.setLayout(new BoxLayout(panelTituloDelegados, BoxLayout.Y_AXIS));// Diseño: El
+																								// BoxLayout.Y_AXIS es
+																								// para que se ubiquen
+																								// VERTICALMENTE una
+																								// encima de la otra.
+		panelTituloDelegados.setBackground(morado);// Color de fondo
+		panelTituloDelegados.setOpaque(detalles);// Mostrar detalles
+		panelTituloDelegados.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));// top, left, bottom, right ->
+																							// Ajusta un borde por
+																							// pixeles
+
+		// Abre: lblTituloDelegados
+		JLabel lblTituloDelegados = new JLabel("Invitados");// 
+		lblTituloDelegados.setFont(new Font("Calibri", Font.BOLD, 40));// Cambia la letra del interior
+		lblTituloDelegados.setForeground(morado3);// Color de la letra
+		lblTituloDelegados.setAlignmentX(Component.CENTER_ALIGNMENT);// Centra horizontalmente
+		lblTituloDelegados.setBackground(gris);// Color de fondo
+		lblTituloDelegados.setOpaque(detalles);// Mostrar detalles
+		// Cierra: lblTituloDelegados
+
+		panelTituloDelegados.add(Box.createVerticalGlue());// Agrega espacio flexible antes del JLabel
+		panelTituloDelegados.add(lblTituloDelegados);// Añade lblTituloCrearLista
+		panelTituloDelegados.add(Box.createVerticalGlue());// Agrega espacio flexible antes del JLabel
+		// Cierra: panelTituloDelegados
+
+		emergenteDelegados.add(panelTituloDelegados, BorderLayout.NORTH);// Ubica arriba
+
+		 // Abre: ListaDelegados
+		//HICE ESTA LISTA PARA VER COMO SE VE 
+	    String[] delegados = {"Delegado 1", "Delegado 2", "Delegado 3", "Delegado 4", "Delegado 5", "Delegado 6"};
+	    JList<String> listaDelegados = new JList<>(delegados); 
+	    listaDelegados.setSelectionMode(ListSelectionModel.SINGLE_SELECTION); // USE SELECCION EN LUGAR DEL CHECKBOX QUE SE VE FEO
+	    JScrollPane scrollDelegados = new JScrollPane(listaDelegados); // Añade la lista a un JScrollPane
+	    scrollDelegados.setPreferredSize(new Dimension(550, 150)); // Tamaño de la lista con el scroll DEBERIA FUNCIONAR BIEN EL SCROLL
+
+	    // Cierra: Lista delegados
+
+	    emergenteDelegados.add(scrollDelegados, BorderLayout.CENTER); // Añade la lista con scroll al centro
+	    
+	    // Abre: panelInferior
+	    JPanel panelInferior = new JPanel(new BorderLayout()); // Crea nuevo
+	    panelInferior.setBackground(cyan); // Color de fondo
+	    panelInferior.setOpaque(detalles); // Mostrar detalles
+
+	    // Abre: panelBotonesBasicos
+	    JPanel panelBotonesBasicos = new JPanel(new BorderLayout());
+	    panelBotonesBasicos.setBackground(cyan); // Color de fondo
+	    panelBotonesBasicos.setOpaque(detalles); // Mostrar detalles
+
+	    // Abre: btnCancelarDelegados
+	    JButton btnCancelarDelegados = new JButton("Cancelar"); // Crea nuevo
+	    btnCancelarDelegados.setFont(new Font("Calibri", Font.PLAIN, 18)); // Cambia la letra
+	    btnCancelarDelegados.setPreferredSize(new Dimension(200, 40)); // Tamaño botón
+	    btnCancelarDelegados.setBackground(morado2); // Color de fondo
+	    btnCancelarDelegados.setCursor(new Cursor(Cursor.HAND_CURSOR)); // Pone el cursor como manita
+
+	    // Acción del btnCancelarDelegados
+	    btnCancelarDelegados.addActionListener(new ActionListener() {
+	        public void actionPerformed(ActionEvent evento) {
+	            emergenteDelegados.dispose(); // Cierra la ventana emergente
+	        }
+	    });
+
+	    // Cierra: btnCancelarDelegados
+
+	    // Abre: btnAceptarDelegados
+	    JButton btnAceptarDelegados = new JButton("Aceptar"); // Crea nuevo
+	    btnAceptarDelegados.setFont(new Font("Calibri", Font.PLAIN, 18)); // Cambia la letra
+	    btnAceptarDelegados.setPreferredSize(new Dimension(200, 40)); // Tamaño botón
+	    btnAceptarDelegados.setBackground(morado2); // Color de fondo
+	    btnAceptarDelegados.setCursor(new Cursor(Cursor.HAND_CURSOR)); // Pone el cursor como manita
+
+	    // Acción del btnAceptarDelegados
+	    btnAceptarDelegados.addActionListener(new ActionListener() {
+	        public void actionPerformed(ActionEvent evento) {
+	        	//LO MISMO PARA VER EL FUNCIONAMIENTO Y AGARRAR EL QUE ELIJA
+	            String delegadoSeleccionado = listaDelegados.getSelectedValue(); // Obtiene el delegado seleccionado
+	            if (delegadoSeleccionado != null) {
+	            	//ACCION CON EL QUE SE ELIJA
+	            }
+	            emergenteDelegados.dispose(); // Cierra la ventana emergente
+	        }
+	    });
+
+	    // Cierra: btnAceptarDelegados
+
+	    panelBotonesBasicos.add(btnCancelarDelegados, BorderLayout.WEST); // Lo añade y lo ubica a la izquierda
+	    panelBotonesBasicos.add(btnAceptarDelegados, BorderLayout.EAST); // Lo añade y lo ubica a la derecha
+	    panelBotonesBasicos.setBorder(BorderFactory.createEmptyBorder(30, 30, 30, 30)); // Ajusta borde
+
+	    // Cierra: panelBotonesBasicos
+
+	    panelInferior.add(panelBotonesBasicos, BorderLayout.SOUTH); // Lo añade al panel inferior
+	    emergenteDelegados.add(panelInferior, BorderLayout.SOUTH); // Lo añade y lo ubica abajo
+
+	    emergenteDelegados.setVisible(true); // Hace visible la emergente
+	}
+	// Cierra: Método para crear emergenteDelegados
+
     //Abre: Método para crear emergenteCrearTarea
     public static void emergenteCrearTarea() {
     	
@@ -1288,24 +1400,10 @@ public class FrameTablero extends JFrame{
 	        	//Cierra: lblFecha
 		        
 		        panelCentral.add(lblFecha);//Añade lblFecha
-		        
-	        	//Abre: JDatePicker
-		        Properties p = new Properties();
-		        p.put("text.today", "Dia");
-		        p.put("text.month", "Mes");
-		        p.put("text.year", "Año");
-		        
-		        UtilDateModel dateModel = new UtilDateModel();
-		        JDatePanelImpl datePanel = new JDatePanelImpl(dateModel, p);
-		        JDatePickerImpl datePicker = new JDatePickerImpl(datePanel, new DateLabelFormatter());
-		        
-		        // Estilo y tamaño del JDatePicker
-		        datePicker.getJFormattedTextField().setPreferredSize(new Dimension(400, 40));
-		        datePicker.getJFormattedTextField().setFont(new Font("Calibri", Font.PLAIN, 20));
-		        datePicker.getJFormattedTextField().setBackground(gris2);
-		        datePicker.getJFormattedTextField().setForeground(gris);
-		        
-			    panelCentral.add(datePicker, BorderLayout.SOUTH);//Agrega txtFieldIngresarNombreEmergenteCrearTarea
+
+		        JPanel datePickerPanel = crearSelectorDeFecha();
+		        panelCentral.add(datePickerPanel);
+
 	        
 			    panelCentral.add(Box.createVerticalStrut(10));//Espacio entre componentes (lbl y txtField)
 			    panelCentral.setBorder(BorderFactory.createEmptyBorder(15, 0, 15, 0));// top, left, bottom, right -> Ajusta un borde por pixeles
@@ -1381,9 +1479,61 @@ public class FrameTablero extends JFrame{
     }
     //Cierra: Método para crear emergenteCrearTarea
     
-    
+	    //Abre; Metodo para crear un panelSelectorFecha
+	    public static JPanel crearSelectorDeFecha() {
+	        // Crear panel para el selector de fecha
+	        JPanel panelFecha = new JPanel(new FlowLayout(FlowLayout.LEFT));
+	        panelFecha.setBackground(Color.WHITE); // Ajusta el color de fondo si lo necesitas
+	        
+	        // Crear JComboBox para día, mes y año
+	        JComboBox<Integer> dayComboBox = new JComboBox<>();
+	        JComboBox<String> monthComboBox = new JComboBox<>();
+	        JComboBox<Integer> yearComboBox = new JComboBox<>();
+	
+	        // Rellenar días (1-31)
+	        for (int i = 1; i <= 31; i++) {
+	            dayComboBox.addItem(i);
+	        }
+	
+	        // Rellenar meses
+	        String[] months = {"Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio",
+	                           "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"};
+	        for (String month : months) {
+	            monthComboBox.addItem(month);
+	        }
+	
+	        // Rellenar años (desde 1990 hasta 2030)
+	        int currentYear = Calendar.getInstance().get(Calendar.YEAR);
+	        for (int i = currentYear - 30; i <= currentYear + 10; i++) {
+	            yearComboBox.addItem(i);
+	        }
+	
+	        // Establecer tamaños y estilos
+	        Dimension fieldSize = new Dimension(100, 30);
+	        dayComboBox.setPreferredSize(fieldSize);
+	        monthComboBox.setPreferredSize(fieldSize);
+	        yearComboBox.setPreferredSize(fieldSize);
+	
+	        Font font = new Font("Calibri", Font.PLAIN, 20);
+	        dayComboBox.setFont(font);
+	        monthComboBox.setFont(font);
+	        yearComboBox.setFont(font);
+	
+	        // Añadir componentes al panel
+	        panelFecha.add(new JLabel("Día:"));
+	        panelFecha.add(dayComboBox);
+	        panelFecha.add(new JLabel("Mes:"));
+	        panelFecha.add(monthComboBox);
+	        panelFecha.add(new JLabel("Año:"));
+	        panelFecha.add(yearComboBox);
+	
+	        return panelFecha;
+	    }
+	    //Cierra: Metodo para crear un panelSelectorFecha
+
+	//Abre: Método para crear emergenteEditarLista
     //Abre: Método para crear emergenteEditarLista
-    public static void emergenteEditarLista() {
+	public static void emergenteEditarLista() {
     	
     	//JDialog hace que solo la emergente sea interactiva, las demás ventanas se bloquean.
     	emergenteEditarLista = new JDialog(frameTablero, "Editar Lista", true);//Crea nuevo (Dueño), (Título), (Bloquea interacción mientras esté abierta)
@@ -1591,6 +1741,18 @@ public class FrameTablero extends JFrame{
     }
     //Cierra: Método para crear emergenteEditarLista
     
+    //Abre: Método para crear emergenteMoverLista
+    public static void emergenteMoverLista() {
+    	
+    	//Se muestra una lista de las listas (paneles) que hay
+    	
+    	
+    }
+    //Cierra: Método para crear emergenteMoverLista
+    
+    //Abre: Método para crear emergenteEliminar
+    //Cierra: Método para crear emergenteMoverLista
+    
     //Abre: Método para crear emergenteEliminarLista
     public static void emergenteEliminarLista() {
     	
@@ -1683,10 +1845,15 @@ public class FrameTablero extends JFrame{
     }
     //Cierra: Método para crear emergenteEliminar
     
+    //Abre: Método para crear emergenteEditarTarea
+    public static void emergenteEditarTarea() {
+    	
+    	//Lista de los delegadps
+    	
+    }
+    //Cierra: Método para crear emergenteEditarTarea
     
-    
-    
-    
+    //Cierra: Método para crear emergenteEditarTarea
     
     //Abre: Método para crear emergenteEliminarTarea
     public static void emergenteEliminarTarea() {
@@ -1779,6 +1946,8 @@ public class FrameTablero extends JFrame{
 	        emergenteEliminarTarea.setVisible(true);//Hace visible la emergente
     }
     //Cierra: Método para crear emergenteEliminarTarea
+    
+    	
     
 	  // -- // -- // -- // -- // -- // -- //
 	 // -- // -- // GET & SET// -- // -- //
