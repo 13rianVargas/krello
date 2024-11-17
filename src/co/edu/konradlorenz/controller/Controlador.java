@@ -65,18 +65,8 @@ public class Controlador {
 		
 		crearEjemplosPersona();
 		
-		// <- Agrega * entre barras para comentar
 		//Inicia el GUI:
 		new Login(this);//El this envía esta instancia del controlador a esa ventana.
-		//*/
-		
-		/*/ <- Agrega * entre barras para comentar
-		new Principal(this);//El this envía esta instancia del controlador a esa ventana.
-		//*/
-		
-		/*/ <- Agrega * entre barras para comentar
-		new FrameTablero(this);//El this envía esta instancia del controlador a esa ventana.
-		//*/
 		
 	}
 	// run
@@ -855,8 +845,6 @@ public class Controlador {
 		Principal.emergenteCrearTablero();
 	}
 	//Cierra: actionBtnCrearTablero
-
-
 
 	//Abre: actionEnterTxtFieldIngresarNombreEmergenteCrearTablero
 	public void actionEnterTxtFieldIngresarNombreEmergenteCrearTablero() {

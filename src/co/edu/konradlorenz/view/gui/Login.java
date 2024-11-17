@@ -48,7 +48,7 @@ public class Login extends JFrame {
 	private static JButton btnLoginCrearCuenta;
 	private static JButton btnRegisterCrearCuenta;
 	
-	//COLORS (Se crean en el Controller)
+	//COLORS (Se inicializan en el Controller)
 	private static Color negro;
 	private static Color blanco;
 	private static Color rojo;
