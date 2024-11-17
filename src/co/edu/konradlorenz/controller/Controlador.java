@@ -71,7 +71,7 @@ public class Controlador {
 		new Login(this);//El this envía esta instancia del controlador a esa ventana.
 		//*/
 		
-		/*/ <- Agrega * entre barras para comentar
+		// <- Agrega * entre barras para comentar
 		new Principal(this);//El this envía esta instancia del controlador a esa ventana.
 		//*/
 		
@@ -1085,9 +1085,14 @@ public class Controlador {
 		Login.getCardLayout().show(Login.getContenedor(), "panelLoginBody");
 	}
 	
+	public void actionTxtRegisterCorreo() {
+		
+	}
+	
 	public boolean verificarCredenciales(String contraseña, String correoBusqueda) {
 		for (Persona persona : listaDePersonasGlobal) {
 			if (persona.getCorreo().equalsIgnoreCase(correoBusqueda) && persona.getContraseña().equals(contraseña)) {
+				objAdministrador=(Administrador) persona;
 				return true;
 			}
 			break;
@@ -1095,5 +1100,5 @@ public class Controlador {
 		return false;
 	}
 	       
-}
+	}
 //class
