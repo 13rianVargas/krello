@@ -133,7 +133,7 @@ public class FrameTablero extends JFrame{
 		frameTablero.setLocationRelativeTo(null); //Centra la ventana
 		frameTablero.setLayout(new BorderLayout());//Diseño
 		frameTablero.setBackground(blanco);//Color de la barra de la ventana
-		frameTablero.getContentPane().setBackground(blanco);//Color del fondo del frame
+		frameTablero.getContentPane().setBackground(blanco);//Color de fondo (solo ventanas)
 
 			panelTableroHead = Principal.panelPrincipalHead();//Llama el head del Frame Principal
 		
@@ -144,6 +144,8 @@ public class FrameTablero extends JFrame{
 		frameTablero.add(panelTableroMiddle, BorderLayout.CENTER);//Lo añade y lo ubica al centro
 			
 		frameTablero.setVisible(true); //IMPORTANTE -> Siempre dejar esto de últimas.
+		
+		SwingUtilities.invokeLater(() -> btnCrearLista.requestFocusInWindow());//Enfoca un componente específico al abrir la ventana
     }
 	//Cierra: Constructor del frame Tablero
         
@@ -188,7 +190,7 @@ public class FrameTablero extends JFrame{
 		        	//Abre: lblTituloTablero
 		    		String nombreTablerto = ctrl.getNombreTableroAbierto(); 
 			    	JLabel lblTituloTablero = new JLabel(nombreTablerto);//Crea nuevo
-			    	lblTituloTablero.setFont(new Font("Inter", Font.PLAIN, 24));//Cambia la letra del interior
+			    	lblTituloTablero.setFont(new Font("Calibri", Font.PLAIN, 24));//Cambia la letra del interior
 			    	lblTituloTablero.setForeground(negro);//Color de letra
 			    	lblTituloTablero.setBackground(verde);//Color de fondo
 			    	lblTituloTablero.setOpaque(detalles);//Mostrar detalles
@@ -199,7 +201,7 @@ public class FrameTablero extends JFrame{
 			    	//Abre: lblAdminTablero
 		    		String nombreAdministrador = ctrl.getNombreAdministradorDeTableroAbierto();
 			    	JLabel lblAdminTablero = new JLabel("Tablero de: " + nombreAdministrador);//Crea nuevo
-			    	lblAdminTablero.setFont(new Font("Inter", Font.ITALIC, 18));//Cambia la letra del interior
+			    	lblAdminTablero.setFont(new Font("Calibri", Font.ITALIC, 18));//Cambia la letra del interior
 			    	lblAdminTablero.setForeground(gris);//Color de letra
 			    	lblAdminTablero.setBackground(negro);//Color de fondo
 			    	lblAdminTablero.setOpaque(detalles);//Mostrar detalles
@@ -222,7 +224,7 @@ public class FrameTablero extends JFrame{
 			    	lblEditarTablero.setBackground(blanco);//Color de fondo
 			    	lblEditarTablero.setOpaque(detalles);//Mostrar detalles
 			    	lblEditarTablero.setIcon(new ImageIcon(Principal.class.getResource("/co/edu/konradlorenz/view/img/Tuerca25x25.png")));//Ruta de la imagen
-			    	lblEditarTablero.setFont(new Font("Inter", Font.PLAIN, 18));//Cambia la letra del interior
+			    	lblEditarTablero.setFont(new Font("Calibri", Font.PLAIN, 18));//Cambia la letra del interior
 			    	lblEditarTablero.setCursor(new Cursor(Cursor.HAND_CURSOR));//Pone el cursor con una manita
 			    	lblEditarTablero.setToolTipText("Editar Tablero");
 			    	
@@ -240,7 +242,7 @@ public class FrameTablero extends JFrame{
 			    	
 			    	//Abre: btnCrearLista
 			    	btnCrearLista = new JButton("Nueva Lista");//Crea nuevo
-			    	btnCrearLista.setFont(new Font("Inter", Font.PLAIN, 18));//Cambia la letra del interior
+			    	btnCrearLista.setFont(new Font("Calibri", Font.PLAIN, 18));//Cambia la letra del interior
 			    	btnCrearLista.setBackground(cyan);//Color de fondo
 			    	btnCrearLista.setForeground(cyan2);//Color de letra
 			    	btnCrearLista.setFocusPainted(false);//Evita que se muestre un borde cuando el componente tiene el foco.
@@ -300,7 +302,7 @@ public class FrameTablero extends JFrame{
 		JPanel panelLista = new JPanel();
 		panelLista.setBackground(petroleo2);
 		panelLista.setForeground(negro);
-		panelLista.setFont(new Font("Inter", Font.PLAIN, 80));
+		panelLista.setFont(new Font("Calibri", Font.PLAIN, 80));
 		panelLista.setBorder(new EmptyBorder(5, 5, 5, 5));
 		panelLista.setBorder(BorderFactory.createLineBorder(petroleo, 4));
 		panelLista.setPreferredSize(new Dimension(280, 420)); //Tamaño fijo, no hay de otra
@@ -320,7 +322,7 @@ public class FrameTablero extends JFrame{
 		    	
 				    String nombreLista  = ctrl.getNombreListaAbierta();
 				    JLabel lblTitulo = new JLabel("• " + nombreLista);
-				    lblTitulo.setFont(new Font("Inter", Font.BOLD, 19));
+				    lblTitulo.setFont(new Font("Calibri", Font.BOLD, 19));
 				    lblTitulo.setForeground(blanco);
 				    
 			    panelTitulo.add(lblTitulo);
@@ -338,7 +340,7 @@ public class FrameTablero extends JFrame{
 				    lblNuevaTarea.setBackground(negro);//Color de fondo
 				    lblNuevaTarea.setOpaque(detalles);//Mostrar detalles
 				    lblNuevaTarea.setIcon(new ImageIcon(Principal.class.getResource("/co/edu/konradlorenz/view/img/Mas25x25.png")));//Ruta de la imagen
-				    lblNuevaTarea.setFont(new Font("Inter", Font.PLAIN, 18));//Cambia la letra del interior
+				    lblNuevaTarea.setFont(new Font("Calibri", Font.PLAIN, 18));//Cambia la letra del interior
 				    lblNuevaTarea.setCursor(new Cursor(Cursor.HAND_CURSOR));//Pone el cursor con una manita
 				    lblNuevaTarea.setToolTipText("Nueva Tarea");
 			    	
@@ -359,7 +361,7 @@ public class FrameTablero extends JFrame{
 			    	lblEditarLista.setBackground(blanco);//Color de fondo
 			    	lblEditarLista.setOpaque(detalles);//Mostrar detalles
 			    	lblEditarLista.setIcon(new ImageIcon(Principal.class.getResource("/co/edu/konradlorenz/view/img/Tuerca25x25.png")));//Ruta de la imagen
-			    	lblEditarLista.setFont(new Font("Inter", Font.PLAIN, 18));//Cambia la letra del interior
+			    	lblEditarLista.setFont(new Font("Calibri", Font.PLAIN, 18));//Cambia la letra del interior
 			    	lblEditarLista.setCursor(new Cursor(Cursor.HAND_CURSOR));//Pone el cursor con una manita
 			    	lblEditarLista.setToolTipText("Editar Lista");
 			    	
@@ -426,7 +428,7 @@ public class FrameTablero extends JFrame{
 	    	//Abrir: lblNombreTarea
 	    	String nombreTarea = "Test";//TODO: Agarrar lo del txtField de la emergente
 		    JLabel lblNombreTarea = new JLabel(nombreTarea);
-		    lblNombreTarea.setFont(new Font("Inter", Font.PLAIN, 15));
+		    lblNombreTarea.setFont(new Font("Calibri", Font.PLAIN, 15));
 		    lblNombreTarea.setForeground(negro);
 	    	//Cerrar: lblNombreTarea
 		    
@@ -437,7 +439,7 @@ public class FrameTablero extends JFrame{
 		    lblEditarTarea.setBackground(blanco);//Color de fondo
 		    lblEditarTarea.setOpaque(detalles);//Mostrar detalles
 		    lblEditarTarea.setIcon(new ImageIcon(Principal.class.getResource("/co/edu/konradlorenz/view/img/Tuerca20x20.png")));//Ruta de la imagen
-		    lblEditarTarea.setFont(new Font("Inter", Font.PLAIN, 18));//Cambia la letra del interior
+		    lblEditarTarea.setFont(new Font("Calibri", Font.PLAIN, 18));//Cambia la letra del interior
 		    lblEditarTarea.setCursor(new Cursor(Cursor.HAND_CURSOR));//Pone el cursor con una manita
 		    lblEditarTarea.setToolTipText("Editar Tarea");
 	    	
@@ -490,7 +492,7 @@ public class FrameTablero extends JFrame{
 
         		//Abre: lblTituloCrearLista
 		        JLabel lblTituloCrearLista = new JLabel("Crear Lista");//Crea nuevo
-		        lblTituloCrearLista.setFont(new Font("Inter", Font.BOLD, 40));//Cambia la letra del interior
+		        lblTituloCrearLista.setFont(new Font("Calibri", Font.BOLD, 40));//Cambia la letra del interior
 		        lblTituloCrearLista.setForeground(morado3);//Color de la letra
 		        lblTituloCrearLista.setAlignmentX(Component.CENTER_ALIGNMENT);//Centra horizontalmente
 		        lblTituloCrearLista.setBackground(gris);//Color de fondo
@@ -511,7 +513,7 @@ public class FrameTablero extends JFrame{
 		        
         		//Abre: lblNombre
 	    		JLabel lblNombre = new JLabel("Nombre:");//Crea nuevo
-		        lblNombre.setFont(new Font("Inter", Font.PLAIN, 25));//Cambia la letra del interior
+		        lblNombre.setFont(new Font("Calibri", Font.PLAIN, 25));//Cambia la letra del interior
 	        	//Cierra: lblNombre
 		        
 	        panelIngresarNombreLista.add(lblNombre);//Añade lblNombre
@@ -520,7 +522,7 @@ public class FrameTablero extends JFrame{
 		        txtFieldIngresarNombreEmergenteCrearLista = new JTextField(mensajeIngresarNombreLista);//Crea nuevo
 		        txtFieldIngresarNombreEmergenteCrearLista.setForeground(gris);//Color de letra
 		        txtFieldIngresarNombreEmergenteCrearLista.setPreferredSize(new Dimension(400, 40));//Tamaño
-		        txtFieldIngresarNombreEmergenteCrearLista.setFont(new Font("Inter", Font.PLAIN, 20));//Cambia la letra del interior
+		        txtFieldIngresarNombreEmergenteCrearLista.setFont(new Font("Calibri", Font.PLAIN, 20));//Cambia la letra del interior
 		        txtFieldIngresarNombreEmergenteCrearLista.setBackground(gris2);//Color de fondo
 		        txtFieldIngresarNombreEmergenteCrearLista.setCursor(new Cursor(Cursor.TEXT_CURSOR));//Pone el cursor modo escritura
 		        
@@ -573,7 +575,7 @@ public class FrameTablero extends JFrame{
 	        
 		        	//Abre: btnCancelarEmergenteCrearLista
 			        btnCancelarEmergenteCrearLista = new JButton("Cancelar");//Crea nuevo
-			        btnCancelarEmergenteCrearLista.setFont(new Font("Inter", Font.PLAIN, 18));//Cambia la letra del interior
+			        btnCancelarEmergenteCrearLista.setFont(new Font("Calibri", Font.PLAIN, 18));//Cambia la letra del interior
 			        btnCancelarEmergenteCrearLista.setPreferredSize(new Dimension(200, 40));//Tamaño botón
 			        btnCancelarEmergenteCrearLista.setBackground(morado2);//Color de fondo
 			        btnCancelarEmergenteCrearLista.setCursor(new Cursor(Cursor.HAND_CURSOR));//Pone el cursor con una manita
@@ -590,7 +592,7 @@ public class FrameTablero extends JFrame{
 	    		
 			        //Abre: btnCrearListaEmergenteCrearLista    
 			        btnCrearListaEmergenteCrearLista = new JButton("Crear Lista");//Crea nuevo
-			        btnCrearListaEmergenteCrearLista.setFont(new Font("Inter", Font.PLAIN, 18));//Cambia la letra del interior
+			        btnCrearListaEmergenteCrearLista.setFont(new Font("Calibri", Font.PLAIN, 18));//Cambia la letra del interior
 			        btnCrearListaEmergenteCrearLista.setPreferredSize(new Dimension(200, 40));//Tamaño
 			        btnCrearListaEmergenteCrearLista.setBackground(morado2);//Color de fondo
 			        btnCrearListaEmergenteCrearLista.setCursor(new Cursor(Cursor.HAND_CURSOR));//Pone el cursor con una manita
@@ -626,6 +628,8 @@ public class FrameTablero extends JFrame{
         
         emergenteCrearLista.setVisible(true);//Hace visible la emergente
         
+        SwingUtilities.invokeLater(() -> btnCancelarEmergenteCrearLista.requestFocusInWindow());//Enfoca un componente específico al abrir la ventana
+        
     }
     //Cierra: Método para crear la emergenteCrearLista
     
@@ -650,7 +654,7 @@ public class FrameTablero extends JFrame{
 
     			//Abre: lblTituloEditarTablero
 	        	JLabel lblTituloEditarTablero = new JLabel("Editar Tablero");//Crea nuevo
-	        	lblTituloEditarTablero.setFont(new Font("Inter", Font.BOLD, 40));//Cambia la letra del interior
+	        	lblTituloEditarTablero.setFont(new Font("Calibri", Font.BOLD, 40));//Cambia la letra del interior
 	        	lblTituloEditarTablero.setForeground(limon2);//Color de la letra
 	        	lblTituloEditarTablero.setAlignmentX(Component.CENTER_ALIGNMENT);//Centra horizontalmente
 	        	lblTituloEditarTablero.setBackground(gris);//Color de fondo
@@ -676,7 +680,7 @@ public class FrameTablero extends JFrame{
 				//txtFieldIngresarNombreEmergenteEditarTablero.setPreferredSize(new Dimension(198, 42));
 				txtFieldIngresarNombreEmergenteEditarTablero.setHorizontalAlignment(JTextField.CENTER);
 				txtFieldIngresarNombreEmergenteEditarTablero.setMaximumSize(new Dimension(250, 50));
-				txtFieldIngresarNombreEmergenteEditarTablero.setFont(new Font("Inter", Font.PLAIN, 20));//Cambia la letra del interior
+				txtFieldIngresarNombreEmergenteEditarTablero.setFont(new Font("Calibri", Font.PLAIN, 20));//Cambia la letra del interior
 				txtFieldIngresarNombreEmergenteEditarTablero.setBackground(morado3);//Color de fondo
 				txtFieldIngresarNombreEmergenteEditarTablero.setCursor(new Cursor(Cursor.TEXT_CURSOR));//Pone el cursor modo escritura
 				txtFieldIngresarNombreEmergenteEditarTablero.setAlignmentX(Component.CENTER_ALIGNMENT);//lo centra???
@@ -716,7 +720,7 @@ public class FrameTablero extends JFrame{
 				
 				//Abre: btnColaboradoresEmergenteEditarTablero
 				btnColaboradoresEmergenteEditarTablero = new JButton("Colaboradores");//Crea nuevo
-				btnColaboradoresEmergenteEditarTablero.setFont(new Font("Inter", Font.PLAIN, 18));//Cambia la letra del interior
+				btnColaboradoresEmergenteEditarTablero.setFont(new Font("Calibri", Font.PLAIN, 18));//Cambia la letra del interior
 				//btnColaboradoresEmergenteEditarTablero.setPreferredSize(new Dimension(198, 42));//Tamaño botón
 				btnColaboradoresEmergenteEditarTablero.setMaximumSize(new Dimension(250, 50));
 				btnColaboradoresEmergenteEditarTablero.setBackground(rosa2);//Color de fondo
@@ -739,7 +743,7 @@ public class FrameTablero extends JFrame{
 	
 				//Abre: btnEliminarEmergenteEditarTablero
 				btnEliminarEmergenteEditarTablero = new JButton("Eliminar");//Crea nuevo
-				btnEliminarEmergenteEditarTablero.setFont(new Font("Inter", Font.PLAIN, 18));//Cambia la letra del interior
+				btnEliminarEmergenteEditarTablero.setFont(new Font("Calibri", Font.PLAIN, 18));//Cambia la letra del interior
 				//btnEliminarEmergenteEditarTablero.setPreferredSize(new Dimension(198, 42));//Tamaño botón
 				btnEliminarEmergenteEditarTablero.setMaximumSize(new Dimension(250, 50));
 				btnEliminarEmergenteEditarTablero.setBackground(morado3);//Color de fondo
@@ -780,7 +784,7 @@ public class FrameTablero extends JFrame{
 	    
 	        		//Abre: btnCancelarEmergenteEditarTablero
 		        	btnCancelarEmergenteEditarTablero = new JButton("Cancelar");//Crea nuevo
-		        	btnCancelarEmergenteEditarTablero.setFont(new Font("Inter", Font.PLAIN, 18));//Cambia la letra del interior
+		        	btnCancelarEmergenteEditarTablero.setFont(new Font("Calibri", Font.PLAIN, 18));//Cambia la letra del interior
 		        	btnCancelarEmergenteEditarTablero.setPreferredSize(new Dimension(200, 40));//Tamaño botón
 		        	btnCancelarEmergenteEditarTablero.setBackground(limon);//Color de fondo
 		        	btnCancelarEmergenteEditarTablero.setCursor(new Cursor(Cursor.HAND_CURSOR));//Pone el cursor con una manita
@@ -797,7 +801,7 @@ public class FrameTablero extends JFrame{
 			
 			        //Abre: btnEliminarEmergenteEditarTablero    
 			        btnGuardarEmergenteEditarTablero = new JButton("Guardar");//Crea nuevo
-			        btnGuardarEmergenteEditarTablero.setFont(new Font("Inter", Font.PLAIN, 18));//Cambia la letra del interior
+			        btnGuardarEmergenteEditarTablero.setFont(new Font("Calibri", Font.PLAIN, 18));//Cambia la letra del interior
 			        btnGuardarEmergenteEditarTablero.setPreferredSize(new Dimension(200, 40));//Tamaño
 			        btnGuardarEmergenteEditarTablero.setBackground(limon);//Color de fondo
 			        btnGuardarEmergenteEditarTablero.setCursor(new Cursor(Cursor.HAND_CURSOR));//Pone el cursor con una manita
@@ -833,6 +837,8 @@ public class FrameTablero extends JFrame{
 	    //Cierra: Funcionalidad cambiar el foco automático al abrir la emergente
     
 	    emergenteEditarTablero.setVisible(true);//Hace visible la emergente
+	    
+	    SwingUtilities.invokeLater(() -> btnCancelarEmergenteEditarTablero.requestFocusInWindow());//Enfoca un componente específico al abrir la ventana
     }
     //Cierra: Método para crear emergenteEditarTablero
     
@@ -857,7 +863,7 @@ public class FrameTablero extends JFrame{
 
     			//Abre: lblTituloEditarColaboradores
 	        	JLabel lblTituloEditarColaboradores = new JLabel("Colaboradores");//Crea nuevo
-	        	lblTituloEditarColaboradores.setFont(new Font("Inter", Font.BOLD, 40));//Cambia la letra del interior
+	        	lblTituloEditarColaboradores.setFont(new Font("Calibri", Font.BOLD, 40));//Cambia la letra del interior
 	        	lblTituloEditarColaboradores.setForeground(limon2);//Color de la letra
 	        	lblTituloEditarColaboradores.setAlignmentX(Component.CENTER_ALIGNMENT);//Centra horizontalmente
 	        	lblTituloEditarColaboradores.setBackground(gris);//Color de fondo
@@ -885,7 +891,7 @@ public class FrameTablero extends JFrame{
 				//txtFieldIngresarCorreoEmergenteColaboradores.setPreferredSize(new Dimension(198, 42));
 				txtFieldIngresarCorreoEmergenteColaboradores.setHorizontalAlignment(JTextField.CENTER);
 				txtFieldIngresarCorreoEmergenteColaboradores.setMaximumSize(new Dimension(400, 35));
-				txtFieldIngresarCorreoEmergenteColaboradores.setFont(new Font("Inter", Font.PLAIN, 20));//Cambia la letra del interior
+				txtFieldIngresarCorreoEmergenteColaboradores.setFont(new Font("Calibri", Font.PLAIN, 20));//Cambia la letra del interior
 				txtFieldIngresarCorreoEmergenteColaboradores.setBackground(gris);//Color de fondo
 				txtFieldIngresarCorreoEmergenteColaboradores.setCursor(new Cursor(Cursor.TEXT_CURSOR));//Pone el cursor modo escritura
 				txtFieldIngresarCorreoEmergenteColaboradores.setAlignmentX(Component.CENTER_ALIGNMENT);//lo centra???
@@ -935,7 +941,7 @@ public class FrameTablero extends JFrame{
 	    
 	        		//Abre: btnCancelarEmergenteEditarTablero
 		        	btnCancelarEmergenteColaboradores = new JButton("Cancelar");//Crea nuevo
-		        	btnCancelarEmergenteColaboradores.setFont(new Font("Inter", Font.PLAIN, 18));//Cambia la letra del interior
+		        	btnCancelarEmergenteColaboradores.setFont(new Font("Calibri", Font.PLAIN, 18));//Cambia la letra del interior
 		        	btnCancelarEmergenteColaboradores.setPreferredSize(new Dimension(200, 40));//Tamaño botón
 		        	btnCancelarEmergenteColaboradores.setBackground(limon);//Color de fondo
 		        	btnCancelarEmergenteColaboradores.setCursor(new Cursor(Cursor.HAND_CURSOR));//Pone el cursor con una manita
@@ -952,7 +958,7 @@ public class FrameTablero extends JFrame{
 			
 			        //Abre: btnConfirmarEmergenteColaboradores    
 		        	btnConfirmarEmergenteColaboradores = new JButton("Confirmar");//Crea nuevo
-		        	btnConfirmarEmergenteColaboradores.setFont(new Font("Inter", Font.PLAIN, 18));//Cambia la letra del interior
+		        	btnConfirmarEmergenteColaboradores.setFont(new Font("Calibri", Font.PLAIN, 18));//Cambia la letra del interior
 		        	btnConfirmarEmergenteColaboradores.setPreferredSize(new Dimension(200, 40));//Tamaño
 		        	btnConfirmarEmergenteColaboradores.setBackground(limon);//Color de fondo
 		        	btnConfirmarEmergenteColaboradores.setCursor(new Cursor(Cursor.HAND_CURSOR));//Pone el cursor con una manita
@@ -1013,7 +1019,7 @@ public class FrameTablero extends JFrame{
 
     			//Abre: lblTituloEliminarTablero
 	        	JLabel lblTituloEliminarTablero = new JLabel("¿Seguro desea borrar el tablero?");//Crea nuevo
-	        	lblTituloEliminarTablero.setFont(new Font("Inter", Font.BOLD, 40));//Cambia la letra del interior
+	        	lblTituloEliminarTablero.setFont(new Font("Calibri", Font.BOLD, 40));//Cambia la letra del interior
 	        	lblTituloEliminarTablero.setForeground(limon2);//Color de la letra
 	        	lblTituloEliminarTablero.setAlignmentX(Component.CENTER_ALIGNMENT);//Centra horizontalmente
 	        	lblTituloEliminarTablero.setBackground(gris);//Color de fondo
@@ -1037,7 +1043,7 @@ public class FrameTablero extends JFrame{
 	    
 	        		//Abre: btnCancelarEmergenteEditarTablero
 		        	btnCancelarEmergenteEliminar = new JButton("Cancelar");//Crea nuevo
-		        	btnCancelarEmergenteEliminar.setFont(new Font("Inter", Font.PLAIN, 18));//Cambia la letra del interior
+		        	btnCancelarEmergenteEliminar.setFont(new Font("Calibri", Font.PLAIN, 18));//Cambia la letra del interior
 		        	btnCancelarEmergenteEliminar.setPreferredSize(new Dimension(200, 40));//Tamaño botón
 		        	btnCancelarEmergenteEliminar.setBackground(limon);//Color de fondo
 		        	btnCancelarEmergenteEliminar.setCursor(new Cursor(Cursor.HAND_CURSOR));//Pone el cursor con una manita
@@ -1054,7 +1060,7 @@ public class FrameTablero extends JFrame{
 			
 			        //Abre: btnBorrarEmergenteEliminar    
 		        	btnBorrarEmergenteEliminar = new JButton("Borrar");//Crea nuevo
-		        	btnBorrarEmergenteEliminar.setFont(new Font("Inter", Font.PLAIN, 18));//Cambia la letra del interior
+		        	btnBorrarEmergenteEliminar.setFont(new Font("Calibri", Font.PLAIN, 18));//Cambia la letra del interior
 		        	btnBorrarEmergenteEliminar.setPreferredSize(new Dimension(200, 40));//Tamaño
 		        	btnBorrarEmergenteEliminar.setBackground(rojo);//Color de fondo
 		        	btnBorrarEmergenteEliminar.setCursor(new Cursor(Cursor.HAND_CURSOR));//Pone el cursor con una manita
@@ -1382,6 +1388,14 @@ public class FrameTablero extends JFrame{
 
 	public static void setMillos(Color millos) {
 		FrameTablero.millos = millos;
+	}
+
+	public static Color getAzulito() {
+		return azulito;
+	}
+
+	public static void setAzulito(Color azulito) {
+		FrameTablero.azulito = azulito;
 	}
 
 	public static Color getRosa() {

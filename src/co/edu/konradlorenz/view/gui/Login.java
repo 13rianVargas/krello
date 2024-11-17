@@ -5,7 +5,6 @@ import java.awt.*;
 import java.awt.event.*;
 
 import javax.swing.*;
-import javax.swing.border.*;
 
 import co.edu.konradlorenz.controller.*;
 
@@ -31,7 +30,7 @@ public class Login extends JFrame {
 	private static JPanel contenedor;
 	
 	//LABELS
-	private static JLabel lblLogin;
+	private static JLabel lblRegisterRegresar;
 	
 	//TEXTFIELDS
 	private static JTextField txtLoginCorreo;
@@ -47,7 +46,6 @@ public class Login extends JFrame {
 	private static JButton btnLoginContinuar;
 	private static JButton btnLoginPanelCrearCuenta;
 	private static JButton btnLoginCrearCuenta;
-	private static JButton btnRegisterRegresar;
 	private static JButton btnRegisterCrearCuenta;
 	
 	//COLORS (Se crean en el Controller)
@@ -87,7 +85,7 @@ public class Login extends JFrame {
 	private static String ingresarContraseñaRegister = "Ingresa tu contraseña";
 	private static String ingresarReContraseñaRegister = "Re-ingresa tu contraseña";
 	private static String mensajeBtnCrearCuentaRegister = "Crear cuenta";
-	private static String mensajeBtnRegresarRegistrar = "   < Regresar";
+	private static String mensajeBtnRegresarRegistrar = "Regresar";
 	
 	
 	
@@ -135,7 +133,8 @@ public class Login extends JFrame {
 		frameLogin.setLocationRelativeTo(null);//Centra la ventana
 		frameLogin.setLayout(null);//Desactiva el control automático de paneles
 		frameLogin.setResizable(false);//No permite modificar el tamaño de la ventana
-		frameLogin.setBackground(morado);//Color de la barra de la ventana
+		frameLogin.setBackground(blanco);//Color de la barra de la ventana
+		frameLogin.getContentPane().setBackground(blanco);//Color de la barra de la ventana
 	
 	    panelLoginHead = panelLoginHead();
 	    panelLoginBody = panelLoginBody();
@@ -145,12 +144,16 @@ public class Login extends JFrame {
 	    contenedor.setLayout(cardLayout);
 	    contenedor.add(panelLoginBody, "panelLoginBody");
 	    contenedor.add(panelRegisterBody, "panelRegisterBody");
-	    contenedor.setBounds(0, 100, 405, 530);
+	    contenedor.setBounds(0, 100, 405, 552);
+	    contenedor.setBackground(blanco);//Color de fondo
 
 	    frameLogin.add(panelLoginHead);
 	    frameLogin.add(contenedor);
 
 	    frameLogin.setVisible(true);
+	    
+	    SwingUtilities.invokeLater(() -> btnLoginContinuar.requestFocusInWindow());//Enfoca un componente específico al abrir la ventana
+	    
 	}
     //Cierra: Constructor del frame Login
 	
@@ -193,19 +196,16 @@ public class Login extends JFrame {
     //Abre: Método para crear el panelLoginBody
 	public static JPanel panelLoginBody() {
 		
-		panelLoginBody= new JPanel();
+		panelLoginBody= new JPanel();//570
 		panelLoginBody.setLayout(null);//Desacriva el control automatico de paneles
 		panelLoginBody.setBounds(0, 100, 405, 530);//x,y,ancho,alto
-		panelLoginBody.setBackground(Color.white);//Fondo del panel
-		panelLoginBody.setOpaque(true);//false -> transparente
-		panelLoginBody.setBackground(millos);//Color de fondo
+		panelLoginBody.setBackground(rosa);//Color de fondo
 		panelLoginBody.setOpaque(detalles);//Mostrar detalles
 		
-		
-			lblLogin = new JLabel(mensajeIniciarSesionLogin);
+			JLabel lblLogin = new JLabel(mensajeIniciarSesionLogin);
 			lblLogin.setHorizontalAlignment(SwingConstants.CENTER);
-			lblLogin.setBounds(67, 60, 250, 100);
 			lblLogin.setFont(new Font("Calibri", Font.BOLD, 18));
+			lblLogin.setBounds(50, 100, 305, 40);//0, 50, 100
 			lblLogin.setBackground(cyan);//Color de fondo
 			lblLogin.setOpaque(detalles);//Mostrar detalles
 			
@@ -214,47 +214,51 @@ public class Login extends JFrame {
 			//Revisar para que se borre el mensaje al escribir
 			txtLoginCorreo= new JTextField(mensajeIngresarCorreoLogin);
 			txtLoginCorreo.setHorizontalAlignment(SwingConstants.CENTER);
-			txtLoginCorreo.setBackground(Color.LIGHT_GRAY);
-			txtLoginCorreo.setBounds(47, 140, 295, 40);
+			txtLoginCorreo.setBackground(gris2);
+			txtLoginCorreo.setBounds(50, (357/2), 305, 40);
 			txtLoginCorreo.setFont(new Font("Calibri", Font.ITALIC, 15));
-			txtLoginCorreo.setForeground(Color.gray);
+			txtLoginCorreo.setForeground(gris);
+			txtLoginCorreo.setCursor(new Cursor(Cursor.TEXT_CURSOR));//Pone el cursor para texto
 			
-			txtLoginCorreo.addFocusListener(new FocusListener() {
-		        @Override
-		        public void focusGained(FocusEvent e) {
-		            if (new String(txtLoginCorreo.getText()).equals(mensajeIngresarCorreoLogin)) {
-		            	txtLoginCorreo.setText("");
-		            	txtLoginCorreo.setForeground(Color.BLACK);
-		            }
-		        }
-
-		        @Override
-		        public void focusLost(FocusEvent e) {
-		            //Si el campo de texto está vacío al perder el foco, restaurar el placeholder
-		            if (txtLoginCorreo.getText().length() == 0) {
-		            	txtLoginCorreo.setForeground(Color.GRAY);
-		            	txtLoginCorreo.setText(mensajeIngresarCorreoLogin);//Restaurar el texto placeholder
-		            }
-		        }
-		    });
-		    //TODO
-			//txtLoginCorreo.addActionListener(enterLogin);
+				txtLoginCorreo.addFocusListener(new FocusListener() {
+			        @Override
+			        public void focusGained(FocusEvent e) {
+			            if (new String(txtLoginCorreo.getText()).equals(mensajeIngresarCorreoLogin)) {
+			            	txtLoginCorreo.setText("");
+			            	txtLoginCorreo.setForeground(negro);
+			            }
+			        }
+	
+			        @Override
+			        public void focusLost(FocusEvent e) {
+			            //Si el campo de texto está vacío al perder el foco, restaurar el placeholder
+			            if (txtLoginCorreo.getText().length() == 0) {
+			            	txtLoginCorreo.setForeground(gris);
+			            	txtLoginCorreo.setText(mensajeIngresarCorreoLogin);//Restaurar el texto placeholder
+			            }
+			        }
+			    });
+			    //TODO
+				//txtLoginCorreo.addActionListener(enterLogin);
 			
 		panelLoginBody.add(txtLoginCorreo);
 		
 			pwdContraseña= new JPasswordField(mensajeIngresarContraseñaLogin);
 			pwdContraseña.setHorizontalAlignment(SwingConstants.CENTER);
-			pwdContraseña.setBackground(Color.LIGHT_GRAY);
-			pwdContraseña.setBounds(47, 220, 295, 40);
+			pwdContraseña.setBackground(gris2);
+			pwdContraseña.setBounds(50, 257, 305, 40);
 			pwdContraseña.setFont(new Font("Calibri", Font.ITALIC, 15));
-			pwdContraseña.setForeground(Color.gray);
+			pwdContraseña.setForeground(gris);
+			pwdContraseña.setEchoChar((char) 0);
+			pwdContraseña.setCursor(new Cursor(Cursor.TEXT_CURSOR));//Pone el cursor para texto
 			
-			pwdContraseña.addFocusListener(new FocusListener() {
+			
+				pwdContraseña.addFocusListener(new FocusListener() {
 		        @Override
 		        public void focusGained(FocusEvent e) {
 		            if (new String(pwdContraseña.getPassword()).equals(mensajeIngresarContraseñaLogin)) {
 		            	pwdContraseña.setText("");
-		            	pwdContraseña.setForeground(Color.BLACK);
+		            	pwdContraseña.setForeground(negro);
 		            	pwdContraseña.setEchoChar('•');//Mostrar puntos
 		            }
 		        }
@@ -263,50 +267,54 @@ public class Login extends JFrame {
 		        public void focusLost(FocusEvent e) {
 		            //Si el campo de texto está vacío al perder el foco, restaurar el placeholder
 		            if (pwdContraseña.getPassword().length == 0) {
-		            	pwdContraseña.setForeground(Color.GRAY);
+		            	pwdContraseña.setForeground(gris);
 		            	pwdContraseña.setText(mensajeIngresarContraseñaLogin);//Restaurar el texto placeholder
 		            	pwdContraseña.setEchoChar((char) 0);//No mostrar puntos
 		            }
 		        }
 		    });
-		    //TODO
-			//pwdContraseña.addActionListener(enterLogin);		
-		panelLoginBody.add(pwdContraseña);
+			    //TODO
+				//pwdContraseña.addActionListener(enterLogin);		
+		
+				panelLoginBody.add(pwdContraseña);
 		
 			btnLoginContinuar = new JButton(mensajeBtnContinuarLogin);
 			btnLoginContinuar.setHorizontalAlignment(SwingConstants.CENTER);
 			btnLoginContinuar.setBackground(morado);
-			btnLoginContinuar.setBounds(47, 300, 295, 40);
+			btnLoginContinuar.setBounds(50, (671/2), 305, 40);
 			btnLoginContinuar.setFont(new Font("Calibri", Font.ITALIC, 15));
-			btnLoginContinuar.setForeground(Color.white);
+			btnLoginContinuar.setForeground(blanco);
+			btnLoginContinuar.setCursor(new Cursor(Cursor.HAND_CURSOR));//Pone el cursor con una manita
+			
+				btnLoginContinuar.addActionListener(new ActionListener() {
+				
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					ctrl.actionBtnContinuarLogin();
+				}
+			});
 			
 		panelLoginBody.add(btnLoginContinuar);
 		
 			btnLoginCrearCuenta= new JButton(mensajeBtnCrearCuentaLogin);
 			btnLoginCrearCuenta.setHorizontalAlignment(SwingConstants.CENTER);
-			btnLoginCrearCuenta.setBackground(Color.WHITE);
-			btnLoginCrearCuenta.setBounds(47, 360, 295, 40);
+			btnLoginCrearCuenta.setBackground(blanco);
+			btnLoginCrearCuenta.setBounds(50, 414, 305, 40);//414, 454, 554
 			btnLoginCrearCuenta.setFont(new Font("Calibri", Font.PLAIN, 15));
 			btnLoginCrearCuenta.setForeground(azulito);
-			btnLoginCrearCuenta.setBorder(null);
+			btnLoginCrearCuenta.setCursor(new Cursor(Cursor.HAND_CURSOR));//Pone el cursor con una manita
+			
+				btnLoginCrearCuenta.addActionListener(new ActionListener() {
+				
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					ctrl.actionBtnCrearCuentaLogin();			
+				}
+			});
 		
 		panelLoginBody.add(btnLoginCrearCuenta);
 
-		btnLoginContinuar.addActionListener(new ActionListener() {
-			
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				ctrl.actionBtnContinuarLogin();
-			}
-		});
-
-		btnLoginCrearCuenta.addActionListener(new ActionListener() {
-			
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				ctrl.actionBtnCrearCuentaLogin();			
-			}
-		});
+		
 		
 		
 		return panelLoginBody;
@@ -322,171 +330,191 @@ public class Login extends JFrame {
 	// -- // -- // -- // -- // -- // -- //
     //Abre: Método para crear el panelRegisterBody
 	public static  JPanel panelRegisterBody() {
-		JPanel panelRegisterBody= new JPanel();
-		panelRegisterBody.setLayout(null);
+		panelRegisterBody= new JPanel();
+		panelRegisterBody.setLayout(null);//Desacriva el control automatico de paneles
 		panelRegisterBody.setBounds(0, 100, 405, 530);
-		panelRegisterBody.setBackground(blanco);
-		panelRegisterBody.setOpaque(true);
+		panelRegisterBody.setBackground(rosa);//Color de fondo
+		panelRegisterBody.setOpaque(detalles);//Mostrar detalles
 			
-			lblLogin = new JLabel(mensajeCrearCuentaRegister);
+			JLabel lblLogin = new JLabel(mensajeCrearCuentaRegister);
 			lblLogin.setHorizontalAlignment(SwingConstants.CENTER);
-			lblLogin.setBackground(Color.black);
-			lblLogin.setBounds(67, 60, 250, 100);
 			lblLogin.setFont(new Font("Calibri", Font.BOLD, 18));
+			lblLogin.setBounds(50, 50, 305, 40);//0, 50, 100
+			lblLogin.setBackground(cyan);//Color de fondo
+			lblLogin.setOpaque(detalles);//Mostrar detalles
 			
-			panelRegisterBody.add(lblLogin);
+		panelRegisterBody.add(lblLogin);//(908/13)
 			
 			txtRegisterCorreo= new JTextField(ingresarCorreoRegister);
 			txtRegisterCorreo.setHorizontalAlignment(SwingConstants.CENTER);
-			txtRegisterCorreo.setBackground(Color.lightGray);
-			txtRegisterCorreo.setBounds(47, 140, 295, 40);
-			txtRegisterCorreo.setFont(new Font("Arial", Font.ITALIC, 15));
-			txtRegisterCorreo.setForeground(Color.gray);
+			txtRegisterCorreo.setBackground(gris2);
+			txtRegisterCorreo.setBounds(50, (1558/13), 305, 40);
+			txtRegisterCorreo.setFont(new Font("Calibri", Font.ITALIC, 15));
+			txtRegisterCorreo.setForeground(gris);
+			txtRegisterCorreo.setCursor(new Cursor(Cursor.TEXT_CURSOR));//Pone el cursor para texto
 			
-			txtRegisterCorreo.addFocusListener(new FocusListener() {
-		        @Override
-		        public void focusGained(FocusEvent e) {
-		            if (new String(txtRegisterCorreo.getText()).equals(ingresarCorreoRegister)) {
-		            	txtRegisterCorreo.setText("");
-		            	txtRegisterCorreo.setForeground(Color.BLACK);
-		            }
-		        }
-
-		        @Override
-		        public void focusLost(FocusEvent e) {
-		            //Si el campo de texto está vacío al perder el foco, restaurar el placeholder
-		            if (txtRegisterCorreo.getText().length() == 0) {
-		            	txtRegisterCorreo.setForeground(Color.GRAY);
-		            	txtRegisterCorreo.setText(ingresarCorreoRegister);//Restaurar el texto placeholder
-		            }
-		        }
-		    });
-		    //TODO
-			//txtRegisterCorreo.addActionListener(enterLogin);
+				txtRegisterCorreo.addFocusListener(new FocusListener() {
+			        @Override
+			        public void focusGained(FocusEvent e) {
+			            if (new String(txtRegisterCorreo.getText()).equals(ingresarCorreoRegister)) {
+			            	txtRegisterCorreo.setText("");
+			            	txtRegisterCorreo.setForeground(negro);
+			            }
+			        }
+	
+			        @Override
+			        public void focusLost(FocusEvent e) {
+			            //Si el campo de texto está vacío al perder el foco, restaurar el placeholder
+			            if (txtRegisterCorreo.getText().length() == 0) {
+			            	txtRegisterCorreo.setForeground(gris);
+			            	txtRegisterCorreo.setText(ingresarCorreoRegister);//Restaurar el texto placeholder
+			            }
+			        }
+			    });
+			    //TODO
+				//txtRegisterCorreo.addActionListener(enterLogin);
 			
-			panelRegisterBody.add(txtRegisterCorreo);
+		panelRegisterBody.add(txtRegisterCorreo);
 			
 			txtRegisterNombre= new JTextField(ingresarNombreRegister);
 			txtRegisterNombre.setHorizontalAlignment(SwingConstants.CENTER);
-			txtRegisterNombre.setBackground(Color.lightGray);
-			txtRegisterNombre.setBounds(47, 200, 295, 40);
-			txtRegisterNombre.setFont(new Font("Arial", Font.ITALIC, 15));
-			txtRegisterNombre.setForeground(Color.gray);
+			txtRegisterNombre.setBackground(gris2);
+			txtRegisterNombre.setBounds(50, (2466/13), 305, 40);
+			txtRegisterNombre.setFont(new Font("Calibri", Font.ITALIC, 15));
+			txtRegisterNombre.setForeground(gris);
+			txtRegisterNombre.setCursor(new Cursor(Cursor.TEXT_CURSOR));//Pone el cursor para texto
 			
-			txtRegisterNombre.addFocusListener(new FocusListener() {
-		        @Override
-		        public void focusGained(FocusEvent e) {
-		            if (new String(txtRegisterNombre.getText()).equals(ingresarNombreRegister)) {
-		            	txtRegisterNombre.setText("");
-		            	txtRegisterNombre.setForeground(Color.BLACK);
-		            }
-		        }
+				txtRegisterNombre.addFocusListener(new FocusListener() {
+			        @Override
+			        public void focusGained(FocusEvent e) {
+			            if (new String(txtRegisterNombre.getText()).equals(ingresarNombreRegister)) {
+			            	txtRegisterNombre.setText("");
+			            	txtRegisterNombre.setForeground(negro);
+			            }
+			        }
+	
+			        @Override
+			        public void focusLost(FocusEvent e) {
+			            //Si el campo de texto está vacío al perder el foco, restaurar el placeholder
+			            if (txtRegisterNombre.getText().length() == 0) {
+			            	txtRegisterNombre.setForeground(gris);
+			            	txtRegisterNombre.setText(ingresarNombreRegister);//Restaurar el texto placeholder
+			            }
+			        }
+			    });
+			    //TODO
+			    //pwdField.addActionListener(enterLogin);
 
-		        @Override
-		        public void focusLost(FocusEvent e) {
-		            //Si el campo de texto está vacío al perder el foco, restaurar el placeholder
-		            if (txtRegisterNombre.getText().length() == 0) {
-		            	txtRegisterNombre.setForeground(Color.GRAY);
-		            	txtRegisterNombre.setText(ingresarNombreRegister);//Restaurar el texto placeholder
-		            }
-		        }
-		    });
-		    //TODO
-		    //pwdField.addActionListener(enterLogin);
-
-			panelRegisterBody.add(txtRegisterNombre);
+		panelRegisterBody.add(txtRegisterNombre);
 			
 			pwdReContraseña= new JPasswordField(ingresarContraseñaRegister);
 			pwdReContraseña.setHorizontalAlignment(SwingConstants.CENTER);
-			pwdReContraseña.setBackground(Color.LIGHT_GRAY);
-			pwdReContraseña.setBounds(47, 260, 295, 40);
+			pwdReContraseña.setBackground(gris2);
+			pwdReContraseña.setBounds(50, (3374/13), 305, 40);
 			pwdReContraseña.setFont(new Font("Calibri", Font.ITALIC, 15));
-			pwdReContraseña.setForeground(Color.GRAY);
+			pwdReContraseña.setForeground(gris);
+			pwdReContraseña.setEchoChar((char) 0);
+			pwdReContraseña.setCursor(new Cursor(Cursor.TEXT_CURSOR));//Pone el cursor para texto
 			
-			pwdReContraseña.addFocusListener(new FocusListener() {
-		        @Override
-		        public void focusGained(FocusEvent e) {
-		            if (new String(pwdReContraseña.getPassword()).equals(ingresarContraseñaRegister)) {
-		            	pwdReContraseña.setText("");
-		            	pwdReContraseña.setForeground(Color.BLACK);
-		            	pwdReContraseña.setEchoChar('•');//Mostrar puntos
-		            }
-		        }
-
-		        @Override
-		        public void focusLost(FocusEvent e) {
-		            //Si el campo de texto está vacío al perder el foco, restaurar el placeholder
-		            if (pwdReContraseña.getPassword().length == 0) {
-		            	pwdReContraseña.setForeground(Color.GRAY);
-		                pwdReContraseña.setText(ingresarContraseñaRegister);//Restaurar el texto placeholder
-		                pwdReContraseña.setEchoChar((char) 0);//No mostrar puntos
-		            }
-		        }
-		    });
-		    //TODO crear metodo para que parpadee
-			//pwdReContraseña.addActionListener(enterLogin);
+				pwdReContraseña.addFocusListener(new FocusListener() {
+			        @Override
+			        public void focusGained(FocusEvent e) {
+			            if (new String(pwdReContraseña.getPassword()).equals(ingresarContraseñaRegister)) {
+			            	pwdReContraseña.setText("");
+			            	pwdReContraseña.setForeground(negro);
+			            	pwdReContraseña.setEchoChar('•');//Mostrar puntos
+			            }
+			        }
+	
+			        @Override
+			        public void focusLost(FocusEvent e) {
+			            //Si el campo de texto está vacío al perder el foco, restaurar el placeholder
+			            if (pwdReContraseña.getPassword().length == 0) {
+			            	pwdReContraseña.setForeground(gris);
+			                pwdReContraseña.setText(ingresarContraseñaRegister);//Restaurar el texto placeholder
+			                pwdReContraseña.setEchoChar((char) 0);//No mostrar puntos
+			            }
+			        }
+			    });
+			    //TODO crear metodo para que parpadee
+				//pwdReContraseña.addActionListener(enterLogin);
 			
 			
 			panelRegisterBody.add(pwdReContraseña);
 			
 			pwdReContraseñaDos= new JPasswordField(ingresarReContraseñaRegister);
 			pwdReContraseñaDos.setHorizontalAlignment(SwingConstants.CENTER);
-			pwdReContraseñaDos.setBackground(Color.LIGHT_GRAY);
-			pwdReContraseñaDos.setBounds(47, 320, 295, 40);
+			pwdReContraseñaDos.setBackground(gris2);
+			pwdReContraseñaDos.setBounds(50, (4282/13), 305, 40);
 			pwdReContraseñaDos.setFont(new Font("Calibri", Font.ITALIC, 15));
-			pwdReContraseñaDos.setForeground(Color.GRAY);
+			pwdReContraseñaDos.setForeground(gris);
+			pwdReContraseñaDos.setEchoChar((char) 0);
+			pwdReContraseñaDos.setCursor(new Cursor(Cursor.TEXT_CURSOR));//Pone el cursor para texto
 			
-			pwdReContraseñaDos.addFocusListener(new FocusListener() {
-		        @Override
-		        public void focusGained(FocusEvent e) {
-		            if (new String(pwdReContraseñaDos.getPassword()).equals(ingresarReContraseñaRegister)) {
-		            	pwdReContraseñaDos.setText("");
-		            	pwdReContraseñaDos.setForeground(Color.BLACK);
-		            	pwdReContraseñaDos.setEchoChar('•');//Mostrar puntos
-		            }
-		        }
-
-		        @Override
-		        public void focusLost(FocusEvent e) {
-		            //Si el campo de texto está vacío al perder el foco, restaurar el placeholder
-		            if (pwdReContraseñaDos.getPassword().length == 0) {
-		            	pwdReContraseñaDos.setForeground(Color.GRAY);
-		            	pwdReContraseñaDos.setText(ingresarReContraseñaRegister);//Restaurar el texto placeholder
-		            	pwdReContraseñaDos.setEchoChar((char) 0);//No mostrar puntos
-		            }
-		        }
-		    });
+				pwdReContraseñaDos.addFocusListener(new FocusListener() {
+			        @Override
+			        public void focusGained(FocusEvent e) {
+			            if (new String(pwdReContraseñaDos.getPassword()).equals(ingresarReContraseñaRegister)) {
+			            	pwdReContraseñaDos.setText("");
+			            	pwdReContraseñaDos.setForeground(negro);
+			            	pwdReContraseñaDos.setEchoChar('•');//Mostrar puntos
+			            }
+			        }
+	
+			        @Override
+			        public void focusLost(FocusEvent e) {
+			            //Si el campo de texto está vacío al perder el foco, restaurar el placeholder
+			            if (pwdReContraseñaDos.getPassword().length == 0) {
+			            	pwdReContraseñaDos.setForeground(gris);
+			            	pwdReContraseñaDos.setText(ingresarReContraseñaRegister);//Restaurar el texto placeholder
+			            	pwdReContraseñaDos.setEchoChar((char) 0);//No mostrar puntos
+			            }
+			        }
+			    });
 		    
-			//TODO
-			//pwdReContraseñaDos.addActionListener(enterLogin);
-			panelRegisterBody.add(pwdReContraseñaDos);
+				//TODO
+				//pwdReContraseñaDos.addActionListener(enterLogin);
+				panelRegisterBody.add(pwdReContraseñaDos);
 		
 			btnRegisterCrearCuenta= new JButton(mensajeBtnCrearCuentaRegister);
 			btnRegisterCrearCuenta.setHorizontalAlignment(SwingConstants.CENTER);
 			btnRegisterCrearCuenta.setBackground(morado);
-			btnRegisterCrearCuenta.setBounds(47, 380, 295, 40);
+			btnRegisterCrearCuenta.setBounds(50, (5190/13), 305, 40);
 			btnRegisterCrearCuenta.setFont(new Font("Calibri", Font.PLAIN, 15));
-			btnRegisterCrearCuenta.setForeground(Color.WHITE);
+			btnRegisterCrearCuenta.setForeground(blanco);
+			btnRegisterCrearCuenta.setCursor(new Cursor(Cursor.HAND_CURSOR));//Pone el cursor con una manita
+			
+			//TODO: Agregar action
 			
 			panelRegisterBody.add(btnRegisterCrearCuenta);
 		
-			btnRegisterRegresar= new JButton(mensajeBtnRegresarRegistrar);
-			btnRegisterRegresar.setHorizontalAlignment(SwingConstants.LEFT);
-			btnRegisterRegresar.setBackground(Color.WHITE);
-			btnRegisterRegresar.setBounds(47, 460, 295, 40);
-			btnRegisterRegresar.setFont(new Font("Calibri", Font.PLAIN, 15));
-			btnRegisterRegresar.setForeground(azulito);
-			btnRegisterRegresar.setBorder(null);	
+			lblRegisterRegresar= new JLabel("< " + mensajeBtnRegresarRegistrar);
+			lblRegisterRegresar.setHorizontalAlignment(SwingConstants.LEFT);
+			lblRegisterRegresar.setBounds(50, (6098/13), 80, 19);//464 , 504, 554
+			lblRegisterRegresar.setFont(new Font("Calibri", Font.PLAIN, 15));
+			lblRegisterRegresar.setForeground(azulito);
+			lblRegisterRegresar.setBackground(verde);//Color de fondo
+			lblRegisterRegresar.setOpaque(detalles);//Mostrar detalles
+			lblRegisterRegresar.setCursor(new Cursor(Cursor.HAND_CURSOR));//Pone el cursor con una manita
 			
-			panelRegisterBody.add(btnRegisterRegresar);
 			
-			btnRegisterRegresar.addActionListener(new ActionListener() {
+				lblRegisterRegresar.addMouseListener(new MouseAdapter() {
+	        		@Override
+	        		public void mouseEntered(MouseEvent e) {
+	        			lblRegisterRegresar.setText("<html><u>" + "&lt; " + "Regresar" + "</u></html>");//Lo subraya al poner el cursor encima
+	        		}
+		            @Override
+		            public void mouseExited(MouseEvent e) {
+		            	lblRegisterRegresar.setText("< " + mensajeBtnRegresarRegistrar);//Elimina el subrayado cuando el mouse no está encima
+		            }
+		            @Override
+		        	public void mouseClicked(MouseEvent e) {
+		            	ctrl.actionBtnRegresarRegister();
+		            }
+		        });
 				
-				@Override
-				public void actionPerformed(ActionEvent e) {
-					ctrl.actionBtnRegresarRegister();		
-				}
-			});
+			panelRegisterBody.add(lblRegisterRegresar);
+        	
 			
 			return panelRegisterBody;		
 	}
@@ -563,15 +591,7 @@ public class Login extends JFrame {
 	public static void setContenedor(JPanel contenedor) {
 		Login.contenedor = contenedor;
 	}
-
-	public static JLabel getLblLogin() {
-		return lblLogin;
-	}
-
-	public static void setLblLogin(JLabel lblLogin) {
-		Login.lblLogin = lblLogin;
-	}
-
+	
 	public static JTextField getTxtLoginCorreo() {
 		return txtLoginCorreo;
 	}
@@ -644,12 +664,12 @@ public class Login extends JFrame {
 		Login.btnLoginCrearCuenta = btnLoginCrearCuenta;
 	}
 
-	public static JButton getBtnRegisterRegresar() {
-		return btnRegisterRegresar;
+	public static JLabel getLblRegisterRegresar() {
+		return lblRegisterRegresar;
 	}
 
-	public static void setBtnRegisterRegresar(JButton btnRegisterRegresar) {
-		Login.btnRegisterRegresar = btnRegisterRegresar;
+	public static void setLblRegisterRegresar(JLabel lblRegisterRegresar) {
+		Login.lblRegisterRegresar = lblRegisterRegresar;
 	}
 
 	public static JButton getBtnRegisterCrearCuenta() {

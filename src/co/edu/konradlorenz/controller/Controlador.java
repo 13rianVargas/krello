@@ -1,9 +1,6 @@
 package co.edu.konradlorenz.controller;
 
-import java.awt.CardLayout;
 import java.awt.Color;
-import java.awt.event.MouseEvent;
-
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
@@ -71,7 +68,7 @@ public class Controlador {
 		new Login(this);//El this envía esta instancia del controlador a esa ventana.
 		//*/
 		
-		// <- Agrega * entre barras para comentar
+		/*/ <- Agrega * entre barras para comentar
 		new Principal(this);//El this envía esta instancia del controlador a esa ventana.
 		//*/
 		
@@ -81,46 +78,6 @@ public class Controlador {
 		
 	}
 	// run
-	
-	// > > > > > > > > > > > > > > > > > > > < < < < < < < < < < < < < < < < < < //
-	// > > > > > > > > > > > > > > > > M E T O D O S < < < < < < < < < < < < < < //
-	// > > > > > > > > > > > > > > > > > > > < < < < < < < < < < < < < < < < < < //
-	
-	public void ejecutarMenuPrincipal() {
-		while (true) {
-			int opcion = Vista.menuPrincipal();
-			//switchMenuPrincipal(opcion);
-		}
-	}
-	// ejecutarMenuPrincipal
-
-	public void ejecutarTablero() {
-		while (true) {
-			Vista.mostrarMensaje("<> <> <> TABLERO: " + tableroAbierto.getNombreTablero() + " <> <> <>");
-			int opcion = Vista.menuTablero();
-			//switchTablero(opcion);
-		}
-	}
-	// ejecutarTablero
-
-	public void ejecutarLista() {
-		while (true) {
-			Vista.mostrarMensaje("<> <> <> LISTA: " + listaAbierta.getNombreLista() + " <> <> <>");
-			int opcion = Vista.menuLista();
-			//switchLista(opcion);
-		}
-	}
-	// ejecutarLista
-
-	public void ejecutarTarea() {
-		while (true) {
-			// Las tareas no tienen nombre, le dejamos la descripcion
-			Vista.mostrarMensaje("<> <> <> " + tareaAbierta.getDescripcion() + " <> <> <>");
-			int opcion = Vista.menuTarea();
-			//switchTarea(opcion);
-		}
-	}
-	// ejecutarLista
 
 	// > > > > > > > > > > > > > > > > > > > < < < < < < < < < < < < < < < < < < //
 	// > > > > > > > > > > > > > > > > > C R E A R < < < < < < < < < < < < < < < //
@@ -588,11 +545,217 @@ public class Controlador {
 	 * 
 	 * }
 	 */
-
+	
+	
+	
+	
+	
 	  // -- // -- // -- // -- // -- // -- //
 	 // -- // -- // ACTIONS- // -- // -- //
 	// -- // -- // -- // -- // -- // -- //
-  
+	
+	//LOGIN
+	
+	//Abre: actionBtnContinuarLogin
+	public void actionBtnContinuarLogin() {
+		
+		//PARPADEO ROJO:
+		//ESTE PARPADEO ES ESPECIAL NO COPIAR.
+		JTextField txtCorreo = Login.getTxtLoginCorreo();
+		JPasswordField pwd = Login.getPwdContraseña();
+		
+		String placeholderCorreo = Login.getMensajeIngresarCorreoLogin();
+		String placeholderContraseña = Login.getMensajeIngresarContraseñaLogin();
+		
+		JButton btn = Login.getBtnLoginContinuar();
+		Color colorDelBtn = morado;
+		
+		char [] contraseñaChar= pwd.getPassword();
+		String contraseña= new String (contraseñaChar);
+		String correoBusqueda= txtCorreo.getText();
+		boolean validacion = verificarCredenciales(contraseña, correoBusqueda);
+		
+			
+		if(txtCorreo.getText().equals(placeholderCorreo) 
+			|| txtCorreo.getText().equals("")
+			|| contraseña.equals(placeholderContraseña)
+			|| contraseña.equals("")
+			|| validacion == false){
+			
+			//Set Bordes
+			Border bordeRojo = BorderFactory.createLineBorder(rojo, 2);
+			Border bordeGris = BorderFactory.createLineBorder(gris, 2);
+			
+			//Primera vez Bordes y Colores
+			txtCorreo.setBorder(bordeRojo);
+			txtCorreo.setForeground(rojo);
+			
+			pwd.setBorder(bordeRojo);
+			pwd.setForeground(rojo);
+			
+			btn.setBorder(bordeRojo);
+			btn.setBackground(rojo);
+			
+			final int[] contador= {0};
+			
+			//Parpadeo
+			Timer timer = new Timer(150, event -> { // Cambia cada 150 ms
+				if (contador[0] < 6) { // Se repetirá 3 veces, 3 rojas y 3 azules = 6
+					Border bordeActual = (contador[0] % 2 == 0) ? bordeRojo : bordeGris; //Op ternario
+	                Color colorBtn = (contador[0] % 2 == 0) ? rojo : colorDelBtn; //Op ternario x2
+	                Color colorTxt = (contador[0] % 2 == 0) ? rojo : gris ; //Op ternario x3
+	                
+			        txtCorreo.setBorder(bordeActual);
+			        txtCorreo.setForeground(colorTxt);
+			        
+			        pwd.setBorder(bordeActual);
+			        pwd.setForeground(colorTxt);
+			        
+			        btn.setBackground(colorBtn);
+			        btn.revalidate();
+			                
+		          	contador[0]++;
+	            } else {
+	                ((Timer) event.getSource()).stop(); //Detiene el Timer
+	            }
+				
+	            btn.setBorder(null);
+	        });
+				
+			timer.start();
+			
+		} else {
+			
+			if (validacion) {
+				Login.getFrameLogin().dispose();//Cierra el frame login
+				new Principal(this);	
+			
+			//String nombreLista = toCapitalCase(txtField.getText());//Obtiene el texto y lo transfoma a Capital
+			//listaAbierta = crearLista(nombreLista);//Envía el nombre al método crearLista
+			
+			
+			}
+			//if validacion
+		}
+		//if parpadeo
+	}
+	//Cierra: actionBtnContinuarLogin
+	
+	//Abre: actionBtnCrearCuentaLogin
+	public void actionBtnCrearCuentaLogin() {
+		Login.getCardLayout().show(Login.getContenedor(), "panelRegisterBody");
+	}
+	//Cierra: actionBtnCrearCuentaLogin
+	
+	//Abre: verificarCredenciales
+	public boolean verificarCredenciales(String contraseña, String correoBusqueda) {
+		for (Persona persona : listaDePersonasGlobal) {
+			if (persona.getCorreo().equalsIgnoreCase(correoBusqueda) && persona.getContraseña().equals(contraseña)) {
+				objAdministrador=(Administrador) persona;
+				return true;
+			}
+			break;
+		}
+		return false;
+	}
+	//Cierra: verificarCredenciales
+	
+	
+	
+	//REGISTER
+	
+	//Abre: actionBtnRegresarRegister
+	public void actionBtnRegresarRegister() {
+		Login.getCardLayout().show(Login.getContenedor(), "panelLoginBody");
+	}
+	//Cierra: actionBtnRegresarRegister
+	
+	//Abre: actionBtnRegisterCrearCuenta
+	public void actionBtnRegisterCrearCuenta() {
+		//PARPADEO ROJO:
+		//ESTE PARPADEO ES ESPECIAL NO COPIAR.
+		JTextField txtCorreo = Login.getTxtLoginCorreo();
+		JPasswordField pwd = Login.getPwdContraseña();
+		
+		String placeholderCorreo = Login.getMensajeIngresarCorreoLogin();
+		String placeholderContraseña = Login.getMensajeIngresarContraseñaLogin();
+		
+		JButton btn = Login.getBtnLoginContinuar();
+		Color colorDelBtn = morado;
+		
+		char [] contraseñaChar= pwd.getPassword();
+		String contraseña= new String (contraseñaChar);
+		String correoBusqueda= txtCorreo.getText();
+		boolean validacion = verificarCredenciales(contraseña, correoBusqueda);
+		
+			
+		if(txtCorreo.getText().equals(placeholderCorreo) 
+			|| txtCorreo.getText().equals("")
+			|| contraseña.equals(placeholderContraseña)
+			|| contraseña.equals("")
+			|| validacion == false){
+			
+			//Set Bordes
+			Border bordeRojo = BorderFactory.createLineBorder(rojo, 2);
+			Border bordeGris = BorderFactory.createLineBorder(gris, 2);
+			
+			//Primera vez Bordes y Colores
+			txtCorreo.setBorder(bordeRojo);
+			txtCorreo.setForeground(rojo);
+			
+			pwd.setBorder(bordeRojo);
+			pwd.setForeground(rojo);
+			
+			btn.setBorder(bordeRojo);
+			btn.setBackground(rojo);
+			
+			final int[] contador= {0};
+			
+			//Parpadeo
+			Timer timer = new Timer(150, event -> { // Cambia cada 150 ms
+				if (contador[0] < 6) { // Se repetirá 3 veces, 3 rojas y 3 azules = 6
+					Border bordeActual = (contador[0] % 2 == 0) ? bordeRojo : bordeGris; //Op ternario
+	                Color colorBtn = (contador[0] % 2 == 0) ? rojo : colorDelBtn; //Op ternario x2
+	                Color colorTxt = (contador[0] % 2 == 0) ? rojo : gris ; //Op ternario x3
+	                
+			        txtCorreo.setBorder(bordeActual);
+			        txtCorreo.setForeground(colorTxt);
+			        
+			        pwd.setBorder(bordeActual);
+			        pwd.setForeground(colorTxt);
+			        
+			        btn.setBackground(colorBtn);
+			        btn.revalidate();
+			                
+		          	contador[0]++;
+	            } else {
+	                ((Timer) event.getSource()).stop(); //Detiene el Timer
+	            }
+				
+	            btn.setBorder(null);
+	        });
+				
+			timer.start();
+			
+		} else {
+			
+			if (validacion) {
+				Login.getFrameLogin().dispose();//Cierra el frame login
+				new Principal(this);	
+			
+			//String nombreLista = toCapitalCase(txtField.getText());//Obtiene el texto y lo transfoma a Capital
+			//listaAbierta = crearLista(nombreLista);//Envía el nombre al método crearLista
+			
+			
+			}
+			//if validacion
+		}
+		//if parpadeo
+		
+		Login.getCardLayout().show(Login.getContenedor(), "panelLoginBody");
+	}
+	//Cierra: actionBtnRegisterCrearCuenta
+	
 	
 	
 	//VOLVER
@@ -622,6 +785,8 @@ public class Controlador {
 		Principal.emergenteCrearTablero();
 	}
 	//Cierra: actionBtnCrearTablero
+
+
 
 	//Abre: actionEnterTxtFieldIngresarNombreEmergenteCrearTablero
 	public void actionEnterTxtFieldIngresarNombreEmergenteCrearTablero() {
@@ -688,6 +853,7 @@ public class Controlador {
 	    Principal.setEmergenteCrearTablero(null);
 	}
 	//Cierra: actionBtnCancelarEmergenteCrearTablero
+	
 	
 	
 	//AGREGAR INVITADOS
@@ -897,7 +1063,7 @@ public class Controlador {
 				
 			timer.start();
 		} else {
-			String nuevoNombreTablero = FrameTablero.getTxtFieldIngresarNombreEmergenteEditarTablero().getText();//Obtiene el texto
+			//String nuevoNombreTablero = FrameTablero.getTxtFieldIngresarNombreEmergenteEditarTablero().getText();//Obtiene el texto
 			//TODO: no existe método de editar tablero
 		}//if editarTablero
 	}
@@ -990,195 +1156,5 @@ public class Controlador {
 	//Cierra: actionBtnCancelarEmergenteEliminar
 	
 
-	//Login
-	
-	//Abre: actionBtnContinuarLogin
-	public void actionBtnContinuarLogin() {
-		
-		//PARPADEO ROJO:
-		//ESTE PARPADEO ES ESPECIAL NO COPIAR.
-		JTextField txtCorreo = Login.getTxtLoginCorreo();
-		JPasswordField pwd = Login.getPwdContraseña();
-		
-		String placeholderCorreo = Login.getMensajeIngresarCorreoLogin();
-		String placeholderContraseña = Login.getMensajeIngresarContraseñaLogin();
-		
-		JButton btn = Login.getBtnLoginContinuar();
-		Color colorDelBtn = morado;
-		
-		char [] contraseñaChar= pwd.getPassword();
-		String contraseña= new String (contraseñaChar);
-		String correoBusqueda= txtCorreo.getText();
-		boolean validacion = verificarCredenciales(contraseña, correoBusqueda);
-		
-			
-		if(txtCorreo.getText().equals(placeholderCorreo) 
-			|| txtCorreo.getText().equals("")
-			|| contraseña.equals(placeholderContraseña)
-			|| contraseña.equals("")
-			|| validacion == false){
-			
-			//Set Bordes
-			Border bordeRojo = BorderFactory.createLineBorder(rojo, 2);
-			Border bordeGris = BorderFactory.createLineBorder(gris, 2);
-			
-			//Primera vez Bordes y Colores
-			txtCorreo.setBorder(bordeRojo);
-			txtCorreo.setForeground(rojo);
-			
-			pwd.setBorder(bordeRojo);
-			pwd.setForeground(rojo);
-			
-			btn.setBorder(bordeRojo);
-			btn.setBackground(rojo);
-			
-			final int[] contador= {0};
-			
-			//Parpadeo
-			Timer timer = new Timer(150, event -> { // Cambia cada 150 ms
-				if (contador[0] < 6) { // Se repetirá 3 veces, 3 rojas y 3 azules = 6
-					Border bordeActual = (contador[0] % 2 == 0) ? bordeRojo : bordeGris; //Op ternario
-	                Color colorBtn = (contador[0] % 2 == 0) ? rojo : colorDelBtn; //Op ternario x2
-	                Color colorTxt = (contador[0] % 2 == 0) ? rojo : gris ; //Op ternario x3
-	                
-			        txtCorreo.setBorder(bordeActual);
-			        txtCorreo.setForeground(colorTxt);
-			        
-			        pwd.setBorder(bordeActual);
-			        pwd.setForeground(colorTxt);
-			        
-			        btn.setBackground(colorBtn);
-			        btn.revalidate();
-			                
-		          	contador[0]++;
-	            } else {
-	                ((Timer) event.getSource()).stop(); //Detiene el Timer
-	            }
-				
-	            btn.setBorder(null);
-	        });
-				
-			timer.start();
-			
-		} else {
-			
-			if (validacion) {
-				Login.getFrameLogin().dispose();//Cierra el frame login
-				new Principal(this);	
-			
-			//String nombreLista = toCapitalCase(txtField.getText());//Obtiene el texto y lo transfoma a Capital
-			//listaAbierta = crearLista(nombreLista);//Envía el nombre al método crearLista
-			
-			
-			}
-			//if validacion
-		}
-		//if parpadeo
-	}
-	//Cierra: actionBtnContinuarLogin
-	
-	public void actionBtnCrearCuentaLogin() {
-		Login.getCardLayout().show(Login.getContenedor(), "panelRegisterBody");
-	}
-	
-	public void actionBtnRegresarRegister() {
-		Login.getCardLayout().show(Login.getContenedor(), "panelLoginBody");
-	}
-	
-	public void actionBtnRegisterCrearCuenta() {
-		//PARPADEO ROJO:
-		//ESTE PARPADEO ES ESPECIAL NO COPIAR.
-		JTextField txtCorreo = Login.getTxtLoginCorreo();
-		JPasswordField pwd = Login.getPwdContraseña();
-		
-		String placeholderCorreo = Login.getMensajeIngresarCorreoLogin();
-		String placeholderContraseña = Login.getMensajeIngresarContraseñaLogin();
-		
-		JButton btn = Login.getBtnLoginContinuar();
-		Color colorDelBtn = morado;
-		
-		char [] contraseñaChar= pwd.getPassword();
-		String contraseña= new String (contraseñaChar);
-		String correoBusqueda= txtCorreo.getText();
-		boolean validacion = verificarCredenciales(contraseña, correoBusqueda);
-		
-			
-		if(txtCorreo.getText().equals(placeholderCorreo) 
-			|| txtCorreo.getText().equals("")
-			|| contraseña.equals(placeholderContraseña)
-			|| contraseña.equals("")
-			|| validacion == false){
-			
-			//Set Bordes
-			Border bordeRojo = BorderFactory.createLineBorder(rojo, 2);
-			Border bordeGris = BorderFactory.createLineBorder(gris, 2);
-			
-			//Primera vez Bordes y Colores
-			txtCorreo.setBorder(bordeRojo);
-			txtCorreo.setForeground(rojo);
-			
-			pwd.setBorder(bordeRojo);
-			pwd.setForeground(rojo);
-			
-			btn.setBorder(bordeRojo);
-			btn.setBackground(rojo);
-			
-			final int[] contador= {0};
-			
-			//Parpadeo
-			Timer timer = new Timer(150, event -> { // Cambia cada 150 ms
-				if (contador[0] < 6) { // Se repetirá 3 veces, 3 rojas y 3 azules = 6
-					Border bordeActual = (contador[0] % 2 == 0) ? bordeRojo : bordeGris; //Op ternario
-	                Color colorBtn = (contador[0] % 2 == 0) ? rojo : colorDelBtn; //Op ternario x2
-	                Color colorTxt = (contador[0] % 2 == 0) ? rojo : gris ; //Op ternario x3
-	                
-			        txtCorreo.setBorder(bordeActual);
-			        txtCorreo.setForeground(colorTxt);
-			        
-			        pwd.setBorder(bordeActual);
-			        pwd.setForeground(colorTxt);
-			        
-			        btn.setBackground(colorBtn);
-			        btn.revalidate();
-			                
-		          	contador[0]++;
-	            } else {
-	                ((Timer) event.getSource()).stop(); //Detiene el Timer
-	            }
-				
-	            btn.setBorder(null);
-	        });
-				
-			timer.start();
-			
-		} else {
-			
-			if (validacion) {
-				Login.getFrameLogin().dispose();//Cierra el frame login
-				new Principal(this);	
-			
-			//String nombreLista = toCapitalCase(txtField.getText());//Obtiene el texto y lo transfoma a Capital
-			//listaAbierta = crearLista(nombreLista);//Envía el nombre al método crearLista
-			
-			
-			}
-			//if validacion
-		}
-		//if parpadeo
-		
-		Login.getCardLayout().show(Login.getContenedor(), "panelLoginBody");
-	}
-	
-	public boolean verificarCredenciales(String contraseña, String correoBusqueda) {
-		for (Persona persona : listaDePersonasGlobal) {
-			if (persona.getCorreo().equalsIgnoreCase(correoBusqueda) && persona.getContraseña().equals(contraseña)) {
-				objAdministrador=(Administrador) persona;
-				return true;
-			}
-			break;
-		}
-		return false;
-	}
-	       
-	}
+}	
 //class

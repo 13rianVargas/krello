@@ -121,7 +121,7 @@ public class Principal extends JFrame {
     	framePrincipal.setLocationRelativeTo(null); //Centra la ventana
     	framePrincipal.setLayout(new BorderLayout());//Diseño
     	framePrincipal.setBackground(blanco);//Color de la barra superior de la ventana
-    	framePrincipal.getContentPane().setBackground(blanco);//Color del fondo del frame
+    	framePrincipal.getContentPane().setBackground(blanco);//Color de fondo (solo ventanas)
 
     		panelPrincipalHead = panelPrincipalHead();//Crea el head
     	
@@ -132,6 +132,8 @@ public class Principal extends JFrame {
 		framePrincipal.add(panelPrincipalBody, BorderLayout.CENTER);//Lo añade y lo ubica al centro
 	        
     	framePrincipal.setVisible(true); //IMPORTANTE -> Siempre hacer dejar esto de últimas.
+    	
+    	SwingUtilities.invokeLater(() -> btnCrearTablero.requestFocusInWindow());//Enfoca un componente específico al abrir la ventana
     }
     //Cierra: Constructor del frame Principal
     
@@ -303,7 +305,7 @@ public class Principal extends JFrame {
     	
 	        	//Abre: lblMisTableros
 		        JLabel lblMisTableros = new JLabel("MIS TABLEROS");//Crea nuevo
-		        lblMisTableros.setFont(new Font("Inter", Font.PLAIN, 40));//Cambia la letra del interior
+		        lblMisTableros.setFont(new Font("Calibri", Font.PLAIN, 40));//Cambia la letra del interior
 		        lblMisTableros.setBackground(limon);//Color de fondo
 		        lblMisTableros.setOpaque(detalles);//Mostrar detalles
 		    	//Cierra: lblMisTableros
@@ -350,7 +352,7 @@ public class Principal extends JFrame {
 		        btnAbrirTablero1 = new JButton("Abrir Tablero 1");//Crea nuevo
 		        btnAbrirTablero1.setBackground(petroleo);//Color de fondo
 		        btnAbrirTablero1.setForeground(blanco);//Color de letra
-		        btnAbrirTablero1.setFont(new Font("Inter", Font.BOLD, 18));//Cambia la letra del interior
+		        btnAbrirTablero1.setFont(new Font("Calibri", Font.BOLD, 18));//Cambia la letra del interior
 				btnAbrirTablero1.setCursor(new Cursor(Cursor.HAND_CURSOR));//Pone el cursor con una manita
 				btnAbrirTablero1.setPreferredSize(buttonSize);//Tamaño botón
 				
@@ -372,7 +374,7 @@ public class Principal extends JFrame {
 		        btnAbrirTablero2 = new JButton("Abrir Tablero 2");//Crea nuevo
 		        btnAbrirTablero2.setBackground(petroleo);//Color de fondo
 		        btnAbrirTablero2.setForeground(blanco);//Color de letra
-		        btnAbrirTablero2.setFont(new Font("Inter", Font.BOLD, 18));//Cambia la letra del interior
+		        btnAbrirTablero2.setFont(new Font("Calibri", Font.BOLD, 18));//Cambia la letra del interior
 		        btnAbrirTablero2.setCursor(new Cursor(Cursor.HAND_CURSOR));//Pone el cursor con una manita
 		        btnAbrirTablero2.setPreferredSize(buttonSize);//Tamaño botón
 				
@@ -394,7 +396,7 @@ public class Principal extends JFrame {
 		        btnAbrirTablero3 = new JButton("Abrir Tablero 3");//Crea nuevo
 		        btnAbrirTablero3.setBackground(petroleo);//Color de fondo
 		        btnAbrirTablero3.setForeground(blanco);//Color de letra
-		        btnAbrirTablero3.setFont(new Font("Inter", Font.BOLD, 18));//Cambia la letra del interior
+		        btnAbrirTablero3.setFont(new Font("Calibri", Font.BOLD, 18));//Cambia la letra del interior
 		        btnAbrirTablero3.setCursor(new Cursor(Cursor.HAND_CURSOR));//Pone el cursor con una manita
 		        btnAbrirTablero3.setPreferredSize(buttonSize);//Tamaño botón
 		        
@@ -450,7 +452,7 @@ public class Principal extends JFrame {
 	        
 	        	//Abre: lblTituloCrearTablero
 		        JLabel lblTituloCrearTablero = new JLabel("Crear Tablero");//Crea nuevo
-		        lblTituloCrearTablero.setFont(new Font("Inter", Font.BOLD, 40));//Cambia la letra del interior
+		        lblTituloCrearTablero.setFont(new Font("Calibri", Font.BOLD, 40));//Cambia la letra del interior
 		        lblTituloCrearTablero.setForeground(morado2);//Color de letra
 		        lblTituloCrearTablero.setAlignmentX(Component.CENTER_ALIGNMENT);//Centra horizontalmente
 		        lblTituloCrearTablero.setBackground(gris);//Color de fondo
@@ -473,7 +475,7 @@ public class Principal extends JFrame {
 	        
 	        	//Abre: lblNombre
 		        JLabel lblNombre = new JLabel("Nombre:");//Crea nuevo
-		        lblNombre.setFont(new Font("Inter", Font.PLAIN, 25));//Cambia la letra del interior
+		        lblNombre.setFont(new Font("Calibri", Font.PLAIN, 25));//Cambia la letra del interior
 	        	//Cierra: lblNombre
 		        
 	        panelIngresarNombreTablero.add(lblNombre);//Añade lblNombre
@@ -482,7 +484,7 @@ public class Principal extends JFrame {
 		        txtFieldIngresarNombreEmergenteCrearTablero = new JTextField(mensajeIngresarNombreTablero);//Crea nuevo
 		        txtFieldIngresarNombreEmergenteCrearTablero.setForeground(gris);//Color de letra
 		        txtFieldIngresarNombreEmergenteCrearTablero.setPreferredSize(new Dimension(400, 40));
-		        txtFieldIngresarNombreEmergenteCrearTablero.setFont(new Font("Inter", Font.PLAIN, 20));//Cambia la letra del interior
+		        txtFieldIngresarNombreEmergenteCrearTablero.setFont(new Font("Calibri", Font.PLAIN, 20));//Cambia la letra del interior
 		        txtFieldIngresarNombreEmergenteCrearTablero.setBackground(gris2);//Color de fondo
 		        txtFieldIngresarNombreEmergenteCrearTablero.setBorder(BorderFactory.createLineBorder(gris, 2));//Color del borde
 		        txtFieldIngresarNombreEmergenteCrearTablero.setCursor(new Cursor(Cursor.TEXT_CURSOR));//Pone el cursor modo escritura
@@ -586,6 +588,8 @@ public class Principal extends JFrame {
         
         
         emergenteCrearTablero.setVisible(true);//Hace visible la emergente
+        
+        SwingUtilities.invokeLater(() -> btnCrearTableroEmergenteCrearTablero.requestFocusInWindow());//Enfoca un componente específico al abrir la ventana
 	    	
     }
     //Cierra: Método para crear emergenteCrearTablero
@@ -741,6 +745,8 @@ public class Principal extends JFrame {
 	    
         emergenteAgregarInvitados.setVisible(true);
         
+        SwingUtilities.invokeLater(() -> btnAgregarInvitadoEmergenteAgregarInvitados.requestFocusInWindow());//Enfoca un componente específico al abrir la ventana
+        
     }
     //Cierra: Método para crear emergenteAgregarInvitados
 
@@ -752,352 +758,368 @@ public class Principal extends JFrame {
 	 // -- // -- // GET & SET// -- // -- //
 	// -- // -- // -- // -- // -- // -- //
     
-    public static Controlador getCtrl() {
-    	return ctrl;
-    }
-    
-    public static void setCtrl(Controlador ctrl) {
-    	Principal.ctrl = ctrl;
-    }
-    
-    public static boolean isDetalles() {
-    	return detalles;
-    }
-    
-    public static void setDetalles(boolean detalles) {
-    	Principal.detalles = detalles;
-    }
-    
-    public static JFrame getFramePrincipal() {
-    	return framePrincipal;
-    }
-    
-    public static void setFramePrincipal(JFrame framePrincipal) {
-    	Principal.framePrincipal = framePrincipal;
-    }
-    
-    public static JDialog getEmergenteCrearTablero() {
-    	return emergenteCrearTablero;
-    }
-    
-    public static void setEmergenteCrearTablero(JDialog emergenteCrearTablero) {
-    	Principal.emergenteCrearTablero = emergenteCrearTablero;
-    }
-    
-    public static JDialog getEmergenteAgregarInvitados() {
-    	return emergenteAgregarInvitados;
-    }
-    
-    public static void setEmergenteAgregarInvitados(JDialog emergenteAgregarInvitados) {
-    	Principal.emergenteAgregarInvitados = emergenteAgregarInvitados;
-    }
-    
-    public static JPanel getPanelPrincipalHead() {
-    	return panelPrincipalHead;
-    }
-    
-    public static void setPanelPrincipalHead(JPanel panelPrincipalHead) {
-    	Principal.panelPrincipalHead = panelPrincipalHead;
-    }
-    
-    public static JPanel getPanelPrincipalMiddle() {
-    	return panelPrincipalMiddle;
-    }
-    
-    public static void setPanelPrincipalMiddle(JPanel panelPrincipalMiddle) {
-    	Principal.panelPrincipalMiddle = panelPrincipalMiddle;
-    }
-    
-    public static JPanel getPanelPrincipalBody() {
-    	return panelPrincipalBody;
-    }
-    
-    public static void setPanelPrincipalBody(JPanel panelPrincipalBody) {
-    	Principal.panelPrincipalBody = panelPrincipalBody;
-    }
-    
-    public static JTextField getTxtFieldIngresarNombreEmergenteCrearTablero() {
-    	return txtFieldIngresarNombreEmergenteCrearTablero;
-    }
-    
-    public static void setTxtFieldIngresarNombreEmergenteCrearTablero(
-    		JTextField txtFieldIngresarNombreEmergenteCrearTablero) {
-    	Principal.txtFieldIngresarNombreEmergenteCrearTablero = txtFieldIngresarNombreEmergenteCrearTablero;
-    }
-    
-    public static JTextField getTxtFieldIngresarCorreoEmergenteAgregarInvitados() {
-    	return txtFieldIngresarCorreoEmergenteAgregarInvitados;
-    }
-    
-    public static void setTxtFieldIngresarCorreoEmergenteAgregarInvitados(
-    		JTextField txtFieldIngresarCorreoEmergenteAgregarInvitados) {
-    	Principal.txtFieldIngresarCorreoEmergenteAgregarInvitados = txtFieldIngresarCorreoEmergenteAgregarInvitados;
-    }
-    
-    public static JLabel getLblKrelloLogo() {
-    	return lblKrelloLogo;
-    }
-    
-    public static void setLblKrelloLogo(JLabel lblKrelloLogo) {
-    	Principal.lblKrelloLogo = lblKrelloLogo;
-    }
-    
-    public static JLabel getLblCasaLogo() {
-    	return lblCasaLogo;
-    }
-    
-    public static void setLblCasaLogo(JLabel lblCasaLogo) {
-    	Principal.lblCasaLogo = lblCasaLogo;
-    }
-    
-    public static JLabel getLblCerrarSesion() {
-    	return lblCerrarSesion;
-    }
-    
-    public static void setLblCerrarSesion(JLabel lblCerrarSesion) {
-    	Principal.lblCerrarSesion = lblCerrarSesion;
-    }
-    
-    public static JButton getBtnCrearTablero() {
-    	return btnCrearTablero;
-    }
-    
-    public static void setBtnCrearTablero(JButton btnCrearTablero) {
-    	Principal.btnCrearTablero = btnCrearTablero;
-    }
-    
-    public static JButton getBtnAbrirTablero1() {
-    	return btnAbrirTablero1;
-    }
-    
-    public static void setBtnAbrirTablero1(JButton btnAbrirTablero1) {
-    	Principal.btnAbrirTablero1 = btnAbrirTablero1;
-    }
-    
-    public static JButton getBtnAbrirTablero2() {
-    	return btnAbrirTablero2;
-    }
-    
-    public static void setBtnAbrirTablero2(JButton btnAbrirTablero2) {
-    	Principal.btnAbrirTablero2 = btnAbrirTablero2;
-    }
-    
-    public static JButton getBtnAbrirTablero3() {
-    	return btnAbrirTablero3;
-    }
-    
-    public static void setBtnAbrirTablero3(JButton btnAbrirTablero3) {
-    	Principal.btnAbrirTablero3 = btnAbrirTablero3;
-    }
-    
-    public static JButton getBtnAgregarInvitados() {
-    	return btnAgregarInvitados;
-    }
-    
-    public static void setBtnAgregarInvitados(JButton btnAgregarInvitados) {
-    	Principal.btnAgregarInvitados = btnAgregarInvitados;
-    }
-    
-    public static JButton getBtnCancelarEmergenteCrearTablero() {
-    	return btnCancelarEmergenteCrearTablero;
-    }
-    
-    public static void setBtnCancelarEmergenteCrearTablero(JButton btnCancelarEmergenteCrearTablero) {
-    	Principal.btnCancelarEmergenteCrearTablero = btnCancelarEmergenteCrearTablero;
-    }
-    
-    public static JButton getBtnCrearTableroEmergenteCrearTablero() {
-    	return btnCrearTableroEmergenteCrearTablero;
-    }
-    
-    public static void setBtnCrearTableroEmergenteCrearTablero(JButton btnCrearTableroEmergenteCrearTablero) {
-    	Principal.btnCrearTableroEmergenteCrearTablero = btnCrearTableroEmergenteCrearTablero;
-    }
-    
-    public static JButton getBtnCancelarEmergenteAgregarInvitados() {
-    	return btnCancelarEmergenteAgregarInvitados;
-    }
-    
-    public static void setBtnCancelarEmergenteAgregarInvitados(JButton btnCancelarEmergenteAgregarInvitados) {
-    	Principal.btnCancelarEmergenteAgregarInvitados = btnCancelarEmergenteAgregarInvitados;
-    }
-    
-    public static JButton getBtnAgregarInvitadoEmergenteAgregarInvitados() {
-    	return btnAgregarInvitadoEmergenteAgregarInvitados;
-    }
-    
-    public static void setBtnAgregarInvitadoEmergenteAgregarInvitados(
-    		JButton btnAgregarInvitadoEmergenteAgregarInvitados) {
-    	Principal.btnAgregarInvitadoEmergenteAgregarInvitados = btnAgregarInvitadoEmergenteAgregarInvitados;
-    }
-    
-    public static Color getNegro() {
-    	return negro;
-    }
-    
-    public static void setNegro(Color negro) {
-    	Principal.negro = negro;
-    }
-    
-    public static Color getBlanco() {
-    	return blanco;
-    }
-    
-    public static void setBlanco(Color blanco) {
-    	Principal.blanco = blanco;
-    }
-    
-    public static Color getRojo() {
-    	return rojo;
-    }
-    
-    public static void setRojo(Color rojo) {
-    	Principal.rojo = rojo;
-    }
-    
-    public static Color getVerde() {
-    	return verde;
-    }
-    
-    public static void setVerde(Color verde) {
-    	Principal.verde = verde;
-    }
-    
-    public static Color getMillos() {
-    	return millos;
-    }
-    
-    public static void setMillos(Color millos) {
-    	Principal.millos = millos;
-    }
-    
-    public static Color getRosa() {
-    	return rosa;
-    }
-    
-    public static void setRosa(Color rosa) {
-    	Principal.rosa = rosa;
-    }
-    
-    public static Color getRosa2() {
-    	return rosa2;
-    }
-    
-    public static void setRosa2(Color rosa2) {
-    	Principal.rosa2 = rosa2;
-    }
-    
-    public static Color getCyan() {
-    	return cyan;
-    }
-    
-    public static void setCyan(Color cyan) {
-    	Principal.cyan = cyan;
-    }
-    
-    public static Color getCyan2() {
-    	return cyan2;
-    }
-    
-    public static void setCyan2(Color cyan2) {
-    	Principal.cyan2 = cyan2;
-    }
-    
-    public static Color getGris() {
-    	return gris;
-    }
-    
-    public static void setGris(Color gris) {
-    	Principal.gris = gris;
-    }
-    
-    public static Color getGris2() {
-    	return gris2;
-    }
-    
-    public static void setGris2(Color gris2) {
-    	Principal.gris2 = gris2;
-    }
-    
-    public static Color getMorado() {
-    	return morado;
-    }
-    
-    public static void setMorado(Color morado) {
-    	Principal.morado = morado;
-    }
-    
-    public static Color getMorado2() {
-    	return morado2;
-    }
-    
-    public static void setMorado2(Color morado2) {
-    	Principal.morado2 = morado2;
-    }
-    
-    public static Color getMorado3() {
-    	return morado3;
-    }
-    
-    public static void setMorado3(Color morado3) {
-    	Principal.morado3 = morado3;
-    }
-    
-    public static Color getAguacate() {
-    	return aguacate;
-    }
-    
-    public static void setAguacate(Color aguacate) {
-    	Principal.aguacate = aguacate;
-    }
-    
-    public static Color getPetroleo() {
-    	return petroleo;
-    }
-    
-    public static void setPetroleo(Color petroleo) {
-    	Principal.petroleo = petroleo;
-    }
-    
-    public static Color getPetroleo2() {
-    	return petroleo2;
-    }
-    
-    public static void setPetroleo2(Color petroleo2) {
-    	Principal.petroleo2 = petroleo2;
-    }
-    
-    public static Color getLimon() {
-    	return limon;
-    }
-    
-    public static void setLimon(Color limon) {
-    	Principal.limon = limon;
-    }
-    
-    public static Color getLimon2() {
-    	return limon2;
-    }
-    
-    public static void setLimon2(Color limon2) {
-    	Principal.limon2 = limon2;
-    }
-    
-    public static String getMensajeIngresarNombreTablero() {
-    	return mensajeIngresarNombreTablero;
-    }
-    
-    public static void setMensajeIngresarNombreTablero(String mensajeIngresarNombreTablero) {
-    	Principal.mensajeIngresarNombreTablero = mensajeIngresarNombreTablero;
-    }
-    
-    public static String getMensajeIngresarCorreo() {
-    	return mensajeIngresarCorreo;
-    }
-    
-    public static void setMensajeIngresarCorreo(String mensajeIngresarCorreo) {
-    	Principal.mensajeIngresarCorreo = mensajeIngresarCorreo;
-    }
-    
+	public static Controlador getCtrl() {
+		return ctrl;
+	}
+
+	public static void setCtrl(Controlador ctrl) {
+		Principal.ctrl = ctrl;
+	}
+
+	public static boolean isDetalles() {
+		return detalles;
+	}
+
+	public static void setDetalles(boolean detalles) {
+		Principal.detalles = detalles;
+	}
+
+	public static JFrame getFramePrincipal() {
+		return framePrincipal;
+	}
+
+	public static void setFramePrincipal(JFrame framePrincipal) {
+		Principal.framePrincipal = framePrincipal;
+	}
+
+	public static JDialog getEmergenteCrearTablero() {
+		return emergenteCrearTablero;
+	}
+
+	public static void setEmergenteCrearTablero(JDialog emergenteCrearTablero) {
+		Principal.emergenteCrearTablero = emergenteCrearTablero;
+	}
+
+	public static JDialog getEmergenteAgregarInvitados() {
+		return emergenteAgregarInvitados;
+	}
+
+	public static void setEmergenteAgregarInvitados(JDialog emergenteAgregarInvitados) {
+		Principal.emergenteAgregarInvitados = emergenteAgregarInvitados;
+	}
+
+	public static JPanel getPanelPrincipalHead() {
+		return panelPrincipalHead;
+	}
+
+	public static void setPanelPrincipalHead(JPanel panelPrincipalHead) {
+		Principal.panelPrincipalHead = panelPrincipalHead;
+	}
+
+	public static JPanel getPanelPrincipalMiddle() {
+		return panelPrincipalMiddle;
+	}
+
+	public static void setPanelPrincipalMiddle(JPanel panelPrincipalMiddle) {
+		Principal.panelPrincipalMiddle = panelPrincipalMiddle;
+	}
+
+	public static JPanel getPanelPrincipalBody() {
+		return panelPrincipalBody;
+	}
+
+	public static void setPanelPrincipalBody(JPanel panelPrincipalBody) {
+		Principal.panelPrincipalBody = panelPrincipalBody;
+	}
+
+	public static JTextField getTxtFieldIngresarNombreEmergenteCrearTablero() {
+		return txtFieldIngresarNombreEmergenteCrearTablero;
+	}
+
+	public static void setTxtFieldIngresarNombreEmergenteCrearTablero(
+			JTextField txtFieldIngresarNombreEmergenteCrearTablero) {
+		Principal.txtFieldIngresarNombreEmergenteCrearTablero = txtFieldIngresarNombreEmergenteCrearTablero;
+	}
+
+	public static JTextField getTxtFieldIngresarCorreoEmergenteAgregarInvitados() {
+		return txtFieldIngresarCorreoEmergenteAgregarInvitados;
+	}
+
+	public static void setTxtFieldIngresarCorreoEmergenteAgregarInvitados(
+			JTextField txtFieldIngresarCorreoEmergenteAgregarInvitados) {
+		Principal.txtFieldIngresarCorreoEmergenteAgregarInvitados = txtFieldIngresarCorreoEmergenteAgregarInvitados;
+	}
+
+	public static JLabel getLblKrelloLogo() {
+		return lblKrelloLogo;
+	}
+
+	public static void setLblKrelloLogo(JLabel lblKrelloLogo) {
+		Principal.lblKrelloLogo = lblKrelloLogo;
+	}
+
+	public static JLabel getLblCasaLogo() {
+		return lblCasaLogo;
+	}
+
+	public static void setLblCasaLogo(JLabel lblCasaLogo) {
+		Principal.lblCasaLogo = lblCasaLogo;
+	}
+
+	public static JLabel getLblCerrarSesion() {
+		return lblCerrarSesion;
+	}
+
+	public static void setLblCerrarSesion(JLabel lblCerrarSesion) {
+		Principal.lblCerrarSesion = lblCerrarSesion;
+	}
+
+	public static JButton getBtnCrearTablero() {
+		return btnCrearTablero;
+	}
+
+	public static void setBtnCrearTablero(JButton btnCrearTablero) {
+		Principal.btnCrearTablero = btnCrearTablero;
+	}
+
+	public static JButton getBtnAbrirTablero1() {
+		return btnAbrirTablero1;
+	}
+
+	public static void setBtnAbrirTablero1(JButton btnAbrirTablero1) {
+		Principal.btnAbrirTablero1 = btnAbrirTablero1;
+	}
+
+	public static JButton getBtnAbrirTablero2() {
+		return btnAbrirTablero2;
+	}
+
+	public static void setBtnAbrirTablero2(JButton btnAbrirTablero2) {
+		Principal.btnAbrirTablero2 = btnAbrirTablero2;
+	}
+
+	public static JButton getBtnAbrirTablero3() {
+		return btnAbrirTablero3;
+	}
+
+	public static void setBtnAbrirTablero3(JButton btnAbrirTablero3) {
+		Principal.btnAbrirTablero3 = btnAbrirTablero3;
+	}
+
+	public static JButton getBtnAgregarInvitados() {
+		return btnAgregarInvitados;
+	}
+
+	public static void setBtnAgregarInvitados(JButton btnAgregarInvitados) {
+		Principal.btnAgregarInvitados = btnAgregarInvitados;
+	}
+
+	public static JButton getBtnCancelarEmergenteCrearTablero() {
+		return btnCancelarEmergenteCrearTablero;
+	}
+
+	public static void setBtnCancelarEmergenteCrearTablero(JButton btnCancelarEmergenteCrearTablero) {
+		Principal.btnCancelarEmergenteCrearTablero = btnCancelarEmergenteCrearTablero;
+	}
+
+	public static JButton getBtnCrearTableroEmergenteCrearTablero() {
+		return btnCrearTableroEmergenteCrearTablero;
+	}
+
+	public static void setBtnCrearTableroEmergenteCrearTablero(JButton btnCrearTableroEmergenteCrearTablero) {
+		Principal.btnCrearTableroEmergenteCrearTablero = btnCrearTableroEmergenteCrearTablero;
+	}
+
+	public static JButton getBtnCancelarEmergenteAgregarInvitados() {
+		return btnCancelarEmergenteAgregarInvitados;
+	}
+
+	public static void setBtnCancelarEmergenteAgregarInvitados(JButton btnCancelarEmergenteAgregarInvitados) {
+		Principal.btnCancelarEmergenteAgregarInvitados = btnCancelarEmergenteAgregarInvitados;
+	}
+
+	public static JButton getBtnAgregarInvitadoEmergenteAgregarInvitados() {
+		return btnAgregarInvitadoEmergenteAgregarInvitados;
+	}
+
+	public static void setBtnAgregarInvitadoEmergenteAgregarInvitados(
+			JButton btnAgregarInvitadoEmergenteAgregarInvitados) {
+		Principal.btnAgregarInvitadoEmergenteAgregarInvitados = btnAgregarInvitadoEmergenteAgregarInvitados;
+	}
+
+	public static Color getNegro() {
+		return negro;
+	}
+
+	public static void setNegro(Color negro) {
+		Principal.negro = negro;
+	}
+
+	public static Color getBlanco() {
+		return blanco;
+	}
+
+	public static void setBlanco(Color blanco) {
+		Principal.blanco = blanco;
+	}
+
+	public static Color getRojo() {
+		return rojo;
+	}
+
+	public static void setRojo(Color rojo) {
+		Principal.rojo = rojo;
+	}
+
+	public static Color getVerde() {
+		return verde;
+	}
+
+	public static void setVerde(Color verde) {
+		Principal.verde = verde;
+	}
+
+	public static Color getMillos() {
+		return millos;
+	}
+
+	public static void setMillos(Color millos) {
+		Principal.millos = millos;
+	}
+
+	public static Color getAzulito() {
+		return azulito;
+	}
+
+	public static void setAzulito(Color azulito) {
+		Principal.azulito = azulito;
+	}
+
+	public static Color getRosa() {
+		return rosa;
+	}
+
+	public static void setRosa(Color rosa) {
+		Principal.rosa = rosa;
+	}
+
+	public static Color getRosa2() {
+		return rosa2;
+	}
+
+	public static void setRosa2(Color rosa2) {
+		Principal.rosa2 = rosa2;
+	}
+
+	public static Color getCyan() {
+		return cyan;
+	}
+
+	public static void setCyan(Color cyan) {
+		Principal.cyan = cyan;
+	}
+
+	public static Color getCyan2() {
+		return cyan2;
+	}
+
+	public static void setCyan2(Color cyan2) {
+		Principal.cyan2 = cyan2;
+	}
+
+	public static Color getGris() {
+		return gris;
+	}
+
+	public static void setGris(Color gris) {
+		Principal.gris = gris;
+	}
+
+	public static Color getGris2() {
+		return gris2;
+	}
+
+	public static void setGris2(Color gris2) {
+		Principal.gris2 = gris2;
+	}
+
+	public static Color getMorado() {
+		return morado;
+	}
+
+	public static void setMorado(Color morado) {
+		Principal.morado = morado;
+	}
+
+	public static Color getMorado2() {
+		return morado2;
+	}
+
+	public static void setMorado2(Color morado2) {
+		Principal.morado2 = morado2;
+	}
+
+	public static Color getMorado3() {
+		return morado3;
+	}
+
+	public static void setMorado3(Color morado3) {
+		Principal.morado3 = morado3;
+	}
+
+	public static Color getAguacate() {
+		return aguacate;
+	}
+
+	public static void setAguacate(Color aguacate) {
+		Principal.aguacate = aguacate;
+	}
+
+	public static Color getPetroleo() {
+		return petroleo;
+	}
+
+	public static void setPetroleo(Color petroleo) {
+		Principal.petroleo = petroleo;
+	}
+
+	public static Color getPetroleo2() {
+		return petroleo2;
+	}
+
+	public static void setPetroleo2(Color petroleo2) {
+		Principal.petroleo2 = petroleo2;
+	}
+
+	public static Color getLimon() {
+		return limon;
+	}
+
+	public static void setLimon(Color limon) {
+		Principal.limon = limon;
+	}
+
+	public static Color getLimon2() {
+		return limon2;
+	}
+
+	public static void setLimon2(Color limon2) {
+		Principal.limon2 = limon2;
+	}
+
+	public static Color getLimon3() {
+		return limon3;
+	}
+
+	public static void setLimon3(Color limon3) {
+		Principal.limon3 = limon3;
+	}
+
+	public static String getMensajeIngresarNombreTablero() {
+		return mensajeIngresarNombreTablero;
+	}
+
+	public static void setMensajeIngresarNombreTablero(String mensajeIngresarNombreTablero) {
+		Principal.mensajeIngresarNombreTablero = mensajeIngresarNombreTablero;
+	}
+
+	public static String getMensajeIngresarCorreo() {
+		return mensajeIngresarCorreo;
+	}
+
+	public static void setMensajeIngresarCorreo(String mensajeIngresarCorreo) {
+		Principal.mensajeIngresarCorreo = mensajeIngresarCorreo;
+	}
+      
 }
 //class
