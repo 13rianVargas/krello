@@ -221,7 +221,6 @@ public class FrameTablero extends JFrame{
 			    	btnCrearLista.setForeground(cyan2);//Color de letra
 			    	btnCrearLista.setFocusPainted(false);//Evita que se muestre un borde cuando el componente tiene el foco.
 			    	btnCrearLista.setCursor(new Cursor(Cursor.HAND_CURSOR));//Pone el cursor con una manita
-			    	btnCrearLista.setToolTipText("Nueva Lista");
 			    	
 			    		//Abrir: Acción del btnCrearLista
 				    	btnCrearLista.addActionListener(new ActionListener() {
@@ -338,7 +337,7 @@ public class FrameTablero extends JFrame{
 			    	lblEditarLista.setIcon(new ImageIcon(Principal.class.getResource("/co/edu/konradlorenz/view/img/Tuerca25x25.png")));//Ruta de la imagen
 			    	lblEditarLista.setFont(new Font("Inter", Font.PLAIN, 18));//Cambia la letra del interior
 			    	lblEditarLista.setCursor(new Cursor(Cursor.HAND_CURSOR));//Pone el cursor con una manita
-			    	lblNuevaTarea.setToolTipText("Editar Lista");
+			    	lblEditarLista.setToolTipText("Editar Lista");
 			    	
 			    		//Abrir: Acción del lblEditarLista
 			    		lblEditarTablero.addMouseListener(new MouseAdapter() {
@@ -416,6 +415,7 @@ public class FrameTablero extends JFrame{
 		    lblEditarTarea.setIcon(new ImageIcon(Principal.class.getResource("/co/edu/konradlorenz/view/img/Tuerca20x20.png")));//Ruta de la imagen
 		    lblEditarTarea.setFont(new Font("Inter", Font.PLAIN, 18));//Cambia la letra del interior
 		    lblEditarTarea.setCursor(new Cursor(Cursor.HAND_CURSOR));//Pone el cursor con una manita
+		    lblEditarTarea.setToolTipText("Editar Tarea");
 	    	
 	    		//Abrir: Acción del lblEditarTarea
 		    	lblEditarTarea.addMouseListener(new MouseAdapter() {
