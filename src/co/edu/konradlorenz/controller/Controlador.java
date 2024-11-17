@@ -5,6 +5,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 import javax.swing.BorderFactory;
+import javax.swing.JButton;
 import javax.swing.Timer;
 import javax.swing.UIManager;
 import javax.swing.border.Border;
@@ -167,12 +168,13 @@ public class Controlador {
 		String nombre = Vista.pedirString("el nombre del delegado");
 		String correo = Vista.pedirString("el correo del delegado");
 		String rol = Vista.pedirString("el rol del delegado (Colaborador/Administrador)");
+		String contraseña= Vista.pedirString("la contraseña del delegado");
 
 		if (rol.equalsIgnoreCase("colaborador")) {
-			Colaborador objColaborador = new Colaborador(nombre, correo, rol);
+			Colaborador objColaborador = new Colaborador(nombre, correo, rol, contraseña);
 			return objColaborador;
 		} else if (rol.equalsIgnoreCase("administrador")) {
-			Administrador objAdministrador = new Administrador(nombre, correo, rol);
+			Administrador objAdministrador = new Administrador(nombre, correo, rol, contraseña);
 			return objAdministrador;
 		} else {
 			Vista.mostrarMensaje("No es un rol valido.");
@@ -485,14 +487,14 @@ public class Controlador {
 
 	public void crearEjemplosPersona() {
 		
-		listaDePersonasGlobal.add(new Administrador("Alejandra Durán", "alejaqt@gmail.com", "Administrador"));
-		listaDePersonasGlobal.add(new Administrador("Sharon Cruz", "sharina@gmail.com", "Administrador"));
-		listaDePersonasGlobal.add(new Administrador("Brian Vargas", "briscuit@gmail.com", "Administrador"));
-		listaDePersonasGlobal.add(new Administrador("Alexander Chacon", "alexito@gmail.com", "Administrador"));
+		listaDePersonasGlobal.add(new Administrador("Alejandra Durán", "alejaqt@gmail.com", "Administrador", "123"));
+		listaDePersonasGlobal.add(new Administrador("Sharon Cruz", "sharina@gmail.com", "Administrador", "123"));
+		listaDePersonasGlobal.add(new Administrador("Brian Vargas", "briscuit@gmail.com", "Administrador", "123"));
+		listaDePersonasGlobal.add(new Administrador("Alexander Chacon", "alexito@gmail.com", "Administrador", "123"));
 		
-		listaDePersonasGlobal.add(new Colaborador("Juan Perez", "juan.perez@example.com", "Colaborador"));
-		listaDePersonasGlobal.add(new Colaborador("Pedro Lopez", "pedro.lopez@example.com", "Colaborador"));
-		listaDePersonasGlobal.add(new Colaborador("Maria Guzman", "maria.garcia@example.com", "Colaborador"));
+		listaDePersonasGlobal.add(new Colaborador("Juan Perez", "juan.perez@example.com", "Colaborador", "123"));
+		listaDePersonasGlobal.add(new Colaborador("Pedro Lopez", "pedro.lopez@example.com", "Colaborador", "123"));
+		listaDePersonasGlobal.add(new Colaborador("Maria Guzman", "maria.garcia@example.com", "Colaborador", "123"));
 		
 	}
 	//crearEjemplosPersona
@@ -547,7 +549,7 @@ public class Controlador {
 	//toCapitalCase
 
 	/*
-	 * Verificar funcionalidad de este tablero poque esta heavy, toca crear metodos
+	 * Verificar funcionalidad de este tablero porque esta heavy, toca crear metodos
 	 * para recorrer tableros y listas creo public void
 	 * moverTarea(ListalistaElegida, Tarea tareaElegida) {
 	 * mostrarLista(listaDeListasGlobal); String nombreBusqueda = Vista.
@@ -657,68 +659,6 @@ public class Controlador {
 	    Principal.setEmergenteCrearTablero(null);
 	}
 	//Cierra: actionBtnCancelarEmergenteCrearTablero
-
-	//Abre: actionBtnContinuarLogin
-	/*public void actionBtnContinuarLogin(ActionEvent evento) {
-		ActionListener enterLogin = new ActionListener() {
-	            
-	            String correo = Login.getTxtLoginCorreo().getText();
-	            String pin = new String(Login.getPwdContraseña().getPassword());
-	            
-				boolean validacion = controlador.validarCredenciales(numeroTarjeta, pin);
-				if(validacion) {
-					konradBank.remove(bodyLogin);//Elimina panel actual
-					konradBank.add(bodyMenuPrincipal());//Agrega nuevo panel
-					konradBank.revalidate();//Recargar
-					konradBank.repaint();//Recargar
-				} else {
-					//Inicializo los bordes
-					Border redBorder = BorderFactory.createLineBorder(Color.RED, 3);
-					Border blueBorder = BorderFactory.createLineBorder(Color.BLUE, 2);
-					
-					//Inicializo colores para el botón
-					Color redColor = Color.RED;
-					Color blueColor = Color.BLUE;
-					
-					//Agrego los colores y bordes
-					btnIngresar.setBorder(redBorder);
-					btnIngresar.setBackground(redColor);
-					txtField.setBorder(redBorder);
-					pwdField.setBorder(redBorder);
-					
-					
-					//Contador para alternar bordes
-					final int[] contador = {0};
-					
-					//Alternador de bordes
-					Timer timer = new Timer(150, event -> { // Cambia cada 150 ms
-			            if (contador[0] < 6) { // Se repetirá 3 veces, 3 rojas y 3 azules = 6
-			                Border bordeActual = (contador[0] % 2 == 0) ? redBorder : blueBorder; //Op ternario
-			                Color colorActual = (contador[0] % 2 == 0) ? redColor : blueColor; //Op ternario x2
-			                txtField.setBorder(bordeActual);
-			                pwdField.setBorder(bordeActual);
-			                btnIngresar.setBorder(bordeActual);
-			                btnIngresar.setBackground(colorActual);
-			                
-			                contador[0]++;
-			            } else {
-			                ((Timer) event.getSource()).stop(); //Detiene el Timer
-			            }
-			        });
-					
-					timer.start();
-				}
-				
-				@Override
-				public void actionPerformed(ActionEvent e) {
-					// TODO Auto-generated method stub
-					
-				}
-	        
-	    };
-	
-	}*/
-	//Cierra: actionBtnContinuarLogin
 	
 	
 	//AGREGAR INVITADOS
@@ -1006,5 +946,74 @@ public class Controlador {
 	}
 	//Cierra: actionBtnCancelarEmergenteEliminar
 	
+
+	//Login
+	
+	public void actionbtnContinuarLogin() {
+		
+		JButton boton= Login.getBtnLoginContinuar();
+		boton.addActionListener(new ActionListener() {
+			
+			
+			public void actionPerformed(ActionEvent e) {
+				char [] contraseñaChar= Login.getPwdContraseña().getPassword();
+				String contraseña= new String (contraseña);
+				String correoBusqueda= Login.getTxtLoginCorreo().getText();
+				boolean validacion = verificarCredenciales(contraseña, correoBusqueda);
+				
+				
+				if (validacion) {
+					Login.getFrameLogin().dispose();
+					
+					new Principal(this);
+					
+				}else {
+					Color rojo = Principal.getRojo();
+					Color negro = Principal.getNegro();
+					Color morado= Login.getMoradito();
+					
+					Border bordeRojo = BorderFactory.createLineBorder(rojo, 2);
+					Border bordeNegro = BorderFactory.createLineBorder(negro, 1);
+					
+					Login.getTxtLoginCorreo().setBorder(bordeRojo);
+					Login.getTxtLoginCorreo().setBackground(negro);
+					Login.getPwdContraseña().setBorder(bordeRojo);
+					Login.getPwdContraseña().setBackground(rojo);					
+					Login.getBtnLoginContinuar().setBorder(bordeRojo);
+					Login.getBtnLoginContinuar().setBackground(rojo);
+					
+					final int[] contador= {0};
+					
+					Timer timer = new Timer(150, event -> { // Cambia cada 150 ms
+			            if (contador[0] < 6) { // Se repetirá 3 veces, 3 rojas y 3 azules = 6
+			                Border bordeActual = (contador[0] % 2 == 0) ? bordeRojo : bordeNegro; //Op ternario
+			                Color colorActual = (contador[0] % 2 == 0) ? rojo : morado; //Op ternario x2
+			                Principal.getTxtFieldIngresarNombreEmergenteCrearTablero().setBorder(bordeActual);
+			                Principal.getBtnCrearTableroEmergenteCrearTablero().setBorder(bordeActual);
+			                Principal.getBtnCrearTableroEmergenteCrearTablero().setBackground(colorActual);
+			                
+			                contador[0]++;
+			            } else {
+			                ((Timer) event.getSource()).stop();//Detiene el Timer
+			            }
+			        });
+					timer.start();
+				}
+				
+				
+			}
+		});
+	}
+
+	protected boolean verificarCredenciales(String contraseña, String correoBusqueda) {
+		for (Persona persona : listaDePersonasGlobal) {
+			if (persona.getCorreo().equalsIgnoreCase(correoBusqueda) && persona.getContraseña().equals(contraseña)) {
+				return true;
+			}
+			break;
+		}
+		return false;
+	}
+	       
 }
 //class
