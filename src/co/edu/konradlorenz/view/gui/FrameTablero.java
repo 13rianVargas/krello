@@ -33,6 +33,7 @@ public class FrameTablero extends JFrame{
 	private static JDialog emergenteEliminarLista;
 	private static JDialog emergenteEliminarTarea;
 	private static JDialog emergenteDelegados;
+	private static JDialog emergenteMoverLista;
 	
 	//PANELS 
 	private static JPanel panelTableroContent;
@@ -1252,7 +1253,7 @@ public class FrameTablero extends JFrame{
     public static void emergenteCrearTarea() {
     	
     	//JDialog hace que solo la emergente sea interactiva, las demás ventanas se bloquean.
-    	emergenteCrearTarea = new JDialog(frameTablero, "Crear Tablero", true);//Crea nuevo (Dueño), (Título), (Bloquea interacción mientras esté abierta)
+    	emergenteCrearTarea = new JDialog(frameTablero, "Crear Tarea", true);//Crea nuevo (Dueño), (Título), (Bloquea interacción mientras esté abierta)
     	emergenteCrearTarea.setSize(600, 470);//Tamaño
     	emergenteCrearTarea.setBackground(morado2);//Color de la barra superior
     	emergenteCrearTarea.getContentPane().setBackground(blanco);//Color del fondo del frame
@@ -1741,15 +1742,126 @@ public class FrameTablero extends JFrame{
     }
     //Cierra: Método para crear emergenteEditarLista
     
-    //Abre: Método para crear emergenteMoverLista
-    public static void emergenteMoverLista() {
-    	
-    	//Se muestra una lista de las listas (paneles) que hay
-    	
-    	
-    }
-    //Cierra: Método para crear emergenteMoverLista
-    
+	// Abre: Método para crear emergenteMoverLista
+	public static void emergenteMoverLista() {
+
+		// Se muestra una lista de las listas (paneles) que hay
+		// JDialog hace que solo la emergente sea interactiva, las demás ventanas se
+		// bloquean.
+		emergenteMoverLista = new JDialog(frameTablero, "Tus Listas", true);// Crea nuevo (Dueño), (Título), (Bloquea
+																			// interacción mientras esté abierta)
+		emergenteMoverLista.setSize(600, 300);// Tamaño
+		emergenteMoverLista.setBackground(morado3);// Color de la barra superior
+		emergenteMoverLista.getContentPane().setBackground(blanco);// Color del fondo del frame
+		emergenteMoverLista.setResizable(false);// No permite modificar el tamaño de la ventana
+		emergenteMoverLista.setLocationRelativeTo(frameTablero);// Se centra según el framePrincipal
+		emergenteMoverLista.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);// Se cierra al dar click en la X
+		emergenteMoverLista.setLayout(new BorderLayout());// Diseño
+
+		// Abre: panelTituloMoverLista
+		JPanel panelTituloLista = new JPanel();// Crea nuevo
+		panelTituloLista.setLayout(new BoxLayout(panelTituloLista, BoxLayout.Y_AXIS));// Diseño: El
+																								// BoxLayout.Y_AXIS es
+																								// para que se ubiquen
+																								// VERTICALMENTE una
+																								// encima de la otra.
+		panelTituloLista.setBackground(morado);// Color de fondo
+		panelTituloLista.setOpaque(detalles);// Mostrar detalles
+		panelTituloLista.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));// top, left, bottom, right ->
+																						// Ajusta un borde por
+																						// pixeles
+
+		// Abre: lblTituloMoverLista
+		JLabel lblTituloLista = new JLabel("Tus Listas");//
+		lblTituloLista.setFont(new Font("Calibri", Font.BOLD, 40));// Cambia la letra del interior
+		lblTituloLista.setForeground(morado3);// Color de la letra
+		lblTituloLista.setAlignmentX(Component.CENTER_ALIGNMENT);// Centra horizontalmente
+		lblTituloLista.setBackground(gris);// Color de fondo
+		lblTituloLista.setOpaque(detalles);// Mostrar detalles
+		// Cierra: lblTituloMoverLista
+
+		panelTituloLista.add(Box.createVerticalGlue());// Agrega espacio flexible antes del JLabel
+		panelTituloLista.add(lblTituloLista);// Añade lblTituloCrearLista
+		panelTituloLista.add(Box.createVerticalGlue());// Agrega espacio flexible antes del JLabel
+		// Cierra: panelTituloMoverLista
+
+		emergenteMoverLista.add(panelTituloLista, BorderLayout.NORTH);// Ubica arriba
+
+		// Abre: ListaListas
+		// HICE ESTA LISTA PARA VER COMO SE VE
+		String[] listas = { "Pendientes", "ejemplo1", "ejemplo2", "ejemplo3", "ejemplo3" };
+		JList<String> listaListas = new JList<>(listas);
+		listaListas.setSelectionMode(ListSelectionModel.SINGLE_SELECTION); // USE SELECCION EN LUGAR DEL CHECKBOX QUE
+																				// SE VE FEO
+		JScrollPane scrollListas = new JScrollPane(listaListas); // Añade la lista a un JScrollPane
+		scrollListas.setPreferredSize(new Dimension(550, 150)); // Tamaño de la lista con el scroll DEBERIA FUNCIONAR
+																	// BIEN EL SCROLL
+
+		// Cierra: ListaListas
+
+		emergenteMoverLista.add(scrollListas, BorderLayout.CENTER); // Añade la lista con scroll al centro
+
+		// Abre: panelInferior
+		JPanel panelInferior = new JPanel(new BorderLayout()); // Crea nuevo
+		panelInferior.setBackground(cyan); // Color de fondo
+		panelInferior.setOpaque(detalles); // Mostrar detalles
+
+		// Abre: panelBotonesBasicos
+		JPanel panelBotonesBasicos = new JPanel(new BorderLayout());
+		panelBotonesBasicos.setBackground(cyan); // Color de fondo
+		panelBotonesBasicos.setOpaque(detalles); // Mostrar detalles
+
+		// Abre: btnCancelarCambios
+		JButton btnCancelarCambios = new JButton("Cancelar"); // Crea nuevo
+		btnCancelarCambios.setFont(new Font("Calibri", Font.PLAIN, 18)); // Cambia la letra
+		btnCancelarCambios.setPreferredSize(new Dimension(200, 40)); // Tamaño botón
+		btnCancelarCambios.setBackground(morado2); // Color de fondo
+		btnCancelarCambios.setCursor(new Cursor(Cursor.HAND_CURSOR)); // Pone el cursor como manita
+
+		// Acción del btnCancelarCambios
+		btnCancelarCambios.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent evento) {
+				emergenteMoverLista.dispose(); // Cierra la ventana emergente
+			}
+		});
+
+		// Cierra: btnCancelarCambios
+
+		// Abre: btnGuardarCamnios
+		JButton btnGuardarCambios = new JButton("Guardar"); // Crea nuevo
+		btnGuardarCambios.setFont(new Font("Calibri", Font.PLAIN, 18)); // Cambia la letra
+		btnGuardarCambios.setPreferredSize(new Dimension(200, 40)); // Tamaño botón
+		btnGuardarCambios.setBackground(morado2); // Color de fondo
+		btnGuardarCambios.setCursor(new Cursor(Cursor.HAND_CURSOR)); // Pone el cursor como manita
+
+		// Acción del btnAceptarDelegados
+		btnGuardarCambios.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent evento) {
+				// LO MISMO PARA VER EL FUNCIONAMIENTO Y AGARRAR EL QUE ELIJA
+				String delegadoSeleccionado = listaListas.getSelectedValue(); // Obtiene el delegado seleccionado
+				if (delegadoSeleccionado != null) {
+					// ACCION CON EL QUE SE ELIJA
+				}
+				emergenteMoverLista.dispose(); // Cierra la ventana emergente
+			}
+		});
+
+		// Cierra: btnAceptarDelegados
+
+		panelBotonesBasicos.add(btnCancelarCambios, BorderLayout.WEST); // Lo añade y lo ubica a la izquierda
+		panelBotonesBasicos.add(btnGuardarCambios, BorderLayout.EAST); // Lo añade y lo ubica a la derecha
+		panelBotonesBasicos.setBorder(BorderFactory.createEmptyBorder(30, 30, 30, 30)); // Ajusta borde
+
+		// Cierra: panelBotonesBasicos
+
+		panelInferior.add(panelBotonesBasicos, BorderLayout.SOUTH); // Lo añade al panel inferior
+		emergenteMoverLista.add(panelInferior, BorderLayout.SOUTH); // Lo añade y lo ubica abajo
+
+		emergenteMoverLista.setVisible(true); // Hace visible la emergente
+	}
+
+	// Cierra: Método para crear emergenteMoverLista
+
     //Abre: Método para crear emergenteEliminar
     //Cierra: Método para crear emergenteMoverLista
     
@@ -1849,6 +1961,7 @@ public class FrameTablero extends JFrame{
     public static void emergenteEditarTarea() {
     	
     	//Lista de los delegadps
+    	
     	
     }
     //Cierra: Método para crear emergenteEditarTarea
