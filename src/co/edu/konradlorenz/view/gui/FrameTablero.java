@@ -5,6 +5,7 @@ import java.awt.event.*;
 
 import java.util.Properties;
 import java.util.Calendar;
+import java.util.Iterator;
 
 import javax.swing.*;
 import javax.swing.border.*;
@@ -308,13 +309,18 @@ public class FrameTablero extends JFrame{
     	
     	panelTableroBody = new JPanel();//Crea nuevo
     	panelTableroBody.setBackground(gris2);
-    	panelTableroBody.setBorder(new EmptyBorder(5, 5,5, 5));//top, left, bottom, right -> Ajusta un borde por pixeles
+    	panelTableroBody.setBorder(new EmptyBorder(5, 5, 5, 5));//top, left, bottom, right -> Ajusta un borde por pixeles
     	panelTableroBody.setBorder(BorderFactory.createLineBorder(gris, 3));
     	panelTableroBody.setLayout(new FlowLayout(FlowLayout.LEFT, 20, 20));
         
-        panelTableroScroll = new JScrollPane(panelTableroBody, JScrollPane.VERTICAL_SCROLLBAR_NEVER, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+        panelTableroScroll = new JScrollPane(panelTableroBody, JScrollPane.VERTICAL_SCROLLBAR_NEVER, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);//HORIZONTAL
+        panelTableroScroll.getHorizontalScrollBar().setUnitIncrement(16); // Ajusta la velocidad del scroll HORIZONTAL
         panelTableroScroll.setBorder(null); // Elimina el borde del JScrollPane
-        panelTableroScroll.getHorizontalScrollBar().setUnitIncrement(16); // Ajusta la velocidad del scroll
+        panelTableroScroll.setBackground(verde);//Color de fondo
+        panelTableroScroll.setOpaque(detalles);
+        
+        panelTableroBody.revalidate();//Recarga el panelPrincipalScroll para que se muestre el tablero nuevo
+        panelTableroBody.repaint();
         
     }
     //Cierra: Método para crear el panelTableroBody
@@ -417,33 +423,21 @@ public class FrameTablero extends JFrame{
 		    panelLista.add(panelSuperior, BorderLayout.NORTH);
 		    
 		
-		
-	    panelTarea(panelLista); //Se utilizaria cuando se realice el evento boton crear tarea, pero lo dejo para que vean como quedo
-	    panelTarea(panelLista); 
-	    panelTarea(panelLista); 
-	    panelTarea(panelLista);
-	    panelTarea(panelLista); 
-	    panelTarea(panelLista); 
-	    panelTarea(panelLista);
-	    panelTarea(panelLista);
-	    panelTarea(panelLista);
-	    panelTarea(panelLista);
-	    panelTarea(panelLista);
-	    panelTarea(panelLista);//TODO: Máximo 8 tareas o hacer un ScrollPanel para las tareas y añadirlas ahí.
+		for (int i = 0; i < 10; i++) {			
+			panelTarea(panelLista); //Se utilizaria cuando se realice el evento boton crear tarea, pero lo dejo para que vean como quedo
+		}
 	         
 	    //scroll de la lista de tareas
-	    panelListaScroll = new JScrollPane(panelLista, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
+	    panelListaScroll = new JScrollPane(panelLista, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 	    panelListaScroll.setBorder(null); // Elimina el borde del JScrollPane
         panelListaScroll.getHorizontalScrollBar().setUnitIncrement(16); // Ajusta la velocidad del scroll
 		//scroll
 	    
-	    
-	    panelLista.revalidate();
 	    panelLista.repaint();
 	
-	    panelTableroScroll.add(panelListaScroll);//Añade el panelListaScroll al panelTableroScroll
-	    panelTableroScroll.revalidate();//Recarga el panelTableroScroll para que se muestre la lista nueva
-	    panelTableroScroll.repaint();
+	    panelTableroBody.add(panelListaScroll);//Añade el panelListaScroll al panelTableroScroll
+	    panelTableroBody.revalidate();//Recarga el panelTableroScroll para que se muestre la lista nueva
+	    panelTableroBody.repaint();
 		   
 	}
 	// Cierra: Método para crear el panelLista
