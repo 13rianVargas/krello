@@ -89,7 +89,7 @@ public class Principal extends JFrame {
 
  		//Inicializaciones que dependen del Controlador
     	ctrl = controlador;//Llama al controller del AplMain
-    	detalles = ctrl.detalles;//Ahora se cambia en el Controller para que actue en todo el GUI.
+    	detalles = ctrl.detalles;
     	negro = ctrl.negro;
     	blanco = ctrl.blanco;
     	rojo = ctrl.rojo;
