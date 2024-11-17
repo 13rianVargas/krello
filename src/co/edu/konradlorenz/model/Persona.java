@@ -2,6 +2,7 @@ package co.edu.konradlorenz.model;
 
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.util.ArrayList;
 
 public abstract class Persona implements WorkTime {
 
@@ -9,6 +10,7 @@ public abstract class Persona implements WorkTime {
 	private String correo;
 	private String rol;
 	private String contraseña;
+	private ArrayList<Tablero> listaTablero = new ArrayList<>();
 
 	public Persona() {
 		super();
@@ -19,7 +21,8 @@ public abstract class Persona implements WorkTime {
 		this.nombre = nombre;
 		this.correo = correo;
 		this.rol = rol;
-		this.contraseña=contraseña;
+		this.contraseña = contraseña;
+		this.listaTablero = new ArrayList<>();
 	}
 
 	public String getNombre() {
@@ -45,8 +48,7 @@ public abstract class Persona implements WorkTime {
 	public void setRol(String rol) {
 		this.rol = rol;
 	}
-	
-	
+
 	public String getContraseña() {
 		return contraseña;
 	}
@@ -55,18 +57,27 @@ public abstract class Persona implements WorkTime {
 		this.contraseña = contraseña;
 	}
 
+	public ArrayList<Tablero> getListaTableros() {
+		return listaTablero;
+	}
+
+	public void setListaTableros(ArrayList<Tablero> listaTableros) {
+		this.listaTablero = listaTableros;
+	}
+	
 	@Override
 	public String toString() {
-		return "El nombre de la persona es = " + nombre + ", el correo = " + correo + ", el rol = " + rol+" y la contraseña = "+contraseña;
+		return "El nombre de la persona es = " + nombre + ", el correo = " + correo + ", el rol = " + rol
+				+ " y la contraseña = " + contraseña;
 	}
 
 	@Override
 	public boolean isWorkTime(LocalDateTime dateTime) {
 		LocalTime time = dateTime.toLocalTime();
 		boolean isWorkTime = !time.isBefore(HORA_INICIO) && !time.isAfter(HORA_FIN);
-        return isWorkTime;
+		return isWorkTime;
 	}
 
 	public abstract boolean verificarDisponibilidad(int tareasPendientes);
-	
+
 }
