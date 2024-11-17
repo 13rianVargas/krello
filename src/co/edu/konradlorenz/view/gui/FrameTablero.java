@@ -27,9 +27,14 @@ public class FrameTablero extends JFrame{
 	private static JDialog emergenteEliminar;
 	
 	//PANELS 
+
+    public static JPanel panelTableroContent; 
 	private static JPanel panelTableroHead;
 	private static JPanel panelTableroMiddle;
-	private static JPanel panelTableroBody;
+	private static JPanel panelLista;
+	
+	//SCROLL PANEL
+	public static JScrollPane panelTableroBody; // Lo cambie a JScrollPane antes era panel
 	
 	//TEXTFIELDS
 	private static JTextField txtFieldIngresarNombreEmergenteCrearLista;
@@ -248,59 +253,60 @@ public class FrameTablero extends JFrame{
     
     //Abre: Método para crear el panelTableroBody
     public static void panelTableroBody() {
-        panelTableroBody = new JPanel();
-        panelTableroBody.setBackground(grisClaro);
-        panelTableroBody.setBorder(new EmptyBorder(5, 5,5, 5));//top, left, bottom, right -> Ajusta un borde por pixeles
-        panelTableroBody.setLayout(new FlowLayout(FlowLayout.LEFT, 20, 20));
+        // Crear el panel interno
+        panelTableroContent = new JPanel();
+        panelTableroContent.setBackground(grisClaro);
+        panelTableroContent.setBorder(new EmptyBorder(5, 5, 5, 5));
+        panelTableroContent.setLayout(new FlowLayout(FlowLayout.LEFT, 20, 20));
+
+        panelTableroBody = new JScrollPane(panelTableroContent, JScrollPane.VERTICAL_SCROLLBAR_NEVER, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+        panelTableroBody.setBorder(null); // Elimina el borde del JScrollPane
+        panelTableroBody.getHorizontalScrollBar().setUnitIncrement(16); // Ajusta la velocidad del scroll
     }
-    //Cierra: Método para crear el panelTableroBody
-    
-    
+    //Abre: Cierra metodo para crear el panelTableroBody
+
     //Abre: Método para crear el panelLista
-	public static void panelLista() {
-		
-		JPanel panelLista = new JPanel();
-		panelLista.setBackground(petroleoOscuro);
-		panelLista.setForeground(negro);
-		panelLista.setFont(new Font("Arial", Font.PLAIN, 80));
-		panelLista.setCursor(new Cursor(Cursor.HAND_CURSOR));
-		panelLista.setBorder(new EmptyBorder(5, 5, 5, 5));
-		
-		panelLista.setPreferredSize(new Dimension(280, 420)); //Tamaño fijo, no hay de otra
-		panelLista.setAlignmentY(CENTER_ALIGNMENT);
-		
-		 JPanel panelSuperior = new JPanel(new FlowLayout(FlowLayout.LEFT, 10, 5));
-		    panelSuperior.setOpaque(false); 
+    public static void panelLista() {
+        panelLista = new JPanel();
+        panelLista.setBackground(petroleoOscuro);
+        panelLista.setForeground(negro);
+        panelLista.setFont(new Font("Arial", Font.PLAIN, 80));
+        panelLista.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        panelLista.setBorder(new EmptyBorder(5, 5, 5, 5));
+        panelLista.setPreferredSize(new Dimension(280, 420));
+        panelLista.setAlignmentY(CENTER_ALIGNMENT);
 
-		    String nombreLista  = ctrl.getNombreListaAbierta();
-		    JLabel titulo = new JLabel(nombreLista);
-		    titulo.setFont(new Font("Arial", Font.BOLD, 20));
-		    titulo.setForeground(Color.WHITE);
+        JPanel panelSuperior = new JPanel(new FlowLayout(FlowLayout.LEFT, 10, 5));
+        panelSuperior.setOpaque(false);
 
-		    JButton btnCrear = new JButton("+");
-		    JButton btnEditar = new JButton("･･･");
-		    
-		    btnCrear.setBackground(limon);
-		    btnCrear.setForeground(negro);
-		    btnEditar.setBackground(morado);
-		    btnEditar.setForeground(blanco);
-		    
-		    panelSuperior.add(titulo);
-		    panelSuperior.add(Box.createHorizontalStrut(50)); // Espacio centraldel título y los botones
-		    panelSuperior.add(btnCrear);
-		    panelSuperior.add(btnEditar);
+        String nombreLista  = ctrl.getNombreListaAbierta();
+        JLabel titulo = new JLabel(nombreLista);
+        titulo.setFont(new Font("Arial", Font.BOLD, 20));
+        titulo.setForeground(Color.WHITE);
 
-		    panelLista.add(panelSuperior, BorderLayout.NORTH);
-			
-		    panelTarea(panelLista); //Se utilizaria cuando se realice el evento boton crear tarea, pero lo dejo para que vean como quedo
-		    
-		    panelTableroBody.add(panelLista);//Añade el panelLista al panelTableroBody
-		    
-		    panelTableroBody.revalidate();//Recarga el panelTableroBody para que se muestre la lista nueva
-		   
-	}
+        JButton btnCrear = new JButton("+");
+        JButton btnEditar = new JButton("･･･");
+
+        btnCrear.setBackground(limon);
+        btnCrear.setForeground(negro);
+        btnEditar.setBackground(morado);
+        btnEditar.setForeground(blanco);
+
+        panelSuperior.add(titulo);
+        panelSuperior.add(Box.createHorizontalStrut(100)); // Espacio entre el título y los botones
+        panelSuperior.add(btnCrear);
+        panelSuperior.add(btnEditar);
+
+       panelLista.add(panelSuperior);
+		
+	    panelTarea(panelLista); //Se utilizaria cuando se realice el evento boton crear tarea, pero lo dejo para que vean como quedo
+        panelTableroContent.add(panelLista);
+
+        panelTableroContent.revalidate();
+        panelTableroContent.repaint();
+    }
 	// Cierra: Método para crear el panelLista
-
+	
 	// Abre: Método para crear el panelTarea
 	public static void panelTarea(JPanel panelLista) {
 	    // Crear un nuevo panel para la tarea
@@ -335,8 +341,7 @@ public class FrameTablero extends JFrame{
 	// Cierra: Método para crear el panelTarea
 
 
-    
-    
+   
 	  // -- // -- // -- // -- // -- // -- //
 	 // -- // -- //EMERGENTES// -- // -- //
 	// -- // -- // -- // -- // -- // -- //
@@ -1044,11 +1049,11 @@ public class FrameTablero extends JFrame{
 		FrameTablero.panelTableroMiddle = panelTableroMiddle;
 	}
 
-	public static JPanel getPanelTableroBody() {
+	public static JScrollPane getPanelTableroBody() {
 		return panelTableroBody;
 	}
 
-	public static void setPanelTableroBody(JPanel panelTableroBody) {
+	public static void setPanelTableroBody(JScrollPane panelTableroBody) {
 		FrameTablero.panelTableroBody = panelTableroBody;
 	}
 
