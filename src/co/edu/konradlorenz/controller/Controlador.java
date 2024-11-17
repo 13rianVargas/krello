@@ -1087,8 +1087,6 @@ public class Controlador {
 	}
 	//Cierra: actionBtnCancelarEmergenteEditarTablero
 	
-	
-	
 	//COLABORADORES TABLERO
 		
 	//Abre: txtFieldIngresarCorreoEmergenteColaboradores//FIXME: Parpadeo
@@ -1144,8 +1142,6 @@ public class Controlador {
 		FrameTablero.getEmergenteColaboradores().dispose();
 	}
 	//Cierra: actionBtnCancelarEmergenteColaboradores
-		
-	
 	
 	//ELIMINAR TABLERO
 		
@@ -1155,6 +1151,33 @@ public class Controlador {
 	}
 	//Cierra: actionBtnCancelarEmergenteEliminar
 	
-
+	
+	//EDITAR LISTA
+	
+	//Abre: actionBtnEditarLista
+	public void actionLblEditarLista() {                                             
+		FrameTablero.emergenteEditarLista();
+	}
+	//Cierra: actionBtnEditarLista
+	
+	//Abre: actionBtnEliminarListaEmergenteEditarLista
+	public void actionBtnEliminarListaEmergenteEditarLista() {
+		FrameTablero.emergenteEliminarLista();
+	}
+	//Cierra: actionBtnEliminarEmergenteEditarTablero
+	
+	//Abre: actionBtnCancelarEmergenteEditarLista
+	public void actionBtnCancelarEmergenteEditarLista() {
+		FrameTablero.getEmergenteEditarLista().dispose();
+	}
+	//Cierra: actionBtnCancelarEmergenteEditarLista
+		
+	//ELIMINAR LISTA
+	
+	//Abre: actionBtnCancelarEmergenteEliminarLista
+	public void actionBtnCancelarEmergenteEliminarLista() {
+		FrameTablero.getEmergenteEliminarLista().dispose();
+	}
+	//Cierra: actionBtnCancelarEmergenteEliminar
 }	
 //class
