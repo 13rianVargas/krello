@@ -484,7 +484,13 @@ public class Login extends JFrame {
 			btnRegisterCrearCuenta.setForeground(blanco);
 			btnRegisterCrearCuenta.setCursor(new Cursor(Cursor.HAND_CURSOR));//Pone el cursor con una manita
 			
-			//TODO: Agregar action
+			btnRegisterCrearCuenta.addActionListener(new ActionListener() {
+				
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					ctrl.actionBtnRegisterCrearCuenta();
+				}
+			});
 			
 			panelRegisterBody.add(btnRegisterCrearCuenta);
 		

@@ -1,5 +1,6 @@
 package co.edu.konradlorenz.model;
 
+
 public class Administrador extends Persona {
 
 	public Administrador() {

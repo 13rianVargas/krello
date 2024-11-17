@@ -1,5 +1,6 @@
 package co.edu.konradlorenz.model;
 
+
 public class Colaborador extends Persona {
 
 	public Colaborador() {
