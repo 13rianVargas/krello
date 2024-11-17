@@ -164,11 +164,11 @@ public class Login extends JFrame {
 	
     //Abre: Método para crear el panelLoginHead
 	public static JPanel panelLoginHead() {
-	    JPanel panelLoginHead = new JPanel();
+	    panelLoginHead = new JPanel();
 	    panelLoginHead.setLayout(null); // Desactiva el control automático de paneles
 	    panelLoginHead.setBounds(0, 0, 405, 150); // x, y, ancho, alto
-	    panelLoginHead.setBackground(Color.white); // Fondo del panel
-	    panelLoginHead.setOpaque(true); // false -> transparente
+	    panelLoginHead.setBackground(limon);//Color de fondo
+	    panelLoginHead.setOpaque(detalles);//Mostrar detalles
 
 	    JLabel lblKrelloLogo = new JLabel();
 	    // Usa la clase específica en lugar de getClass()
@@ -181,6 +181,8 @@ public class Login extends JFrame {
 	    lblKrelloLogo.setIcon(new ImageIcon(logored));
 	    lblKrelloLogo.setBounds(0, 5, 405, 110); // x, y, ancho, altura
 	    lblKrelloLogo.setHorizontalAlignment(SwingConstants.CENTER); // Centrar Horizontalmente
+	    lblKrelloLogo.setBackground(aguacate);//Color de fondo
+	    lblKrelloLogo.setOpaque(detalles);//Mostrar detalles
 
 	    panelLoginHead.add(lblKrelloLogo);
 
@@ -191,18 +193,21 @@ public class Login extends JFrame {
     //Abre: Método para crear el panelLoginBody
 	public static JPanel panelLoginBody() {
 		
-		JPanel panelLoginBody= new JPanel();
+		panelLoginBody= new JPanel();
 		panelLoginBody.setLayout(null);//Desacriva el control automatico de paneles
 		panelLoginBody.setBounds(0, 100, 405, 530);//x,y,ancho,alto
 		panelLoginBody.setBackground(Color.white);//Fondo del panel
 		panelLoginBody.setOpaque(true);//false -> transparente
+		panelLoginBody.setBackground(millos);//Color de fondo
+		panelLoginBody.setOpaque(detalles);//Mostrar detalles
 		
 		
 			lblLogin = new JLabel(mensajeIniciarSesionLogin);
 			lblLogin.setHorizontalAlignment(SwingConstants.CENTER);
-			lblLogin.setBackground(Color.black);
 			lblLogin.setBounds(67, 60, 250, 100);
 			lblLogin.setFont(new Font("Calibri", Font.BOLD, 18));
+			lblLogin.setBackground(cyan);//Color de fondo
+			lblLogin.setOpaque(detalles);//Mostrar detalles
 			
 		panelLoginBody.add(lblLogin);
 		

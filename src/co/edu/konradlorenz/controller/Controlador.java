@@ -17,7 +17,7 @@ import co.edu.konradlorenz.model.*;
 public class Controlador {
 	
 	//MOSTRAR DETALLES
-	public boolean detalles = false;//true -> mostrar / false -> ocultar
+	public boolean detalles = true;//true -> mostrar / false -> ocultar
 
 	private ArrayList<Tablero> listaDeTablerosGlobal = new ArrayList<>();
 	private ArrayList<Lista> listaDeListasGlobal = new ArrayList<>();
