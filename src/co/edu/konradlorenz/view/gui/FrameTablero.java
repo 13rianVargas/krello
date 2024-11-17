@@ -1,7 +1,10 @@
 package co.edu.konradlorenz.view.gui;
 
+import org.jdatepicker.imp.*;//TODO: Descargar biblioteca
+
 import java.awt.*;
 import java.awt.event.*;
+import java.util.Properties;
 
 import javax.swing.*;
 import javax.swing.border.*;
@@ -25,6 +28,7 @@ public class FrameTablero extends JFrame{
 	private static JDialog emergenteEditarTablero;
 	private static JDialog emergenteColaboradores;
 	private static JDialog emergenteEliminar;
+	private static JDialog emergenteCrearTarea;
 	private static JDialog emergenteEditarLista;
 	private static JDialog emergenteEliminarLista;
 	private static JDialog emergenteEliminarTarea;
@@ -43,7 +47,9 @@ public class FrameTablero extends JFrame{
 	private static JTextField txtFieldIngresarNombreEmergenteCrearLista;
 	private static JTextField txtFieldIngresarNombreEmergenteEditarTablero;
 	private static JTextField txtFieldIngresarCorreoEmergenteColaboradores;
+	private static JTextField txtFieldIngresarNombreEmergenteCrearTarea;
 	private static JTextField txtFieldIngresarNombreEmergenteEditarLista;
+	private static JTextField txtFieldIngresarDescripcionEmergenteCrearTarea;
 	
 	//BUTTONS
 	private static JButton btnCrearLista;
@@ -57,6 +63,8 @@ public class FrameTablero extends JFrame{
 	private static JButton btnConfirmarEmergenteColaboradores;
 	private static JButton btnCancelarEmergenteEliminar;
 	private static JButton btnBorrarEmergenteEliminar;
+	private static JButton btnCancelarEmergenteCrearTarea;
+	private static JButton btnCrearTareaEmergenteCrearTarea;
 	private static JButton btnMoverListaEmergenteEditarLista;
 	private static JButton btnEliminarListaEmergenteEditarLista;
 	private static JButton btnCancelarEmergenteEditarLista;
@@ -99,6 +107,8 @@ public class FrameTablero extends JFrame{
 	private static String mensajeIngresarNombreLista = " Ingrese nombre de la lista...";
 	private static String mensajeEditarNombreTablero = " Nombre ";
 	private static String mensajeCorreoColaboradores = " Ingrese correo del colaborador...";
+	private static String mensajeIngresarNombreTarea = " Ingrese nombre de la tarea...";
+	private static String mensajeIngresarDescripcionTarea = " Ingrese la descripción...";
 	
 	
 	
@@ -360,7 +370,7 @@ public class FrameTablero extends JFrame{
 			    		//Abrir: Acción del lblNuevaTarea
 			    		lblNuevaTarea.addMouseListener(new MouseAdapter() {
 			    			public void mouseClicked(MouseEvent e) {
-			    				//ctrl.actionLblEditarLista();//Se llama el método del Controller que gestiona el evento.
+			    				ctrl.actionLblNuevaTarea();//Se llama el método del Controller que gestiona el evento.
 			    			}
 			    		});
 			    		//Cierra: Acción del lblNuevaTarea
@@ -1126,6 +1136,252 @@ public class FrameTablero extends JFrame{
     }
     //Cierra: Método para crear emergenteEliminar
     
+    //Abre: Método para crear emergenteCrearTarea
+    public static void emergenteCrearTarea() {
+    	
+    	//JDialog hace que solo la emergente sea interactiva, las demás ventanas se bloquean.
+    	emergenteCrearTarea = new JDialog(frameTablero, "Crear Tablero", true);//Crea nuevo (Dueño), (Título), (Bloquea interacción mientras esté abierta)
+    	emergenteCrearTarea.setSize(600, 470);//Tamaño
+    	emergenteCrearTarea.setBackground(morado2);//Color de la barra superior
+    	emergenteCrearTarea.getContentPane().setBackground(blanco);//Color del fondo del frame
+    	emergenteCrearTarea.setResizable(false);//No permite modificar el tamaño de la ventana
+    	emergenteCrearTarea.setLocationRelativeTo(frameTablero);//Se centra según el framePrincipal
+    	emergenteCrearTarea.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);//Se cierra al dar click en la X
+    	emergenteCrearTarea.setLayout(new BorderLayout());//Diseño
+	        
+        
+	    	//Abre: panelTituloCrearTarea
+	        JPanel panelTituloCrearTarea = new JPanel();//Crea nuevo
+	        panelTituloCrearTarea.setLayout(new BoxLayout(panelTituloCrearTarea, BoxLayout.Y_AXIS));//Diseño: El BoxLayout.Y_AXIS es para que se ubiquen VERTICALMENTE una encima de la otra.
+	        panelTituloCrearTarea.setBackground(morado);//Color de fondo
+	        panelTituloCrearTarea.setOpaque(detalles);//Mostrar detalles
+	        panelTituloCrearTarea.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));// top, left, bottom, right -> Ajusta un borde por pixeles
+	        
+	        	//Abre: lblTituloCrearTaraa
+		        JLabel lblTituloCrearTarea = new JLabel("Crear Tarea");//Crea nuevo
+		        lblTituloCrearTarea.setFont(new Font("Calibri", Font.BOLD, 40));//Cambia la letra del interior
+		        lblTituloCrearTarea.setForeground(morado2);//Color de letra
+		        lblTituloCrearTarea.setAlignmentX(Component.CENTER_ALIGNMENT);//Centra horizontalmente
+		        lblTituloCrearTarea.setBackground(gris);//Color de fondo
+		        lblTituloCrearTarea.setOpaque(detalles);//Mostrar detalles
+		        //Cierra: lblTituloCrearTarea
+	        
+		    panelTituloCrearTarea.add(Box.createVerticalGlue());//Agrega espacio flexible antes del JLabel
+		    panelTituloCrearTarea.add(lblTituloCrearTarea);//Añade lblTituloCrearTablero
+		    panelTituloCrearTarea.add(Box.createVerticalGlue());//Agrega espacio flexible después del JLabel
+	        //Cierra: panelTituloCrearTarea
+	        
+		    
+        emergenteCrearTarea.add(panelTituloCrearTarea, BorderLayout.NORTH);//Lo añade y lo ubica a arriba
+        
+        
+	        //Abre: panelCentral
+        	JPanel panelCentral = new JPanel(new FlowLayout(FlowLayout.CENTER, 10, 10));//Diseño: Flujo Centrado (espacio horizontal),(espacio vertical)
+        	panelCentral.setBackground(millos);//Color de fondo
+        	panelCentral.setOpaque(detalles);//Mostrar detalles
+	        
+	        	//Abre: lblNombre
+		        JLabel lblNombre = new JLabel("Nombre:");//Crea nuevo
+		        lblNombre.setFont(new Font("Calibri", Font.PLAIN, 25));//Cambia la letra del interior
+	        	//Cierra: lblNombre
+		        
+		        panelCentral.add(lblNombre);//Añade lblNombre
+		        
+	        	//Abre: txtFieldIngresarNombreEmergenteCrearTarea
+		        txtFieldIngresarNombreEmergenteCrearTarea = new JTextField(mensajeIngresarNombreTarea);//Crea nuevo
+		        txtFieldIngresarNombreEmergenteCrearTarea.setForeground(gris);//Color de letra
+		        txtFieldIngresarNombreEmergenteCrearTarea.setPreferredSize(new Dimension(400, 40));
+		        txtFieldIngresarNombreEmergenteCrearTarea.setFont(new Font("Calibri", Font.PLAIN, 20));//Cambia la letra del interior
+		        txtFieldIngresarNombreEmergenteCrearTarea.setBackground(gris2);//Color de fondo
+		        txtFieldIngresarNombreEmergenteCrearTarea.setBorder(BorderFactory.createLineBorder(gris, 2));//Color del borde
+		        txtFieldIngresarNombreEmergenteCrearTarea.setCursor(new Cursor(Cursor.TEXT_CURSOR));//Pone el cursor modo escritura
+		        
+			        //Abre: Placeholder "mensaje previo"
+		        	txtFieldIngresarNombreEmergenteCrearTarea.addFocusListener(new FocusListener() {
+			            @Override
+			            public void focusGained(FocusEvent e) {
+			                if (txtFieldIngresarNombreEmergenteCrearTarea.getText().equals(mensajeIngresarNombreTarea)) {
+			                	txtFieldIngresarNombreEmergenteCrearTarea.setText("");//Cambia el contenido del txtField
+			                	txtFieldIngresarNombreEmergenteCrearTarea.setForeground(negro);//Color de letra
+			                }
+			            }
+			            @Override
+			            public void focusLost(FocusEvent e) {
+			                //Si el campo de texto está vacío al perder el foco, restaura el placeholder
+			                if (txtFieldIngresarNombreEmergenteCrearTarea.getText().isEmpty()) {
+			                	txtFieldIngresarNombreEmergenteCrearTarea.setText(mensajeIngresarNombreTarea);//Cambia el contenido del txtField
+			                	txtFieldIngresarNombreEmergenteCrearTarea.setForeground(gris);//Color de letra
+			                }
+			            }
+			        });
+			        //Cierra: Placeholder "mensaje previo"
+		        
+			        //Abre: Acción del txtFieldIngresarNombreEmergenteCrearTarea
+		        	txtFieldIngresarNombreEmergenteCrearTarea.addActionListener(new ActionListener() {
+			            public void actionPerformed(ActionEvent evento) {
+			            	//ctrl.actionEnterTxtFieldIngresarNombreEmergenteCrearTablero();//TODO: No se que debe hacer el método del Controller que gestiona el evento.
+			            }
+			        });
+			        //Cierra: Acción del txtFieldIngresarNombreEmergenteCrearTarea
+		        
+		        //Cierra: txtFieldIngresarNombreEmergenteCrearTarea
+		        
+			    panelCentral.add(txtFieldIngresarNombreEmergenteCrearTarea, BorderLayout.NORTH);//Agrega txtFieldIngresarNombreEmergenteCrearTarea
+	        
+			    panelCentral.add(Box.createVerticalStrut(10));//Espacio entre componentes (lbl y txtField)
+			    panelCentral.setBorder(BorderFactory.createEmptyBorder(15, 0, 15, 0));// top, left, bottom, right -> Ajusta un borde por pixeles
+			    
+			  //Abre: lblDescripcion
+		        JLabel lblDescripcion = new JLabel("Descripción:");//Crea nuevo
+		        lblDescripcion.setFont(new Font("Calibri", Font.PLAIN, 25));//Cambia la letra del interior
+	        	//Cierra: lblDescripcion
+		        
+		        panelCentral.add(lblDescripcion);//Añade lblDescripcion
+		        
+	        	//Abre: txtFieldIngresarDescripcionEmergenteCrearTarea
+		        txtFieldIngresarDescripcionEmergenteCrearTarea = new JTextField(mensajeIngresarDescripcionTarea);//Crea nuevo
+		        txtFieldIngresarDescripcionEmergenteCrearTarea.setForeground(gris);//Color de letra
+		        txtFieldIngresarDescripcionEmergenteCrearTarea.setPreferredSize(new Dimension(400, 40));
+		        txtFieldIngresarDescripcionEmergenteCrearTarea.setFont(new Font("Calibri", Font.PLAIN, 20));//Cambia la letra del interior
+		        txtFieldIngresarDescripcionEmergenteCrearTarea.setBackground(gris2);//Color de fondo
+		        txtFieldIngresarDescripcionEmergenteCrearTarea.setBorder(BorderFactory.createLineBorder(gris, 2));//Color del borde
+		        txtFieldIngresarDescripcionEmergenteCrearTarea.setCursor(new Cursor(Cursor.TEXT_CURSOR));//Pone el cursor modo escritura
+		        
+			        //Abre: Placeholder "mensaje previo"
+		        	txtFieldIngresarDescripcionEmergenteCrearTarea.addFocusListener(new FocusListener() {
+			            @Override
+			            public void focusGained(FocusEvent e) {
+			                if (txtFieldIngresarDescripcionEmergenteCrearTarea.getText().equals(mensajeIngresarDescripcionTarea)) {
+			                	txtFieldIngresarDescripcionEmergenteCrearTarea.setText("");//Cambia el contenido del txtField
+			                	txtFieldIngresarDescripcionEmergenteCrearTarea.setForeground(negro);//Color de letra
+			                }
+			            }
+			            @Override
+			            public void focusLost(FocusEvent e) {
+			                //Si el campo de texto está vacío al perder el foco, restaura el placeholder
+			                if (txtFieldIngresarDescripcionEmergenteCrearTarea.getText().isEmpty()) {
+			                	txtFieldIngresarDescripcionEmergenteCrearTarea.setText(mensajeIngresarDescripcionTarea);//Cambia el contenido del txtField
+			                	txtFieldIngresarDescripcionEmergenteCrearTarea.setForeground(gris);//Color de letra
+			                }
+			            }
+			        });
+			        //Cierra: Placeholder "mensaje previo"
+		        
+			        //Abre: Acción del txtFieldIngresarDescripcionEmergenteCrearTarea
+		        	txtFieldIngresarDescripcionEmergenteCrearTarea.addActionListener(new ActionListener() {
+			            public void actionPerformed(ActionEvent evento) {
+			            	//ctrl.actionEnterTxtFieldIngresarNombreEmergenteCrearTablero();//TODO: No se que debe hacer el método del Controller que gestiona el evento.
+			            }
+			        });
+			        //Cierra: Acción del txtFieldIngresarDescripcionEmergenteCrearTarea
+		        
+		        //Cierra: txtFieldIngresarDescripcionEmergenteCrearTarea
+		        
+			    panelCentral.add(txtFieldIngresarDescripcionEmergenteCrearTarea, BorderLayout.CENTER);//Agrega txtFieldIngresarDescripcionEmergenteCrearTarea
+	        
+			    panelCentral.add(Box.createVerticalStrut(10));//Espacio entre componentes (lbl y txtField)
+			    panelCentral.setBorder(BorderFactory.createEmptyBorder(15, 0, 15, 0));// top, left, bottom, right -> Ajusta un borde por pixeles
+	        
+			  //Abre: lblFecha
+		        JLabel lblFecha = new JLabel("Fecha:");//Crea nuevo
+		        lblFecha.setFont(new Font("Calibri", Font.PLAIN, 25));//Cambia la letra del interior
+	        	//Cierra: lblFecha
+		        
+		        panelCentral.add(lblFecha);//Añade lblFecha
+		        
+	        	//Abre: JDatePicker
+		        Properties p = new Properties();
+		        p.put("text.today", "Dia");
+		        p.put("text.month", "Mes");
+		        p.put("text.year", "Año");
+		        
+		        UtilDateModel dateModel = new UtilDateModel();
+		        JDatePanelImpl datePanel = new JDatePanelImpl(dateModel, p);
+		        JDatePickerImpl datePicker = new JDatePickerImpl(datePanel, new DateLabelFormatter());
+		        
+		        // Estilo y tamaño del JDatePicker
+		        datePicker.getJFormattedTextField().setPreferredSize(new Dimension(400, 40));
+		        datePicker.getJFormattedTextField().setFont(new Font("Calibri", Font.PLAIN, 20));
+		        datePicker.getJFormattedTextField().setBackground(gris2);
+		        datePicker.getJFormattedTextField().setForeground(gris);
+		        
+			    panelCentral.add(datePicker, BorderLayout.SOUTH);//Agrega txtFieldIngresarNombreEmergenteCrearTarea
+	        
+			    panelCentral.add(Box.createVerticalStrut(10));//Espacio entre componentes (lbl y txtField)
+			    panelCentral.setBorder(BorderFactory.createEmptyBorder(15, 0, 15, 0));// top, left, bottom, right -> Ajusta un borde por pixeles
+			    
+			    //Cierra: panelCentral
+	        
+	        
+        emergenteCrearTarea.add(panelCentral, BorderLayout.CENTER);//Lo añade y lo ubica al centro
+	        
+        
+	        //Abre: panelBotonesBasicos
+	        JPanel panelBotonesBasicos = new JPanel(new BorderLayout());
+	        panelBotonesBasicos.setBackground(cyan);//Color de fondo
+	        panelBotonesBasicos.setOpaque(detalles);//Mostrar detalles
+	        
+	        	//Abre: btnCancelarEmergenteCrearTarea
+		        btnCancelarEmergenteCrearTarea = new JButton("Cancelar");//Crea nuevo
+		        btnCancelarEmergenteCrearTarea.setFont(new Font("Arial", Font.PLAIN, 18));//Cambia la letra del interior
+		        btnCancelarEmergenteCrearTarea.setPreferredSize(new Dimension(200, 40));//Tamaño botón
+		        btnCancelarEmergenteCrearTarea.setBackground(morado2);//Color de fondo
+		        btnCancelarEmergenteCrearTarea.setCursor(new Cursor(Cursor.HAND_CURSOR));//Pone el cursor con una manita
+		        
+	    			//Abre: Acción del btnCancelarEmergenteCrearTarea
+		        	btnCancelarEmergenteCrearTarea.addActionListener(new ActionListener() {
+			            public void actionPerformed(ActionEvent evento) {
+			            	ctrl.actionBtnCancelarEmergenteCrearTarea();//Se llama el método del Controller que gestiona el evento.
+			            }
+			        });
+	    			//Cierra: Acción del btnCancelarEmergenteCrearTarea
+	    		
+	        	//Cierra: btnCancelarEmergenteCrearTarea
+	    		
+    			//Abre: btnCrearTareaEmergenteCrearTarea
+		        btnCrearTareaEmergenteCrearTarea = new JButton("Crear Tablero");//Crear nuevo
+		        btnCrearTareaEmergenteCrearTarea.setFont(new Font("Arial", Font.PLAIN, 18));//Cambia la letra del interior
+		        btnCrearTareaEmergenteCrearTarea.setPreferredSize(new Dimension(200, 40));
+		        btnCrearTareaEmergenteCrearTarea.setBackground(morado2);//Color de fondo
+		        btnCrearTareaEmergenteCrearTarea.setCursor(new Cursor(Cursor.HAND_CURSOR));//Pone el cursor con una manita
+		        
+		        	//Abre: Acción del btnCrearTareaEmergenteCrearTarea
+		        	btnCrearTareaEmergenteCrearTarea.addActionListener(new ActionListener() {
+			            public void actionPerformed(ActionEvent evento) {
+			            	//ctrl.actionEnterTxtFieldIngresarNombreEmergenteCrearTablero();//TODO: no se cual es el metodo / Se llama el método del Controller que gestiona el evento.
+			            }
+			        });
+			        //Cierra: Acción del btnCrearTareaEmergenteCrearTarea
+	    		
+    			//Cierra: btnCrearTareaEmergenteCrearTarea
+	    		
+	        panelBotonesBasicos.add(btnCancelarEmergenteCrearTarea, BorderLayout.WEST);//Lo añade y lo ubica a la izquierda
+	        panelBotonesBasicos.add(btnCrearTareaEmergenteCrearTarea, BorderLayout.EAST);//Lo añade y lo ubica a la derecha
+	        panelBotonesBasicos.setBorder(BorderFactory.createEmptyBorder(30, 30, 30, 30));//top, left, bottom, right -> Ajusta un borde por pixeles
+	        //Cierra: panelBotonesBasicos
+	        
+	        
+        emergenteCrearTarea.add(panelBotonesBasicos, BorderLayout.SOUTH);//Lo añade y lo ubica abajo
+    	
+        
+        //Abre: Funcionalidad cambiar el foco automático al abrir la emergente
+        //txtFieldIngresarNombreEmergenteCrearTablero.setEnabled(false);
+        //Timer timer = new Timer(100, e -> {
+            //txtFieldIngresarNombreEmergenteCrearTablero.setEnabled(true);
+        //});//Temporizador
+        //timer.setRepeats(false);//Evita que el temporizador se repita
+        //timer.start();//Inicia el temporizador
+        //Cierra: Funcionalidad cambiar el foco automático al abrir la emergente
+        
+        
+        emergenteCrearTarea.setVisible(true);//Hace visible la emergente
+        
+        SwingUtilities.invokeLater(() -> btnCrearTareaEmergenteCrearTarea.requestFocusInWindow());//Enfoca un componente específico al abrir la ventana
+	    	
+    }
+    //Cierra: Método para crear emergenteCrearTarea
+    
+    
     //Abre: Método para crear emergenteEditarLista
     public static void emergenteEditarLista() {
     	
@@ -1321,12 +1577,12 @@ public class FrameTablero extends JFrame{
 	    emergenteEditarLista.add(panelInferior, BorderLayout.SOUTH);//Lo añade y lo ubica abajo
     
 	    //Abre: Funcionalidad cambiar el foco automático al abrir la emergente
-	    //txtFieldIngresarNombreEmergenteEditarTablero.setEnabled(false);
-	    //Timer timer = new Timer(100, e -> {
-	    	//txtFieldIngresarNombreEmergenteEditarTablero.setEnabled(true);
-	    //});//Temporizador
-	    //timer.setRepeats(false);//Evita que el temporizador se repita
-	    //timer.start();//Inicia el temporizador
+	    txtFieldIngresarNombreEmergenteEditarLista.setEnabled(false);
+	    Timer timer = new Timer(100, e -> {
+	    	txtFieldIngresarNombreEmergenteEditarLista.setEnabled(true);
+	    });//Temporizador
+	    timer.setRepeats(false);//Evita que el temporizador se repita
+	    timer.start();//Inicia el temporizador
 	    //Cierra: Funcionalidad cambiar el foco automático al abrir la emergente
     
 	    emergenteEditarLista.setVisible(true);//Hace visible la emergente
@@ -1584,6 +1840,14 @@ public class FrameTablero extends JFrame{
 		FrameTablero.emergenteEliminar = emergenteEliminar;
 	}
 
+	public static JDialog getEmergenteCrearTarea() {
+		return emergenteCrearTarea;
+	}
+
+	public static void setEmergenteCrearTarea(JDialog emergenteCrearTarea) {
+		FrameTablero.emergenteCrearTarea = emergenteCrearTarea;
+	}
+	
 	public static JDialog getEmergenteEditarLista() {
 		return emergenteEditarLista;
 	}
@@ -1683,6 +1947,31 @@ public class FrameTablero extends JFrame{
 			JTextField txtFieldIngresarNombreEmergenteEditarLista) {
 		FrameTablero.txtFieldIngresarNombreEmergenteEditarLista = txtFieldIngresarNombreEmergenteEditarLista;
 	}
+
+	public static JTextField getTxtFieldIngresarNombreEmergenteCrearTarea() {
+		return txtFieldIngresarNombreEmergenteCrearTarea;
+	}
+
+	public static void setTxtFieldIngresarNombreEmergenteCrearTarea(JTextField txtFieldIngresarNombreEmergenteCrearTarea) {
+		FrameTablero.txtFieldIngresarNombreEmergenteCrearTarea = txtFieldIngresarNombreEmergenteCrearTarea;
+	}
+
+	public static JTextField getTxtFieldIngresarDescripcionEmergenteCrearTarea() {
+		return txtFieldIngresarDescripcionEmergenteCrearTarea;
+	}
+
+
+
+
+
+	public static void setTxtFieldIngresarDescripcionEmergenteCrearTarea(
+			JTextField txtFieldIngresarDescripcionEmergenteCrearTarea) {
+		FrameTablero.txtFieldIngresarDescripcionEmergenteCrearTarea = txtFieldIngresarDescripcionEmergenteCrearTarea;
+	}
+
+
+
+
 
 	public static JButton getBtnCrearLista() {
 		return btnCrearLista;

@@ -1151,6 +1151,20 @@ public class Controlador {
 	}
 	//Cierra: actionBtnCancelarEmergenteEliminar
 	
+	//CREAR TAREA
+	
+	//Abre: actionBtnNuevaTarea
+	public void actionLblNuevaTarea() {
+		FrameTablero.emergenteCrearTarea();
+	}
+	//Cierra: actionBtnNuevaTarea
+	
+	//Abre: actionBtnCancelarEmergenteCrearTarea
+	public void actionBtnCancelarEmergenteCrearTarea() {
+	    FrameTablero.getEmergenteCrearTarea().dispose();
+	    FrameTablero.setEmergenteCrearTarea(null);
+	}
+	//Cierra: actionBtnCancelarEmergenteCrearTarea
 	
 	//EDITAR LISTA
 	
