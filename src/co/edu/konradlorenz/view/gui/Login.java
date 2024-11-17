@@ -15,6 +15,12 @@ public class Login extends JFrame {
 	//CONTROLADOR
 	private static Controlador ctrl;
 	
+	//CardLayout
+	private static CardLayout cardLayout= new CardLayout();
+	
+	//Contenedor
+	private static JPanel contenedor= new JPanel(cardLayout);
+	
 	//MOSTRAR DETALLES
 	private static boolean detalles;
 	
@@ -44,7 +50,7 @@ public class Login extends JFrame {
 	private static JButton btnLoginContinuar;
 	private static JButton btnLoginPanelCrearCuenta;
 	private static JButton btnLoginCrearCuenta;
-	private static JButton btnLoginRegresar;
+	private static JButton btnRegisterRegresar;
 	private static JButton btnRegisterCrearCuenta;
 	
 	//Colores
@@ -56,7 +62,7 @@ public class Login extends JFrame {
 		private static String mensajeIniciarSesionLogin="Inicia sesión para continuar", mensajeIngresarCorreoLogin="Ingresa tu correo", mensajeIngresarContraseñaLogin="Ingresa tu contraseña"
 				, mensajeBtnContinuarLogin="Continuar", mensajeBtnCrearCuentaLogin="Crear cuenta";
 		private static String mensajeCrearCuentaRegister="Crear una cuenta", ingresarCorreoRegister="Ingresa tu correo", ingresarNombreRegister="Ingresa tu nombre",
-				ingresarContraseñaRegister="Ingresa tu contraseña", ingresarReContraseñaRegister="Re-ingresa tu contraseña", mensajeBtnCrearCuentaRegister="Crear cuenta", mensajeBtnRegresarRegistrar="< Regresar";
+				ingresarContraseñaRegister="Ingresa tu contraseña", ingresarReContraseñaRegister="Re-ingresa tu contraseña", mensajeBtnCrearCuentaRegister="Crear cuenta", mensajeBtnRegresarRegistrar="   < Regresar";
 		
 	
 	//Método constructor del frame Login
@@ -72,17 +78,21 @@ public class Login extends JFrame {
 		frameLogin.setLayout(null);//Desactiva el control automático de paneles
 		frameLogin.setResizable(false);//No permite modificar el tamaño de la ventana
 		frameLogin.setBackground(moradito);//Color de la barra de la ventana
-		
-		panelLoginHead = panelLoginHead();
-		frameLogin.add(panelLoginHead);
-		
-		panelLoginBody = panelLoginBody();
-		frameLogin.add(panelLoginBody);
-		
-		panelRegisterBody = panelRegisterBody();
-		frameLogin.add(panelRegisterBody);
-		
-		frameLogin.setVisible(true);
+	
+	    panelLoginHead = panelLoginHead();
+	    panelLoginBody = panelLoginBody();
+
+	    panelRegisterBody = panelRegisterBody();
+	    
+	    contenedor.setLayout(cardLayout);
+	    contenedor.add(panelLoginBody, "panelLoginBody");
+	    contenedor.add(panelRegisterBody, "panelRegisterBody");
+	    contenedor.setBounds(0, 100, 405, 530);
+
+	    frameLogin.add(panelLoginHead);
+	    frameLogin.add(contenedor);
+
+	    frameLogin.setVisible(true);
 	}
 	//*/Login
 	
@@ -215,15 +225,23 @@ public class Login extends JFrame {
 			btnLoginCrearCuenta.setBorder(null);
 		
 		panelLoginBody.add(btnLoginCrearCuenta);
-		
+
 		btnLoginContinuar.addActionListener(new ActionListener() {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				ctrl.actionbtnContinuarLogin();
-				
+				ctrl.actionBtnContinuarLogin();
 			}
 		});
+
+		btnLoginCrearCuenta.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				ctrl.actionBtnCrearCuentaLogin();			
+			}
+		});
+		
 		
 		return panelLoginBody;
 	}
@@ -379,15 +397,23 @@ public class Login extends JFrame {
 			
 			panelRegisterBody.add(btnRegisterCrearCuenta);
 		
-			btnLoginRegresar= new JButton(mensajeBtnRegresarRegistrar);
-			btnLoginRegresar.setHorizontalAlignment(SwingConstants.LEFT);
-			btnLoginRegresar.setBackground(Color.WHITE);
-			btnLoginRegresar.setBounds(47, 460, 295, 40);
-			btnLoginRegresar.setFont(new Font("Calibri", Font.PLAIN, 15));
-			btnLoginRegresar.setForeground(azulito);
-			btnLoginRegresar.setBorder(null);	
+			btnRegisterRegresar= new JButton(mensajeBtnRegresarRegistrar);
+			btnRegisterRegresar.setHorizontalAlignment(SwingConstants.LEFT);
+			btnRegisterRegresar.setBackground(Color.WHITE);
+			btnRegisterRegresar.setBounds(47, 460, 295, 40);
+			btnRegisterRegresar.setFont(new Font("Calibri", Font.PLAIN, 15));
+			btnRegisterRegresar.setForeground(azulito);
+			btnRegisterRegresar.setBorder(null);	
 			
-			panelRegisterBody.add(btnLoginRegresar);
+			panelRegisterBody.add(btnRegisterRegresar);
+			
+			btnRegisterRegresar.addActionListener(new ActionListener() {
+				
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					ctrl.actionBtnRegresarRegister();		
+				}
+			});
 			
 			return panelRegisterBody;		
 	}
@@ -505,142 +531,214 @@ public class Login extends JFrame {
 		Login.btnLoginCrearCuenta = btnLoginCrearCuenta;
 	}
 
-	public static JButton getBtnLoginRegresar() {
-		return btnLoginRegresar;
+	public static JButton getBtnRegisterRegresar() {
+		return btnRegisterRegresar;
 	}
 
-	public static void setBtnLoginRegresar(JButton btnLoginRegresar) {
-		Login.btnLoginRegresar = btnLoginRegresar;
+	public static void setBtnRegisterRegresar(JButton btnRegisterRegresar) {
+		Login.btnRegisterRegresar = btnRegisterRegresar;
 	}
 
 	public static JButton getBtnRegisterCrearCuenta() {
 		return btnRegisterCrearCuenta;
 	}
 
+	
 	public static void setBtnRegisterCrearCuenta(JButton btnRegisterCrearCuenta) {
-		Login.btnRegisterCrearCuenta = btnRegisterCrearCuenta;
-	}
-
+			Login.btnRegisterCrearCuenta = btnRegisterCrearCuenta;
+		}
+	
+		
 	public static Color getBlanquito() {
-		return blanquito;
-	}
-
+			return blanquito;
+		}
+	
+		
 	public static void setBlanquito(Color blanquito) {
-		Login.blanquito = blanquito;
-	}
-
+			Login.blanquito = blanquito;
+		}
+	
+		
 	public static Color getMoradito() {
-		return moradito;
-	}
-
+			return moradito;
+		}
+	
+		
 	public static void setMoradito(Color moradito) {
-		Login.moradito = moradito;
-	}
-
+			Login.moradito = moradito;
+		}
+	
+		
 	public static Color getAzulito() {
-		return azulito;
-	}
-
+			return azulito;
+		}
+	
+		
 	public static void setAzulito(Color azulito) {
-		Login.azulito = azulito;
-	}
-
+			Login.azulito = azulito;
+		}
+	
+		
 	public String getMensajeIniciarSesionLogin() {
-		return mensajeIniciarSesionLogin;
-	}
-
+			return mensajeIniciarSesionLogin;
+		}
+	
+		
 	public static String getMensajeIngresarCorreoLogin() {
-		return mensajeIngresarCorreoLogin;
-	}
-
+			return mensajeIngresarCorreoLogin;
+		}
+	
+		
 	public static void setMensajeIngresarCorreoLogin(String mensajeIngresarCorreoLogin) {
-		Login.mensajeIngresarCorreoLogin = mensajeIngresarCorreoLogin;
-	}
-
+			Login.mensajeIngresarCorreoLogin = mensajeIngresarCorreoLogin;
+		}
+	
+		
 	public static String getMensajeIngresarContraseñaLogin() {
-		return mensajeIngresarContraseñaLogin;
-	}
-
+			return mensajeIngresarContraseñaLogin;
+		}
+	
+		
 	public static void setMensajeIngresarContraseñaLogin(String mensajeIngresarContraseñaLogin) {
-		Login.mensajeIngresarContraseñaLogin = mensajeIngresarContraseñaLogin;
-	}
-
+			Login.mensajeIngresarContraseñaLogin = mensajeIngresarContraseñaLogin;
+		}
+	
+		
 	public static String getMensajeBtnContinuarLogin() {
-		return mensajeBtnContinuarLogin;
-	}
-
+			return mensajeBtnContinuarLogin;
+		}
+	
+		
 	public static void setMensajeBtnContinuarLogin(String mensajeBtnContinuarLogin) {
-		Login.mensajeBtnContinuarLogin = mensajeBtnContinuarLogin;
-	}
-
+			Login.mensajeBtnContinuarLogin = mensajeBtnContinuarLogin;
+		}
+	
+		
 	public static String getMensajeBtnCrearCuentaLogin() {
-		return mensajeBtnCrearCuentaLogin;
-	}
-
+			return mensajeBtnCrearCuentaLogin;
+		}
+	
+		
 	public static void setMensajeBtnCrearCuentaLogin(String mensajeBtnCrearCuentaLogin) {
-		Login.mensajeBtnCrearCuentaLogin = mensajeBtnCrearCuentaLogin;
-	}
-
+			Login.mensajeBtnCrearCuentaLogin = mensajeBtnCrearCuentaLogin;
+		}
+	
+		
 	public static void setMensajeIniciarSesionLogin(String mensajeIniciarSesionLogin) {
-		Login.mensajeIniciarSesionLogin = mensajeIniciarSesionLogin;
-	}
-
+			Login.mensajeIniciarSesionLogin = mensajeIniciarSesionLogin;
+		}
+	
+		
 	public static String getMensajeCrearCuentaRegister() {
-		return mensajeCrearCuentaRegister;
-	}
-
+			return mensajeCrearCuentaRegister;
+		}
+	
+		
 	public static void setMensajeCrearCuentaRegister(String mensajeCrearCuentaRegister) {
-		Login.mensajeCrearCuentaRegister = mensajeCrearCuentaRegister;
-	}
-
+			Login.mensajeCrearCuentaRegister = mensajeCrearCuentaRegister;
+		}
+	
+		
 	public static String getIngresarCorreoRegister() {
-		return ingresarCorreoRegister;
-	}
-
+			return ingresarCorreoRegister;
+		}
+	
+		
 	public static void setIngresarCorreoRegister(String ingresarCorreoRegister) {
-		Login.ingresarCorreoRegister = ingresarCorreoRegister;
-	}
-
+			Login.ingresarCorreoRegister = ingresarCorreoRegister;
+		}
+	
+		
 	public static String getIngresarNombreRegister() {
-		return ingresarNombreRegister;
-	}
-
+			return ingresarNombreRegister;
+		}
+	
+		
 	public static void setIngresarNombreRegister(String ingresarNombreRegister) {
-		Login.ingresarNombreRegister = ingresarNombreRegister;
-	}
-
+			Login.ingresarNombreRegister = ingresarNombreRegister;
+		}
+	
+		
 	public static String getIngresarContraseñaRegister() {
-		return ingresarContraseñaRegister;
-	}
-
+			return ingresarContraseñaRegister;
+		}
+	
+		
 	public static void setIngresarContraseñaRegister(String ingresarContraseñaRegister) {
-		Login.ingresarContraseñaRegister = ingresarContraseñaRegister;
-	}
-
+			Login.ingresarContraseñaRegister = ingresarContraseñaRegister;
+		}
+	
+		
 	public static String getIngresarReContraseñaRegister() {
-		return ingresarReContraseñaRegister;
-	}
-
+			return ingresarReContraseñaRegister;
+		}
+	
+		
 	public static void setIngresarReContraseñaRegister(String ingresarReContraseñaRegister) {
-		Login.ingresarReContraseñaRegister = ingresarReContraseñaRegister;
-	}
-
+			Login.ingresarReContraseñaRegister = ingresarReContraseñaRegister;
+		}
+	
+		
 	public static String getMensajeBtnCrearCuentaRegister() {
-		return mensajeBtnCrearCuentaRegister;
-	}
-
+			return mensajeBtnCrearCuentaRegister;
+		}
+	
+		
 	public static void setMensajeBtnCrearCuentaRegister(String mensajeBtnCrearCuentaRegister) {
-		Login.mensajeBtnCrearCuentaRegister = mensajeBtnCrearCuentaRegister;
-	}
-
+			Login.mensajeBtnCrearCuentaRegister = mensajeBtnCrearCuentaRegister;
+		}
+	
+		
 	public static String getMensajeBtnRegresarRegistrar() {
-		return mensajeBtnRegresarRegistrar;
-	}
-
+			return mensajeBtnRegresarRegistrar;
+		}
+	
+		
 	public static void setMensajeBtnRegresarRegistrar(String mensajeBtnRegresarRegistrar) {
-		Login.mensajeBtnRegresarRegistrar = mensajeBtnRegresarRegistrar;
-	}
+			Login.mensajeBtnRegresarRegistrar = mensajeBtnRegresarRegistrar;
+		}
 
+	
+	public static Controlador getCtrl() {
+			return ctrl;
+		}
+	
+		
+	public static void setCtrl(Controlador ctrl) {
+			Login.ctrl = ctrl;
+		}
+	
+		
+	public static CardLayout getCardLayout() {
+			return cardLayout;
+		}
+	
+		
+	public static void setCardLayout(CardLayout cardLayout) {
+			Login.cardLayout = cardLayout;
+		}
+	
+		
+	public static JPanel getContenedor() {
+			return contenedor;
+		}
+	
+		
+	public static void setContenedor(JPanel contenedor) {
+			Login.contenedor = contenedor;
+		}
+	
+		
+	public static boolean isDetalles() {
+			return detalles;
+		}
+	
+		
+	public static void setDetalles(boolean detalles) {
+		Login.detalles = detalles;
+	}
+	
+	
 	//Mensajes y textos
 	
 }	
