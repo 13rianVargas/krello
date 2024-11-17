@@ -59,27 +59,28 @@ public class FrameTablero extends JFrame{
 	private static JLabel lblNuevaTarea;
 	private static JLabel lblEditarTarea;
 		
-	//COLORS
-	private static Color negro = new Color(0, 0, 0);
-	private static Color blanco = new Color(255, 255, 255);
-	private static Color rojo = new Color(255, 0, 0);
-	private static Color verde = new Color(117, 251, 76);
-	private static Color millos = new Color(0, 0, 255);
-	private static Color rosa = new Color(243, 178, 177);
-	private static Color rosa2 = new Color(235, 116, 116);
-	private static Color cyan = new Color(117, 251, 253);
-	private static Color cyan2 = new Color(81, 174, 173);
-	private static Color gris = new Color(154, 154, 154);
-	private static Color gris2 = new Color(217, 217, 217);
-	private static Color morado = new Color(98, 20, 109);
-	private static Color morado2 = new Color(173, 16, 195);
-	private static Color morado3 = new Color(161, 114, 167);
-	private static Color aguacate = new Color(102, 181, 127);
-	private static Color petroleo = new Color(0, 151, 149);
-	private static Color petroleo2 = new Color(83, 181, 179);
-	private static Color limon = new Color(206, 220, 23);
-	private static Color limon2 = new Color(180, 200, 0);
-	private static Color limon3 = new Color(162, 168, 0);
+	//COLORS (Se crean en el Controller)
+	private static Color negro;
+	private static Color blanco;
+	private static Color rojo;
+	private static Color verde;
+	private static Color millos;
+	private static Color azulito;
+	private static Color rosa;
+	private static Color rosa2;
+	private static Color cyan;
+	private static Color cyan2;
+	private static Color gris;
+	private static Color gris2;
+	private static Color morado;
+	private static Color morado2;
+	private static Color morado3;
+	private static Color aguacate;
+	private static Color petroleo;
+	private static Color petroleo2;
+	private static Color limon;
+	private static Color limon2;
+	private static Color limon3;
 
 	//STRINGS
 	private static String mensajeIngresarNombreLista = " Ingrese nombre de la lista...";
@@ -97,9 +98,32 @@ public class FrameTablero extends JFrame{
     //Abre: Constructor del frame Tablero
  	public FrameTablero(Controlador controlador){
  		
+ 		//Inicializaciones que dependen del Controlador
     	ctrl = controlador;//Llama al controller del AplMain
     	detalles = ctrl.detalles;//Ahora se cambia en el Controller para que actue en todo el GUI.
+    	negro = ctrl.negro;
+    	blanco = ctrl.blanco;
+    	rojo = ctrl.rojo;
+    	verde = ctrl.verde;
+    	millos = ctrl.millos;
+    	azulito = ctrl.azulito;
+    	rosa = ctrl.rosa;
+    	rosa2 = ctrl.rosa2;
+    	cyan = ctrl.cyan;
+    	cyan2 = ctrl.cyan2;
+    	gris = ctrl.gris;
+    	gris2 = ctrl.gris2;
+    	morado = ctrl.morado;
+    	morado2 = ctrl.morado2;
+    	morado3 = ctrl.morado3;
+    	aguacate = ctrl.aguacate;
+    	petroleo = ctrl.petroleo;
+    	petroleo2 = ctrl.petroleo2;
+    	limon = ctrl.limon;
+    	limon2 = ctrl.limon2;
+    	limon3 = ctrl.limon3;
 
+    	//Aquí inicia el verdadero Constructor de la ventana
  		frameTablero = new JFrame();
 		frameTablero.setDefaultCloseOperation(EXIT_ON_CLOSE); //Terminar la ejecución si se cierra la ventana
 		String nombreTableroAbierto = ctrl.getNombreTableroAbierto();
@@ -162,7 +186,7 @@ public class FrameTablero extends JFrame{
 
 	        
 		        	//Abre: lblTituloTablero
-		    		String nombreTablerto = ctrl.getNombreTableroAbierto();//TODO: Máximo 49 caracteres 
+		    		String nombreTablerto = ctrl.getNombreTableroAbierto(); 
 			    	JLabel lblTituloTablero = new JLabel(nombreTablerto);//Crea nuevo
 			    	lblTituloTablero.setFont(new Font("Inter", Font.PLAIN, 24));//Cambia la letra del interior
 			    	lblTituloTablero.setForeground(negro);//Color de letra
@@ -174,7 +198,7 @@ public class FrameTablero extends JFrame{
 			    	
 			    	//Abre: lblAdminTablero
 		    		String nombreAdministrador = ctrl.getNombreAdministradorDeTableroAbierto();
-			    	JLabel lblAdminTablero = new JLabel("Tablero de: " + nombreAdministrador);//Crea nuevo //TODO: Agregar el nombre del dueño
+			    	JLabel lblAdminTablero = new JLabel("Tablero de: " + nombreAdministrador);//Crea nuevo
 			    	lblAdminTablero.setFont(new Font("Inter", Font.ITALIC, 18));//Cambia la letra del interior
 			    	lblAdminTablero.setForeground(gris);//Color de letra
 			    	lblAdminTablero.setBackground(negro);//Color de fondo
@@ -217,7 +241,7 @@ public class FrameTablero extends JFrame{
 			    	//Abre: btnCrearLista
 			    	btnCrearLista = new JButton("Nueva Lista");//Crea nuevo
 			    	btnCrearLista.setFont(new Font("Inter", Font.PLAIN, 18));//Cambia la letra del interior
-			    	btnCrearLista.setBackground(cyan);//Color de fondo //TODO: Poner este color global :D
+			    	btnCrearLista.setBackground(cyan);//Color de fondo
 			    	btnCrearLista.setForeground(cyan2);//Color de letra
 			    	btnCrearLista.setFocusPainted(false);//Evita que se muestre un borde cuando el componente tiene el foco.
 			    	btnCrearLista.setCursor(new Cursor(Cursor.HAND_CURSOR));//Pone el cursor con una manita
@@ -294,7 +318,7 @@ public class FrameTablero extends JFrame{
 		    	panelTitulo.setBackground(rosa);//Color de fondo
 		    	panelTitulo.setOpaque(detalles);//Mostrar detalles
 		    	
-				    String nombreLista  = ctrl.getNombreListaAbierta();//TODO: Máximo 13 caracteres
+				    String nombreLista  = ctrl.getNombreListaAbierta();
 				    JLabel lblTitulo = new JLabel("• " + nombreLista);
 				    lblTitulo.setFont(new Font("Inter", Font.BOLD, 19));
 				    lblTitulo.setForeground(blanco);

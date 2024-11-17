@@ -1,15 +1,12 @@
 package co.edu.konradlorenz.controller;
 
 import java.awt.Color;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
-import javax.swing.BorderFactory;
-import javax.swing.JButton;
-import javax.swing.Timer;
-import javax.swing.UIManager;
+import javax.swing.*;
 import javax.swing.border.Border;
 
 import co.edu.konradlorenz.view.*;
@@ -32,6 +29,29 @@ public class Controlador {
 	private Lista listaAbierta;
 	private Tarea tareaAbierta;
 	private Colaborador colaboradorAbierto;
+	
+	//COLORS
+	public Color negro = new Color(0, 0, 0);
+	public Color blanco = new Color(255, 255, 255);
+	public Color rojo = new Color(255, 0, 0);
+	public Color verde = new Color(117, 251, 76);
+	public Color millos = new Color(0, 0, 255);
+	public Color azulito = new Color(31, 165, 163);
+	public Color rosa = new Color(243, 178, 177);
+	public Color rosa2 = new Color(235, 116, 116);
+	public Color cyan = new Color(117, 251, 253);
+	public Color cyan2 = new Color(81, 174, 173);
+	public Color gris = new Color(154, 154, 154);
+	public Color gris2 = new Color(217, 217, 217);
+	public Color morado = new Color(98, 20, 109);
+	public Color morado2 = new Color(173, 16, 195);
+	public Color morado3 = new Color(161, 114, 167);
+	public Color aguacate = new Color(102, 181, 127);
+	public Color petroleo = new Color(0, 151, 149);
+	public Color petroleo2 = new Color(83, 181, 179);
+	public Color limon = new Color(206, 220, 23);
+	public Color limon2 = new Color(180, 200, 0);
+	public Color limon3 = new Color(162, 168, 0);
 
 	public void run() {
 		
@@ -359,7 +379,7 @@ public class Controlador {
 	// getNombreTableroAbierto
 
 	public String getNombreListaAbierta() {
-		String nombreLista = listaAbierta.getNombreLista();
+			String nombreLista = listaAbierta.getNombreLista();
 		return nombreLista;
 	}
 	// abrirLista
@@ -607,8 +627,9 @@ public class Controlador {
 		String placeholder = Principal.getMensajeIngresarNombreTablero();
 		
 		if(Principal.getTxtFieldIngresarNombreEmergenteCrearTablero().getText().equals(placeholder) 
-				|| Principal.getTxtFieldIngresarNombreEmergenteCrearTablero().getText().equals("")){
-			//IMPORTANTE: Este if es el que hace parpadear de rojo xd, el else crea el tablero
+				|| Principal.getTxtFieldIngresarNombreEmergenteCrearTablero().getText().equals("")
+				|| Principal.getTxtFieldIngresarNombreEmergenteCrearTablero().getText().length() > 50){
+
 			//Inicializo colores
 			Color rojo = Principal.getRojo();
 			Color gris = Principal.getGris();
@@ -675,7 +696,7 @@ public class Controlador {
 	//Cierra: actionBtnAgregarInvitados
 	
 	//Abre: actionEnterTxtFieldIngresarCorreoEmergenteAgregarInvitados
-	//TODO: Método sin implementar
+	//FIXME: Método sin implementar
 	public Persona actionEnterTxtFieldIngresarCorreoEmergenteAgregarInvitados() {
 		
 		String placeholder = Principal.getMensajeIngresarCorreo();
@@ -750,24 +771,28 @@ public class Controlador {
 	//Abre: actionEnterTxtFieldIngresarNombreEmergenteCrearLista
 	public void actionEnterTxtFieldIngresarNombreEmergenteCrearLista() {
 		
+		//IMPORTANTE Coloca aquí tus componentes xd:
+		JTextField txtField = FrameTablero.getTxtFieldIngresarNombreEmergenteCrearLista();
+		JButton btn = FrameTablero.getBtnCrearListaEmergenteCrearLista();
 		String placeholder = FrameTablero.getMensajeIngresarNombreLista();
 		
-		if(FrameTablero.getTxtFieldIngresarNombreEmergenteCrearLista().getText().equals(placeholder) 
-				|| FrameTablero.getTxtFieldIngresarNombreEmergenteCrearLista().getText().equals("")){
-			//IMPORTANTE: Este if es el que hace parpadear de rojo xd, el else crea el tablero
+		if(txtField.getText().equals(placeholder) 
+			|| txtField.getText().equals("")
+			|| txtField.getText().length() > 13){
+			
 			//Inicializo colores
 			Color rojo = FrameTablero.getRojo();
-			Color negro = FrameTablero.getNegro();
-			Color limon = FrameTablero.getLimon();
+			Color gris = FrameTablero.getGris();
+			Color morado2 = FrameTablero.getMorado2();
 				
 			//Inicializo los bordes
 			Border bordeRojo = BorderFactory.createLineBorder(rojo, 2);
-			Border bordeNegro = BorderFactory.createLineBorder(negro, 1);
+			Border bordeGris = BorderFactory.createLineBorder(gris, 2);
 				
 			//Agrego los colores y bordes
-			FrameTablero.getBtnCrearListaEmergenteCrearLista().setBorder(bordeRojo);
-			FrameTablero.getBtnCrearListaEmergenteCrearLista().setBackground(rojo);
-			FrameTablero.getTxtFieldIngresarNombreEmergenteCrearLista().setBorder(bordeRojo);
+			btn.setBackground(rojo);
+			txtField.setForeground(rojo);
+			txtField.setBorder(bordeRojo);
 				
 			//Contador para alternar bordes
 			final int[] contador = {0};
@@ -775,21 +800,25 @@ public class Controlador {
 			//Alternador de bordes (funciona casi como un ciclo)
 			Timer timer = new Timer(150, event -> { // Cambia cada 150 ms
 	            if (contador[0] < 6) { // Se repetirá 3 veces, 3 rojas y 3 azules = 6
-	                Border bordeActual = (contador[0] % 2 == 0) ? bordeRojo : bordeNegro; //Op ternario
-	                Color colorActual = (contador[0] % 2 == 0) ? rojo : limon; //Op ternario x2
-	                FrameTablero.getTxtFieldIngresarNombreEmergenteCrearLista().setBorder(bordeActual);
-	                FrameTablero.getBtnCrearListaEmergenteCrearLista().setBorder(bordeActual);
-	                FrameTablero.getBtnCrearListaEmergenteCrearLista().setBackground(colorActual);
+	                Border bordeActual = (contador[0] % 2 == 0) ? bordeRojo : bordeGris; //Op ternario
+	                Color colorBtn = (contador[0] % 2 == 0) ? rojo : morado2; //Op ternario x2
+	                Color colorTxt = (contador[0] % 2 == 0) ? rojo : gris ; //Op ternario x3
+	                txtField.setBorder(bordeActual);
+	                txtField.setForeground(colorTxt);
+	                btn.setBackground(colorBtn);
+	                btn.revalidate();
 	                
 	                contador[0]++;
 	            } else {
 	                ((Timer) event.getSource()).stop(); //Detiene el Timer
 	            }
+	            btn.setBorder(null);
 	        });
 				
 			timer.start();
 		} else {
-			String nombreLista = toCapitalCase(FrameTablero.getTxtFieldIngresarNombreEmergenteCrearLista().getText());//Obtiene el texto y lo transfoma a Capital
+			
+			String nombreLista = toCapitalCase(txtField.getText());//Obtiene el texto y lo transfoma a Capital
 			listaAbierta = crearLista(nombreLista);//Envía el nombre al método crearLista
 			
 			FrameTablero.getEmergenteCrearLista().dispose();//Cierra el frame principal

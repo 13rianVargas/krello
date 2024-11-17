@@ -47,10 +47,28 @@ public class Login extends JFrame {
 	private static JButton btnLoginRegresar;
 	private static JButton btnRegisterCrearCuenta;
 	
-	//Colores
-	private static Color blanquito = new Color(255, 255, 255);
-	private static Color moradito = new Color(98, 20, 109); 
-	private static Color azulito = new Color(31, 165, 163);
+	//COLORS (Se crean en el Controller)
+	private static Color negro;
+	private static Color blanco;
+	private static Color rojo;
+	private static Color verde;
+	private static Color millos;
+	private static Color azulito;
+	private static Color rosa;
+	private static Color rosa2;
+	private static Color cyan;
+	private static Color cyan2;
+	private static Color gris;
+	private static Color gris2;
+	private static Color morado;
+	private static Color morado2;
+	private static Color morado3;
+	private static Color aguacate;
+	private static Color petroleo;
+	private static Color petroleo2;
+	private static Color limon;
+	private static Color limon2;
+	private static Color limon3;
 	
 	//Strings
 		private static String mensajeIniciarSesionLogin="Inicia sesión para continuar", mensajeIngresarCorreoLogin="Ingresa tu correo", mensajeIngresarContraseñaLogin="Ingresa tu contraseña"
@@ -62,16 +80,39 @@ public class Login extends JFrame {
 	//Método constructor del frame Login
 	public Login (Controlador controlador) {
 		
+		//Inicializaciones que dependen del Controlador
     	ctrl = controlador;//Llama al controller del AplMain
     	detalles = ctrl.detalles;//Ahora se cambia en el Controller para que actue en todo el GUI.
+    	negro = ctrl.negro;
+    	blanco = ctrl.blanco;
+    	rojo = ctrl.rojo;
+    	verde = ctrl.verde;
+    	millos = ctrl.millos;
+    	azulito = ctrl.azulito;
+    	rosa = ctrl.rosa;
+    	rosa2 = ctrl.rosa2;
+    	cyan = ctrl.cyan;
+    	cyan2 = ctrl.cyan2;
+    	gris = ctrl.gris;
+    	gris2 = ctrl.gris2;
+    	morado = ctrl.morado;
+    	morado2 = ctrl.morado2;
+    	morado3 = ctrl.morado3;
+    	aguacate = ctrl.aguacate;
+    	petroleo = ctrl.petroleo;
+    	petroleo2 = ctrl.petroleo2;
+    	limon = ctrl.limon;
+    	limon2 = ctrl.limon2;
+    	limon3 = ctrl.limon3;
 		
+    	//Aquí inicia el verdadero Constructor de la ventana
 		frameLogin.setDefaultCloseOperation(EXIT_ON_CLOSE);//Terminar la ejecución si se cierra la ventana
 		frameLogin.setTitle("KRELLO");//Título de la ventana
 		frameLogin.setSize(405,680);//ancho, alto
 		frameLogin.setLocationRelativeTo(null);//Centra la ventana
 		frameLogin.setLayout(null);//Desactiva el control automático de paneles
 		frameLogin.setResizable(false);//No permite modificar el tamaño de la ventana
-		frameLogin.setBackground(moradito);//Color de la barra de la ventana
+		frameLogin.setBackground(morado);//Color de la barra de la ventana
 		
 		panelLoginHead = panelLoginHead();
 		frameLogin.add(panelLoginHead);
@@ -194,7 +235,7 @@ public class Login extends JFrame {
 		
 			btnLoginContinuar = new JButton(mensajeBtnContinuarLogin);
 			btnLoginContinuar.setHorizontalAlignment(SwingConstants.CENTER);
-			btnLoginContinuar.setBackground(moradito);
+			btnLoginContinuar.setBackground(morado);
 			btnLoginContinuar.setBounds(47, 300, 295, 40);
 			btnLoginContinuar.setFont(new Font("Calibri", Font.ITALIC, 15));
 			btnLoginContinuar.setForeground(Color.white);
@@ -234,7 +275,7 @@ public class Login extends JFrame {
 		JPanel panelRegisterBody= new JPanel();
 		panelRegisterBody.setLayout(null);
 		panelRegisterBody.setBounds(0, 100, 405, 530);
-		panelRegisterBody.setBackground(blanquito);
+		panelRegisterBody.setBackground(blanco);
 		panelRegisterBody.setOpaque(true);
 			
 			lblLogin = new JLabel(mensajeCrearCuentaRegister);
@@ -372,7 +413,7 @@ public class Login extends JFrame {
 		
 			btnRegisterCrearCuenta= new JButton(mensajeBtnCrearCuentaRegister);
 			btnRegisterCrearCuenta.setHorizontalAlignment(SwingConstants.CENTER);
-			btnRegisterCrearCuenta.setBackground(moradito);
+			btnRegisterCrearCuenta.setBackground(morado);
 			btnRegisterCrearCuenta.setBounds(47, 380, 295, 40);
 			btnRegisterCrearCuenta.setFont(new Font("Calibri", Font.PLAIN, 15));
 			btnRegisterCrearCuenta.setForeground(Color.WHITE);
@@ -521,20 +562,20 @@ public class Login extends JFrame {
 		Login.btnRegisterCrearCuenta = btnRegisterCrearCuenta;
 	}
 
-	public static Color getBlanquito() {
-		return blanquito;
+	public static Color getBlanco() {
+		return blanco;
 	}
 
-	public static void setBlanquito(Color blanquito) {
-		Login.blanquito = blanquito;
+	public static void setBlanco(Color blanco) {
+		Login.blanco = blanco;
 	}
 
-	public static Color getMoradito() {
-		return moradito;
+	public static Color getMorado() {
+		return morado;
 	}
 
-	public static void setMoradito(Color moradito) {
-		Login.moradito = moradito;
+	public static void setMorado(Color morado) {
+		Login.morado = morado;
 	}
 
 	public static Color getAzulito() {
