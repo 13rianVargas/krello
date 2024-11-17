@@ -611,16 +611,16 @@ public class Controlador {
 			//IMPORTANTE: Este if es el que hace parpadear de rojo xd, el else crea el tablero
 			//Inicializo colores
 			Color rojo = Principal.getRojo();
-			Color negro = Principal.getNegro();
-			Color limon = Principal.getLimon();
+			Color gris = Principal.getGris();
+			Color morado2 = Principal.getMorado2();
 			
 			//Inicializo los bordes
 			Border bordeRojo = BorderFactory.createLineBorder(rojo, 2);
-			Border bordeNegro = BorderFactory.createLineBorder(negro, 1);
+			Border bordeGris = BorderFactory.createLineBorder(gris, 2);
 			
 			//Agrego los colores y bordes
-			Principal.getBtnCrearTableroEmergenteCrearTablero().setBorder(bordeRojo);
 			Principal.getBtnCrearTableroEmergenteCrearTablero().setBackground(rojo);
+			Principal.getTxtFieldIngresarNombreEmergenteCrearTablero().setForeground(rojo);
 			Principal.getTxtFieldIngresarNombreEmergenteCrearTablero().setBorder(bordeRojo);
 			
 			//Contador para alternar bordes
@@ -628,17 +628,20 @@ public class Controlador {
 			
 			//Alternador de bordes (funciona casi como un ciclo)
 			Timer timer = new Timer(150, event -> { // Cambia cada 150 ms
-	            if (contador[0] < 6) { // Se repetirá 3 veces, 3 rojas y 3 azules = 6
-	                Border bordeActual = (contador[0] % 2 == 0) ? bordeRojo : bordeNegro; //Op ternario
-	                Color colorActual = (contador[0] % 2 == 0) ? rojo : limon; //Op ternario x2
+	            if (contador[0] < 6) { // Se repetirá 3 veces, 3 de color rojo y 3 del color base = 6
+	                Border bordeActual = (contador[0] % 2 == 0) ? bordeRojo : bordeGris; //Op ternario
+	                Color colorBtn = (contador[0] % 2 == 0) ? rojo : morado2; //Op ternario x2
+	                Color colorTxt = (contador[0] % 2 == 0) ? rojo : gris ; //Op ternario x3
 	                Principal.getTxtFieldIngresarNombreEmergenteCrearTablero().setBorder(bordeActual);
-	                Principal.getBtnCrearTableroEmergenteCrearTablero().setBorder(bordeActual);
-	                Principal.getBtnCrearTableroEmergenteCrearTablero().setBackground(colorActual);
+	                Principal.getTxtFieldIngresarNombreEmergenteCrearTablero().setForeground(colorTxt);
+	                Principal.getBtnCrearTableroEmergenteCrearTablero().setBackground(colorBtn);
+	                Principal.getBtnCrearTableroEmergenteCrearTablero().revalidate();
 	                
 	                contador[0]++;
 	            } else {
 	                ((Timer) event.getSource()).stop();//Detiene el Timer
 	            }
+	            Principal.getBtnCrearTableroEmergenteCrearTablero().setBorder(null);
 	        });
 			
 			timer.start();
@@ -651,7 +654,7 @@ public class Controlador {
 
 		    new FrameTablero(this);//Crea nuevo
 		    
-		}//if crearTablero
+		}//if CrearTablero
 	}
 	//Cierra: actionEnterTxtFieldIngresarNombreEmergenteCrearTablero
 
@@ -682,12 +685,11 @@ public class Controlador {
 			//IMPORTANTE: Este if es el que hace parpadear de rojo xd, el else crea el tablero
 			//Inicializo colores
 			Color rojo = Principal.getRojo();
-			Color negro = Principal.getNegro();
-			Color limon = Principal.getLimon();
+			Color morado2 = Principal.getMorado2();
 			
 			//Inicializo los bordes
 			Border bordeRojo = BorderFactory.createLineBorder(rojo, 2);
-			Border bordeNegro = BorderFactory.createLineBorder(negro, 1);
+			Border bordeNull = null;
 			
 			//Agrego los colores y bordes
 			Principal.getBtnAgregarInvitadoEmergenteAgregarInvitados().setBorder(bordeRojo);
@@ -700,8 +702,8 @@ public class Controlador {
 			//Alternador de bordes (funciona casi como un ciclo)
 			Timer timer = new Timer(150, event -> { // Cambia cada 150 ms
 	            if (contador[0] < 6) { // Se repetirá 3 veces, 3 rojas y 3 azules = 6
-	                Border bordeActual = (contador[0] % 2 == 0) ? bordeRojo : bordeNegro; //Op ternario
-	                Color colorActual = (contador[0] % 2 == 0) ? rojo : limon; //Op ternario x2
+	                Border bordeActual = (contador[0] % 2 == 0) ? bordeRojo : bordeNull; //Op ternario
+	                Color colorActual = (contador[0] % 2 == 0) ? rojo : morado2; //Op ternario x2
 	                Principal.getTxtFieldIngresarCorreoEmergenteAgregarInvitados().setBorder(bordeActual);
 	                Principal.getBtnAgregarInvitadoEmergenteAgregarInvitados().setBorder(bordeActual);
 	                Principal.getBtnAgregarInvitadoEmergenteAgregarInvitados().setBackground(colorActual);
@@ -809,7 +811,7 @@ public class Controlador {
 	//EDITAR TABLERO
 		
 	//Abre: actionBtnEditarTablero
-	public void actionBtnEditarTablero() {                                             
+	public void actionLblEditarTablero() {                                             
 		FrameTablero.emergenteEditarTablero();
 	}
 	//Cierra: actionBtnEditarTablero
