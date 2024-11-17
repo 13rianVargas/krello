@@ -67,6 +67,7 @@ public class Controlador {
 		crearEjemplosPersona();
 		
 		// <- Agrega * entre barras para comentar
+		//Inicia el GUI:
 		new Login(this);//El this envía esta instancia del controlador a esa ventana.
 		//*/
 		
@@ -624,48 +625,49 @@ public class Controlador {
 
 	//Abre: actionEnterTxtFieldIngresarNombreEmergenteCrearTablero
 	public void actionEnterTxtFieldIngresarNombreEmergenteCrearTablero() {
-		
-		String placeholder = Principal.getMensajeIngresarNombreTablero();
-		
-		if(Principal.getTxtFieldIngresarNombreEmergenteCrearTablero().getText().equals(placeholder) 
-				|| Principal.getTxtFieldIngresarNombreEmergenteCrearTablero().getText().equals("")
-				|| Principal.getTxtFieldIngresarNombreEmergenteCrearTablero().getText().length() > 50){
-
-			//Inicializo colores
-			Color rojo = Principal.getRojo();
-			Color gris = Principal.getGris();
-			Color morado2 = Principal.getMorado2();
 			
+		//PARPADEO ROJO:
+		//IMPORTANTE Coloca aquí tus componentes xd:
+		JTextField txtField = Principal.getTxtFieldIngresarNombreEmergenteCrearTablero();
+		JButton btn = Principal.getBtnCrearTableroEmergenteCrearTablero();
+		String placeholder = Principal.getMensajeIngresarNombreTablero();
+		Color colorDelBtn = morado2;
+		int limiteTexto = 50;//Default: (50) Ajusta este valor si necesitas que los txtField tengan un tamaño pequeño para que no deforme los paneles.
+		
+		if(txtField.getText().equals(placeholder) 
+			|| txtField.getText().equals("")
+			|| txtField.getText().length() > limiteTexto){
+				
 			//Inicializo los bordes
 			Border bordeRojo = BorderFactory.createLineBorder(rojo, 2);
 			Border bordeGris = BorderFactory.createLineBorder(gris, 2);
-			
+				
 			//Agrego los colores y bordes
-			Principal.getBtnCrearTableroEmergenteCrearTablero().setBackground(rojo);
-			Principal.getTxtFieldIngresarNombreEmergenteCrearTablero().setForeground(rojo);
-			Principal.getTxtFieldIngresarNombreEmergenteCrearTablero().setBorder(bordeRojo);
-			
+			btn.setBackground(rojo);
+			txtField.setForeground(rojo);
+			txtField.setBorder(bordeRojo);
+				
 			//Contador para alternar bordes
 			final int[] contador = {0};
 			
 			//Alternador de bordes (funciona casi como un ciclo)
 			Timer timer = new Timer(150, event -> { // Cambia cada 150 ms
-	            if (contador[0] < 6) { // Se repetirá 3 veces, 3 de color rojo y 3 del color base = 6
+	            if (contador[0] < 6) { // Se repetirá 3 veces, 3 rojas y 3 azules = 6
 	                Border bordeActual = (contador[0] % 2 == 0) ? bordeRojo : bordeGris; //Op ternario
-	                Color colorBtn = (contador[0] % 2 == 0) ? rojo : morado2; //Op ternario x2
+	                Color colorBtn = (contador[0] % 2 == 0) ? rojo : colorDelBtn; //Op ternario x2
 	                Color colorTxt = (contador[0] % 2 == 0) ? rojo : gris ; //Op ternario x3
-	                Principal.getTxtFieldIngresarNombreEmergenteCrearTablero().setBorder(bordeActual);
-	                Principal.getTxtFieldIngresarNombreEmergenteCrearTablero().setForeground(colorTxt);
-	                Principal.getBtnCrearTableroEmergenteCrearTablero().setBackground(colorBtn);
-	                Principal.getBtnCrearTableroEmergenteCrearTablero().revalidate();
+	                txtField.setBorder(bordeActual);
+	                txtField.setForeground(colorTxt);
+	                btn.setBackground(colorBtn);
+	                btn.revalidate();
 	                
 	                contador[0]++;
 	            } else {
-	                ((Timer) event.getSource()).stop();//Detiene el Timer
+	                ((Timer) event.getSource()).stop(); //Detiene el Timer
 	            }
-	            Principal.getBtnCrearTableroEmergenteCrearTablero().setBorder(null);
+	            btn.setBorder(null);
 	        });
-			
+				
 			timer.start();
 		} else {
 			String nombreTablero = toCapitalCase(Principal.getTxtFieldIngresarNombreEmergenteCrearTablero().getText()); // Obtiene el texto y lo transforma a CapitalCase
@@ -699,44 +701,50 @@ public class Controlador {
 	//Abre: actionEnterTxtFieldIngresarCorreoEmergenteAgregarInvitados
 	//FIXME: Método sin implementar
 	public Persona actionEnterTxtFieldIngresarCorreoEmergenteAgregarInvitados() {
-		
-		String placeholder = Principal.getMensajeIngresarCorreo();
-		
-		if(Principal.getTxtFieldIngresarCorreoEmergenteAgregarInvitados().getText().equals(placeholder) 
-				|| Principal.getTxtFieldIngresarCorreoEmergenteAgregarInvitados().getText().equals("")){
-			//IMPORTANTE: Este if es el que hace parpadear de rojo xd, el else crea el tablero
-			//Inicializo colores
-			Color rojo = Principal.getRojo();
-			Color morado2 = Principal.getMorado2();
 			
-			//Inicializo los bordes
-			Border bordeRojo = BorderFactory.createLineBorder(rojo, 2);
-			Border bordeNull = null;
+			//PARPADEO ROJO:
+			//IMPORTANTE Coloca aquí tus componentes xd:
+			JTextField txtField = Principal.getTxtFieldIngresarCorreoEmergenteAgregarInvitados();
+			JButton btn = Principal.getBtnAgregarInvitadoEmergenteAgregarInvitados();
+			String placeholder = Principal.getMensajeIngresarCorreo();
+			Color colorDelBtn = morado2;
+			int limiteTexto = 50;//Default: (50) Ajusta este valor si necesitas que los txtField tengan un tamaño pequeño para que no deforme los paneles.
 			
-			//Agrego los colores y bordes
-			Principal.getBtnAgregarInvitadoEmergenteAgregarInvitados().setBorder(bordeRojo);
-			Principal.getBtnAgregarInvitadoEmergenteAgregarInvitados().setBackground(rojo);
-			Principal.getTxtFieldIngresarCorreoEmergenteAgregarInvitados().setBorder(bordeRojo);
-			
-			//Contador para alternar bordes
-			final int[] contador = {0};
-			
-			//Alternador de bordes (funciona casi como un ciclo)
-			Timer timer = new Timer(150, event -> { // Cambia cada 150 ms
-	            if (contador[0] < 6) { // Se repetirá 3 veces, 3 rojas y 3 azules = 6
-	                Border bordeActual = (contador[0] % 2 == 0) ? bordeRojo : bordeNull; //Op ternario
-	                Color colorActual = (contador[0] % 2 == 0) ? rojo : morado2; //Op ternario x2
-	                Principal.getTxtFieldIngresarCorreoEmergenteAgregarInvitados().setBorder(bordeActual);
-	                Principal.getBtnAgregarInvitadoEmergenteAgregarInvitados().setBorder(bordeActual);
-	                Principal.getBtnAgregarInvitadoEmergenteAgregarInvitados().setBackground(colorActual);
-	                
-	                contador[0]++;
-	            } else {
-	                ((Timer) event.getSource()).stop(); //Detiene el Timer
-	            }
-	        });
-			
-			timer.start();
+			if(txtField.getText().equals(placeholder) 
+				|| txtField.getText().equals("")
+				|| txtField.getText().length() > limiteTexto){
+					
+				//Inicializo los bordes
+				Border bordeRojo = BorderFactory.createLineBorder(rojo, 2);
+				Border bordeGris = BorderFactory.createLineBorder(gris, 2);
+					
+				//Agrego los colores y bordes
+				btn.setBackground(rojo);
+				txtField.setForeground(rojo);
+				txtField.setBorder(bordeRojo);
+					
+				//Contador para alternar bordes
+				final int[] contador = {0};
+				
+				//Alternador de bordes (funciona casi como un ciclo)
+				Timer timer = new Timer(150, event -> { // Cambia cada 150 ms
+		            if (contador[0] < 6) { // Se repetirá 3 veces, 3 rojas y 3 azules = 6
+		                Border bordeActual = (contador[0] % 2 == 0) ? bordeRojo : bordeGris; //Op ternario
+		                Color colorBtn = (contador[0] % 2 == 0) ? rojo : colorDelBtn; //Op ternario x2
+		                Color colorTxt = (contador[0] % 2 == 0) ? rojo : gris ; //Op ternario x3
+		                txtField.setBorder(bordeActual);
+		                txtField.setForeground(colorTxt);
+		                btn.setBackground(colorBtn);
+		                btn.revalidate();
+		                
+		                contador[0]++;
+		            } else {
+		                ((Timer) event.getSource()).stop(); //Detiene el Timer
+		            }
+		            btn.setBorder(null);
+		        });
+					
+				timer.start();
 		} else {
 			String correoInvitado = Principal.getTxtFieldIngresarCorreoEmergenteAgregarInvitados().getText();//Obtiene el texto
 			
@@ -772,19 +780,17 @@ public class Controlador {
 	//Abre: actionEnterTxtFieldIngresarNombreEmergenteCrearLista
 	public void actionEnterTxtFieldIngresarNombreEmergenteCrearLista() {
 		
+		//PARPADEO ROJO:
 		//IMPORTANTE Coloca aquí tus componentes xd:
 		JTextField txtField = FrameTablero.getTxtFieldIngresarNombreEmergenteCrearLista();
 		JButton btn = FrameTablero.getBtnCrearListaEmergenteCrearLista();
 		String placeholder = FrameTablero.getMensajeIngresarNombreLista();
+		Color colorDelBtn = morado2;
+		int limiteTexto = 13;//Default: (50) Ajusta este valor si necesitas que los txtField tengan un tamaño pequeño para que no deforme los paneles.
 		
 		if(txtField.getText().equals(placeholder) 
 			|| txtField.getText().equals("")
-			|| txtField.getText().length() > 13){
-			
-			//Inicializo colores
-			Color rojo = FrameTablero.getRojo();
-			Color gris = FrameTablero.getGris();
-			Color morado2 = FrameTablero.getMorado2();
+			|| txtField.getText().length() > limiteTexto){
 				
 			//Inicializo los bordes
 			Border bordeRojo = BorderFactory.createLineBorder(rojo, 2);
@@ -802,7 +808,7 @@ public class Controlador {
 			Timer timer = new Timer(150, event -> { // Cambia cada 150 ms
 	            if (contador[0] < 6) { // Se repetirá 3 veces, 3 rojas y 3 azules = 6
 	                Border bordeActual = (contador[0] % 2 == 0) ? bordeRojo : bordeGris; //Op ternario
-	                Color colorBtn = (contador[0] % 2 == 0) ? rojo : morado2; //Op ternario x2
+	                Color colorBtn = (contador[0] % 2 == 0) ? rojo : colorDelBtn; //Op ternario x2
 	                Color colorTxt = (contador[0] % 2 == 0) ? rojo : gris ; //Op ternario x3
 	                txtField.setBorder(bordeActual);
 	                txtField.setForeground(colorTxt);
@@ -848,25 +854,25 @@ public class Controlador {
 		
 	//Abre: txtFieldIngresarNombreEmergenteEditarTablero
 	public void txtFieldIngresarNombreEmergenteEditarTablero() {
-		
+			
+		//PARPADEO ROJO:
+		//IMPORTANTE Coloca aquí tus componentes xd:
+		JTextField txtField = FrameTablero.getTxtFieldIngresarNombreEmergenteEditarTablero();
+		JButton btn = FrameTablero.getBtnGuardarEmergenteEditarTablero();
 		String placeholder = FrameTablero.getMensajeEditarNombreTablero();
+		Color colorDelBtn = limon;
 		
-		if(FrameTablero.getTxtFieldIngresarNombreEmergenteEditarTablero().getText().equals(placeholder) 
-				|| FrameTablero.getTxtFieldIngresarNombreEmergenteEditarTablero().getText().equals("")){
-			//IMPORTANTE: Este if es el que hace parpadear de rojo xd, el else crea el tablero
-			//Inicializo colores
-			Color rojo = FrameTablero.getRojo();
-			Color negro = FrameTablero.getNegro();
-			Color limon = FrameTablero.getLimon();
+		if(txtField.getText().equals(placeholder) 
+			|| txtField.getText().equals("")){
 				
 			//Inicializo los bordes
 			Border bordeRojo = BorderFactory.createLineBorder(rojo, 2);
-			Border bordeNegro = BorderFactory.createLineBorder(negro, 1);
+			Border bordeGris = BorderFactory.createLineBorder(gris, 2);
 				
 			//Agrego los colores y bordes
-			FrameTablero.getBtnGuardarEmergenteEditarTablero().setBorder(bordeRojo);
-			FrameTablero.getBtnGuardarEmergenteEditarTablero().setBackground(rojo);
-			FrameTablero.getTxtFieldIngresarNombreEmergenteEditarTablero().setBorder(bordeRojo);
+			btn.setBackground(rojo);
+			txtField.setForeground(rojo);
+			txtField.setBorder(bordeRojo);
 				
 			//Contador para alternar bordes
 			final int[] contador = {0};
@@ -874,23 +880,26 @@ public class Controlador {
 			//Alternador de bordes (funciona casi como un ciclo)
 			Timer timer = new Timer(150, event -> { // Cambia cada 150 ms
 	            if (contador[0] < 6) { // Se repetirá 3 veces, 3 rojas y 3 azules = 6
-	                Border bordeActual = (contador[0] % 2 == 0) ? bordeRojo : bordeNegro; //Op ternario
-	                Color colorActual = (contador[0] % 2 == 0) ? rojo : limon; //Op ternario x2
-	                FrameTablero.getTxtFieldIngresarNombreEmergenteEditarTablero().setBorder(bordeActual);
-	                FrameTablero.getBtnGuardarEmergenteEditarTablero().setBorder(bordeActual);
-	                FrameTablero.getBtnGuardarEmergenteEditarTablero().setBackground(colorActual);
+	                Border bordeActual = (contador[0] % 2 == 0) ? bordeRojo : bordeGris; //Op ternario
+	                Color colorBtn = (contador[0] % 2 == 0) ? rojo : colorDelBtn; //Op ternario x2
+	                Color colorTxt = (contador[0] % 2 == 0) ? rojo : gris ; //Op ternario x3
+	                txtField.setBorder(bordeActual);
+	                txtField.setForeground(colorTxt);
+	                btn.setBackground(colorBtn);
+	                btn.revalidate();
 	                
 	                contador[0]++;
 	            } else {
 	                ((Timer) event.getSource()).stop(); //Detiene el Timer
 	            }
+	            btn.setBorder(null);
 	        });
-			
+				
 			timer.start();
 		} else {
 			String nuevoNombreTablero = FrameTablero.getTxtFieldIngresarNombreEmergenteEditarTablero().getText();//Obtiene el texto
 			//TODO: no existe método de editar tablero
-		}//if crearLista
+		}//if editarTablero
 	}
 	//Cierra: txtFieldIngresarNombreEmergenteEditarTablero
 		
@@ -916,53 +925,53 @@ public class Controlador {
 	
 	//COLABORADORES TABLERO
 		
-	//Abre: txtFieldIngresarCorreoEmergenteColaboradores
-		public void txtFieldIngresarCorreoEmergenteColaboradores() {
-			
-			String placeholder = FrameTablero.getMensajeCorreoColaboradores();
-			
-			if(FrameTablero.getTxtFieldIngresarCorreoEmergenteColaboradores().getText().equals(placeholder) 
-					|| FrameTablero.getTxtFieldIngresarCorreoEmergenteColaboradores().getText().equals("")){
-				//IMPORTANTE: Este if es el que hace parpadear de rojo xd, el else crea el tablero
-				//Inicializo colores
-				Color rojo = FrameTablero.getRojo();
-				Color negro = FrameTablero.getNegro();
-				Color limon = FrameTablero.getLimon();
-					
-				//Inicializo los bordes
-				Border bordeRojo = BorderFactory.createLineBorder(rojo, 2);
-				Border bordeNegro = BorderFactory.createLineBorder(negro, 1);
-					
-				//Agrego los colores y bordes
-				FrameTablero.getBtnConfirmarEmergenteColaboradores().setBorder(bordeRojo);
-				FrameTablero.getBtnConfirmarEmergenteColaboradores().setBackground(rojo);
-				FrameTablero.getTxtFieldIngresarCorreoEmergenteColaboradores().setBorder(bordeRojo);
-					
-				//Contador para alternar bordes
-				final int[] contador = {0};
+	//Abre: txtFieldIngresarCorreoEmergenteColaboradores//FIXME: Parpadeo
+	public void txtFieldIngresarCorreoEmergenteColaboradores() {
+		
+		String placeholder = FrameTablero.getMensajeCorreoColaboradores();
+		
+		if(FrameTablero.getTxtFieldIngresarCorreoEmergenteColaboradores().getText().equals(placeholder) 
+				|| FrameTablero.getTxtFieldIngresarCorreoEmergenteColaboradores().getText().equals("")){
+			//IMPORTANTE: Este if es el que hace parpadear de rojo xd, el else crea el tablero
+			//Inicializo colores
+			Color rojo = FrameTablero.getRojo();
+			Color negro = FrameTablero.getNegro();
+			Color limon = FrameTablero.getLimon();
 				
-				//Alternador de bordes (funciona casi como un ciclo)
-				Timer timer = new Timer(150, event -> { // Cambia cada 150 ms
-		            if (contador[0] < 6) { // Se repetirá 3 veces, 3 rojas y 3 azules = 6
-		                Border bordeActual = (contador[0] % 2 == 0) ? bordeRojo : bordeNegro; //Op ternario
-		                Color colorActual = (contador[0] % 2 == 0) ? rojo : limon; //Op ternario x2
-		                FrameTablero.getTxtFieldIngresarCorreoEmergenteColaboradores().setBorder(bordeActual);
-		                FrameTablero.getBtnConfirmarEmergenteColaboradores().setBorder(bordeActual);
-		                FrameTablero.getBtnConfirmarEmergenteColaboradores().setBackground(colorActual);
-		                
-		                contador[0]++;
-		            } else {
-		                ((Timer) event.getSource()).stop(); //Detiene el Timer
-		            }
-		        });
+			//Inicializo los bordes
+			Border bordeRojo = BorderFactory.createLineBorder(rojo, 2);
+			Border bordeNegro = BorderFactory.createLineBorder(negro, 1);
 				
-				timer.start();
-			} else {
-				//String nuevoNombreTablero = FrameTablero.getBtnConfirmarEmergenteColaboradores().getText();//Obtiene el texto
-				//TODO: no se que método va aca:)
-			}//if crearLista
-		}
-		//Cierra: txtFieldIngresarNombreEmergenteEditarTablero
+			//Agrego los colores y bordes
+			FrameTablero.getBtnConfirmarEmergenteColaboradores().setBorder(bordeRojo);
+			FrameTablero.getBtnConfirmarEmergenteColaboradores().setBackground(rojo);
+			FrameTablero.getTxtFieldIngresarCorreoEmergenteColaboradores().setBorder(bordeRojo);
+				
+			//Contador para alternar bordes
+			final int[] contador = {0};
+			
+			//Alternador de bordes (funciona casi como un ciclo)
+			Timer timer = new Timer(150, event -> { // Cambia cada 150 ms
+	            if (contador[0] < 6) { // Se repetirá 3 veces, 3 rojas y 3 azules = 6
+	                Border bordeActual = (contador[0] % 2 == 0) ? bordeRojo : bordeNegro; //Op ternario
+	                Color colorActual = (contador[0] % 2 == 0) ? rojo : limon; //Op ternario x2
+	                FrameTablero.getTxtFieldIngresarCorreoEmergenteColaboradores().setBorder(bordeActual);
+	                FrameTablero.getBtnConfirmarEmergenteColaboradores().setBorder(bordeActual);
+	                FrameTablero.getBtnConfirmarEmergenteColaboradores().setBackground(colorActual);
+	                
+	                contador[0]++;
+	            } else {
+	                ((Timer) event.getSource()).stop(); //Detiene el Timer
+	            }
+	        });
+			
+			timer.start();
+		} else {
+			//String nuevoNombreTablero = FrameTablero.getBtnConfirmarEmergenteColaboradores().getText();//Obtiene el texto
+			//TODO: no se que método va aca:)
+		}//if crearLista
+	}
+	//Cierra: txtFieldIngresarNombreEmergenteEditarTablero
 	
 	//Abre: actionBtnCancelarEmergenteColaboradores
 	public void actionBtnCancelarEmergenteColaboradores() {
@@ -983,53 +992,90 @@ public class Controlador {
 
 	//Login
 	
+	//Abre: actionBtnContinuarLogin
 	public void actionBtnContinuarLogin() {
-			
-		char [] contraseñaChar= Login.getPwdContraseña().getPassword();
+		
+		//PARPADEO ROJO:
+		//ESTE PARPADEO ES ESPECIAL NO COPIAR.
+		JTextField txtCorreo = Login.getTxtLoginCorreo();
+		JPasswordField pwd = Login.getPwdContraseña();
+		
+		String placeholderCorreo = Login.getMensajeIngresarCorreoLogin();
+		String placeholderContraseña = Login.getMensajeIngresarContraseñaLogin();
+		
+		JButton btn = Login.getBtnLoginContinuar();
+		Color colorDelBtn = morado;
+		
+		char [] contraseñaChar= pwd.getPassword();
 		String contraseña= new String (contraseñaChar);
-		String correoBusqueda= Login.getTxtLoginCorreo().getText();
+		String correoBusqueda= txtCorreo.getText();
 		boolean validacion = verificarCredenciales(contraseña, correoBusqueda);
-				
-				
-		if (validacion) {
-			Login.getFrameLogin().dispose();	
-			new Principal(this);		
-		}else {
-			Color rojo = Principal.getRojo();
-			Color negro = Principal.getNegro();
-			Color azul= Principal.getMillos();
-					
+		
+			
+		if(txtCorreo.getText().equals(placeholderCorreo) 
+			|| txtCorreo.getText().equals("")
+			|| contraseña.equals(placeholderContraseña)
+			|| contraseña.equals("")
+			|| validacion == false){
+			
+			//Set Bordes
 			Border bordeRojo = BorderFactory.createLineBorder(rojo, 2);
-			Border bordeNegro = BorderFactory.createLineBorder(negro, 1);
-					
-			Login.getTxtLoginCorreo().setBorder(bordeRojo);
-			Login.getTxtLoginCorreo().setBackground(negro);
-			Login.getPwdContraseña().setBorder(bordeRojo);
-			Login.getPwdContraseña().setBackground(rojo);					
-			Login.getBtnLoginContinuar().setBorder(bordeRojo);
-			Login.getBtnLoginContinuar().setBackground(rojo);
-					
+			Border bordeGris = BorderFactory.createLineBorder(gris, 2);
+			
+			//Primera vez Bordes y Colores
+			txtCorreo.setBorder(bordeRojo);
+			txtCorreo.setForeground(rojo);
+			
+			pwd.setBorder(bordeRojo);
+			pwd.setForeground(rojo);
+			
+			btn.setBorder(bordeRojo);
+			btn.setBackground(rojo);
+			
 			final int[] contador= {0};
-					
+			
+			//Parpadeo
 			Timer timer = new Timer(150, event -> { // Cambia cada 150 ms
-			      if (contador[0] < 6) { // Se repetirá 3 veces, 3 rojas y 3 azules = 6
-			          Border bordeActual = (contador[0] % 2 == 0) ? bordeRojo : bordeNegro; //Op ternario
-			          Color colorActual = (contador[0] % 2 == 0) ? rojo : azul; //Op ternario x2
-			          Login.getTxtLoginCorreo().setBorder(bordeActual);
-			          Login.getTxtLoginCorreo().setBackground(colorActual);
-			          Login.getPwdContraseña().setBackground(colorActual);
-			          Login.getPwdContraseña().setBorder(bordeActual);
-			          Login.getBtnLoginContinuar().setBorder(bordeActual);
-			          Login.getBtnLoginContinuar().setBackground(colorActual);
+				if (contador[0] < 6) { // Se repetirá 3 veces, 3 rojas y 3 azules = 6
+					Border bordeActual = (contador[0] % 2 == 0) ? bordeRojo : bordeGris; //Op ternario
+	                Color colorBtn = (contador[0] % 2 == 0) ? rojo : colorDelBtn; //Op ternario x2
+	                Color colorTxt = (contador[0] % 2 == 0) ? rojo : gris ; //Op ternario x3
+	                
+			        txtCorreo.setBorder(bordeActual);
+			        txtCorreo.setForeground(colorTxt);
+			        
+			        pwd.setBorder(bordeActual);
+			        pwd.setForeground(colorTxt);
+			        
+			        btn.setBackground(colorBtn);
+			        btn.revalidate();
 			                
-			          	contador[0]++;
-			       } else {
-			         ((Timer) event.getSource()).stop();//Detiene el Timer
-			         }
-			        });
-					timer.start();
-				}	
+		          	contador[0]++;
+	            } else {
+	                ((Timer) event.getSource()).stop(); //Detiene el Timer
+	            }
+				
+	            btn.setBorder(null);
+	        });
+				
+			timer.start();
+			
+		} else {
+			
+			if (validacion) {
+				Login.getFrameLogin().dispose();//Cierra el frame login
+				new Principal(this);	
+			
+			//String nombreLista = toCapitalCase(txtField.getText());//Obtiene el texto y lo transfoma a Capital
+			//listaAbierta = crearLista(nombreLista);//Envía el nombre al método crearLista
+			
+			
 			}
+			//if validacion
+		}
+		//if parpadeo
+	}
+	//Cierra: actionBtnContinuarLogin
 	
 	public void actionBtnCrearCuentaLogin() {
 		Login.getCardLayout().show(Login.getContenedor(), "panelRegisterBody");

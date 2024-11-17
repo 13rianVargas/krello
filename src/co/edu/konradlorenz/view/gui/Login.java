@@ -275,11 +275,6 @@ public class Login extends JFrame {
 			btnLoginContinuar.setFont(new Font("Calibri", Font.ITALIC, 15));
 			btnLoginContinuar.setForeground(Color.white);
 			
-			//Estas 3 lineas permiten que se pueda visualizar en macOS
-			btnLoginContinuar.setOpaque(true);
-			Border border = BorderFactory.createLineBorder(Color.MAGENTA, 2);
-			btnLoginContinuar.setBorder(border);
-			
 		panelLoginBody.add(btnLoginContinuar);
 		
 			btnLoginCrearCuenta= new JButton(mensajeBtnCrearCuentaLogin);
