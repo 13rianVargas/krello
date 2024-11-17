@@ -177,9 +177,9 @@ public class Login extends JFrame {
 	        System.err.println("No se pudo cargar el recurso: KrelloLogo187x60.png");
 	    }
 	    Image logored = logo.getImage();
-	    logored = logored.getScaledInstance(220, 70, Image.SCALE_SMOOTH); // Cambiar "logored.SCALE_SMOOTH" a "Image.SCALE_SMOOTH"
+	    logored = logored.getScaledInstance(220, 80, Image.SCALE_SMOOTH); // Cambiar "logored.SCALE_SMOOTH" a "Image.SCALE_SMOOTH"
 	    lblKrelloLogo.setIcon(new ImageIcon(logored));
-	    lblKrelloLogo.setBounds(0, 5, 405, 150); // x, y, ancho, altura
+	    lblKrelloLogo.setBounds(0, 5, 405, 110); // x, y, ancho, altura
 	    lblKrelloLogo.setHorizontalAlignment(SwingConstants.CENTER); // Centrar Horizontalmente
 
 	    panelLoginHead.add(lblKrelloLogo);

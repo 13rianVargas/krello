@@ -1038,6 +1038,7 @@ public class Controlador {
 	public void actionBtnRegresarRegister() {
 		Login.getCardLayout().show(Login.getContenedor(), "panelLoginBody");
 	}
+	
 	public boolean verificarCredenciales(String contraseña, String correoBusqueda) {
 		for (Persona persona : listaDePersonasGlobal) {
 			if (persona.getCorreo().equalsIgnoreCase(correoBusqueda) && persona.getContraseña().equals(contraseña)) {
