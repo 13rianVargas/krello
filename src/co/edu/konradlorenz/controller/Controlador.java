@@ -1,5 +1,6 @@
 package co.edu.konradlorenz.controller;
 
+import java.awt.CardLayout;
 import java.awt.Color;
 import java.awt.event.MouseEvent;
 
@@ -982,7 +983,7 @@ public class Controlador {
 
 	//Login
 	
-	public void actionbtnContinuarLogin() {
+	public void actionBtnContinuarLogin() {
 			
 		char [] contraseñaChar= Login.getPwdContraseña().getPassword();
 		String contraseña= new String (contraseñaChar);
@@ -1030,8 +1031,14 @@ public class Controlador {
 				}	
 			}
 	
+	public void actionBtnCrearCuentaLogin() {
+		Login.getCardLayout().show(Login.getContenedor(), "panelRegisterBody");
+	}
 	
-	private boolean verificarCredenciales(String contraseña, String correoBusqueda) {
+	public void actionBtnRegresarRegister() {
+		Login.getCardLayout().show(Login.getContenedor(), "panelLoginBody");
+	}
+	public boolean verificarCredenciales(String contraseña, String correoBusqueda) {
 		for (Persona persona : listaDePersonasGlobal) {
 			if (persona.getCorreo().equalsIgnoreCase(correoBusqueda) && persona.getContraseña().equals(contraseña)) {
 				return true;
