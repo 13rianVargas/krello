@@ -1087,8 +1087,6 @@ public class Controlador {
 	}
 	//Cierra: actionBtnCancelarEmergenteEditarTablero
 	
-	
-	
 	//COLABORADORES TABLERO
 		
 	//Abre: txtFieldIngresarCorreoEmergenteColaboradores//FIXME: Parpadeo
@@ -1144,8 +1142,6 @@ public class Controlador {
 		FrameTablero.getEmergenteColaboradores().dispose();
 	}
 	//Cierra: actionBtnCancelarEmergenteColaboradores
-		
-	
 	
 	//ELIMINAR TABLERO
 		
@@ -1155,6 +1151,92 @@ public class Controlador {
 	}
 	//Cierra: actionBtnCancelarEmergenteEliminar
 	
-
+	
+	//EDITAR LISTA
+	
+	//Abre: actionBtnEditarLista
+	public void actionLblEditarLista() {                                             
+		FrameTablero.emergenteEditarLista();
+	}
+	//Cierra: actionBtnEditarLista
+	
+	//Abre: txtFieldIngresarNombreEmergenteEditarLista
+		public void txtFieldIngresarNombreEmergenteEditarLista() {
+				
+			//PARPADEO ROJO:
+			//IMPORTANTE Coloca aquí tus componentes xd:
+			JTextField txtField = FrameTablero.getTxtFieldIngresarNombreEmergenteEditarLista();
+			JButton btn = FrameTablero.getBtnGuardarEmergenteEditarLista();
+			String placeholder = FrameTablero.getMensajeEditarNombreTablero();
+			Color colorDelBtn = limon;
+			
+			if(txtField.getText().equals(placeholder) 
+				|| txtField.getText().equals("")){
+					
+				//Inicializo los bordes
+				Border bordeRojo = BorderFactory.createLineBorder(rojo, 2);
+				Border bordeGris = BorderFactory.createLineBorder(gris, 2);
+					
+				//Agrego los colores y bordes
+				btn.setBackground(rojo);
+				txtField.setForeground(rojo);
+				txtField.setBorder(bordeRojo);
+					
+				//Contador para alternar bordes
+				final int[] contador = {0};
+				
+				//Alternador de bordes (funciona casi como un ciclo)
+				Timer timer = new Timer(150, event -> { // Cambia cada 150 ms
+		            if (contador[0] < 6) { // Se repetirá 3 veces, 3 rojas y 3 azules = 6
+		                Border bordeActual = (contador[0] % 2 == 0) ? bordeRojo : bordeGris; //Op ternario
+		                Color colorBtn = (contador[0] % 2 == 0) ? rojo : colorDelBtn; //Op ternario x2
+		                Color colorTxt = (contador[0] % 2 == 0) ? rojo : gris ; //Op ternario x3
+		                txtField.setBorder(bordeActual);
+		                txtField.setForeground(colorTxt);
+		                btn.setBackground(colorBtn);
+		                btn.revalidate();
+		                
+		                contador[0]++;
+		            } else {
+		                ((Timer) event.getSource()).stop(); //Detiene el Timer
+		            }
+		            btn.setBorder(null);
+		        });
+					
+				timer.start();
+			} else {
+				//String nuevoNombreLista = FrameTablero.getTxtFieldIngresarNombreEmergenteEditarLista().getText();//Obtiene el texto
+				//TODO: no existe método de editar tablero
+			}//if editarTablero
+		}
+		//Cierra: TxtFieldIngresarNombreEmergenteEditarLista
+	
+	//Abre: actionBtnEliminarListaEmergenteEditarLista
+	public void actionBtnEliminarListaEmergenteEditarLista() {
+		FrameTablero.emergenteEliminarLista();
+	}
+	//Cierra: actionBtnEliminarEmergenteEditarTablero
+	
+	//Abre: actionBtnCancelarEmergenteEditarLista
+	public void actionBtnCancelarEmergenteEditarLista() {
+		FrameTablero.getEmergenteEditarLista().dispose();
+	}
+	//Cierra: actionBtnCancelarEmergenteEditarLista
+		
+	//ELIMINAR LISTA
+	
+	//Abre: actionBtnCancelarEmergenteEliminarLista
+	public void actionBtnCancelarEmergenteEliminarLista() {
+		FrameTablero.getEmergenteEliminarLista().dispose();
+	}
+	//Cierra: actionBtnCancelarEmergenteEliminar
+	
+	//ELIMINAR TAREA
+	
+	//Abre: actionBtnCancelarEmergenteEliminarLista
+	public void actionBtnCancelarEmergenteEliminarTarea() {
+		FrameTablero.getEmergenteEliminarTarea().dispose();
+	}
+	//Cierra: actionBtnCancelarEmergenteEliminar
 }	
 //class
