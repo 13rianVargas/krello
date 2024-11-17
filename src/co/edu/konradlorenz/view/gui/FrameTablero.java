@@ -27,6 +27,7 @@ public class FrameTablero extends JFrame{
 	private static JDialog emergenteEliminar;
 	private static JDialog emergenteEditarLista;
 	private static JDialog emergenteEliminarLista;
+	private static JDialog emergenteEliminarTarea;
 	
 	//PANELS 
     public static JPanel panelTableroContent;
@@ -41,6 +42,7 @@ public class FrameTablero extends JFrame{
 	private static JTextField txtFieldIngresarNombreEmergenteCrearLista;
 	private static JTextField txtFieldIngresarNombreEmergenteEditarTablero;
 	private static JTextField txtFieldIngresarCorreoEmergenteColaboradores;
+	private static JTextField txtFieldIngresarNombreEmergenteEditarLista;
 	
 	//BUTTONS
 	private static JButton btnCrearLista;
@@ -54,13 +56,14 @@ public class FrameTablero extends JFrame{
 	private static JButton btnConfirmarEmergenteColaboradores;
 	private static JButton btnCancelarEmergenteEliminar;
 	private static JButton btnBorrarEmergenteEliminar;
-	private static JButton btnPendientesListaEmergenteEditarLista;
 	private static JButton btnMoverListaEmergenteEditarLista;
 	private static JButton btnEliminarListaEmergenteEditarLista;
 	private static JButton btnCancelarEmergenteEditarLista;
 	private static JButton btnGuardarEmergenteEditarLista;
 	private static JButton btnCancelarEmergenteEliminarLista;
 	private static JButton btnBorrarEmergenteEliminarLista;
+	private static JButton btnCancelarEmergenteEliminarTarea;
+	private static JButton btnBorrarEmergenteEliminarTarea;
 	
 	//LABELS (Actuan como botón)
 	private static JLabel lblEditarTablero;
@@ -375,7 +378,7 @@ public class FrameTablero extends JFrame{
 			    	lblEditarLista.setToolTipText("Editar Lista");
 			    	
 			    		//Abrir: Acción del lblEditarLista
-			    		lblEditarTablero.addMouseListener(new MouseAdapter() {
+			    		lblEditarTablero.addMouseListener(new MouseAdapter() {//FIXME: no se porq no funciona:(
 			    			public void mouseClicked(MouseEvent e) {
 			    				ctrl.actionLblEditarLista();//Se llama el método del Controller que gestiona el evento.
 			    			}
@@ -1108,7 +1111,7 @@ public class FrameTablero extends JFrame{
     }
     //Cierra: Método para crear emergenteEliminar
     
-  //Abre: Método para crear emergenteEditarLista
+    //Abre: Método para crear emergenteEditarLista
     public static void emergenteEditarLista() {
     	
     	//JDialog hace que solo la emergente sea interactiva, las demás ventanas se bloquean.
@@ -1149,28 +1152,49 @@ public class FrameTablero extends JFrame{
 			panelCentral.setOpaque(detalles);//Mostrar detalles
 			
 			
-				//Abre: btnPendientesListaEmergenteEditarLista
-				btnPendientesListaEmergenteEditarLista = new JButton("Pendientes");//Crea nuevo
-				btnPendientesListaEmergenteEditarLista.setFont(new Font("Calibri", Font.PLAIN, 18));//Cambia la letra del interior
-				//btnPendientesListaEmergenteEditarLista.setPreferredSize(new Dimension(198, 42));//Tamaño botón
-				btnPendientesListaEmergenteEditarLista.setMaximumSize(new Dimension(250, 50));
-				btnPendientesListaEmergenteEditarLista.setBackground(morado3);//Color de fondo
-				btnPendientesListaEmergenteEditarLista.setForeground(blanco);
-				btnPendientesListaEmergenteEditarLista.setCursor(new Cursor(Cursor.HAND_CURSOR));//Pone el cursor con una manita
-				btnPendientesListaEmergenteEditarLista.setAlignmentX(Component.CENTER_ALIGNMENT);//lo centra???
+			//Abre: txtFieldIngresarNombreEmergenteEditarLista
+			txtFieldIngresarNombreEmergenteEditarLista = new JTextField(mensajeEditarNombreTablero);//Crea nuevo
+			txtFieldIngresarNombreEmergenteEditarLista.setForeground(blanco);//Color de letra
+			//txtFieldIngresarNombreEmergenteEditarLista.setPreferredSize(new Dimension(198, 42));
+			txtFieldIngresarNombreEmergenteEditarLista.setHorizontalAlignment(JTextField.CENTER);
+			txtFieldIngresarNombreEmergenteEditarLista.setMaximumSize(new Dimension(250, 50));
+			txtFieldIngresarNombreEmergenteEditarLista.setFont(new Font("Calibri", Font.PLAIN, 20));//Cambia la letra del interior
+			txtFieldIngresarNombreEmergenteEditarLista.setBackground(morado3);//Color de fondo
+			txtFieldIngresarNombreEmergenteEditarLista.setCursor(new Cursor(Cursor.TEXT_CURSOR));//Pone el cursor modo escritura
+			txtFieldIngresarNombreEmergenteEditarLista.setAlignmentX(Component.CENTER_ALIGNMENT);//lo centra???
 			
-        			//Abre: Acción del btnPendientesListaEmergenteEditarLista
-					btnPendientesListaEmergenteEditarLista.addActionListener(new ActionListener() {
-						public void actionPerformed(ActionEvent evento) {
-							//ctrl.actionBtnPendientesListaEmergenteEditarLista();//TODO: Se llama el método del Controller que gestiona el evento.
-		            	}
-		        	});
-        			//Cierra: Acción del btnPendientesListaEmergenteEditarLista
-	    		
-				//Cierra: btnPendientesListaEmergenteEditarLista
-	    		
-				panelCentral.add(btnPendientesListaEmergenteEditarLista, BorderLayout.NORTH);
-				panelCentral.add(Box.createRigidArea(new Dimension(0, 20)));
+		        //Abre: Placeholder "mensaje previo"
+			txtFieldIngresarNombreEmergenteEditarLista.addFocusListener(new FocusListener() {
+		            @Override
+		            public void focusGained(FocusEvent e) {
+		                if (txtFieldIngresarNombreEmergenteEditarLista.getText().equals(mensajeEditarNombreTablero)) {
+		                	txtFieldIngresarNombreEmergenteEditarLista.setText("");//Cambia el contenido del txtField
+		                	txtFieldIngresarNombreEmergenteEditarLista.setForeground(negro);//Color de letra
+		                }
+		            }
+		            @Override
+		            public void focusLost(FocusEvent e) {
+		                //Si el campo de texto está vacío al perder el foco, restaura el placeholder
+		                if (txtFieldIngresarNombreEmergenteEditarLista.getText().isEmpty()) {
+		                	txtFieldIngresarNombreEmergenteEditarLista.setText(mensajeEditarNombreTablero);//Cambia el contenido del txtField
+		                	txtFieldIngresarNombreEmergenteEditarLista.setForeground(gris);//Color de letra
+		                }
+		            }
+		        });
+		        //Cierra: Placeholder "mensaje previo"
+	        
+		        //Abre: Acción del txtFieldIngresarNombreEmergenteEditarLista
+				txtFieldIngresarNombreEmergenteEditarLista.addActionListener(new ActionListener() {
+		            public void actionPerformed(ActionEvent evento) {
+		            	ctrl.txtFieldIngresarNombreEmergenteEditarLista();//Se llama el método del Controller que gestiona el evento.
+		            }
+		        });
+		        //Cierra: Acción del txtFieldIngresarNombreEmergenteEditarLista
+	        
+	        //Cierra: txtFieldIngresarNombreEmergenteEditarLista
+			
+			panelCentral.add(txtFieldIngresarNombreEmergenteEditarLista, BorderLayout.NORTH);
+			panelCentral.add(Box.createRigidArea(new Dimension(0, 20)));
 				
 				//Abre: btnMoverListaEmergenteEditarLista
 				btnMoverListaEmergenteEditarLista = new JButton("Mover Lista");//Crea nuevo
@@ -1296,7 +1320,7 @@ public class FrameTablero extends JFrame{
     }
     //Cierra: Método para crear emergenteEditarLista
     
-  //Abre: Método para crear emergenteEliminarLista
+    //Abre: Método para crear emergenteEliminarLista
     public static void emergenteEliminarLista() {
     	
     	//JDialog hace que solo la emergente sea interactiva, las demás ventanas se bloquean.
@@ -1327,7 +1351,7 @@ public class FrameTablero extends JFrame{
 	        	panelTituloEliminarLista.add(lblTituloEliminarLista);
         	//Cierra: panelTituloEliminarLista
     
-	        emergenteEliminar.add(panelTituloEliminarLista, BorderLayout.CENTER);//Ubica arriba
+	        emergenteEliminarLista.add(panelTituloEliminarLista, BorderLayout.CENTER);//Ubica arriba
 	        
 	        //Abre: panelInferior
     		JPanel panelInferior = new JPanel(new BorderLayout());//Crea nuevo
@@ -1389,6 +1413,101 @@ public class FrameTablero extends JFrame{
     //Cierra: Método para crear emergenteEliminar
     
     
+    
+    
+    
+    
+    //Abre: Método para crear emergenteEliminarTarea
+    public static void emergenteEliminarTarea() {
+    	
+    	//JDialog hace que solo la emergente sea interactiva, las demás ventanas se bloquean.
+    	emergenteEliminarTarea = new JDialog(frameTablero, "Eliminar Tarea", true);//Crea nuevo (Dueño), (Título), (Bloquea interacción mientras esté abierta)
+    	emergenteEliminarTarea.setSize(600, 295);//Tamaño
+    	emergenteEliminarTarea.setBackground(blanco);//Color de fondo
+    	emergenteEliminarTarea.setResizable(false);//No permite modificar el tamaño de la ventana
+    	emergenteEliminarTarea.setLocationRelativeTo(frameTablero);//Se centra según el framePrincipal
+    	emergenteEliminarTarea.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);//Se cierra al dar click en la X
+    	emergenteEliminarTarea.setLayout(new BorderLayout());//Diseño
+    	
+    		//Abre: panelTituloEliminarTarea
+        	JPanel panelTituloEliminarTarea = new JPanel();//Crea nuevo
+        	panelTituloEliminarTarea.setLayout(new BoxLayout(panelTituloEliminarTarea, BoxLayout.Y_AXIS));//Diseño: El BoxLayout.Y_AXIS es para que se ubiquen VERTICALMENTE una encima de la otra.
+        	panelTituloEliminarTarea.setBackground(morado);//Color de fondo
+        	panelTituloEliminarTarea.setOpaque(detalles);//Mostrar detalles
+        	panelTituloEliminarTarea.setBorder(BorderFactory.createEmptyBorder(80, 20, 80, 20));//top, left, bottom, right -> Ajusta un borde por pixeles
+
+    			//Abre: lblTituloEliminarTarea
+	        	JLabel lblTituloEliminarTarea = new JLabel("¿Seguro desea borrar la tarea?");//Crea nuevo
+	        	lblTituloEliminarTarea.setFont(new Font("Calibri", Font.BOLD, 30));//Cambia la letra del interior
+	        	lblTituloEliminarTarea.setForeground(limon2);//Color de la letra
+	        	lblTituloEliminarTarea.setAlignmentX(Component.CENTER_ALIGNMENT);//Centra horizontalmente
+	        	lblTituloEliminarTarea.setBackground(gris);//Color de fondo
+	        	lblTituloEliminarTarea.setOpaque(detalles);//Mostrar detalles
+	        	//Cierra: lblTituloEliminarTarea
+	        
+	        	panelTituloEliminarTarea.add(lblTituloEliminarTarea);
+        	//Cierra: panelTituloEliminarTarea
+    
+	        emergenteEliminarTarea.add(panelTituloEliminarTarea, BorderLayout.CENTER);//Ubica arriba
+	        
+	        //Abre: panelInferior
+    		JPanel panelInferior = new JPanel(new BorderLayout());//Crea nuevo
+    		panelInferior.setBackground(blanco);//Color de fondo
+    		panelInferior.setOpaque(detalles);//Mostrar detalles
+
+	    		//Abre: panelBotonesBasicos
+	    		JPanel panelBotonesBasicos = new JPanel(new BorderLayout());
+	    		panelBotonesBasicos.setBackground(cyan);//Color de fondo
+	    		panelBotonesBasicos.setOpaque(detalles);//Mostrar detalles
+	    
+	        		//Abre: btnCancelarEmergenteEliminarLista
+		        	btnCancelarEmergenteEliminarTarea = new JButton("Cancelar");//Crea nuevo
+		        	btnCancelarEmergenteEliminarTarea.setFont(new Font("Calibri", Font.PLAIN, 18));//Cambia la letra del interior
+		        	btnCancelarEmergenteEliminarTarea.setPreferredSize(new Dimension(200, 40));//Tamaño botón
+		        	btnCancelarEmergenteEliminarTarea.setBackground(limon);//Color de fondo
+		        	btnCancelarEmergenteEliminarTarea.setCursor(new Cursor(Cursor.HAND_CURSOR));//Pone el cursor con una manita
+	        
+						//Abre: Acción del btnCancelarEmergenteEliminarTarea
+		        		btnCancelarEmergenteEliminarTarea.addActionListener(new ActionListener() {
+				            public void actionPerformed(ActionEvent evento) {
+				            	ctrl.actionBtnCancelarEmergenteEliminarTarea();//Se llama el método del Controller que gestiona el evento.
+				            }
+				        });
+						//Cierra: Acción del btnCancelarEmergenteEliminarLista
+			        
+			        //Cierra: btnCancelarEmergenteEliminarLista
+			
+			        //Abre: btnBorrarEmergenteEliminarTarea    
+			        btnBorrarEmergenteEliminarTarea = new JButton("Borrar");//Crea nuevo
+			        btnBorrarEmergenteEliminarTarea.setFont(new Font("Calibri", Font.PLAIN, 18));//Cambia la letra del interior
+			        btnBorrarEmergenteEliminarTarea.setPreferredSize(new Dimension(200, 40));//Tamaño
+			        btnBorrarEmergenteEliminarTarea.setBackground(rojo);//Color de fondo
+			        btnBorrarEmergenteEliminarTarea.setCursor(new Cursor(Cursor.HAND_CURSOR));//Pone el cursor con una manita
+	        
+			        	//Abre: Acción del btnBorrarEmergenteEliminarTarea
+			        	btnBorrarEmergenteEliminarTarea.addActionListener(new ActionListener() {
+				            public void actionPerformed(ActionEvent evento) {
+				            	//TODO:Crear método en el Controller
+				            	//ctrl.BorrarEmergenteEliminarTarea();//Se llama el método del Controller que gestiona el evento. 
+				            }
+				        });
+						//Cierra: Acción del btnBorrarEmergenteEliminarTarea
+	        
+			        //Cierra: btnBorrarEmergenteEliminarTarea
+			
+		       	panelBotonesBasicos.add(btnCancelarEmergenteEliminarTarea, BorderLayout.WEST);//Lo añade y lo ubica a la izquierda
+		        panelBotonesBasicos.add(btnBorrarEmergenteEliminarTarea, BorderLayout.EAST);//Lo añade y lo ubica a la derecha
+		        panelBotonesBasicos.setBorder(BorderFactory.createEmptyBorder(10, 30, 10, 30));// top, left, bottom, right -> Ajusta un borde por pixeles
+		        //Cierra: panelBotonesBasicos
+
+	        panelInferior.add(panelBotonesBasicos, BorderLayout.SOUTH);//Lo añade y lo ubica abajo
+	        //Cierra: panelInferior
+			
+	        emergenteEliminarTarea.add(panelInferior, BorderLayout.SOUTH);//Lo añade y lo ubica abajo
+	        
+	        emergenteEliminarTarea.setVisible(true);//Hace visible la emergente
+    }
+    //Cierra: Método para crear emergenteEliminarTarea
     
 	  // -- // -- // -- // -- // -- // -- //
 	 // -- // -- // GET & SET// -- // -- //
@@ -1466,6 +1585,14 @@ public class FrameTablero extends JFrame{
 		FrameTablero.emergenteEliminarLista = emergenteEliminarLista;
 	}
 
+	public static JDialog getEmergenteEliminarTarea() {
+		return emergenteEliminarTarea;
+	}
+
+	public static void setEmergenteEliminarTarea(JDialog emergenteEliminarTarea) {
+		FrameTablero.emergenteEliminarTarea = emergenteEliminarTarea;
+	}
+
 	public static JPanel getPanelTableroContent() {
 		return panelTableroContent;
 	}
@@ -1531,6 +1658,15 @@ public class FrameTablero extends JFrame{
 	public static void setTxtFieldIngresarCorreoEmergenteColaboradores(
 			JTextField txtFieldIngresarCorreoEmergenteColaboradores) {
 		FrameTablero.txtFieldIngresarCorreoEmergenteColaboradores = txtFieldIngresarCorreoEmergenteColaboradores;
+	}
+	
+	public static JTextField getTxtFieldIngresarNombreEmergenteEditarLista() {
+		return txtFieldIngresarNombreEmergenteEditarLista;
+	}
+
+	public static void setTxtFieldIngresarNombreEmergenteEditarLista(
+			JTextField txtFieldIngresarNombreEmergenteEditarLista) {
+		FrameTablero.txtFieldIngresarNombreEmergenteEditarLista = txtFieldIngresarNombreEmergenteEditarLista;
 	}
 
 	public static JButton getBtnCrearLista() {
@@ -1619,6 +1755,69 @@ public class FrameTablero extends JFrame{
 
 	public static void setBtnBorrarEmergenteEliminar(JButton btnBorrarEmergenteEliminar) {
 		FrameTablero.btnBorrarEmergenteEliminar = btnBorrarEmergenteEliminar;
+	}
+
+	public static JButton getBtnMoverListaEmergenteEditarLista() {
+		return btnMoverListaEmergenteEditarLista;
+	}
+	
+	public static void setBtnMoverListaEmergenteEditarLista(JButton btnMoverListaEmergenteEditarLista) {
+		FrameTablero.btnMoverListaEmergenteEditarLista = btnMoverListaEmergenteEditarLista;
+	}
+
+	public static JButton getBtnEliminarListaEmergenteEditarLista() {
+		return btnEliminarListaEmergenteEditarLista;
+	}
+
+	public static void setBtnEliminarListaEmergenteEditarLista(JButton btnEliminarListaEmergenteEditarLista) {
+		FrameTablero.btnEliminarListaEmergenteEditarLista = btnEliminarListaEmergenteEditarLista;
+	}
+
+	public static JButton getBtnCancelarEmergenteEditarLista() {
+		return btnCancelarEmergenteEditarLista;
+	}
+
+	public static void setBtnCancelarEmergenteEditarLista(JButton btnCancelarEmergenteEditarLista) {
+		FrameTablero.btnCancelarEmergenteEditarLista = btnCancelarEmergenteEditarLista;
+	}
+
+	public static JButton getBtnGuardarEmergenteEditarLista() {
+		return btnGuardarEmergenteEditarLista;
+	}
+	
+	public static void setBtnGuardarEmergenteEditarLista(JButton btnGuardarEmergenteEditarLista) {
+		FrameTablero.btnGuardarEmergenteEditarLista = btnGuardarEmergenteEditarLista;
+	}
+
+	public static JButton getBtnCancelarEmergenteEliminarLista() {
+		return btnCancelarEmergenteEliminarLista;
+	}
+
+	public static void setBtnCancelarEmergenteEliminarLista(JButton btnCancelarEmergenteEliminarLista) {
+		FrameTablero.btnCancelarEmergenteEliminarLista = btnCancelarEmergenteEliminarLista;
+	}
+
+	public static JButton getBtnBorrarEmergenteEliminarLista() {
+		return btnBorrarEmergenteEliminarLista;
+	}
+	public static void setBtnBorrarEmergenteEliminarLista(JButton btnBorrarEmergenteEliminarLista) {
+		FrameTablero.btnBorrarEmergenteEliminarLista = btnBorrarEmergenteEliminarLista;
+	}
+
+	public static JButton getBtnCancelarEmergenteEliminarTarea() {
+		return btnCancelarEmergenteEliminarTarea;
+	}
+
+	public static void setBtnCancelarEmergenteEliminarTarea(JButton btnCancelarEmergenteEliminarTarea) {
+		FrameTablero.btnCancelarEmergenteEliminarTarea = btnCancelarEmergenteEliminarTarea;
+	}
+	
+	public static JButton getBtnBorrarEmergenteEliminarTarea() {
+		return btnBorrarEmergenteEliminarTarea;
+	}
+	
+	public static void setBtnBorrarEmergenteEliminarTarea(JButton btnBorrarEmergenteEliminarTarea) {
+		FrameTablero.btnBorrarEmergenteEliminarTarea = btnBorrarEmergenteEliminarTarea;
 	}
 
 	public static JLabel getLblEditarTablero() {
