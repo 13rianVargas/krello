@@ -77,8 +77,8 @@ public class Login extends JFrame {
 		panelLoginHead = panelLoginHead();
 		frameLogin.add(panelLoginHead);
 		
-		//panelLoginBody = panelLoginBody();
-		//frameLogin.add(panelLoginBody);
+		panelLoginBody = panelLoginBody();
+		frameLogin.add(panelLoginBody);
 		
 		panelRegisterBody = panelRegisterBody();
 		frameLogin.add(panelRegisterBody);
@@ -217,8 +217,17 @@ public class Login extends JFrame {
 		
 		panelLoginBody.add(btnLoginCrearCuenta);
 		
+		btnLoginContinuar.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				ctrl.actionbtnContinuarLogin();
+				
+			}
+		});
+		
 		return panelLoginBody;
-	}	
+	}
 	
 	//Register
 		//Panel registerBody
@@ -545,12 +554,9 @@ public class Login extends JFrame {
 		Login.azulito = azulito;
 	}
 
-	
 	public String getMensajeIniciarSesionLogin() {
 		return mensajeIniciarSesionLogin;
 	}
-
-	
 
 	public static String getMensajeIngresarCorreoLogin() {
 		return mensajeIngresarCorreoLogin;

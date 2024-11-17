@@ -5,8 +5,8 @@ public class Colaborador extends Persona {
 	public Colaborador() {
 	}
 
-	public Colaborador(String nombre, String correo, String rol) {
-		super(nombre, correo, "Colaborador");
+	public Colaborador(String nombre, String correo, String rol, String contraseña) {
+		super(nombre, correo, "Colaborador", contraseña);
 	}
 
 	@Override

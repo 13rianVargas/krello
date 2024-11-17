@@ -1,6 +1,8 @@
 package co.edu.konradlorenz.controller;
 
 import java.awt.Color;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
@@ -950,62 +952,53 @@ public class Controlador {
 	//Login
 	
 	public void actionbtnContinuarLogin() {
-		
-		JButton boton= Login.getBtnLoginContinuar();
-		boton.addActionListener(new ActionListener() {
 			
-			
-			public void actionPerformed(ActionEvent e) {
-				char [] contraseñaChar= Login.getPwdContraseña().getPassword();
-				String contraseña= new String (contraseña);
-				String correoBusqueda= Login.getTxtLoginCorreo().getText();
-				boolean validacion = verificarCredenciales(contraseña, correoBusqueda);
+		char [] contraseñaChar= Login.getPwdContraseña().getPassword();
+		String contraseña= new String (contraseñaChar);
+		String correoBusqueda= Login.getTxtLoginCorreo().getText();
+		boolean validacion = verificarCredenciales(contraseña, correoBusqueda);
 				
 				
-				if (validacion) {
-					Login.getFrameLogin().dispose();
+		if (validacion) {
+			Login.getFrameLogin().dispose();	
+			new Principal(this);		
+		}else {
+			Color rojo = Principal.getRojo();
+			Color negro = Principal.getNegro();
+			Color morado= Login.getMoradito();
 					
-					new Principal(this);
+			Border bordeRojo = BorderFactory.createLineBorder(rojo, 2);
+			Border bordeNegro = BorderFactory.createLineBorder(negro, 1);
 					
-				}else {
-					Color rojo = Principal.getRojo();
-					Color negro = Principal.getNegro();
-					Color morado= Login.getMoradito();
+			Login.getTxtLoginCorreo().setBorder(bordeRojo);
+			Login.getTxtLoginCorreo().setBackground(negro);
+			Login.getPwdContraseña().setBorder(bordeRojo);
+			Login.getPwdContraseña().setBackground(rojo);					
+			Login.getBtnLoginContinuar().setBorder(bordeRojo);
+			Login.getBtnLoginContinuar().setBackground(rojo);
 					
-					Border bordeRojo = BorderFactory.createLineBorder(rojo, 2);
-					Border bordeNegro = BorderFactory.createLineBorder(negro, 1);
+			final int[] contador= {0};
 					
-					Login.getTxtLoginCorreo().setBorder(bordeRojo);
-					Login.getTxtLoginCorreo().setBackground(negro);
-					Login.getPwdContraseña().setBorder(bordeRojo);
-					Login.getPwdContraseña().setBackground(rojo);					
-					Login.getBtnLoginContinuar().setBorder(bordeRojo);
-					Login.getBtnLoginContinuar().setBackground(rojo);
-					
-					final int[] contador= {0};
-					
-					Timer timer = new Timer(150, event -> { // Cambia cada 150 ms
-			            if (contador[0] < 6) { // Se repetirá 3 veces, 3 rojas y 3 azules = 6
-			                Border bordeActual = (contador[0] % 2 == 0) ? bordeRojo : bordeNegro; //Op ternario
-			                Color colorActual = (contador[0] % 2 == 0) ? rojo : morado; //Op ternario x2
-			                Principal.getTxtFieldIngresarNombreEmergenteCrearTablero().setBorder(bordeActual);
-			                Principal.getBtnCrearTableroEmergenteCrearTablero().setBorder(bordeActual);
-			                Principal.getBtnCrearTableroEmergenteCrearTablero().setBackground(colorActual);
+			Timer timer = new Timer(150, event -> { // Cambia cada 150 ms
+			      if (contador[0] < 6) { // Se repetirá 3 veces, 3 rojas y 3 azules = 6
+			          Border bordeActual = (contador[0] % 2 == 0) ? bordeRojo : bordeNegro; //Op ternario
+			          Color colorActual = (contador[0] % 2 == 0) ? rojo : morado; //Op ternario x2
+			          Principal.getTxtFieldIngresarNombreEmergenteCrearTablero().setBorder(bordeActual);
+			          Principal.getBtnCrearTableroEmergenteCrearTablero().setBorder(bordeActual);
+			          Principal.getBtnCrearTableroEmergenteCrearTablero().setBackground(colorActual);
 			                
-			                contador[0]++;
-			            } else {
-			                ((Timer) event.getSource()).stop();//Detiene el Timer
-			            }
+			          	contador[0]++;
+			            
+			       } else {
+			         ((Timer) event.getSource()).stop();//Detiene el Timer
+			         }
 			        });
 					timer.start();
-				}
-				
-				
+				}	
 			}
-		});
-	}
-
-	protected boolean verificarCredenciales(String contraseña, String correoBusqueda) {
+	
+	
+	private boolean verificarCredenciales(String contraseña, String correoBusqueda) {
 		for (Persona persona : listaDePersonasGlobal) {
 			if (persona.getCorreo().equalsIgnoreCase(correoBusqueda) && persona.getContraseña().equals(contraseña)) {
 				return true;
