@@ -45,11 +45,11 @@ public class Controlador {
 		
 		crearEjemplosPersona();
 		
-		/*/ <- Agrega * entre barras para comentar
+		// <- Agrega * entre barras para comentar
 		new Login(this);//El this envía esta instancia del controlador a esa ventana.
 		//*/
 		
-		// <- Agrega * entre barras para comentar
+		/*/ <- Agrega * entre barras para comentar
 		new Principal(this);//El this envía esta instancia del controlador a esa ventana.
 		//*/
 		
@@ -965,7 +965,7 @@ public class Controlador {
 		}else {
 			Color rojo = Principal.getRojo();
 			Color negro = Principal.getNegro();
-			Color morado= Login.getMoradito();
+			Color azul= Principal.getMillos();
 					
 			Border bordeRojo = BorderFactory.createLineBorder(rojo, 2);
 			Border bordeNegro = BorderFactory.createLineBorder(negro, 1);
@@ -982,13 +982,15 @@ public class Controlador {
 			Timer timer = new Timer(150, event -> { // Cambia cada 150 ms
 			      if (contador[0] < 6) { // Se repetirá 3 veces, 3 rojas y 3 azules = 6
 			          Border bordeActual = (contador[0] % 2 == 0) ? bordeRojo : bordeNegro; //Op ternario
-			          Color colorActual = (contador[0] % 2 == 0) ? rojo : morado; //Op ternario x2
-			          Principal.getTxtFieldIngresarNombreEmergenteCrearTablero().setBorder(bordeActual);
-			          Principal.getBtnCrearTableroEmergenteCrearTablero().setBorder(bordeActual);
-			          Principal.getBtnCrearTableroEmergenteCrearTablero().setBackground(colorActual);
+			          Color colorActual = (contador[0] % 2 == 0) ? rojo : azul; //Op ternario x2
+			          Login.getTxtLoginCorreo().setBorder(bordeActual);
+			          Login.getTxtLoginCorreo().setBackground(colorActual);
+			          Login.getPwdContraseña().setBackground(colorActual);
+			          Login.getPwdContraseña().setBorder(bordeActual);
+			          Login.getBtnLoginContinuar().setBorder(bordeActual);
+			          Login.getBtnLoginContinuar().setBackground(colorActual);
 			                
 			          	contador[0]++;
-			            
 			       } else {
 			         ((Timer) event.getSource()).stop();//Detiene el Timer
 			         }

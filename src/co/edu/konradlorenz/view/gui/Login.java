@@ -32,7 +32,6 @@ public class Login extends JFrame {
 	
 	//TEXTFIELDS
 	private static JTextField txtLoginCorreo;
-	private static JTextField txtLoginNombre;
 	private static JTextField txtRegisterCorreo;
 	private static JTextField txtRegisterNombre;
 	
@@ -440,14 +439,6 @@ public class Login extends JFrame {
 
 	public static void setTxtLoginCorreo(JTextField txtLoginCorreo) {
 		Login.txtLoginCorreo = txtLoginCorreo;
-	}
-
-	public static JTextField getTxtLoginNombre() {
-		return txtLoginNombre;
-	}
-
-	public static void setTxtLoginNombre(JTextField txtLoginNombre) {
-		Login.txtLoginNombre = txtLoginNombre;
 	}
 
 	public static JTextField getTxtRegisterCorreo() {
