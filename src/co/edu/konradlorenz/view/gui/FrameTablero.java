@@ -27,13 +27,14 @@ public class FrameTablero extends JFrame{
 	private static JDialog emergenteEliminar;
 	
 	//PANELS 
-    public static JPanel panelTableroContent;
+	private static JPanel panelTableroContent;
 	private static JPanel panelTableroHead;
 	private static JPanel panelTableroMiddle;
-	private static JPanel panelLista;
+	private static JPanel panelListaContent;
 	
 	//SCROLL PANEL
-	public static JScrollPane panelTableroBody;
+	private static JScrollPane panelTableroBody;
+	private static JScrollPane panelLista;
 	
 	//TEXTFIELDS
 	private static JTextField txtFieldIngresarNombreEmergenteCrearLista;
@@ -299,14 +300,14 @@ public class FrameTablero extends JFrame{
     //Abre: Método para crear el panelLista
 	public static void panelLista() {
 		
-		JPanel panelLista = new JPanel();
-		panelLista.setBackground(petroleo2);
-		panelLista.setForeground(negro);
-		panelLista.setFont(new Font("Calibri", Font.PLAIN, 80));
-		panelLista.setBorder(new EmptyBorder(5, 5, 5, 5));
-		panelLista.setBorder(BorderFactory.createLineBorder(petroleo, 4));
-		panelLista.setPreferredSize(new Dimension(280, 420)); //Tamaño fijo, no hay de otra
-		panelLista.setAlignmentY(CENTER_ALIGNMENT);
+		panelListaContent = new JPanel();
+		panelListaContent.setBackground(petroleo2);
+		panelListaContent.setForeground(negro);
+		panelListaContent.setFont(new Font("Calibri", Font.PLAIN, 80));
+		panelListaContent.setBorder(new EmptyBorder(5, 5, 5, 5));
+		panelListaContent.setBorder(BorderFactory.createLineBorder(petroleo, 4));
+		panelListaContent.setPreferredSize(new Dimension(280, 420)); //Tamaño fijo, no hay de otra
+		panelListaContent.setAlignmentY(CENTER_ALIGNMENT);
 
 			//Abre: panelSuperior
 			JPanel panelSuperior = new JPanel();//Crea nuevo
@@ -390,21 +391,34 @@ public class FrameTablero extends JFrame{
 		    panelSuperior.add(panelFlexible, BorderLayout.NORTH);//Añade el panelFlexible abajo
 			//Cierra: panelSuperior
 
-	    panelLista.add(panelSuperior, BorderLayout.NORTH);
+		    panelListaContent.add(panelSuperior, BorderLayout.NORTH);
+		    
 		
-	    panelTarea(panelLista); //Se utilizaria cuando se realice el evento boton crear tarea, pero lo dejo para que vean como quedo
-	    panelTarea(panelLista); 
-	    panelTarea(panelLista); 
-	    panelTarea(panelLista);
-	    panelTarea(panelLista); 
-	    panelTarea(panelLista); 
-	    panelTarea(panelLista);
-	    panelTarea(panelLista);
-	    panelTarea(panelLista);
-	    panelTarea(panelLista);//TODO: Máximo 8 tareas o hacer un ScrollPanel para las tareas y añadirlas ahí.
+		
+	    panelTarea(panelListaContent); //Se utilizaria cuando se realice el evento boton crear tarea, pero lo dejo para que vean como quedo
+	    panelTarea(panelListaContent); 
+	    panelTarea(panelListaContent); 
+	    panelTarea(panelListaContent);
+	    panelTarea(panelListaContent); 
+	    panelTarea(panelListaContent); 
+	    panelTarea(panelListaContent);
+	    panelTarea(panelListaContent);
+	    panelTarea(panelListaContent);
+	    panelTarea(panelListaContent);
+	    panelTarea(panelListaContent);
+	    panelTarea(panelListaContent);//TODO: Máximo 8 tareas o hacer un ScrollPanel para las tareas y añadirlas ahí.
+	         
+	    //scroll de la lista de tareas
+	    panelLista = new JScrollPane(panelListaContent, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
+	    panelLista.setBorder(null); // Elimina el borde del JScrollPane
+        panelLista.getHorizontalScrollBar().setUnitIncrement(16); // Ajusta la velocidad del scroll
+		//scroll
 	    
+	    
+	    panelListaContent.revalidate();
+	    panelListaContent.repaint();
+	
 	    panelTableroContent.add(panelLista);//Añade el panelLista al panelTableroBody
-	    
 	    panelTableroContent.revalidate();//Recarga el panelTableroBody para que se muestre la lista nueva
 	    panelTableroContent.repaint();
 		   
@@ -459,7 +473,7 @@ public class FrameTablero extends JFrame{
 	    panelTarea.add(lblEditarTarea);
 
 	    // Añadir el panelTarea al panelLista en la sección central
-	    panelLista.add(panelTarea, BorderLayout.CENTER);
+	    panelListaContent.add(panelTarea, BorderLayout.CENTER);
 	}
 	// Cierra: Método para crear el panelTarea
 
@@ -1187,12 +1201,12 @@ public class FrameTablero extends JFrame{
 		FrameTablero.panelTableroMiddle = panelTableroMiddle;
 	}
 
-	public static JPanel getPanelLista() {
-		return panelLista;
+	public static JPanel getPanelListaContent() {
+		return panelListaContent;
 	}
 
-	public static void setPanelLista(JPanel panelLista) {
-		FrameTablero.panelLista = panelLista;
+	public static void setPanelListaContent(JPanel panelListaContent) {
+		FrameTablero.panelListaContent = panelListaContent;
 	}
 
 	public static JScrollPane getPanelTableroBody() {
