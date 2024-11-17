@@ -238,8 +238,14 @@ public class Login extends JFrame {
 			            }
 			        }
 			    });
-			    //TODO
-				//txtLoginCorreo.addActionListener(enterLogin);
+			    
+				txtLoginCorreo.addActionListener(new ActionListener() {
+					
+					@Override
+					public void actionPerformed(ActionEvent e) {
+						ctrl.actionBtnContinuarLogin();						
+					}
+				});
 			
 		panelLoginBody.add(txtLoginCorreo);
 		
@@ -273,10 +279,16 @@ public class Login extends JFrame {
 		            }
 		        }
 		    });
-			    //TODO
-				//pwdContraseña.addActionListener(enterLogin);		
+			   
+				pwdContraseña.addActionListener(new ActionListener() {
+					
+					@Override
+					public void actionPerformed(ActionEvent e) {
+						ctrl.actionBtnContinuarLogin();						
+					}
+				});		
 		
-				panelLoginBody.add(pwdContraseña);
+		panelLoginBody.add(pwdContraseña);
 		
 			btnLoginContinuar = new JButton(mensajeBtnContinuarLogin);
 			btnLoginContinuar.setHorizontalAlignment(SwingConstants.CENTER);
@@ -371,8 +383,14 @@ public class Login extends JFrame {
 			            }
 			        }
 			    });
-			    //TODO
-				//txtRegisterCorreo.addActionListener(enterLogin);
+			    
+				txtRegisterCorreo.addActionListener(new ActionListener() {
+					
+					@Override
+					public void actionPerformed(ActionEvent e) {
+						ctrl.actionBtnRegisterCrearCuenta();		
+					}
+				});
 			
 		panelRegisterBody.add(txtRegisterCorreo);
 			
@@ -402,8 +420,14 @@ public class Login extends JFrame {
 			            }
 			        }
 			    });
-			    //TODO
-			    //pwdField.addActionListener(enterLogin);
+			    
+			    txtRegisterNombre.addActionListener(new ActionListener() {
+					
+					@Override
+					public void actionPerformed(ActionEvent e) {
+						ctrl.actionBtnRegisterCrearCuenta();						
+					}
+				});
 
 		panelRegisterBody.add(txtRegisterNombre);
 			
@@ -436,8 +460,14 @@ public class Login extends JFrame {
 			            }
 			        }
 			    });
-			    //TODO crear metodo para que parpadee
-				//pwdReContraseña.addActionListener(enterLogin);
+
+				pwdReContraseña.addActionListener(new ActionListener() {
+					
+					@Override
+					public void actionPerformed(ActionEvent e) {
+						ctrl.actionBtnRegisterCrearCuenta();						
+					}
+				});
 			
 			
 			panelRegisterBody.add(pwdReContraseña);
@@ -472,8 +502,14 @@ public class Login extends JFrame {
 			        }
 			    });
 		    
-				//TODO
-				//pwdReContraseñaDos.addActionListener(enterLogin);
+				pwdReContraseñaDos.addActionListener(new ActionListener() {
+					
+					@Override
+					public void actionPerformed(ActionEvent e) {
+						ctrl.actionBtnRegisterCrearCuenta();						
+					}
+				});
+				
 				panelRegisterBody.add(pwdReContraseñaDos);
 		
 			btnRegisterCrearCuenta= new JButton(mensajeBtnCrearCuentaRegister);
