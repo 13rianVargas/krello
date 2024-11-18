@@ -4,7 +4,6 @@ import java.awt.*;
 import java.awt.event.*;
 
 import java.util.Calendar;
-import java.util.Iterator;
 
 import javax.swing.*;
 import javax.swing.border.*;
@@ -25,17 +24,16 @@ public class FrameTablero extends JFrame{
 	
 	//EMERGENTES
 	private static JDialog emergenteCrearLista;
-	private static JDialog emergenteCrearTarea;
 	private static JDialog emergenteEditarTablero;
 	private static JDialog emergenteEditarLista;
 	private static JDialog emergenteEliminar;
 	private static JDialog emergenteDelegados;
 	private static JDialog emergenteCrearTarea;
-	private static JDialog emergenteEditarLista;
 	private static JDialog emergenteMoverLista;
 	private static JDialog emergenteEliminarLista;
 	private static JDialog emergenteEditarTarea;
 	private static JDialog emergenteEliminarTarea;
+	private static JDialog emergenteColaboradores;
 	
 	//PANELS 
 	private static JPanel panelTableroHead;
