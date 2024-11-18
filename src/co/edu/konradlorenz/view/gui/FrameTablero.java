@@ -111,7 +111,7 @@ public class FrameTablero extends JFrame{
 
 	//STRINGS
 	private static String mensajeIngresarNombreLista = " Ingrese nombre de la lista...";
-	private static String mensajeEditarNombreTablero = " Nombre ";
+	private static String mensajeEditarNombreTablero;
 	private static String mensajeCorreoColaboradores = " Ingrese correo del colaborador...";
 	private static String mensajeIngresarNombreTarea = " Ingrese nombre de la tarea...";
 	private static String mensajeIngresarDescripcionTarea = " Ingrese la descripción...";
@@ -433,7 +433,7 @@ public class FrameTablero extends JFrame{
 		}
 	         
 	    //scroll de la lista de tareas
-	    panelListaScroll = new JScrollPane(panelLista, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+	    panelListaScroll = new JScrollPane(panelLista, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 	    panelListaScroll.setBorder(null); // Elimina el borde del JScrollPane
         panelListaScroll.getHorizontalScrollBar().setUnitIncrement(16); // Ajusta la velocidad del scroll
 		//scroll
@@ -711,6 +711,7 @@ public class FrameTablero extends JFrame{
 			
 			
 				//Abre: txtFieldIngresarNombreEmergenteEditarTablero
+				mensajeEditarNombreTablero = ctrl.getNombreTableroAbierto();
 				txtFieldIngresarNombreEmergenteEditarTablero = new JTextField(mensajeEditarNombreTablero);//Crea nuevo
 				txtFieldIngresarNombreEmergenteEditarTablero.setForeground(blanco);//Color de letra
 				//txtFieldIngresarNombreEmergenteEditarTablero.setPreferredSize(new Dimension(198, 42));
@@ -845,8 +846,7 @@ public class FrameTablero extends JFrame{
 			        	//Abre: Acción del btnCrearListaEmergenteCrearLista
 				        btnGuardarEmergenteEditarTablero.addActionListener(new ActionListener() {
 				            public void actionPerformed(ActionEvent evento) {
-				            	//TODO:Crear método en el Controller
-				            	//ctrl.GuardarEmergenteEditarTablero();//Se llama el método del Controller que gestiona el evento. 
+				            	ctrl.actionBtnGuardarEmergenteEditarTablero();//Se llama el método del Controller que gestiona el evento. 
 				            }
 				        });
 						//Cierra: Acción del btnCrearListaEmergenteCrearLista
@@ -961,7 +961,7 @@ public class FrameTablero extends JFrame{
 			        //Abre: Acción del txtFieldIngresarCorreoEmergenteColaboradores
 					txtFieldIngresarCorreoEmergenteColaboradores.addActionListener(new ActionListener() {
 			            public void actionPerformed(ActionEvent evento) {
-			            	ctrl.txtFieldIngresarCorreoEmergenteColaboradores();//Se llama el método del Controller que gestiona el evento.
+			            	ctrl.actionBtnConfirmarEmergenteColaboradores();//Se llama el método del Controller que gestiona el evento.
 			            }
 			        });
 			        //Cierra: Acción del txtFieldIngresarCorreoEmergenteColaboradores
@@ -1011,8 +1011,7 @@ public class FrameTablero extends JFrame{
 			        	//Abre: Acción del btnCrearListaEmergenteCrearLista
 				        btnConfirmarEmergenteColaboradores.addActionListener(new ActionListener() {
 				            public void actionPerformed(ActionEvent evento) {
-				            	//TODO:Crear método en el Controller
-				            	//ctrl.ConfirmarEmergenteColaboradores();//Se llama el método del Controller que gestiona el evento. 
+				            	ctrl.actionBtnConfirmarEmergenteColaboradores();//Se llama el método del Controller que gestiona el evento. 
 				            }
 				        });
 						//Cierra: Acción del btnConfirmarEmergenteColaboradores

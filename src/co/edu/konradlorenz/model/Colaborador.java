@@ -6,7 +6,7 @@ public class Colaborador extends Persona {
 	public Colaborador() {
 	}
 
-	public Colaborador(String nombre, String correo, String rol, String contraseña) {
+	public Colaborador(String nombre, String correo, String contraseña) {
 		super(nombre, correo, "Colaborador", contraseña);
 	}
 

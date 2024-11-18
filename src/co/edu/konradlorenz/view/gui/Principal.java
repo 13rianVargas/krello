@@ -353,14 +353,15 @@ public class Principal extends JFrame {
     	
     	panelPrincipalScroll = new JScrollPane(panelPrincipalBody, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);//VERTICAL
     	panelPrincipalScroll.getVerticalScrollBar().setUnitIncrement(16); // Ajusta la velocidad del scroll VERTICAL
+    	panelPrincipalScroll.setBorder(null); // Elimina el borde del JScrollPane
     	panelPrincipalScroll.setBackground(verde);//Color de fondo
     	panelPrincipalScroll.setOpaque(detalles);
-    	panelPrincipalScroll.setBorder(null); // Elimina el borde del JScrollPane
+    	
 	        //Abre: panelAlineamientoIzquierda
 	        panelAlineamientoIzquierda = new JPanel();
 	        panelAlineamientoIzquierda.setLayout(new FlowLayout(FlowLayout.LEFT, 0, 0)); // Alinea a la izquierda con espaciado
-//	        int alturaDinamicaPanelAlineamientoIzquierda = ctrl.alturaDinamicapanelAlineamientoIzquierda;
-	        int alturaDinamicaPanelAlineamientoIzquierda = 471;//471 mínimo para que se active la ScrollBar
+//	        int alturaDinamicaPanelAlineamientoIzquierda = ctrl.alturaDinamicaPanelAlineamientoIzquierda;
+	        int alturaDinamicaPanelAlineamientoIzquierda = 470;//471 mínimo para que se active la ScrollBar
 	        panelAlineamientoIzquierda.setPreferredSize(new Dimension(600, alturaDinamicaPanelAlineamientoIzquierda)); // Tamaño fijo en X, y sin límite en Y
 	        panelAlineamientoIzquierda.setOpaque(detalles);//Mostrar detalles
 	        panelAlineamientoIzquierda.setBackground(rojo);//Color de fondo
@@ -386,37 +387,28 @@ public class Principal extends JFrame {
 				            }
 				        });
 						//Cierra: Acción del btnCrearTablero
-			        
+
 					//Cierra: btnCrearTablero
 						
 				panelTablero.add(btnCrearTablero);
 			    
 				//Cierra: panelTablero
-			
+				
 			panelAlineamientoIzquierda.add(panelTablero);
 	        //Cierra: panelAlineamientoIzquierda
-		
+			
 
 	    panelPrincipalBody.add(panelAlineamientoIzquierda); // Añadir el panelAuxiliar
 	    panelPrincipalBody.revalidate();//Recarga el panelPrincipalScroll para que se muestre el tablero nuevo
 	    panelPrincipalBody.repaint();
-
-	    for (int i = 0; i < 16; i++) {
-	    	panelTablero();
-	    }
 	    
-
-
-
-	    
-	    panelPrincipalBody.revalidate();//Recarga el panelPrincipalScroll para que se muestre el tablero nuevo
-	    panelPrincipalBody.repaint();
+	    ctrl.mostrarTableros();
 	    
     }
     //Cierra: Método para crear el panelPrincipalBody
     
     //Abre: Método para crear el panelTablero
-	public static JButton panelTablero() {
+	public static void panelTablero(String nombre) {
         
     	JPanel panelTablero = new JPanel();
 		panelTablero.setBackground(millos);
@@ -425,7 +417,10 @@ public class Principal extends JFrame {
 		panelTablero.setLayout(new FlowLayout(FlowLayout.CENTER, 30, 10));
 			
 			//Abre: btnAbrirTablero
-			String nombreTablero = "XD";//TODO:
+			if(nombre == null) {
+				nombre = ctrl.toCapitalCase(txtFieldIngresarNombreEmergenteCrearTablero.getText()); // Obtiene el texto y lo transforma a CapitalCase
+			}
+			String nombreTablero = nombre;
 			JButton btnAbrirTablero = new JButton(nombreTablero);//Crea nuevo
 			btnAbrirTablero.setBackground(petroleo);//Color de fondo
 			btnAbrirTablero.setForeground(blanco);//Color de letra
@@ -436,8 +431,7 @@ public class Principal extends JFrame {
 		      	//Abre: Acción del btnAbrirTablero
 				btnAbrirTablero.addActionListener(new ActionListener() {
 		            public void actionPerformed(ActionEvent evento) {
-		            	//TODO:Crear método en el Controller
-		            	//ctrl.actionBtnAbrirTablero1();//Se llama el método del Controller que gestiona el evento. 
+		            	ctrl.actionBtnAbrirTablero(nombreTablero);//Se llama el método del Controller que gestiona el evento. 
 		            }
 		        });
 				//Cierra: Acción del btnAbrirTablero
@@ -450,8 +444,6 @@ public class Principal extends JFrame {
 		
 		panelPrincipalBody.revalidate();
 		panelPrincipalBody.repaint();
-	    
-	    return btnAbrirTablero;
 		   
 	}
 	// Cierra: Método para crear el panelTablero
@@ -595,7 +587,6 @@ public class Principal extends JFrame {
 		        
 		        	//Abre: Acción del btnCrearTableroEmergenteCrearTablero
 		    		btnCrearTableroEmergenteCrearTablero.addActionListener(new ActionListener() {
-		    			
 			            public void actionPerformed(ActionEvent evento) {
 			            	ctrl.actionEnterTxtFieldIngresarNombreEmergenteCrearTablero();//Se llama el método del Controller que gestiona el evento.
 			            }

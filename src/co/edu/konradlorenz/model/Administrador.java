@@ -6,7 +6,7 @@ public class Administrador extends Persona {
 	public Administrador() {
 	}
 
-	public Administrador(String nombre, String correo, String rol, String contraseña) {
+	public Administrador(String nombre, String correo, String contraseña) {
 		super(nombre, correo, "Administrador", contraseña);
 	}
 

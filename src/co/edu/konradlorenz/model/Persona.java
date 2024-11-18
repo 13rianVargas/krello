@@ -10,7 +10,7 @@ public abstract class Persona implements WorkTime {
 	private String correo;
 	private String rol;
 	private String contraseña;
-	private ArrayList<Tablero> listaTablero = new ArrayList<>();
+	private ArrayList<Tablero> listaDeTableros = new ArrayList<>();
 
 	public Persona() {
 		super();
@@ -22,7 +22,7 @@ public abstract class Persona implements WorkTime {
 		this.correo = correo;
 		this.rol = rol;
 		this.contraseña = contraseña;
-		this.listaTablero = new ArrayList<>();
+		this.listaDeTableros = new ArrayList<>();
 	}
 
 	public String getNombre() {
@@ -57,12 +57,12 @@ public abstract class Persona implements WorkTime {
 		this.contraseña = contraseña;
 	}
 
-	public ArrayList<Tablero> getListaTableros() {
-		return listaTablero;
+	public ArrayList<Tablero> getListaDeTableros() {
+		return listaDeTableros;
 	}
 
-	public void setListaTableros(ArrayList<Tablero> listaTableros) {
-		this.listaTablero = listaTableros;
+	public void setListaDeTableros(ArrayList<Tablero> listaDeTableros) {
+		this.listaDeTableros = listaDeTableros;
 	}
 	
 	@Override
