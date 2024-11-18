@@ -1,12 +1,13 @@
 package co.edu.konradlorenz.model;
 
+
 public class Colaborador extends Persona {
 
 	public Colaborador() {
 	}
 
-	public Colaborador(String nombre, String correo, String rol) {
-		super(nombre, correo, "Colaborador");
+	public Colaborador(String nombre, String correo, String contraseña) {
+		super(nombre, correo, "Colaborador", contraseña);
 	}
 
 	@Override

@@ -1,12 +1,13 @@
 package co.edu.konradlorenz.model;
 
+
 public class Administrador extends Persona {
 
 	public Administrador() {
 	}
 
-	public Administrador(String nombre, String correo, String rol) {
-		super(nombre, correo, "Administrador");
+	public Administrador(String nombre, String correo, String contraseña) {
+		super(nombre, correo, "Administrador", contraseña);
 	}
 
 	@Override

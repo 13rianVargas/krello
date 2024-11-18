@@ -1,250 +1,73 @@
 package co.edu.konradlorenz.controller;
 
+import java.awt.Color;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
-import co.edu.konradlorenz.view.Vista;
+import javax.swing.*;
+import javax.swing.border.Border;
+
+import co.edu.konradlorenz.view.*;
+import co.edu.konradlorenz.view.gui.*;
 import co.edu.konradlorenz.model.*;
 
 public class Controlador {
-
-	/*
-	 * protected Administrador objAdministrador = new Administrador(); protected
-	 * Colaborador objColaborador = new Colaborador(); protected Tablero objTablero
-	 * = new Tablero(); protected Lista objLista = new Lista(); protected Tarea
-	 * objTarea = new Tarea(); private ArrayList<Persona> listaPersonasGlobal = new
-	 * ArrayList<>();
-	 */
+	
+	//MOSTRAR DETALLES
+	public boolean detalles = true;//true -> mostrar / false -> ocultar
 
 	private ArrayList<Tablero> listaDeTablerosGlobal = new ArrayList<>();
 	private ArrayList<Lista> listaDeListasGlobal = new ArrayList<>();
 	private ArrayList<Tarea> listaDeTareasGlobal = new ArrayList<>();
-	private ArrayList<Persona> listaDePersonaGlobal = new ArrayList<>();
+	private ArrayList<Persona> listaDePersonasGlobal = new ArrayList<>();
 	private Administrador objAdministrador;
 
+	private Administrador administradorAbierto;
 	private Tablero tableroAbierto;
 	private Lista listaAbierta;
 	private Tarea tareaAbierta;
 	private Colaborador colaboradorAbierto;
+	
+	//COLORS
+	public Color negro = new Color(0, 0, 0);
+	public Color blanco = new Color(255, 255, 255);
+	public Color rojo = new Color(255, 0, 0);
+	public Color verde = new Color(117, 251, 76);
+	public Color millos = new Color(0, 0, 255);
+	public Color azulito = new Color(31, 165, 163);
+	public Color rosa = new Color(243, 178, 177);
+	public Color rosa2 = new Color(235, 116, 116);
+	public Color cyan = new Color(117, 251, 253);
+	public Color cyan2 = new Color(81, 174, 173);
+	public Color gris = new Color(154, 154, 154);
+	public Color gris2 = new Color(217, 217, 217);
+	public Color morado = new Color(98, 20, 109);
+	public Color morado2 = new Color(173, 16, 195);
+	public Color morado3 = new Color(161, 114, 167);
+	public Color aguacate = new Color(102, 181, 127);
+	public Color petroleo = new Color(0, 151, 149);
+	public Color petroleo2 = new Color(83, 181, 179);
+	public Color limon = new Color(206, 220, 23);
+	public Color limon2 = new Color(180, 200, 0);
+	public Color limon3 = new Color(162, 168, 0);
 
-	// > > > > > > > > > > > > > > > > > > > < < < < < < < < < < < < < < < < < < //
-	// > > > > > > > > > > > > > > > > M E T O D O S < < < < < < < < < < < < < < //
-	// > > > > > > > > > > > > > > > > > > > < < < < < < < < < < < < < < < < < < //
 	public void run() {
+		
+		//Abre: Cambio de diseño de botones generales
+		try {
+			UIManager.setLookAndFeel("javax.swing.plaf.nimbus.NimbusLookAndFeel");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+		//Cierra: Cambio de diseño de botones generales
+		
 		crearEjemplosPersona();
-		// crear Administrador
-		String nombre = Vista.pedirString("su nombre");
-		String correo = Vista.pedirString("su correo");
-		objAdministrador = new Administrador(nombre, correo, "Administrador");
-
-		ejecutarMenuPrincipal();
+		
+		//Inicia el GUI:
+		new Login(this);//El this envía esta instancia del controlador a esa ventana.
+		
 	}
 	// run
-	public void ejecutarMenuPrincipal() {
-		while (true) {
-			int opcion = Vista.menuPrincipal();
-			switchMenuPrincipal(opcion);
-		}
-	}
-	// ejecutarMenuPrincipal
-
-	public void ejecutarTablero() {
-		while (true) {
-			Vista.mostrarMensaje("<> <> <> TABLERO: " + tableroAbierto.getNombreTablero() + " <> <> <>");
-			int opcion = Vista.menuTablero();
-			switchTablero(opcion);
-		}
-	}
-	// ejecutarTablero
-
-	public void ejecutarLista() {
-		while (true) {
-			Vista.mostrarMensaje("<> <> <> LISTA: " + listaAbierta.getNombreLista() + " <> <> <>");
-			int opcion = Vista.menuLista();
-			switchLista(opcion);
-		}
-	}
-	// ejecutarLista
-
-	public void ejecutarTarea() {
-		while (true) {
-			// Las tareas no tienen nombre, le dejamos la descripcion
-			Vista.mostrarMensaje("<> <> <> " + tareaAbierta.getDescripcion() + " <> <> <>");
-			int opcion = Vista.menuTarea();
-			switchTarea(opcion);
-		}
-	}
-	// ejecutarLista
-
-	// > > > > > > > > > > > > > > > > > > > < < < < < < < < < < < < < < < < < < //
-	// > > > > > > > > > > > > > > > > S W I T C H < < < < < < < < < < < < < < < //
-	// > > > > > > > > > > > > > > > > > > > < < < < < < < < < < < < < < < < < < //
-
-	public void switchMenuPrincipal(int opcion) {
-		switch (opcion) {
-		case 1:
-			// 1. crear tablero
-			crearTablero();
-			break;
-		case 2:
-			// 2. abrir tablero
-			while (true) {
-				tableroAbierto = abrirTablero();
-				if (tableroAbierto != null) {
-					ejecutarTablero();
-				} else
-					break;
-			}
-			break;
-		case 0:
-			// 0. Salir
-			Vista.mostrarMensaje("Saliendo ...");
-			System.exit(0);
-			break;
-		default:
-			Vista.mostrarMensaje("No es una opción valida.");
-			break;
-		}
-	}
-	// switchMenuPrincipal
-
-	public void switchTablero(int opcion) {
-		if (tableroAbierto != null) {
-			switch (opcion) {
-			case 1:
-				// 1. agregar lista
-				crearLista();
-				ejecutarTablero();
-				break;
-			case 2:
-				// 2. abrir lista
-				while (true) {
-					listaAbierta = abrirLista();
-					if (listaAbierta != null) {
-						ejecutarLista();
-					} else 
-						break;
-				}
-				break;		
-				
-			case 3:
-				// 3. eliminar lista
-				eliminarLista();
-				if (tableroAbierto != null) {
-					ejecutarTablero();
-				}
-				break;
-			case 4:
-				// 4. volver
-				Vista.mostrarMensaje("Volviendo ...");
-				ejecutarMenuPrincipal();
-				break;
-			case 0:
-				// 0. Salir
-				Vista.mostrarMensaje("Saliendo ...");
-				System.exit(0);
-				break;
-			default:
-				Vista.mostrarMensaje("No es una opción valida.");
-				break;
-			}
-			// switch
-		}
-		// if
-	}
-	// switchTablero
-
-	public void switchLista(int opcion) {
-		if (listaAbierta != null) {
-			switch (opcion) {
-			case 1:
-				// 1. agregar tarea
-				crearTarea();
-				ejecutarLista();
-				break;
-			case 2:
-				// 2. abrir tarea
-
-				while (true) {
-					tareaAbierta = abrirTarea();
-					if (tareaAbierta != null) {
-						ejecutarTarea();
-					} else
-						break;
-				}
-				break;
-			case 3:
-				// 3. eliminar tarea
-				eliminarTarea();
-				if (listaAbierta != null) {
-					ejecutarLista();
-				}
-				break;
-			case 4:
-				// 4. volver
-				Vista.mostrarMensaje("Volviendo ...");
-				ejecutarTablero();
-				break;
-			case 0:
-				// 0. salir
-				Vista.mostrarMensaje("Saliendo ...");
-				System.exit(0);
-				break;
-			default:
-				Vista.mostrarMensaje("No es una opción valida.");
-				break;
-			}
-			// switch
-		}
-		// if
-	}
-	// switchLista
-
-	public void switchTarea(int opcion) {
-		if (tareaAbierta != null) {
-			switch (opcion) {
-			case 1:
-				// 1. modificar descripcion
-				modificarDescripcionTarea();
-				// abrir tarea
-				break;
-			case 2:
-				// 2. modificar fecha
-				modificarFechaTarea();
-				// abrir tarea
-				break;
-			case 3:
-				// 3. modificar casilla
-				modificarCasilla();
-				// modificar descripcion
-				// modificar fecha
-				// abrir tarea
-				break;
-			// case 4: de momento no lo utilizaremos
-			// 4. mover tarea
-
-			// modificar casilla
-			// abrir tarea
-			// break;
-			case 5:
-				// 5. volver
-				Vista.mostrarMensaje("Volviendo ...");
-				ejecutarLista();
-				break;
-			case 0:
-				// 0. salir
-				Vista.mostrarMensaje("Saliendo ...");
-				System.exit(0);
-				break;
-			default:
-				Vista.mostrarMensaje("No es una opción valida.");
-				break;
-			}
-			// switch
-		}
-		// if
-	}
-	// switchTarea
 
 	// > > > > > > > > > > > > > > > > > > > < < < < < < < < < < < < < < < < < < //
 	// > > > > > > > > > > > > > > > > > C R E A R < < < < < < < < < < < < < < < //
@@ -254,21 +77,17 @@ public class Controlador {
 	 * Metodos de crear objetos Tablero, Lista, Tarea y Persona. -crearPersona() se
 	 * utiliza unicamente en el método crearTarea.
 	 */
-	public void crearTablero() {
-
-		String nombreTablero = Vista.pedirString("el nombre del tablero");
-		Tablero tablero = new Tablero(nombreTablero, listaDeListasGlobal);
-		listaDeTablerosGlobal.add(tablero);
-
-		Vista.mostrarMensaje("Tablero agregado correctamente.");
+	public Tablero crearTablero(String nombreTablero, String nombreAdministrador) {
+		Tablero tablero = new Tablero(nombreTablero, nombreAdministrador);
+		listaDeTablerosGlobal.add(tablero);//TODO: Cambiar por tableros de persona.
+		return tablero;
 	}
 	// crearTablero
 
-	public void crearLista() {
-		String nombreLista = Vista.pedirString("el nombre de la lista");
-		Lista lista = new Lista(nombreLista, listaDeTareasGlobal);
-		listaDeListasGlobal.add(lista);
-		Vista.mostrarMensaje("Lista agregada correctamente.");
+	public Lista crearLista(String nombreLista) {
+		Lista lista = new Lista(nombreLista);//Crea la lista
+		tableroAbierto.getListaDeListas().add(lista);//Añade la lista al tablero abierto
+		return lista;
 	}
 	// crearLista
 
@@ -285,17 +104,17 @@ public class Controlador {
 		objTarea.setCasilla(false);
 		ArrayList<Persona> listaDelegados = new ArrayList<>();
 		objTarea.setListaDelegados(listaDelegados);
-		mostrarPersonas(listaDePersonaGlobal);
+		mostrarPersonas(listaDePersonasGlobal);
 		boolean disponible = false;
 		boolean vacia = false;
-		if (listaDePersonaGlobal.isEmpty()) {
+		if (listaDePersonasGlobal.isEmpty()) {
 			int indice = Integer.parseInt(Vista.pedirString("cuantos delegados tiene la tarea"));
 			for (int i = 1; i <= indice; i++) {
-				listaDelegados.add(crearPersona());
+				listaDelegados.add(seleccionarDelegado());
 			}
 		}else {
 			String correoBusqueda = Vista.pedirString("el correo del delegado a asignar la tarea");
-			for (Persona persona : listaDePersonaGlobal) {
+			for (Persona persona : listaDePersonasGlobal) {
 				if (persona.getCorreo().equals(correoBusqueda)) {
 					colaboradorAbierto= (Colaborador)persona;
 					break;
@@ -316,21 +135,38 @@ public class Controlador {
 	}
 	// crearTarea
 
-	public Persona crearPersona() {
-		String nombre = Vista.pedirString("el nombre del delegado");
-		String correo = Vista.pedirString("el correo del delegado");
-		String rol = Vista.pedirString("el rol del delegado (Colaborador/Administrador)");
+	public Persona seleccionarDelegado() {
+		boolean elegido=false;
+		String nombreBusqueda=Vista.pedirString("el nombre del delegado de la tarea");
+		String correoBusqueda= Vista.pedirString("el correo del delegado de la tarea");
+		for (Persona persona : listaDePersonasGlobal) {
+			if (persona.getNombre().equalsIgnoreCase(nombreBusqueda)
+				 && persona.getCorreo().equalsIgnoreCase(correoBusqueda)) {
+				elegido=true;
+				return persona;
+			}
+			break;
+		}
+		if (!elegido) {
+			Vista.mostrarMensaje("No se ha encontrado ninguna persona con ese nombre y correo");
+			seleccionarDelegado();
+		}
+		return null;
+	}
+	//seleccionarDelegado
+	
+	public Persona crearPersona(String nombre, String correo, String rol, String contraseña) {
 
 		if (rol.equalsIgnoreCase("colaborador")) {
-			Colaborador objColaborador = new Colaborador(nombre, correo, rol);
+			Colaborador objColaborador = new Colaborador(nombre, correo, contraseña);
 			return objColaborador;
 		} else if (rol.equalsIgnoreCase("administrador")) {
-			Administrador objAdministrador = new Administrador(nombre, correo, rol);
+			Administrador objAdministrador = new Administrador(nombre, correo, contraseña);
 			return objAdministrador;
 		} else {
 			Vista.mostrarMensaje("No es un rol valido.");
 			Vista.mostrarMensaje("Por favor elige entre las opciones disponibles. Colaborador/Administrador");
-			crearPersona();
+			crearPersona(nombre, correo, rol, contraseña);
 		}
 		return null;
 	}
@@ -363,7 +199,7 @@ public class Controlador {
 	 */
 
 	public void eliminarLista() {
-		mostrarLista();
+		mostrarListas();
 		if (!tableroAbierto.getListaDeListas().isEmpty()) {
 			boolean encontrado = false;
 			String nombreBusqueda = Vista.pedirString("el nombre de la lista que desea eliminar");
@@ -386,7 +222,7 @@ public class Controlador {
 	// eliminarLista
 
 	public void eliminarTarea() {
-		mostrarTarea();
+		mostrarTareas();
 		if (!listaAbierta.getListaDeTareas().isEmpty()) {
 			int indiceBusqueda = Integer.parseInt(Vista.pedirString("el indice de la tarea que desea eliminar"));
 			boolean encontrado = false;
@@ -435,18 +271,18 @@ public class Controlador {
 	 * Metodos para mostrar listas, tableros, tareas y personas. -los métodos de
 	 * mostrar unicamente se usan en los métodos de abrir y moverTarea.
 	 */
-	public void mostrarTablero() {
-		if (listaDeTablerosGlobal.isEmpty()) {
-			Vista.mostrarMensaje("No hay tableros creados para mostrar.");
+	public void mostrarTableros() {
+		if (administradorAbierto.getListaDeTableros().isEmpty()) {
+			//JPane futuro?
 		} else {
-			for (Tablero tablero : listaDeTablerosGlobal) {
-				Vista.mostrarMensaje(" -" + tablero.toString());
+			for (Tablero tablero : administradorAbierto.getListaDeTableros()) {
+				Principal.panelTablero(tablero.getNombreTablero());
 			}
 		}
 	}
 	// mostrarTablero
 
-	public void mostrarLista() {
+	public void mostrarListas() {
 
 		if (listaDeListasGlobal.isEmpty()) {
 			Vista.mostrarMensaje("No hay listas creadas para mostrar.");
@@ -458,7 +294,7 @@ public class Controlador {
 	}
 	// mostrarLista
 
-	public void mostrarTarea() {
+	public void mostrarTareas() {
 
 		if (listaDeTareasGlobal.isEmpty()) {
 			Vista.mostrarMensaje("No hay tareas creadas para mostrar.");
@@ -489,61 +325,26 @@ public class Controlador {
 	 * que a los metodos de abrir clases se les puede quitar el if del is.empty,
 	 * menos al de tablero.
 	 */
-	public Tablero abrirTablero() {
-		boolean encontrado = false;
-
-		Tablero tableroAbierto = null;
-
-		if (listaDeTablerosGlobal.isEmpty()) {
-			Vista.mostrarMensaje("No hay tableros creados para abrir.");
-			return null;
-		} else {
-			while (!encontrado) {
-				mostrarTablero();
-				String nombreBusqueda = Vista.pedirString("El nombre del tablero que desea abrir.");
-
-				for (Tablero tablero : listaDeTablerosGlobal) {
-					if (tablero.getNombreTablero().equalsIgnoreCase(nombreBusqueda)) {
-						encontrado = true;
-						tableroAbierto = tablero;
-						break;
-					}
-				}
-
-				if (!encontrado) {
-					Vista.mostrarMensaje("El tablero ingresado no existe, intente de nuevo.");
-				}
-
-			}
-
-			return tableroAbierto;
-		}
+	public String getNombreAdministradorAbierto() {
+		return administradorAbierto.getNombre();
 	}
-	// abrirTablero
+	//abrirAdministrador
+	
+	public String getNombreTableroAbierto() {
+		String nombreTablero = tableroAbierto.getNombreTablero();
+		return nombreTablero;
+	}
+	// getNombreTableroAbierto
+	
+	public String getNombreAdministradorDeTableroAbierto() {
+		String nombreAdministrador = tableroAbierto.getNombreAdministrador();
+		return nombreAdministrador;
+	}
+	// getNombreTableroAbierto
 
-	public Lista abrirLista() {
-		
-		boolean encontrado = false;
-		if (tableroAbierto.getListaDeListas().isEmpty()) {
-			Vista.mostrarMensaje("No hay listas creadas para abrir.");
-			return null;
-		} else {
-			while (!encontrado) {
-				mostrarLista();
-				String nombreBusqueda = Vista.pedirString("el nombre de la lista que desea abrir.");
-				for (Lista lista : listaDeListasGlobal) {
-					if (lista.getNombreLista().equalsIgnoreCase(nombreBusqueda)) {
-						encontrado = true;
-						Vista.mostrarMensaje("La lista fue encontrada.");
-						return lista;
-					}
-				}
-				if (!encontrado) {
-					Vista.mostrarMensaje("La lista no fue encontrada, por favor intente de nuevo.");
-				}
-			}
-			return null;
-		}
+	public String getNombreListaAbierta() {
+			String nombreLista = listaAbierta.getNombreLista();
+		return nombreLista;
 	}
 	// abrirLista
 
@@ -554,7 +355,7 @@ public class Controlador {
 			return null;
 		} else {
 			while (!encontrado) {
-				mostrarTarea();
+				mostrarTareas();
 				int indice = Integer.parseInt(Vista.pedirString("el indice de la descripción de la tarea que desea abrir"));
 				for (int i = 0; i < listaDeTareasGlobal.size(); i++) {
 					if ((i + 1) == indice) {
@@ -671,10 +472,20 @@ public class Controlador {
 	// modificarNombreTablero
 
 	public void crearEjemplosPersona() {
-		listaDePersonaGlobal.add(new Colaborador("Juan Perez", "juan.perez@example.com", "Colaborador"));
-		listaDePersonaGlobal.add(new Colaborador("Pedro Lopez", "pedro.lopez@example.com", "Colaborador"));
-		listaDePersonaGlobal.add(new Colaborador("Maria Guzman", "maria.garcia@example.com", "Colaborador"));
+		
+		listaDePersonasGlobal.add(new Administrador("admin", "admin", "admin"));
+		
+		listaDePersonasGlobal.add(new Administrador("Alejandra Durán", "alejaqt@gmail.com", "123"));
+		listaDePersonasGlobal.add(new Administrador("Sharon Cruz", "sharina@gmail.com", "123"));
+		listaDePersonasGlobal.add(new Administrador("Brian Vargas", "briscuit@gmail.com", "123"));
+		listaDePersonasGlobal.add(new Administrador("Alexander Chacon", "alexito@gmail.com", "falcao<3"));
+		
+		listaDePersonasGlobal.add(new Colaborador("Juan Perez", "juan.perez@example.com", "123"));
+		listaDePersonasGlobal.add(new Colaborador("Pedro Lopez", "pedro.lopez@example.com", "123"));
+		listaDePersonasGlobal.add(new Colaborador("Maria Guzman", "maria.garcia@example.com", "123"));
+		
 	}
+	//crearEjemplosPersona
 	
 	public boolean asignarTarea(Persona persona) {//TODO: Crear lista de personas global
 		if (persona.getRol().equalsIgnoreCase("Colaborador")) {
@@ -688,6 +499,7 @@ public class Controlador {
 		}
 		return true;
 	}
+	// asignarTarea
 	
 	public int recorrerTarea(Persona PersonaComparar) {
 		int canTareas = 0;
@@ -703,9 +515,29 @@ public class Controlador {
 		return canTareas;
 	} 
 	// recorrerTarea
+	
+	public String toCapitalCase(String text) {
+	    if (text == null || text.isEmpty()) {
+	        return text; // Retorna el texto original si es nulo o vacío
+	    }
+
+	    String[] words = text.trim().split("\\s+"); // Divide el texto por espacios
+	    StringBuilder capitalizedText = new StringBuilder();
+
+	    for (String word : words) {
+	        if (word.length() > 0) {
+	            capitalizedText.append(Character.toUpperCase(word.charAt(0))) // Primera letra en mayúscula
+	                          .append(word.substring(1).toLowerCase())        // Resto en minúscula
+	                          .append(" ");                                  // Añade un espacio
+	        }
+	    }
+
+	    return capitalizedText.toString().trim(); // Elimina el último espacio
+	}
+	//toCapitalCase
 
 	/*
-	 * Verificar funcionalidad de este tablero poque esta heavy, toca crear metodos
+	 * Verificar funcionalidad de este tablero porque esta heavy, toca crear metodos
 	 * para recorrer tableros y listas creo public void
 	 * moverTarea(ListalistaElegida, Tarea tareaElegida) {
 	 * mostrarLista(listaDeListasGlobal); String nombreBusqueda = Vista.
@@ -720,6 +552,923 @@ public class Controlador {
 	 * 
 	 * }
 	 */
+	
+	
+	
+	
+	
+	  // -- // -- // -- // -- // -- // -- //
+	 // -- // -- // ACTIONS- // -- // -- //
+	// -- // -- // -- // -- // -- // -- //
+	
+	//LOGIN
+	
+	//Abre: actionBtnContinuarLogin
+	public void actionBtnContinuarLogin() {
+		
+		//PARPADEO ROJO:
+		//ESTE PARPADEO ES ESPECIAL NO COPIAR.
+		JTextField txtCorreo = Login.getTxtLoginCorreo();
+		JPasswordField pwd = Login.getPwdContraseña();
+		
+		String placeholderCorreo = Login.getMensajeIngresarCorreoLogin();
+		String placeholderContraseña = Login.getMensajeIngresarContraseñaLogin();
+		
+		JButton btn = Login.getBtnLoginContinuar();
+		Color colorDelBtn = morado;
+		
+		char [] contraseñaChar= pwd.getPassword();
+		String contraseña= new String (contraseñaChar);
+		String correoBusqueda= txtCorreo.getText();
+		boolean validacion = verificarCredenciales(contraseña, correoBusqueda);
+		
+			
+		if(txtCorreo.getText().equals(placeholderCorreo) 
+			|| txtCorreo.getText().equals("")
+			|| contraseña.equals(placeholderContraseña)
+			|| contraseña.equals("")
+			|| validacion == false){
+			
+			//Set Bordes
+			Border bordeRojo = BorderFactory.createLineBorder(rojo, 2);
+			Border bordeGris = BorderFactory.createLineBorder(gris, 2);
+			
+			//Primera vez Bordes y Colores
+			txtCorreo.setBorder(bordeRojo);
+			txtCorreo.setForeground(rojo);
+			
+			pwd.setBorder(bordeRojo);
+			pwd.setForeground(rojo);
+			
+			btn.setBorder(bordeRojo);
+			btn.setBackground(rojo);
+			
+			final int[] contador= {0};
+			
+			//Parpadeo
+			Timer timer = new Timer(150, event -> { // Cambia cada 150 ms
+				if (contador[0] < 6) { // Se repetirá 3 veces, 3 rojas y 3 azules = 6
+					Border bordeActual = (contador[0] % 2 == 0) ? bordeRojo : bordeGris; //Op ternario
+	                Color colorBtn = (contador[0] % 2 == 0) ? rojo : colorDelBtn; //Op ternario x2
+	                Color colorTxt = (contador[0] % 2 == 0) ? rojo : gris ; //Op ternario x3
+	                
+			        txtCorreo.setBorder(bordeActual);
+			        txtCorreo.setForeground(colorTxt);
+			        
+			        pwd.setBorder(bordeActual);
+			        pwd.setForeground(colorTxt);
+			        
+			        btn.setBackground(colorBtn);
+			        btn.revalidate();
+			                
+		          	contador[0]++;
+	            } else {
+	                ((Timer) event.getSource()).stop(); //Detiene el Timer
+	            }
+				
+	            btn.setBorder(null);
+	        });
+				
+			timer.start();
+			
+		} else {
+			
+			if (validacion) {
+				
+				Login.getFrameLogin().dispose();//Cierra el frame login
+				new Principal(this);	
+			
+			}
+			//if validacion
+		}
+		//if parpadeo
+	}
+	//Cierra: actionBtnContinuarLogin
+	
+	//Abre: actionBtnCrearCuentaLogin
+	public void actionBtnCrearCuentaLogin() {
+		Login.getCardLayout().show(Login.getContenedor(), "panelRegisterBody");
+	}
+	//Cierra: actionBtnCrearCuentaLogin
+	
+	//Abre: verificarCredenciales
+	public boolean verificarCredenciales(String contraseña, String correoBusqueda) {
+		for (Persona persona : listaDePersonasGlobal) {
+			if (persona.getCorreo().equalsIgnoreCase(correoBusqueda) && persona.getContraseña().equals(contraseña)) {
+				administradorAbierto=(Administrador) persona;
+				return true;
+			}
+		}
+		return false;
+	}
+	//Cierra: verificarCredenciales
+	
+	
+	
+	//REGISTER
+	
+	//Abre: actionBtnRegresarRegister
+	public void actionBtnRegresarRegister() {
+		Login.getCardLayout().show(Login.getContenedor(), "panelLoginBody");
+	}
+	//Cierra: actionBtnRegresarRegister
+	
+	//Abre: actionBtnRegisterCrearCuenta
+	public void actionBtnRegisterCrearCuenta() {
+		JTextField txtCorreo= Login.getTxtRegisterCorreo();
+		JTextField txtNombre= Login.getTxtRegisterNombre();
+		JPasswordField pwdReContraseña= Login.getPwdReContraseña();
+		JPasswordField pwdReContraseñaDos= Login.getPwdReContraseñaDos();
+		
+		String placeholderCorreo = Login.getIngresarCorreoRegister();
+		String placeholderNombre = Login.getIngresarNombreRegister();
+		String placeholderReContraseña = Login.getIngresarContraseñaRegister();
+		String placeholderReContraseñaDos = Login.getIngresarReContraseñaRegister();	
+		
+		JButton btn= Login.getBtnRegisterCrearCuenta();
+		Color colorDelBtn= morado;
+		
+		
+		if (txtCorreo.getText().equals(placeholderCorreo)
+			 || txtCorreo.getText().equals("")
+			 || txtNombre.getText().equals(placeholderNombre)
+			 || txtNombre.getText().equals("")
+			 || pwdReContraseña.getPassword().equals(placeholderReContraseña)
+			 || pwdReContraseña.getPassword().equals("")
+			 || pwdReContraseñaDos.getPassword().equals(placeholderReContraseñaDos)
+			 || pwdReContraseñaDos.getPassword().equals("")) {
+			
+				//Set Bordes
+				Border bordeRojo = BorderFactory.createLineBorder(rojo, 2);
+				Border bordeGris = BorderFactory.createLineBorder(gris, 2);
+				
+				//Primera vez Bordes y Colores
+				txtCorreo.setBorder(bordeRojo);
+				txtCorreo.setForeground(rojo);
+				
+				txtNombre.setBorder(bordeRojo);
+				txtNombre.setForeground(rojo);
+				
+				pwdReContraseña.setBorder(bordeRojo);
+				pwdReContraseña.setForeground(rojo);
+				
+				pwdReContraseñaDos.setBorder(bordeRojo);
+				pwdReContraseñaDos.setForeground(rojo);
+				
+				btn.setBorder(bordeRojo);
+				btn.setBackground(rojo);
+				
+				final int[] contador= {0};
+				
+				//Parpadeo
+				Timer timer = new Timer(150, event -> { // Cambia cada 150 ms
+					if (contador[0] < 6) { // Se repetirá 3 veces, 3 rojas y 3 azules = 6
+						Border bordeActual = (contador[0] % 2 == 0) ? bordeRojo : bordeGris; //Op ternario
+		                Color colorBtn = (contador[0] % 2 == 0) ? rojo : colorDelBtn; //Op ternario x2
+		                Color colorTxt = (contador[0] % 2 == 0) ? rojo : gris ; //Op ternario x3
+		                
+				        txtCorreo.setBorder(bordeActual);
+				        txtCorreo.setForeground(colorTxt);
+				        
+				        txtNombre.setBorder(bordeActual);
+						txtNombre.setForeground(colorTxt);
+						
+						pwdReContraseña.setBorder(bordeActual);
+						pwdReContraseña.setForeground(colorTxt);
+						
+						pwdReContraseñaDos.setBorder(bordeActual);
+						pwdReContraseñaDos.setForeground(colorTxt);
+						
+				        
+				        btn.setBackground(colorBtn);
+				        btn.revalidate();
+				                
+			          	contador[0]++;
+		            } else {
+		                ((Timer) event.getSource()).stop(); //Detiene el Timer
+		            }
+					
+		            btn.setBorder(null);
+		        });
+				
+				timer.start();
+				
+		} else {
+			String correo = txtCorreo.getText();
+			String nombre = txtNombre.getText();
+			char [] reContraseñaChar = pwdReContraseña.getPassword();
+			String reContraseña = new String(reContraseñaChar);
+			char [] reContraseñaDosChar = pwdReContraseñaDos.getPassword();
+			String reContraseñaDos= new String(reContraseñaDosChar);
+			if (reContraseña.equals(reContraseñaDos)) {
+				listaDePersonasGlobal.add(crearPersona(nombre, correo, "administrador", reContraseña));
+				Login.getCardLayout().show(Login.getContenedor(), "panelLoginBody");
+			} else {
+				
+				//Set Bordes
+				Border bordeRojo = BorderFactory.createLineBorder(rojo, 2);
+				Border bordeGris = BorderFactory.createLineBorder(gris, 2);
+				
+				//Primera vez Bordes y Colores
+				pwdReContraseña.setBorder(bordeRojo);
+				pwdReContraseña.setForeground(rojo);
+				
+				pwdReContraseñaDos.setBorder(bordeRojo);
+				pwdReContraseñaDos.setForeground(rojo);
+				
+				btn.setBorder(bordeRojo);
+				btn.setBackground(rojo);
+				
+				final int[] contador= {0};
+				
+				//Parpadeo
+				Timer timer = new Timer(150, event -> { // Cambia cada 150 ms
+					if (contador[0] < 6) { // Se repetirá 3 veces, 3 rojas y 3 azules = 6
+						Border bordeActual = (contador[0] % 2 == 0) ? bordeRojo : bordeGris; //Op ternario
+		                Color colorBtn = (contador[0] % 2 == 0) ? rojo : colorDelBtn; //Op ternario x2
+		                Color colorTxt = (contador[0] % 2 == 0) ? rojo : gris ; //Op ternario x3
+						
+						pwdReContraseña.setBorder(bordeActual);
+						pwdReContraseña.setForeground(colorTxt);
+						
+						pwdReContraseñaDos.setBorder(bordeActual);
+						pwdReContraseñaDos.setForeground(colorTxt);
+						
+				        
+				        btn.setBackground(colorBtn);
+				        btn.revalidate();
+				                
+			          	contador[0]++;
+		            } else {
+		                ((Timer) event.getSource()).stop(); //Detiene el Timer
+		            }
+					
+		            btn.setBorder(null);
+		        });
+				
+				timer.start();	
+			}	
+		}
+		
+	}
+	//Abre: actionBtnRegisterCrearCuentaDos
+	
+	//VOLVER
+	
+	//Abre: actionVolverPrincipal
+	public void actionVolverPrincipal() {
+		try {
+			if(FrameTablero.getFrameTablero().isActive()) {//Si está abierto
+				FrameTablero.getFrameTablero().dispose();//Cierra el frame del tablero
+			}
+		} catch (NullPointerException e) {
+			Vista.mostrarMensaje(e.getMessage());
+		}
+		
+		if(!Principal.getFramePrincipal().isActive()) {//Si no está abierto
+	    	new Principal(this);//Crea nuevo, el this envía esta instancia del controlador a esa ventana.
+	    }
+	    
+	}
+	//Cierra: actionVolverPrincipal
+	
+	public void actionLblCerrarSesion() {
+		
+		if (Principal.getFramePrincipal()==null) {
+			//No hace nada
+		}else if (Principal.getFramePrincipal().isActive()) {
+			Principal.getFramePrincipal().dispose();
+			new Login(this);
+		}else if (FrameTablero.getFrameTablero()==null) {
+			//No hace nada	
+		}else if (FrameTablero.getFrameTablero().isActive()) {
+			FrameTablero.getFrameTablero().dispose();
+			new Login(this);
+		}
+	}
+	
+	
+	
+	//CREAR TABLERO
+	
+	//Abre: actionBtnCrearTablero
+	public void actionBtnCrearTablero() {
+		Principal.emergenteCrearTablero();
+	}
+	//Cierra: actionBtnCrearTablero
 
-}
+	//Abre: actionEnterTxtFieldIngresarNombreEmergenteCrearTablero
+	public void actionEnterTxtFieldIngresarNombreEmergenteCrearTablero() {
+			
+		//PARPADEO ROJO:
+		//IMPORTANTE Coloca aquí tus componentes xd:
+		JTextField txtField = Principal.getTxtFieldIngresarNombreEmergenteCrearTablero();
+		JButton btn = Principal.getBtnCrearTableroEmergenteCrearTablero();
+		String placeholder = Principal.getMensajeIngresarNombreTablero();
+		Color colorDelBtn = morado2;
+		int limiteTexto = 50;//Default: (50) Ajusta este valor si necesitas que los txtField tengan un tamaño pequeño para que no deforme los paneles.
+		
+		if(txtField.getText().equals(placeholder) 
+			|| txtField.getText().equals("")
+			|| txtField.getText().length() > limiteTexto){
+				
+			//Inicializo los bordes
+			Border bordeRojo = BorderFactory.createLineBorder(rojo, 2);
+			Border bordeGris = BorderFactory.createLineBorder(gris, 2);
+				
+			//Agrego los colores y bordes
+			btn.setBackground(rojo);
+			txtField.setForeground(rojo);
+			txtField.setBorder(bordeRojo);
+				
+			//Contador para alternar bordes
+			final int[] contador = {0};
+			
+			//Alternador de bordes (funciona casi como un ciclo)
+			Timer timer = new Timer(150, event -> { // Cambia cada 150 ms
+	            if (contador[0] < 6) { // Se repetirá 3 veces, 3 rojas y 3 azules = 6
+	                Border bordeActual = (contador[0] % 2 == 0) ? bordeRojo : bordeGris; //Op ternario
+	                Color colorBtn = (contador[0] % 2 == 0) ? rojo : colorDelBtn; //Op ternario x2
+	                Color colorTxt = (contador[0] % 2 == 0) ? rojo : gris ; //Op ternario x3
+	                txtField.setBorder(bordeActual);
+	                txtField.setForeground(colorTxt);
+	                btn.setBackground(colorBtn);
+	                btn.revalidate();
+	                
+	                contador[0]++;
+	            } else {
+	                ((Timer) event.getSource()).stop(); //Detiene el Timer
+	            }
+	            btn.setBorder(null);
+	        });
+				
+			timer.start();
+		} else {
+			
+			String nombreTablero = toCapitalCase(Principal.getTxtFieldIngresarNombreEmergenteCrearTablero().getText()); // Obtiene el texto y lo transforma a CapitalCase
+			String nombreAdministrador = administradorAbierto.getNombre();
+			Tablero nuevoTablero = crearTablero(nombreTablero, nombreAdministrador);
+			administradorAbierto.getListaDeTableros().add(nuevoTablero);
+			
+			Principal.panelTablero(null);//El null es para que tome el nombre del txtField
+			
+			Principal.getEmergenteCrearTablero().dispose();
+		    
+		}//if CrearTablero
+	}
+	//Cierra: actionEnterTxtFieldIngresarNombreEmergenteCrearTablero
+
+	//Abre: actionBtnCancelarEmergenteCrearTablero
+	public void actionBtnCancelarEmergenteCrearTablero() {
+	    Principal.getEmergenteCrearTablero().dispose();
+	    Principal.setEmergenteCrearTablero(null);
+	}
+	//Cierra: actionBtnCancelarEmergenteCrearTablero
+	
+	//Abre: actionBtnAbrirTablero
+	public void actionBtnAbrirTablero(String nombreTablero) {
+		
+		for (Tablero tablero : administradorAbierto.getListaDeTableros()) {
+			if(tablero.getNombreTablero().equals(nombreTablero)) {
+				tableroAbierto = tablero;
+			}
+		}
+		
+		new FrameTablero(this);//Abre el tableroAbierto
+		
+		Principal.getFramePrincipal().dispose();//Cierra el framePrincipal
+
+	}
+	//Cierra: actionBtnAbrirTablero
+	
+	
+	
+	//AGREGAR INVITADOS
+	
+	//Abre: actionBtnAgregarInvitados
+	public void actionBtnAgregarInvitados() {
+		Principal.emergenteAgregarInvitados();
+	}
+	//Cierra: actionBtnAgregarInvitados
+	
+	//Abre: actionEnterTxtFieldIngresarCorreoEmergenteAgregarInvitados
+	//FIXME: Método sin implementar
+	public Persona actionEnterTxtFieldIngresarCorreoEmergenteAgregarInvitados() {
+			
+			//PARPADEO ROJO:
+			//IMPORTANTE Coloca aquí tus componentes xd:
+			JTextField txtField = Principal.getTxtFieldIngresarCorreoEmergenteAgregarInvitados();
+			JButton btn = Principal.getBtnAgregarInvitadoEmergenteAgregarInvitados();
+			String placeholder = Principal.getMensajeIngresarCorreo();
+			Color colorDelBtn = morado2;
+			int limiteTexto = 50;//Default: (50) Ajusta este valor si necesitas que los txtField tengan un tamaño pequeño para que no deforme los paneles.
+			
+			if(txtField.getText().equals(placeholder) 
+				|| txtField.getText().equals("")
+				|| txtField.getText().length() > limiteTexto){
+					
+				//Inicializo los bordes
+				Border bordeRojo = BorderFactory.createLineBorder(rojo, 2);
+				Border bordeGris = BorderFactory.createLineBorder(gris, 2);
+					
+				//Agrego los colores y bordes
+				btn.setBackground(rojo);
+				txtField.setForeground(rojo);
+				txtField.setBorder(bordeRojo);
+					
+				//Contador para alternar bordes
+				final int[] contador = {0};
+				
+				//Alternador de bordes (funciona casi como un ciclo)
+				Timer timer = new Timer(150, event -> { // Cambia cada 150 ms
+		            if (contador[0] < 6) { // Se repetirá 3 veces, 3 rojas y 3 azules = 6
+		                Border bordeActual = (contador[0] % 2 == 0) ? bordeRojo : bordeGris; //Op ternario
+		                Color colorBtn = (contador[0] % 2 == 0) ? rojo : colorDelBtn; //Op ternario x2
+		                Color colorTxt = (contador[0] % 2 == 0) ? rojo : gris ; //Op ternario x3
+		                txtField.setBorder(bordeActual);
+		                txtField.setForeground(colorTxt);
+		                btn.setBackground(colorBtn);
+		                btn.revalidate();
+		                
+		                contador[0]++;
+		            } else {
+		                ((Timer) event.getSource()).stop(); //Detiene el Timer
+		            }
+		            btn.setBorder(null);
+		        });
+					
+				timer.start();
+		} else {
+			String correoInvitado = Principal.getTxtFieldIngresarCorreoEmergenteAgregarInvitados().getText();//Obtiene el texto
+			
+			for (Persona personita : listaDePersonasGlobal) {
+				if(personita.getCorreo().equals(correoInvitado)) {
+					actionBtnCancelarEmergenteAgregarInvitados();
+					return personita;
+				}
+				
+			}
+		}//if crearTablero
+		return null;
+	}
+	//Cierra: actionEnterTxtFieldIngresarCorreoEmergenteAgregarInvitados
+	
+	//Abre: actionBtnCancelarEmergenteAgregarInvitados
+	public void actionBtnCancelarEmergenteAgregarInvitados() {
+	    Principal.getEmergenteAgregarInvitados().dispose();
+	    Principal.setEmergenteAgregarInvitados(null);
+	}
+	//Cierra: actionBtnCancelarEmergenteAgregarInvitados
+	
+	
+	
+	//CREAR LISTA
+	
+	//Abre: actionBtnCrearLista
+	public void actionBtnCrearLista( ) {                                             
+		FrameTablero.emergenteCrearLista();
+	}
+	//Cierra: actionBtnCrearLista
+	
+	//Abre: actionEnterTxtFieldIngresarNombreEmergenteCrearLista
+	public void actionEnterTxtFieldIngresarNombreEmergenteCrearLista() {
+		
+		//PARPADEO ROJO:
+		//IMPORTANTE Coloca aquí tus componentes xd:
+		JTextField txtField = FrameTablero.getTxtFieldIngresarNombreEmergenteCrearLista();
+		JButton btn = FrameTablero.getBtnCrearListaEmergenteCrearLista();
+		String placeholder = FrameTablero.getMensajeIngresarNombreLista();
+		Color colorDelBtn = morado2;
+		int limiteTexto = 13;//Default: (50) Ajusta este valor si necesitas que los txtField tengan un tamaño pequeño para que no deforme los paneles.
+		
+		if(txtField.getText().equals(placeholder) 
+			|| txtField.getText().equals("")
+			|| txtField.getText().length() > limiteTexto){
+				
+			//Inicializo los bordes
+			Border bordeRojo = BorderFactory.createLineBorder(rojo, 2);
+			Border bordeGris = BorderFactory.createLineBorder(gris, 2);
+				
+			//Agrego los colores y bordes
+			btn.setBackground(rojo);
+			txtField.setForeground(rojo);
+			txtField.setBorder(bordeRojo);
+				
+			//Contador para alternar bordes
+			final int[] contador = {0};
+			
+			//Alternador de bordes (funciona casi como un ciclo)
+			Timer timer = new Timer(150, event -> { // Cambia cada 150 ms
+	            if (contador[0] < 6) { // Se repetirá 3 veces, 3 rojas y 3 azules = 6
+	                Border bordeActual = (contador[0] % 2 == 0) ? bordeRojo : bordeGris; //Op ternario
+	                Color colorBtn = (contador[0] % 2 == 0) ? rojo : colorDelBtn; //Op ternario x2
+	                Color colorTxt = (contador[0] % 2 == 0) ? rojo : gris ; //Op ternario x3
+	                txtField.setBorder(bordeActual);
+	                txtField.setForeground(colorTxt);
+	                btn.setBackground(colorBtn);
+	                btn.revalidate();
+	                
+	                contador[0]++;
+	            } else {
+	                ((Timer) event.getSource()).stop(); //Detiene el Timer
+	            }
+	            btn.setBorder(null);
+	        });
+				
+			timer.start();
+		} else {
+			
+			String nombreLista = toCapitalCase(txtField.getText());//Obtiene el texto y lo transfoma a Capital
+			listaAbierta = crearLista(nombreLista);//Envía el nombre al método crearLista
+			
+			FrameTablero.getEmergenteCrearLista().dispose();//Cierra el frame principal
+			
+			FrameTablero.panelLista();//Crea y añade el panelLista al panelTableroBody
+			
+		}//if crearLista
+	}
+	//Cierra: actionEnterTxtFieldIngresarNombreEmergenteCrearLista
+	
+	//Abre: actionBtnCancelarEmergenteCrearLista
+	public void actionBtnCancelarEmergenteCrearLista() {
+		FrameTablero.getEmergenteCrearLista().dispose();
+	}
+	//Cierra: actionBtnCancelarEmergenteCrearLista
+	
+	
+	
+	//EDITAR TABLERO
+		
+	//Abre: actionBtnEditarTablero
+	public void actionLblEditarTablero() {                                             
+		FrameTablero.emergenteEditarTablero();
+	}
+	//Cierra: actionBtnEditarTablero
+		
+	//Abre: txtFieldIngresarNombreEmergenteEditarTablero
+	public void txtFieldIngresarNombreEmergenteEditarTablero() {
+			
+		//PARPADEO ROJO:
+		//IMPORTANTE Coloca aquí tus componentes xd:
+		JTextField txtField = FrameTablero.getTxtFieldIngresarNombreEmergenteEditarTablero();
+		JButton btn = FrameTablero.getBtnGuardarEmergenteEditarTablero();
+		String placeholder = FrameTablero.getMensajeEditarNombreTablero();
+		Color colorDelBtn = limon;
+		
+		if(txtField.getText().equals(placeholder) 
+			|| txtField.getText().equals("")){
+				
+			//Inicializo los bordes
+			Border bordeRojo = BorderFactory.createLineBorder(rojo, 2);
+			Border bordeGris = BorderFactory.createLineBorder(gris, 2);
+				
+			//Agrego los colores y bordes
+			btn.setBackground(rojo);
+			txtField.setForeground(rojo);
+			txtField.setBorder(bordeRojo);
+				
+			//Contador para alternar bordes
+			final int[] contador = {0};
+			
+			//Alternador de bordes (funciona casi como un ciclo)
+			Timer timer = new Timer(150, event -> { // Cambia cada 150 ms
+	            if (contador[0] < 6) { // Se repetirá 3 veces, 3 rojas y 3 azules = 6
+	                Border bordeActual = (contador[0] % 2 == 0) ? bordeRojo : bordeGris; //Op ternario
+	                Color colorBtn = (contador[0] % 2 == 0) ? rojo : colorDelBtn; //Op ternario x2
+	                Color colorTxt = (contador[0] % 2 == 0) ? rojo : gris ; //Op ternario x3
+	                txtField.setBorder(bordeActual);
+	                txtField.setForeground(colorTxt);
+	                btn.setBackground(colorBtn);
+	                btn.revalidate();
+	                
+	                contador[0]++;
+	            } else {
+	                ((Timer) event.getSource()).stop(); //Detiene el Timer
+	            }
+	            btn.setBorder(null);
+	        });
+				
+			timer.start();
+		} else {
+			//String nuevoNombreTablero = FrameTablero.getTxtFieldIngresarNombreEmergenteEditarTablero().getText();//Obtiene el texto
+			//TODO: no existe método de editar tablero
+		}//if editarTablero
+	}
+	//Cierra: txtFieldIngresarNombreEmergenteEditarTablero
+		
+	//Abre: actionBtnColaboradoresEmergenteEditarTablero
+	public void actionBtnColaboradoresEmergenteEditarTablero() {
+		FrameTablero.emergenteColaboradores();
+	}
+	//Cierra: actionBtnColaboradoresEmergenteEditarTablero
+	
+	//Abre: actionBtnEliminarEmergenteEditarTablero
+	public void actionBtnEliminarEmergenteEditarTablero() {
+		FrameTablero.emergenteEliminar();
+	}
+	//Cierra: actionBtnEliminarEmergenteEditarTablero
+		
+	//Abre: actionBtnGuardarEmergenteEditarTablero
+	public void actionBtnGuardarEmergenteEditarTablero() {
+		
+		//PARPADEO ROJO:
+		//IMPORTANTE Coloca aquí tus componentes xd:
+		JTextField txtField = FrameTablero.getTxtFieldIngresarNombreEmergenteEditarTablero();
+		JButton btn = FrameTablero.getBtnGuardarEmergenteEditarTablero();
+		String placeholder = FrameTablero.getMensajeEditarNombreTablero();
+		Color colorDelBtn = limon;
+		int limiteTexto = 50;//Default: (50) Ajusta este valor si necesitas que los txtField tengan un tamaño pequeño para que no deforme los paneles.
+		
+		if(toCapitalCase(txtField.getText()).equals(placeholder) 
+			|| txtField.getText().equals("")
+			|| txtField.getText().length() > limiteTexto){
+				
+			//Inicializo los bordes
+			Border bordeRojo = BorderFactory.createLineBorder(rojo, 2);
+			Border bordeGris = BorderFactory.createLineBorder(gris, 2);
+				
+			//Agrego los colores y bordes
+			btn.setBackground(rojo);
+			txtField.setForeground(rojo);
+			txtField.setBorder(bordeRojo);
+				
+			//Contador para alternar bordes
+			final int[] contador = {0};
+			
+			//Alternador de bordes (funciona casi como un ciclo)
+			Timer timer = new Timer(150, event -> { // Cambia cada 150 ms
+	            if (contador[0] < 6) { // Se repetirá 3 veces, 3 rojas y 3 grises = 6
+	                Border bordeActual = (contador[0] % 2 == 0) ? bordeRojo : bordeGris; //Op ternario
+	                Color colorBtn = (contador[0] % 2 == 0) ? rojo : colorDelBtn; //Op ternario x2
+	                Color colorTxt = (contador[0] % 2 == 0) ? rojo : blanco ; //Op ternario x3
+	                txtField.setBorder(bordeActual);
+	                txtField.setForeground(colorTxt);
+	                btn.setBackground(colorBtn);
+	                btn.revalidate();
+	                
+	                contador[0]++;
+	            } else {
+	                ((Timer) event.getSource()).stop(); //Detiene el Timer
+	            }
+	            btn.setBorder(null);
+	        });
+				
+			timer.start();
+		} else {
+			
+		String nuevoNombre = FrameTablero.getTxtFieldIngresarNombreEmergenteEditarTablero().getText();
+		tableroAbierto.setNombreTablero(toCapitalCase(nuevoNombre));
+		
+		FrameTablero.getEmergenteEditarTablero().dispose();
+		
+		FrameTablero.getFrameTablero().dispose();
+		new FrameTablero(this);
+		}
+	}
+	//Cierra: actionBtnGuardarEmergenteEditarTablero
+	
+	//Abre: actionBtnCancelarEmergenteEditarTablero
+	public void actionBtnCancelarEmergenteEditarTablero() {
+		FrameTablero.getEmergenteEditarTablero().dispose();
+	}
+	//Cierra: actionBtnCancelarEmergenteEditarTablero
+	
+	
+	
+	//COLABORADORES TABLERO
+		
+	//Abre: txtFieldIngresarCorreoEmergenteColaboradores//FIXME: Parpadeo
+	public void txtFieldIngresarCorreoEmergenteColaboradores() {
+		
+		String placeholder = FrameTablero.getMensajeCorreoColaboradores();
+		
+		if(FrameTablero.getTxtFieldIngresarCorreoEmergenteColaboradores().getText().equals(placeholder) 
+				|| FrameTablero.getTxtFieldIngresarCorreoEmergenteColaboradores().getText().equals("")){
+			//IMPORTANTE: Este if es el que hace parpadear de rojo xd, el else crea el tablero
+			//Inicializo colores
+			Color rojo = FrameTablero.getRojo();
+			Color negro = FrameTablero.getNegro();
+			Color limon = FrameTablero.getLimon();
+				
+			//Inicializo los bordes
+			Border bordeRojo = BorderFactory.createLineBorder(rojo, 2);
+			Border bordeNegro = BorderFactory.createLineBorder(negro, 1);
+				
+			//Agrego los colores y bordes
+			FrameTablero.getBtnConfirmarEmergenteColaboradores().setBorder(bordeRojo);
+			FrameTablero.getBtnConfirmarEmergenteColaboradores().setBackground(rojo);
+			FrameTablero.getTxtFieldIngresarCorreoEmergenteColaboradores().setBorder(bordeRojo);
+				
+			//Contador para alternar bordes
+			final int[] contador = {0};
+			
+			//Alternador de bordes (funciona casi como un ciclo)
+			Timer timer = new Timer(150, event -> { // Cambia cada 150 ms
+	            if (contador[0] < 6) { // Se repetirá 3 veces, 3 rojas y 3 azules = 6
+	                Border bordeActual = (contador[0] % 2 == 0) ? bordeRojo : bordeNegro; //Op ternario
+	                Color colorActual = (contador[0] % 2 == 0) ? rojo : limon; //Op ternario x2
+	                FrameTablero.getTxtFieldIngresarCorreoEmergenteColaboradores().setBorder(bordeActual);
+	                FrameTablero.getBtnConfirmarEmergenteColaboradores().setBorder(bordeActual);
+	                FrameTablero.getBtnConfirmarEmergenteColaboradores().setBackground(colorActual);
+	                
+	                contador[0]++;
+	            } else {
+	                ((Timer) event.getSource()).stop(); //Detiene el Timer
+	            }
+	        });
+			
+			timer.start();
+		} else {
+			//String nuevoNombreTablero = FrameTablero.getBtnConfirmarEmergenteColaboradores().getText();//Obtiene el texto
+			//TODO: no se que método va aca:)
+		}//if crearLista
+	}
+	//Cierra: txtFieldIngresarNombreEmergenteEditarTablero
+	
+	//Abre: actionBtnConfirmarEmergenteColaboradores
+	public void actionBtnConfirmarEmergenteColaboradores() {
+		//TODO: Esto solo agrega, no se puede eliminar de momento xd
+		
+		String correo = FrameTablero.getTxtFieldIngresarCorreoEmergenteColaboradores().getText();
+		boolean encontrado = false;
+		Persona persona = null;
+		for (Persona personita : listaDePersonasGlobal) {
+			if(personita.getCorreo().equals(correo)) {
+				persona = personita;
+				encontrado = true;
+			}
+		}
+		
+	
+		//PARPADEO ROJO:
+		//IMPORTANTE Coloca aquí tus componentes xd:
+		JTextField txtField = FrameTablero.getTxtFieldIngresarCorreoEmergenteColaboradores();
+		JButton btn = FrameTablero.getBtnConfirmarEmergenteColaboradores();
+		String placeholder = FrameTablero.getMensajeCorreoColaboradores();
+		Color colorDelBtn = limon;
+		int limiteTexto = 50;//Default: (50) Ajusta este valor si necesitas que los txtField tengan un tamaño pequeño para que no deforme los paneles.
+		
+		if(txtField.getText().equals(placeholder) 
+			|| txtField.getText().equals("")
+			|| txtField.getText().length() > limiteTexto
+			|| !encontrado){
+				
+			//Inicializo los bordes
+			Border bordeRojo = BorderFactory.createLineBorder(rojo, 2);
+			Border bordeGris = BorderFactory.createLineBorder(gris, 2);
+				
+			//Agrego los colores y bordes
+			btn.setBackground(rojo);
+			txtField.setForeground(rojo);
+			txtField.setBorder(bordeRojo);
+				
+			//Contador para alternar bordes
+			final int[] contador = {0};
+			
+			//Alternador de bordes (funciona casi como un ciclo)
+			Timer timer = new Timer(150, event -> { // Cambia cada 150 ms
+	            if (contador[0] < 6) { // Se repetirá 3 veces, 3 rojas y 3 grises = 6
+	                Border bordeActual = (contador[0] % 2 == 0) ? bordeRojo : bordeGris; //Op ternario
+	                Color colorBtn = (contador[0] % 2 == 0) ? rojo : colorDelBtn; //Op ternario x2
+	                Color colorTxt = (contador[0] % 2 == 0) ? rojo : gris ; //Op ternario x3
+	                txtField.setBorder(bordeActual);
+	                txtField.setForeground(colorTxt);
+	                btn.setBackground(colorBtn);
+	                btn.revalidate();
+	                
+	                contador[0]++;
+	            } else {
+	                ((Timer) event.getSource()).stop(); //Detiene el Timer
+	            }
+	            btn.setBorder(null);
+	        });
+				
+			timer.start();
+		} else {
+			tableroAbierto.getListaDeInvitados().add(persona);
+			FrameTablero.getEmergenteColaboradores().dispose();
+		}		
+	}
+	//Cierra: actionBtnConfirmarEmergenteColaboradores
+	
+	//Abre: actionBtnCancelarEmergenteColaboradores
+	public void actionBtnCancelarEmergenteColaboradores() {
+		FrameTablero.getEmergenteColaboradores().dispose();
+	}
+	//Cierra: actionBtnCancelarEmergenteColaboradores
+	
+	
+	
+	//ELIMINAR TABLERO
+		
+	//Abre: actionBtnCancelarEmergenteEliminar
+	public void actionBtnCancelarEmergenteEliminar() {
+		FrameTablero.getEmergenteEliminar().dispose();
+	}
+	//Cierra: actionBtnCancelarEmergenteEliminar
+	
+	
+	
+	//CREAR TAREA
+	
+	//Abre: actionBtnNuevaTarea
+	public void actionLblNuevaTarea() {
+		FrameTablero.emergenteCrearTarea();
+	}
+	//Cierra: actionBtnNuevaTarea
+	
+	//Abre: actionBtnCancelarEmergenteCrearTarea
+	public void actionBtnCancelarEmergenteCrearTarea() {
+	    FrameTablero.getEmergenteCrearTarea().dispose();
+	    FrameTablero.setEmergenteCrearTarea(null);
+	}
+	//Cierra: actionBtnCancelarEmergenteCrearTarea
+	
+	//EDITAR LISTA
+	
+	//Abre: actionBtnEditarLista
+	public void actionLblEditarLista() {                                             
+		FrameTablero.emergenteEditarLista();
+	}
+	//Cierra: actionBtnEditarLista
+	
+	//Abre: txtFieldIngresarNombreEmergenteEditarLista
+		public void txtFieldIngresarNombreEmergenteEditarLista() {
+				
+			//PARPADEO ROJO:
+			//IMPORTANTE Coloca aquí tus componentes xd:
+			JTextField txtField = FrameTablero.getTxtFieldIngresarNombreEmergenteEditarLista();
+			JButton btn = FrameTablero.getBtnGuardarEmergenteEditarLista();
+			String placeholder = FrameTablero.getMensajeEditarNombreTablero();
+			Color colorDelBtn = limon;
+			
+			if(txtField.getText().equals(placeholder) 
+				|| txtField.getText().equals("")){
+					
+				//Inicializo los bordes
+				Border bordeRojo = BorderFactory.createLineBorder(rojo, 2);
+				Border bordeGris = BorderFactory.createLineBorder(gris, 2);
+					
+				//Agrego los colores y bordes
+				btn.setBackground(rojo);
+				txtField.setForeground(rojo);
+				txtField.setBorder(bordeRojo);
+					
+				//Contador para alternar bordes
+				final int[] contador = {0};
+				
+				//Alternador de bordes (funciona casi como un ciclo)
+				Timer timer = new Timer(150, event -> { // Cambia cada 150 ms
+		            if (contador[0] < 6) { // Se repetirá 3 veces, 3 rojas y 3 azules = 6
+		                Border bordeActual = (contador[0] % 2 == 0) ? bordeRojo : bordeGris; //Op ternario
+		                Color colorBtn = (contador[0] % 2 == 0) ? rojo : colorDelBtn; //Op ternario x2
+		                Color colorTxt = (contador[0] % 2 == 0) ? rojo : gris ; //Op ternario x3
+		                txtField.setBorder(bordeActual);
+		                txtField.setForeground(colorTxt);
+		                btn.setBackground(colorBtn);
+		                btn.revalidate();
+		                
+		                contador[0]++;
+		            } else {
+		                ((Timer) event.getSource()).stop(); //Detiene el Timer
+		            }
+		            btn.setBorder(null);
+		        });
+					
+				timer.start();
+			} else {
+				//String nuevoNombreLista = FrameTablero.getTxtFieldIngresarNombreEmergenteEditarLista().getText();//Obtiene el texto
+				//TODO: no existe método de editar tablero
+			}//if editarTablero
+		}
+		//Cierra: TxtFieldIngresarNombreEmergenteEditarLista
+	
+	//Abre: actionBtnEliminarListaEmergenteEditarLista
+	public void actionBtnEliminarListaEmergenteEditarLista() {
+		FrameTablero.emergenteEliminarLista();
+	}
+	//Cierra: actionBtnEliminarEmergenteEditarTablero
+	
+	//Abre: actionBtnCancelarEmergenteEditarLista
+	public void actionBtnCancelarEmergenteEditarLista() {
+		FrameTablero.getEmergenteEditarLista().dispose();
+	}
+	//Cierra: actionBtnCancelarEmergenteEditarLista
+		
+	//ELIMINAR LISTA
+	
+	//Abre: actionBtnCancelarEmergenteEliminarLista
+	public void actionBtnCancelarEmergenteEliminarLista() {
+		FrameTablero.getEmergenteEliminarLista().dispose();
+	}
+	//Cierra: actionBtnCancelarEmergenteEliminar
+	
+	//ELIMINAR TAREA
+	
+	//Abre: actionBtnCancelarEmergenteEliminarLista
+	public void actionBtnCancelarEmergenteEliminarTarea() {
+		FrameTablero.getEmergenteEliminarTarea().dispose();
+	}
+	//Cierra: actionBtnCancelarEmergenteEliminar
+}	
 //class
