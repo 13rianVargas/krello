@@ -4,6 +4,7 @@ import java.awt.*;
 import java.awt.event.*;
 
 import java.util.Calendar;
+import java.util.Iterator;
 
 import javax.swing.*;
 import javax.swing.border.*;
@@ -24,8 +25,9 @@ public class FrameTablero extends JFrame{
 	
 	//EMERGENTES
 	private static JDialog emergenteCrearLista;
+	private static JDialog emergenteCrearTarea;
 	private static JDialog emergenteEditarTablero;
-	private static JDialog emergenteColaboradores;
+	private static JDialog emergenteEditarLista;
 	private static JDialog emergenteEliminar;
 	private static JDialog emergenteDelegados;
 	private static JDialog emergenteCrearTarea;
@@ -36,14 +38,14 @@ public class FrameTablero extends JFrame{
 	private static JDialog emergenteEliminarTarea;
 	
 	//PANELS 
-	private static JPanel panelTableroContent;
 	private static JPanel panelTableroHead;
 	private static JPanel panelTableroMiddle;
-	private static JPanel panelListaContent;
+	private static JPanel panelTableroBody;
+	private static JPanel panelLista;
 	
 	//SCROLL PANEL
-	private static JScrollPane panelTableroBody;
-	private static JScrollPane panelLista;
+	private static JScrollPane panelTableroScroll;
+	private static JScrollPane panelListaScroll;
 	
 	//TEXTFIELDS
 	private static JTextField txtFieldIngresarNombreEmergenteCrearLista;
@@ -86,7 +88,7 @@ public class FrameTablero extends JFrame{
 	private static JLabel lblNuevaTarea;
 	private static JLabel lblEditarTarea;
 		
-	//COLORS (Se crean en el Controller)
+	//COLORS (Se inicializan en el Controller)
 	private static Color negro;
 	private static Color blanco;
 	private static Color rojo;
@@ -298,9 +300,9 @@ public class FrameTablero extends JFrame{
 	        panelIntermedio.setBackground(rojo);//Color de fondo
 	        panelIntermedio.setOpaque(detalles);//Mostrar detalles
 	        
-	        	panelTableroBody();//Crea el panelTableroBody
+	        	panelTableroBody();//Crea el panelTableroScroll
 	    	
-	    	panelIntermedio.add(panelTableroBody, BorderLayout.CENTER);//Lo añade y lo ubica en el centro
+	    	panelIntermedio.add(panelTableroScroll, BorderLayout.CENTER);//Lo añade y lo ubica en el centro
 	    	//Cierra: panelIntermedio
         
         panelTableroMiddle.add(panelIntermedio, BorderLayout.CENTER);//Lo añade y lo ubica abajo
@@ -311,29 +313,36 @@ public class FrameTablero extends JFrame{
     
     //Abre: Método para crear el panelTableroBody
     public static void panelTableroBody() {
-    	panelTableroContent = new JPanel();
-        panelTableroContent.setBackground(gris2);
-        panelTableroContent.setBorder(new EmptyBorder(5, 5,5, 5));//top, left, bottom, right -> Ajusta un borde por pixeles
-        panelTableroContent.setBorder(BorderFactory.createLineBorder(gris, 3));
-        panelTableroContent.setLayout(new FlowLayout(FlowLayout.LEFT, 20, 20));
+    	
+    	panelTableroBody = new JPanel();//Crea nuevo
+    	panelTableroBody.setBackground(gris2);
+    	panelTableroBody.setBorder(new EmptyBorder(5, 5, 5, 5));//top, left, bottom, right -> Ajusta un borde por pixeles
+    	panelTableroBody.setBorder(BorderFactory.createLineBorder(gris, 3));
+    	panelTableroBody.setLayout(new FlowLayout(FlowLayout.LEFT, 20, 20));
         
-        panelTableroBody = new JScrollPane(panelTableroContent, JScrollPane.VERTICAL_SCROLLBAR_NEVER, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-        panelTableroBody.setBorder(null); // Elimina el borde del JScrollPane
-        panelTableroBody.getHorizontalScrollBar().setUnitIncrement(16); // Ajusta la velocidad del scroll
+        panelTableroScroll = new JScrollPane(panelTableroBody, JScrollPane.VERTICAL_SCROLLBAR_NEVER, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);//HORIZONTAL
+        panelTableroScroll.getHorizontalScrollBar().setUnitIncrement(16); // Ajusta la velocidad del scroll HORIZONTAL
+        panelTableroScroll.setBorder(null); // Elimina el borde del JScrollPane
+        panelTableroScroll.setBackground(verde);//Color de fondo
+        panelTableroScroll.setOpaque(detalles);
+        
+        panelTableroBody.revalidate();//Recarga el panelPrincipalScroll para que se muestre el tablero nuevo
+        panelTableroBody.repaint();
+        
     }
     //Cierra: Método para crear el panelTableroBody
     
     //Abre: Método para crear el panelLista
 	public static void panelLista() {
 		
-		panelListaContent = new JPanel();
-		panelListaContent.setBackground(petroleo2);
-		panelListaContent.setForeground(negro);
-		panelListaContent.setFont(new Font("Calibri", Font.PLAIN, 80));
-		panelListaContent.setBorder(new EmptyBorder(5, 5, 5, 5));
-		panelListaContent.setBorder(BorderFactory.createLineBorder(petroleo, 4));
-		panelListaContent.setPreferredSize(new Dimension(280, 420)); //Tamaño fijo, no hay de otra
-		panelListaContent.setAlignmentY(CENTER_ALIGNMENT);
+		panelLista = new JPanel();
+		panelLista.setBackground(petroleo2);
+		panelLista.setForeground(negro);
+		panelLista.setFont(new Font("Calibri", Font.PLAIN, 80));
+		panelLista.setBorder(new EmptyBorder(5, 5, 5, 5));
+		panelLista.setBorder(BorderFactory.createLineBorder(petroleo, 4));
+		panelLista.setPreferredSize(new Dimension(280, 420)); //Tamaño fijo, no hay de otra
+		panelLista.setAlignmentY(CENTER_ALIGNMENT);
 
 			//Abre: panelSuperior
 			JPanel panelSuperior = new JPanel();//Crea nuevo
@@ -418,42 +427,30 @@ public class FrameTablero extends JFrame{
 		    panelSuperior.add(panelFlexible, BorderLayout.NORTH);//Añade el panelFlexible abajo
 			//Cierra: panelSuperior
 
-		    panelListaContent.add(panelSuperior, BorderLayout.NORTH);
+		    panelLista.add(panelSuperior, BorderLayout.NORTH);
 		    
 		
-		
-	    panelTarea(panelListaContent); //Se utilizaria cuando se realice el evento boton crear tarea, pero lo dejo para que vean como quedo
-	    panelTarea(panelListaContent); 
-	    panelTarea(panelListaContent); 
-	    panelTarea(panelListaContent);
-	    panelTarea(panelListaContent); 
-	    panelTarea(panelListaContent); 
-	    panelTarea(panelListaContent);
-	    panelTarea(panelListaContent);
-	    panelTarea(panelListaContent);
-	    panelTarea(panelListaContent);
-	    panelTarea(panelListaContent);
-	    panelTarea(panelListaContent);//TODO: Máximo 8 tareas o hacer un ScrollPanel para las tareas y añadirlas ahí.
+		for (int i = 0; i < 10; i++) {			
+			panelTarea(panelLista); //Se utilizaria cuando se realice el evento boton crear tarea, pero lo dejo para que vean como quedo
+		}
 	         
 	    //scroll de la lista de tareas
-	    panelLista = new JScrollPane(panelListaContent, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
-	    panelLista.setBorder(null); // Elimina el borde del JScrollPane
-        panelLista.getHorizontalScrollBar().setUnitIncrement(16); // Ajusta la velocidad del scroll
+	    panelListaScroll = new JScrollPane(panelLista, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+	    panelListaScroll.setBorder(null); // Elimina el borde del JScrollPane
+        panelListaScroll.getHorizontalScrollBar().setUnitIncrement(16); // Ajusta la velocidad del scroll
 		//scroll
 	    
-	    
-	    panelListaContent.revalidate();
-	    panelListaContent.repaint();
+	    panelLista.repaint();
 	
-	    panelTableroContent.add(panelLista);//Añade el panelLista al panelTableroBody
-	    panelTableroContent.revalidate();//Recarga el panelTableroBody para que se muestre la lista nueva
-	    panelTableroContent.repaint();
+	    panelTableroBody.add(panelListaScroll);//Añade el panelListaScroll al panelTableroScroll
+	    panelTableroBody.revalidate();//Recarga el panelTableroScroll para que se muestre la lista nueva
+	    panelTableroBody.repaint();
 		   
 	}
 	// Cierra: Método para crear el panelLista
 	
 	// Abre: Método para crear el panelTarea
-	public static void panelTarea(JPanel panelLista) {
+	public static void panelTarea(JPanel panelListaScroll) {
 		
 	    JPanel panelTarea = new JPanel();
 	    panelTarea.setLayout(new FlowLayout(FlowLayout.LEFT));//Diseño de flujo hacia la izquierda
@@ -494,13 +491,13 @@ public class FrameTablero extends JFrame{
 	    
 		    //Cierra: lblEditarTarea
 		    	
-	    panelTarea.add(Box.createHorizontalStrut(100)); //TODO: Creo que aquí va a tocar igual que el panelSuperior del panelLista, para que sea responsivo.
+	    panelTarea.add(Box.createHorizontalStrut(100)); //TODO: Creo que aquí va a tocar igual que el panelSuperior del panelListaScroll, para que sea responsivo.
 
 	    // Agregar el botón de editar después del espacio
 	    panelTarea.add(lblEditarTarea);
 
-	    // Añadir el panelTarea al panelLista en la sección central
-	    panelListaContent.add(panelTarea, BorderLayout.CENTER);
+	    // Añadir el panelTarea al panelListaScroll en la sección central
+	    panelLista.add(panelTarea, BorderLayout.CENTER);
 	}
 	// Cierra: Método para crear el panelTarea
 
@@ -1545,7 +1542,8 @@ public class FrameTablero extends JFrame{
     	//JDialog hace que solo la emergente sea interactiva, las demás ventanas se bloquean.
     	emergenteEditarLista = new JDialog(frameTablero, "Editar Lista", true);//Crea nuevo (Dueño), (Título), (Bloquea interacción mientras esté abierta)
     	emergenteEditarLista.setSize(600, 432);//Tamaño
-    	emergenteEditarLista.setBackground(blanco);//Color de fondo
+    	emergenteEditarLista.setBackground(blanco);//Color de la barra superior
+    	emergenteEditarLista.getContentPane().setBackground(blanco);//Color del fondo del frame
     	emergenteEditarLista.setResizable(false);//No permite modificar el tamaño de la ventana
     	emergenteEditarLista.setLocationRelativeTo(frameTablero);//Se centra según el framePrincipal
     	emergenteEditarLista.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);//Se cierra al dar click en la X
@@ -1580,46 +1578,46 @@ public class FrameTablero extends JFrame{
 			panelCentral.setOpaque(detalles);//Mostrar detalles
 			
 			
-			//Abre: txtFieldIngresarNombreEmergenteEditarLista
-			txtFieldIngresarNombreEmergenteEditarLista = new JTextField(mensajeEditarNombreTablero);//Crea nuevo
-			txtFieldIngresarNombreEmergenteEditarLista.setForeground(blanco);//Color de letra
-			//txtFieldIngresarNombreEmergenteEditarLista.setPreferredSize(new Dimension(198, 42));
-			txtFieldIngresarNombreEmergenteEditarLista.setHorizontalAlignment(JTextField.CENTER);
-			txtFieldIngresarNombreEmergenteEditarLista.setMaximumSize(new Dimension(250, 50));
-			txtFieldIngresarNombreEmergenteEditarLista.setFont(new Font("Calibri", Font.PLAIN, 20));//Cambia la letra del interior
-			txtFieldIngresarNombreEmergenteEditarLista.setBackground(morado3);//Color de fondo
-			txtFieldIngresarNombreEmergenteEditarLista.setCursor(new Cursor(Cursor.TEXT_CURSOR));//Pone el cursor modo escritura
-			txtFieldIngresarNombreEmergenteEditarLista.setAlignmentX(Component.CENTER_ALIGNMENT);//lo centra???
-			
-		        //Abre: Placeholder "mensaje previo"
-			txtFieldIngresarNombreEmergenteEditarLista.addFocusListener(new FocusListener() {
-		            @Override
-		            public void focusGained(FocusEvent e) {
-		                if (txtFieldIngresarNombreEmergenteEditarLista.getText().equals(mensajeEditarNombreTablero)) {
-		                	txtFieldIngresarNombreEmergenteEditarLista.setText("");//Cambia el contenido del txtField
-		                	txtFieldIngresarNombreEmergenteEditarLista.setForeground(negro);//Color de letra
-		                }
-		            }
-		            @Override
-		            public void focusLost(FocusEvent e) {
-		                //Si el campo de texto está vacío al perder el foco, restaura el placeholder
-		                if (txtFieldIngresarNombreEmergenteEditarLista.getText().isEmpty()) {
-		                	txtFieldIngresarNombreEmergenteEditarLista.setText(mensajeEditarNombreTablero);//Cambia el contenido del txtField
-		                	txtFieldIngresarNombreEmergenteEditarLista.setForeground(gris);//Color de letra
-		                }
-		            }
-		        });
-		        //Cierra: Placeholder "mensaje previo"
-	        
-		        //Abre: Acción del txtFieldIngresarNombreEmergenteEditarLista
-				txtFieldIngresarNombreEmergenteEditarLista.addActionListener(new ActionListener() {
-		            public void actionPerformed(ActionEvent evento) {
-		            	ctrl.txtFieldIngresarNombreEmergenteEditarLista();//Se llama el método del Controller que gestiona el evento.
-		            }
-		        });
-		        //Cierra: Acción del txtFieldIngresarNombreEmergenteEditarLista
-	        
-	        //Cierra: txtFieldIngresarNombreEmergenteEditarLista
+				//Abre: txtFieldIngresarNombreEmergenteEditarLista
+				txtFieldIngresarNombreEmergenteEditarLista = new JTextField(mensajeEditarNombreTablero);//Crea nuevo
+				txtFieldIngresarNombreEmergenteEditarLista.setForeground(blanco);//Color de letra
+				//txtFieldIngresarNombreEmergenteEditarLista.setPreferredSize(new Dimension(198, 42));
+				txtFieldIngresarNombreEmergenteEditarLista.setHorizontalAlignment(JTextField.CENTER);
+				txtFieldIngresarNombreEmergenteEditarLista.setMaximumSize(new Dimension(250, 50));
+				txtFieldIngresarNombreEmergenteEditarLista.setFont(new Font("Calibri", Font.PLAIN, 20));//Cambia la letra del interior
+				txtFieldIngresarNombreEmergenteEditarLista.setBackground(morado3);//Color de fondo
+				txtFieldIngresarNombreEmergenteEditarLista.setCursor(new Cursor(Cursor.TEXT_CURSOR));//Pone el cursor modo escritura
+				txtFieldIngresarNombreEmergenteEditarLista.setAlignmentX(Component.CENTER_ALIGNMENT);//lo centra???
+				
+			        //Abre: Placeholder "mensaje previo"
+					txtFieldIngresarNombreEmergenteEditarLista.addFocusListener(new FocusListener() {
+			            @Override
+			            public void focusGained(FocusEvent e) {
+			                if (txtFieldIngresarNombreEmergenteEditarLista.getText().equals(mensajeEditarNombreTablero)) {
+			                	txtFieldIngresarNombreEmergenteEditarLista.setText("");//Cambia el contenido del txtField
+			                	txtFieldIngresarNombreEmergenteEditarLista.setForeground(negro);//Color de letra
+			                }
+			            }
+			            @Override
+			            public void focusLost(FocusEvent e) {
+			                //Si el campo de texto está vacío al perder el foco, restaura el placeholder
+			                if (txtFieldIngresarNombreEmergenteEditarLista.getText().isEmpty()) {
+			                	txtFieldIngresarNombreEmergenteEditarLista.setText(mensajeEditarNombreTablero);//Cambia el contenido del txtField
+			                	txtFieldIngresarNombreEmergenteEditarLista.setForeground(gris);//Color de letra
+			                }
+			            }
+			        });
+			        //Cierra: Placeholder "mensaje previo"
+		        
+			        //Abre: Acción del txtFieldIngresarNombreEmergenteEditarLista
+					txtFieldIngresarNombreEmergenteEditarLista.addActionListener(new ActionListener() {
+			            public void actionPerformed(ActionEvent evento) {
+			            	ctrl.txtFieldIngresarNombreEmergenteEditarLista();//Se llama el método del Controller que gestiona el evento.
+			            }
+			        });
+			        //Cierra: Acción del txtFieldIngresarNombreEmergenteEditarLista
+		        
+		        //Cierra: txtFieldIngresarNombreEmergenteEditarLista
 			
 			panelCentral.add(txtFieldIngresarNombreEmergenteEditarLista, BorderLayout.NORTH);
 			panelCentral.add(Box.createRigidArea(new Dimension(0, 20)));
@@ -1644,8 +1642,8 @@ public class FrameTablero extends JFrame{
 		    		
 		    	//Cierra: btnMoverListaEmergenteEditarLista
 		    		
-				panelCentral.add(btnMoverListaEmergenteEditarLista, BorderLayout.CENTER);
-				panelCentral.add(Box.createRigidArea(new Dimension(0, 20)));
+			panelCentral.add(btnMoverListaEmergenteEditarLista, BorderLayout.CENTER);
+			panelCentral.add(Box.createRigidArea(new Dimension(0, 20)));
 	
 				//Abre: btnEliminarListaEmergenteEditarLista
 				btnEliminarListaEmergenteEditarLista = new JButton("Eliminar Lista");//Crea nuevo
@@ -1667,8 +1665,8 @@ public class FrameTablero extends JFrame{
 		    		
 		    	//Cierra: btnEliminarListaEmergenteEditarLista
 		    		
-				panelCentral.add(btnEliminarListaEmergenteEditarLista, BorderLayout.SOUTH);
-				panelCentral.add(Box.createRigidArea(new Dimension(0, 30)));
+			panelCentral.add(btnEliminarListaEmergenteEditarLista, BorderLayout.SOUTH);
+			panelCentral.add(Box.createRigidArea(new Dimension(0, 30)));
 				
 				//panelCentral.setBorder(BorderFactory.createEmptyBorder(3, 0, 0, 0));// top, left, bottom, right -> Ajusta un borde por pixeles
 
@@ -2239,7 +2237,7 @@ public class FrameTablero extends JFrame{
 	public static void setEmergenteCrearTarea(JDialog emergenteCrearTarea) {
 		FrameTablero.emergenteCrearTarea = emergenteCrearTarea;
 	}
-	
+
 	public static JDialog getEmergenteEditarLista() {
 		return emergenteEditarLista;
 	}
@@ -2264,12 +2262,12 @@ public class FrameTablero extends JFrame{
 		FrameTablero.emergenteEliminarTarea = emergenteEliminarTarea;
 	}
 
-	public static JPanel getPanelTableroContent() {
-		return panelTableroContent;
+	public static JPanel getPanelTableroBody() {
+		return panelTableroBody;
 	}
 
-	public static void setPanelTableroContent(JPanel panelTableroContent) {
-		FrameTablero.panelTableroContent = panelTableroContent;
+	public static void setPanelTableroBody(JPanel panelTableroBody) {
+		FrameTablero.panelTableroBody = panelTableroBody;
 	}
 
 	public static JPanel getPanelTableroHead() {
@@ -2288,20 +2286,28 @@ public class FrameTablero extends JFrame{
 		FrameTablero.panelTableroMiddle = panelTableroMiddle;
 	}
 
-	public static JPanel getPanelListaContent() {
-		return panelListaContent;
+	public static JPanel getPanelLista() {
+		return panelLista;
 	}
 
-	public static void setPanelListaContent(JPanel panelListaContent) {
-		FrameTablero.panelListaContent = panelListaContent;
+	public static void setPanelLista(JPanel panelLista) {
+		FrameTablero.panelLista = panelLista;
 	}
 
-	public static JScrollPane getPanelTableroBody() {
-		return panelTableroBody;
+	public static JScrollPane getPanelTableroScroll() {
+		return panelTableroScroll;
 	}
 
-	public static void setPanelTableroBody(JScrollPane panelTableroBody) {
-		FrameTablero.panelTableroBody = panelTableroBody;
+	public static void setPanelTableroScroll(JScrollPane panelTableroScroll) {
+		FrameTablero.panelTableroScroll = panelTableroScroll;
+	}
+
+	public static JScrollPane getPanelListaScroll() {
+		return panelListaScroll;
+	}
+
+	public static void setPanelListaScroll(JScrollPane panelListaScroll) {
+		FrameTablero.panelListaScroll = panelListaScroll;
 	}
 
 	public static JTextField getTxtFieldIngresarNombreEmergenteCrearLista() {
@@ -2330,7 +2336,16 @@ public class FrameTablero extends JFrame{
 			JTextField txtFieldIngresarCorreoEmergenteColaboradores) {
 		FrameTablero.txtFieldIngresarCorreoEmergenteColaboradores = txtFieldIngresarCorreoEmergenteColaboradores;
 	}
-	
+
+	public static JTextField getTxtFieldIngresarNombreEmergenteCrearTarea() {
+		return txtFieldIngresarNombreEmergenteCrearTarea;
+	}
+
+	public static void setTxtFieldIngresarNombreEmergenteCrearTarea(
+			JTextField txtFieldIngresarNombreEmergenteCrearTarea) {
+		FrameTablero.txtFieldIngresarNombreEmergenteCrearTarea = txtFieldIngresarNombreEmergenteCrearTarea;
+	}
+
 	public static JTextField getTxtFieldIngresarNombreEmergenteEditarLista() {
 		return txtFieldIngresarNombreEmergenteEditarLista;
 	}
@@ -2340,30 +2355,14 @@ public class FrameTablero extends JFrame{
 		FrameTablero.txtFieldIngresarNombreEmergenteEditarLista = txtFieldIngresarNombreEmergenteEditarLista;
 	}
 
-	public static JTextField getTxtFieldIngresarNombreEmergenteCrearTarea() {
-		return txtFieldIngresarNombreEmergenteCrearTarea;
-	}
-
-	public static void setTxtFieldIngresarNombreEmergenteCrearTarea(JTextField txtFieldIngresarNombreEmergenteCrearTarea) {
-		FrameTablero.txtFieldIngresarNombreEmergenteCrearTarea = txtFieldIngresarNombreEmergenteCrearTarea;
-	}
-
 	public static JTextField getTxtFieldIngresarDescripcionEmergenteCrearTarea() {
 		return txtFieldIngresarDescripcionEmergenteCrearTarea;
 	}
-
-
-
-
 
 	public static void setTxtFieldIngresarDescripcionEmergenteCrearTarea(
 			JTextField txtFieldIngresarDescripcionEmergenteCrearTarea) {
 		FrameTablero.txtFieldIngresarDescripcionEmergenteCrearTarea = txtFieldIngresarDescripcionEmergenteCrearTarea;
 	}
-
-
-
-
 
 	public static JButton getBtnCrearLista() {
 		return btnCrearLista;
@@ -2453,10 +2452,26 @@ public class FrameTablero extends JFrame{
 		FrameTablero.btnBorrarEmergenteEliminar = btnBorrarEmergenteEliminar;
 	}
 
+	public static JButton getBtnCancelarEmergenteCrearTarea() {
+		return btnCancelarEmergenteCrearTarea;
+	}
+
+	public static void setBtnCancelarEmergenteCrearTarea(JButton btnCancelarEmergenteCrearTarea) {
+		FrameTablero.btnCancelarEmergenteCrearTarea = btnCancelarEmergenteCrearTarea;
+	}
+
+	public static JButton getBtnCrearTareaEmergenteCrearTarea() {
+		return btnCrearTareaEmergenteCrearTarea;
+	}
+
+	public static void setBtnCrearTareaEmergenteCrearTarea(JButton btnCrearTareaEmergenteCrearTarea) {
+		FrameTablero.btnCrearTareaEmergenteCrearTarea = btnCrearTareaEmergenteCrearTarea;
+	}
+
 	public static JButton getBtnMoverListaEmergenteEditarLista() {
 		return btnMoverListaEmergenteEditarLista;
 	}
-	
+
 	public static void setBtnMoverListaEmergenteEditarLista(JButton btnMoverListaEmergenteEditarLista) {
 		FrameTablero.btnMoverListaEmergenteEditarLista = btnMoverListaEmergenteEditarLista;
 	}
@@ -2480,7 +2495,7 @@ public class FrameTablero extends JFrame{
 	public static JButton getBtnGuardarEmergenteEditarLista() {
 		return btnGuardarEmergenteEditarLista;
 	}
-	
+
 	public static void setBtnGuardarEmergenteEditarLista(JButton btnGuardarEmergenteEditarLista) {
 		FrameTablero.btnGuardarEmergenteEditarLista = btnGuardarEmergenteEditarLista;
 	}
@@ -2496,6 +2511,7 @@ public class FrameTablero extends JFrame{
 	public static JButton getBtnBorrarEmergenteEliminarLista() {
 		return btnBorrarEmergenteEliminarLista;
 	}
+
 	public static void setBtnBorrarEmergenteEliminarLista(JButton btnBorrarEmergenteEliminarLista) {
 		FrameTablero.btnBorrarEmergenteEliminarLista = btnBorrarEmergenteEliminarLista;
 	}
@@ -2507,11 +2523,11 @@ public class FrameTablero extends JFrame{
 	public static void setBtnCancelarEmergenteEliminarTarea(JButton btnCancelarEmergenteEliminarTarea) {
 		FrameTablero.btnCancelarEmergenteEliminarTarea = btnCancelarEmergenteEliminarTarea;
 	}
-	
+
 	public static JButton getBtnBorrarEmergenteEliminarTarea() {
 		return btnBorrarEmergenteEliminarTarea;
 	}
-	
+
 	public static void setBtnBorrarEmergenteEliminarTarea(JButton btnBorrarEmergenteEliminarTarea) {
 		FrameTablero.btnBorrarEmergenteEliminarTarea = btnBorrarEmergenteEliminarTarea;
 	}
@@ -2738,6 +2754,22 @@ public class FrameTablero extends JFrame{
 
 	public static void setMensajeCorreoColaboradores(String mensajeCorreoColaboradores) {
 		FrameTablero.mensajeCorreoColaboradores = mensajeCorreoColaboradores;
+	}
+
+	public static String getMensajeIngresarNombreTarea() {
+		return mensajeIngresarNombreTarea;
+	}
+
+	public static void setMensajeIngresarNombreTarea(String mensajeIngresarNombreTarea) {
+		FrameTablero.mensajeIngresarNombreTarea = mensajeIngresarNombreTarea;
+	}
+
+	public static String getMensajeIngresarDescripcionTarea() {
+		return mensajeIngresarDescripcionTarea;
+	}
+
+	public static void setMensajeIngresarDescripcionTarea(String mensajeIngresarDescripcionTarea) {
+		FrameTablero.mensajeIngresarDescripcionTarea = mensajeIngresarDescripcionTarea;
 	}
 
 }    

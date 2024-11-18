@@ -65,18 +65,8 @@ public class Controlador {
 		
 		crearEjemplosPersona();
 		
-		// <- Agrega * entre barras para comentar
 		//Inicia el GUI:
 		new Login(this);//El this envía esta instancia del controlador a esa ventana.
-		//*/
-		
-		/*/ <- Agrega * entre barras para comentar
-		new Principal(this);//El this envía esta instancia del controlador a esa ventana.
-		//*/
-		
-		/*/ <- Agrega * entre barras para comentar
-		new FrameTablero(this);//El this envía esta instancia del controlador a esa ventana.
-		//*/
 		
 	}
 	// run
@@ -338,7 +328,6 @@ public class Controlador {
 	 * menos al de tablero.
 	 */
 	public String getNombreAdministradorAbierto() {
-		administradorAbierto = (Administrador) listaDePersonasGlobal.get(0);//Abre administrador //TODO: Implementar con Login
 		return administradorAbierto.getNombre();
 	}
 	//abrirAdministrador
@@ -489,7 +478,8 @@ public class Controlador {
 		listaDePersonasGlobal.add(new Administrador("Alejandra Durán", "alejaqt@gmail.com", "Administrador", "123"));
 		listaDePersonasGlobal.add(new Administrador("Sharon Cruz", "sharina@gmail.com", "Administrador", "123"));
 		listaDePersonasGlobal.add(new Administrador("Brian Vargas", "briscuit@gmail.com", "Administrador", "123"));
-		listaDePersonasGlobal.add(new Administrador("Alexander Chacon", "alexito@gmail.com", "Administrador", "123"));
+		listaDePersonasGlobal.add(new Administrador("Alexander Chacon", "alexito@gmail.com", "Administrador", "falcao<3"));
+		listaDePersonasGlobal.add(new Administrador("admin", "admin", "admin", "admin"));
 		
 		listaDePersonasGlobal.add(new Colaborador("Juan Perez", "juan.perez@example.com", "Colaborador", "123"));
 		listaDePersonasGlobal.add(new Colaborador("Pedro Lopez", "pedro.lopez@example.com", "Colaborador", "123"));
@@ -645,6 +635,7 @@ public class Controlador {
 		} else {
 			
 			if (validacion) {
+				
 				Login.getFrameLogin().dispose();//Cierra el frame login
 				new Principal(this);	
 			
@@ -694,12 +685,10 @@ public class Controlador {
 		JPasswordField pwdReContraseña= Login.getPwdReContraseña();
 		JPasswordField pwdReContraseñaDos= Login.getPwdReContraseñaDos();
 		
-		String placeholderCorreo = txtCorreo.getText();
-		String placeholderNombre = txtNombre.getText();
-		char [] reContraseñaChar = pwdReContraseña.getPassword();
-		String  placeholderReContraseña = new String(reContraseñaChar);
-		char [] reContraseñaDosChar = pwdReContraseñaDos.getPassword();
-		String placeholderReContraseñaDos = new String(reContraseñaDosChar);	
+		String placeholderCorreo = Login.getIngresarCorreoRegister();
+		String placeholderNombre = Login.getIngresarNombreRegister();
+		String  placeholderReContraseña = Login.getIngresarContraseñaRegister();
+		String placeholderReContraseñaDos = Login.getIngresarReContraseñaRegister();	
 		
 		JButton btn= Login.getBtnRegisterCrearCuenta();
 		Color colorDelBtn= morado;
@@ -731,7 +720,6 @@ public class Controlador {
 				pwdReContraseñaDos.setBorder(bordeRojo);
 				pwdReContraseñaDos.setForeground(rojo);
 				
-				//Preguntar por que?
 				btn.setBorder(bordeRojo);
 				btn.setBackground(rojo);
 				
@@ -773,13 +761,58 @@ public class Controlador {
 		} else {
 			String correo = txtCorreo.getText();
 			String nombre = txtNombre.getText();
-			reContraseñaChar = pwdReContraseña.getPassword();
+			char [] reContraseñaChar = pwdReContraseña.getPassword();
 			String reContraseña = new String(reContraseñaChar);
-			reContraseñaDosChar = pwdReContraseñaDos.getPassword();
-			String reContraseñaDos = new String(reContraseñaDosChar);
-			listaDePersonasGlobal.add(crearPersona(nombre, correo, reContraseña, reContraseñaDos));
-			Login.getCardLayout().show(Login.getContenedor(), "panelLoginBody");
-			
+			char [] reContraseñaDosChar = pwdReContraseñaDos.getPassword();
+			String reContraseñaDos= new String(reContraseñaDosChar);
+			if (reContraseña.equals(reContraseñaDos)) {
+				listaDePersonasGlobal.add(crearPersona(nombre, correo, "administrador", reContraseña));
+				Login.getCardLayout().show(Login.getContenedor(), "panelLoginBody");
+			} else {
+				
+				//Set Bordes
+				Border bordeRojo = BorderFactory.createLineBorder(rojo, 2);
+				Border bordeGris = BorderFactory.createLineBorder(gris, 2);
+				
+				//Primera vez Bordes y Colores
+				pwdReContraseña.setBorder(bordeRojo);
+				pwdReContraseña.setForeground(rojo);
+				
+				pwdReContraseñaDos.setBorder(bordeRojo);
+				pwdReContraseñaDos.setForeground(rojo);
+				
+				btn.setBorder(bordeRojo);
+				btn.setBackground(rojo);
+				
+				final int[] contador= {0};
+				
+				//Parpadeo
+				Timer timer = new Timer(150, event -> { // Cambia cada 150 ms
+					if (contador[0] < 6) { // Se repetirá 3 veces, 3 rojas y 3 azules = 6
+						Border bordeActual = (contador[0] % 2 == 0) ? bordeRojo : bordeGris; //Op ternario
+		                Color colorBtn = (contador[0] % 2 == 0) ? rojo : colorDelBtn; //Op ternario x2
+		                Color colorTxt = (contador[0] % 2 == 0) ? rojo : gris ; //Op ternario x3
+						
+						pwdReContraseña.setBorder(bordeActual);
+						pwdReContraseña.setForeground(colorTxt);
+						
+						pwdReContraseñaDos.setBorder(bordeActual);
+						pwdReContraseñaDos.setForeground(colorTxt);
+						
+				        
+				        btn.setBackground(colorBtn);
+				        btn.revalidate();
+				                
+			          	contador[0]++;
+		            } else {
+		                ((Timer) event.getSource()).stop(); //Detiene el Timer
+		            }
+					
+		            btn.setBorder(null);
+		        });
+				
+				timer.start();	
+			}	
 		}
 		
 	}
@@ -803,6 +836,21 @@ public class Controlador {
 	}
 	//Cierra: actionVolverPrincipal
 	
+	public void actionLblCerrarSesion() {
+		
+		if (Principal.getFramePrincipal()==null) {
+			//No hace nada
+		}else if (Principal.getFramePrincipal().isActive()) {
+			Principal.getFramePrincipal().dispose();
+			new Login(this);
+		}else if (FrameTablero.getFrameTablero()==null) {
+			//No hace nada	
+		}else if (FrameTablero.getFrameTablero().isActive()) {
+			FrameTablero.getFrameTablero().dispose();
+			new Login(this);
+		}
+	}
+	
 	
 	
 	//CREAR TABLERO
@@ -812,8 +860,6 @@ public class Controlador {
 		Principal.emergenteCrearTablero();
 	}
 	//Cierra: actionBtnCrearTablero
-
-
 
 	//Abre: actionEnterTxtFieldIngresarNombreEmergenteCrearTablero
 	public void actionEnterTxtFieldIngresarNombreEmergenteCrearTablero() {

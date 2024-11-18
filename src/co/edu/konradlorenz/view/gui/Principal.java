@@ -22,16 +22,22 @@ public class Principal extends JFrame {
 	
 	//EMERGENTES
 	private static JDialog emergenteCrearTablero;
-	private static JDialog emergenteAgregarInvitados;
+	private static JDialog emergenteAgregarInvitados;//FIXME: Unused
 	
 	//PANELS
 	private static JPanel panelPrincipalHead;
 	private static JPanel panelPrincipalMiddle;
 	private static JPanel panelPrincipalBody;
+	private static JPanel panelTablero;
+	private static JPanel panelAlineamientoIzquierda;
+	
+	//SCROLL PANEL
+	private static JScrollPane panelPrincipalScroll;
+	private static JScrollPane panelTableroScroll;
 	
 	//TEXTFIELDS
 	private static JTextField txtFieldIngresarNombreEmergenteCrearTablero;
-	private static JTextField txtFieldIngresarCorreoEmergenteAgregarInvitados;
+	private static JTextField txtFieldIngresarCorreoEmergenteAgregarInvitados;//FIXME: Unused
 	
 	//LABELS (Actuan como botón)
 	private static JLabel lblKrelloLogo;
@@ -40,16 +46,13 @@ public class Principal extends JFrame {
 	
 	//BUTTONS
 	private static JButton btnCrearTablero;
-	private static JButton btnAbrirTablero1;
-	private static JButton btnAbrirTablero2;
-	private static JButton btnAbrirTablero3;
 	private static JButton btnAgregarInvitados;
 	private static JButton btnCancelarEmergenteCrearTablero;
 	private static JButton btnCrearTableroEmergenteCrearTablero;
 	private static JButton btnCancelarEmergenteAgregarInvitados;
 	private static JButton btnAgregarInvitadoEmergenteAgregarInvitados;
 		
-	//COLORS (Se crean en el Controller)
+	//COLORS (Se inicializan en el Controller)
 	private static Color negro;
 	private static Color blanco;
 	private static Color rojo;
@@ -71,6 +74,10 @@ public class Principal extends JFrame {
 	private static Color limon;
 	private static Color limon2;
 	private static Color limon3;
+	
+	//DIMENSION
+	private static int x = 215;
+	private static Dimension tamañoBotonTablero =new Dimension(x, x);
 
 	//STRINGS
 	private static String mensajeIngresarNombreTablero = " Ingrese nombre del tablero...";
@@ -123,13 +130,13 @@ public class Principal extends JFrame {
     	framePrincipal.setBackground(blanco);//Color de la barra superior de la ventana
     	framePrincipal.getContentPane().setBackground(blanco);//Color de fondo (solo ventanas)
 
-    		panelPrincipalHead = panelPrincipalHead();//Crea el head
+    		panelPrincipalHead();//Crea el head
     	
 		framePrincipal.add(panelPrincipalHead, BorderLayout.NORTH);//Lo añade y lo ubica arriba
     	
-    		panelPrincipalBody = panelPrincipalBody();//Crea el body
+			panelPrincipalMiddle();//Crea el Middle
     	
-		framePrincipal.add(panelPrincipalBody, BorderLayout.CENTER);//Lo añade y lo ubica al centro
+		framePrincipal.add(panelPrincipalMiddle, BorderLayout.CENTER);//Lo añade y lo ubica al centro
 	        
     	framePrincipal.setVisible(true); //IMPORTANTE -> Siempre hacer dejar esto de últimas.
     	
@@ -271,11 +278,13 @@ public class Principal extends JFrame {
 			            }
 			            @Override
 			        	public void mouseClicked(MouseEvent e) {
-			                //TODO: Acción para volver al Login
+			                ctrl.actionLblCerrarSesion();
 			            }
 			        });
 		        	//Cierra: Acción de lblCerrarSesion
 			        
+		        	
+		        	
 	        	//Cierra: lblCerrarSesion
 		        	
 	        panelCerrarSesion.add(lblCerrarSesion);//Agrega lblCerrarSesion
@@ -288,138 +297,164 @@ public class Principal extends JFrame {
     }
 	//Cierra: Método para crear el panelPrincipalHead
     
-    //Abre: Método para crear el panelPrincipalBody
-    public static JPanel panelPrincipalBody() {
+	//Abre: Método para crear el panelPrincipalMiddle
+    public static void panelPrincipalMiddle() {
     	
-        panelPrincipalBody = new JPanel();//Crear nuevo    
-        panelPrincipalBody.setBackground(rosa);//Color de fondo
-        panelPrincipalBody.setOpaque(detalles);//Mostrar detalles
-        panelPrincipalBody.setLayout(new BoxLayout(panelPrincipalBody, BoxLayout.Y_AXIS));
+    	panelPrincipalMiddle = new JPanel();//Crea nuevo
+    	panelPrincipalMiddle.setLayout(new BorderLayout());//Diseño
+    	panelPrincipalMiddle.setBorder(new EmptyBorder(0,20,20,20));//top, left, bottom, right -> Ajusta un borde por pixeles
+    	panelPrincipalMiddle.setBackground(aguacate);//Color de fondo
+    	panelPrincipalMiddle.setOpaque(detalles);//Mostrar detalles
 
-	      	//Abre: panelBotonesTableros
+    		//Abre: panelMisTableros
 	    	JPanel panelMisTableros = new JPanel();//Crear nuevo
-	    	panelMisTableros.setLayout(new BoxLayout(panelMisTableros, BoxLayout.X_AXIS));//Diseño: El BoxLayout.X_AXIS es para que se ubiquen HORIZONTALMENTE una al lado de la otra.
-	    	panelMisTableros.setBorder(new EmptyBorder(10, 0, 10, 0));//top, left, bottom, right -> Ajusta un borde por pixeles
+	    	panelMisTableros.setLayout(new FlowLayout(FlowLayout.CENTER));//Diseño: El BoxLayout.X_AXIS es para que se ubiquen HORIZONTALMENTE una al lado de la otra.
+	    	panelMisTableros.setBorder(new EmptyBorder(0, 0, 0, 0));//top, left, bottom, right -> Ajusta un borde por pixeles
 	    	panelMisTableros.setBackground(limon);//Color de fondo
 	    	panelMisTableros.setOpaque(detalles);//Mostrar detalles
     	
 	        	//Abre: lblMisTableros
 		        JLabel lblMisTableros = new JLabel("MIS TABLEROS");//Crea nuevo
 		        lblMisTableros.setFont(new Font("Calibri", Font.PLAIN, 40));//Cambia la letra del interior
-		        lblMisTableros.setBackground(limon);//Color de fondo
+		        lblMisTableros.setBorder(new EmptyBorder(0, 0, 0, 0));//top, left, bottom, right -> Ajusta un borde por pixeles
+		        lblMisTableros.setBackground(verde);//Color de fondo
 		        lblMisTableros.setOpaque(detalles);//Mostrar detalles
 		    	//Cierra: lblMisTableros
 		        
 	        panelMisTableros.add(lblMisTableros);
+    		//Cierra: panelMisTableros
         
-        panelPrincipalBody.add(panelMisTableros, BorderLayout.NORTH);//Lo añade y lo ubica arriba
+        panelPrincipalMiddle.add(panelMisTableros, BorderLayout.NORTH);//Lo añade y lo ubica arriba
         
-        	//Abre: panelBotonesTableros
-        	JPanel panelBotonesTableros = new JPanel();//Crear nuevo
-        	panelBotonesTableros.setLayout(new GridBagLayout());
-        	panelBotonesTableros.setBackground(aguacate);//Color de fondo
-        	panelBotonesTableros.setOpaque(detalles);//Mostrar detalles
-        	
-        	Dimension buttonSize = new Dimension(250, 250);//Establece variable de tamaño para los botones
-        	
-        	GridBagConstraints gbc = new GridBagConstraints();
-        	gbc.gridy = 0; //Todos los botones estarán en la misma fila
-        	gbc.insets = new Insets(30, 30, 30, 30); //Espaciado entre botones (arriba, izquierda, abajo, derecha)
-        	gbc.anchor = GridBagConstraints.CENTER; //Centra los botones dentro de sus celdas
-        	
-		        //Abre: btnCrearTablero
-		        btnCrearTablero = new JButton("+");//Crea nuevo
-		        btnCrearTablero.setBackground(petroleo);//Color de fondo
-		        btnCrearTablero.setForeground(blanco);//Color de letra
-		    	btnCrearTablero.setFont(new Font("Arial", Font.PLAIN, 80));//Cambia la letra del interior
-		    	btnCrearTablero.setCursor(new Cursor(Cursor.HAND_CURSOR));//Pone el cursor con una manita
-		    	btnCrearTablero.setPreferredSize(buttonSize);//Tamaño botón
-		    	
-					//Abre: Acción del btnCrearTablero
-					btnCrearTablero.addActionListener(new ActionListener() {
-			            public void actionPerformed(ActionEvent evento) {
-			            	ctrl.actionBtnCrearTablero();//Se llama el método del Controller que gestiona el evento.
-			            }
-			        });
-					//Cierra: Acción del btnCrearTablero
-					
-				//Cierra: btnCrearTablero
-			
-			gbc.gridx = 0; // Primera columna
-			panelBotonesTableros.add(btnCrearTablero, gbc);//Añade btnCrearTablero
-					
-				//Abre: btnAbrirTablero1
-		        btnAbrirTablero1 = new JButton("Abrir Tablero 1");//Crea nuevo
-		        btnAbrirTablero1.setBackground(petroleo);//Color de fondo
-		        btnAbrirTablero1.setForeground(blanco);//Color de letra
-		        btnAbrirTablero1.setFont(new Font("Calibri", Font.BOLD, 18));//Cambia la letra del interior
-				btnAbrirTablero1.setCursor(new Cursor(Cursor.HAND_CURSOR));//Pone el cursor con una manita
-				btnAbrirTablero1.setPreferredSize(buttonSize);//Tamaño botón
-				
-			      	//Abre: Acción del btnAbrirTablero1
-		        	btnAbrirTablero1.addActionListener(new ActionListener() {
-			            public void actionPerformed(ActionEvent evento) {
-			            	//TODO:Crear método en el Controller
-			            	//ctrl.actionBtnAbrirTablero1();//Se llama el método del Controller que gestiona el evento. 
-			            }
-			        });
-					//Cierra: Acción del btnAbrirTablero1
-		        
-				//Cierra: btnAbrirTablero1
+	        //Abre: panelIntermedio
+	        JPanel panelIntermedio = new JPanel();//Crea nuevo
+	        panelIntermedio.setLayout(new BorderLayout());//Diseño
+	        panelIntermedio.setBackground(rojo);//Color de fondo
+	        panelIntermedio.setOpaque(detalles);//Mostrar detalles
 	        
-        	gbc.gridx = 1; // Segunda columna
-        	panelBotonesTableros.add(btnAbrirTablero1, gbc);//Añade btnAbrirTablero1
-		        
-				//Abre: btnAbrirTablero2
-		        btnAbrirTablero2 = new JButton("Abrir Tablero 2");//Crea nuevo
-		        btnAbrirTablero2.setBackground(petroleo);//Color de fondo
-		        btnAbrirTablero2.setForeground(blanco);//Color de letra
-		        btnAbrirTablero2.setFont(new Font("Calibri", Font.BOLD, 18));//Cambia la letra del interior
-		        btnAbrirTablero2.setCursor(new Cursor(Cursor.HAND_CURSOR));//Pone el cursor con una manita
-		        btnAbrirTablero2.setPreferredSize(buttonSize);//Tamaño botón
-				
-			      	//Abre: Acción del btnAbrirTablero2
-					btnAbrirTablero2.addActionListener(new ActionListener() {
-			            public void actionPerformed(ActionEvent evento) {
-			            	//TODO:Crear método en el Controller
-			            	//ctrl.actionBtnAbrirTablero2();//Se llama el método del Controller que gestiona el evento. 
-			            }
-			        });
-					//Cierra: Acción del btnAbrirTablero2
-		        	
-				//Cierra: btnAbrirTablero2
+	        	panelPrincipalBody();//Crea el panelPrincipalScroll
+	    	
+	    	panelIntermedio.add(panelPrincipalScroll, BorderLayout.CENTER);//Lo añade y lo ubica en el centro
+	    	//Cierra: panelIntermedio
+        
+	    	panelPrincipalMiddle.add(panelIntermedio, BorderLayout.CENTER);//Lo añade y lo ubica abajo
+    	
+    }
+    //Cierra: Método para crear el panelPrincipalMiddle
 	
-			gbc.gridx = 2; // Tercera columna
-			panelBotonesTableros.add(btnAbrirTablero2, gbc);//Añade btnAbrirTablero2
+    //Abre: Método para crear el panelPrincipalBody
+    public static void panelPrincipalBody() {
+    	
+    	panelPrincipalBody = new JPanel();//Crea nuevo
+    	panelPrincipalBody.setBackground(cyan2);//Color de fondo
+    	panelPrincipalBody.setOpaque(detalles);
+    	panelPrincipalBody.setBorder(BorderFactory.createLineBorder(gris, 3));
+    	panelPrincipalBody.setLayout(new BoxLayout(panelPrincipalBody, BoxLayout.Y_AXIS));
+    	
+    	panelPrincipalScroll = new JScrollPane(panelPrincipalBody, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);//VERTICAL
+    	panelPrincipalScroll.getVerticalScrollBar().setUnitIncrement(16); // Ajusta la velocidad del scroll VERTICAL
+    	panelPrincipalScroll.setBackground(verde);//Color de fondo
+    	panelPrincipalScroll.setOpaque(detalles);
+    	panelPrincipalScroll.setBorder(null); // Elimina el borde del JScrollPane
+	        //Abre: panelAlineamientoIzquierda
+	        panelAlineamientoIzquierda = new JPanel();
+	        panelAlineamientoIzquierda.setLayout(new FlowLayout(FlowLayout.LEFT, 0, 0)); // Alinea a la izquierda con espaciado
+//	        int alturaDinamicaPanelAlineamientoIzquierda = ctrl.alturaDinamicapanelAlineamientoIzquierda;
+	        int alturaDinamicaPanelAlineamientoIzquierda = 471;//471 mínimo para que se active la ScrollBar
+	        panelAlineamientoIzquierda.setPreferredSize(new Dimension(600, alturaDinamicaPanelAlineamientoIzquierda)); // Tamaño fijo en X, y sin límite en Y
+	        panelAlineamientoIzquierda.setOpaque(detalles);//Mostrar detalles
+	        panelAlineamientoIzquierda.setBackground(rojo);//Color de fondo
+	        
+				//Abre: panelTablero
+		    	JPanel panelTablero = new JPanel();
+				panelTablero.setBackground(verde);
+				panelTablero.setOpaque(detalles);
+				panelTablero.setLayout(new FlowLayout(FlowLayout.CENTER, 30, 10));
 					
-				//Abre: btnAbrirTablero3
-		        btnAbrirTablero3 = new JButton("Abrir Tablero 3");//Crea nuevo
-		        btnAbrirTablero3.setBackground(petroleo);//Color de fondo
-		        btnAbrirTablero3.setForeground(blanco);//Color de letra
-		        btnAbrirTablero3.setFont(new Font("Calibri", Font.BOLD, 18));//Cambia la letra del interior
-		        btnAbrirTablero3.setCursor(new Cursor(Cursor.HAND_CURSOR));//Pone el cursor con una manita
-		        btnAbrirTablero3.setPreferredSize(buttonSize);//Tamaño botón
-		        
-			      	//Abre: Acción del btnAbrirTablero3
-					btnAbrirTablero3.addActionListener(new ActionListener() {
-			            public void actionPerformed(ActionEvent evento) {
-			            	//TODO:Crear método en el Controller
-			            	//ctrl.actionBtnAbrirTablero3();//Se llama el método del Controller que gestiona el evento. 
-			            }
-			        });
-					//Cierra: Acción del btnAbrirTablero3
-				
-				//Cierra: btnAbrirTablero3
+					//Abre: btnCrearTablero
+					btnCrearTablero = new JButton("+");//Crea nuevo
+					btnCrearTablero.setBackground(petroleo);//Color de fondo
+					btnCrearTablero.setForeground(blanco);//Color de letra
+					btnCrearTablero.setFont(new Font("Calibri", Font.BOLD, 60));//Cambia la letra del interior
+					btnCrearTablero.setCursor(new Cursor(Cursor.HAND_CURSOR));//Pone el cursor con una manita
+					btnCrearTablero.setPreferredSize(tamañoBotonTablero);//Tamaño botón
+					
+				      	//Abre: Acción del btnCrearTablero
+						btnCrearTablero.addActionListener(new ActionListener() {
+				            public void actionPerformed(ActionEvent evento) {
+				            	ctrl.actionBtnCrearTablero();//Se llama el método del Controller que gestiona el evento. 
+				            }
+				        });
+						//Cierra: Acción del btnCrearTablero
+			        
+					//Cierra: btnCrearTablero
+						
+				panelTablero.add(btnCrearTablero);
+			    
+				//Cierra: panelTablero
 			
-			gbc.gridx = 3; // Cuarta columna
-			panelBotonesTableros.add(btnAbrirTablero3, gbc);//Añade btnAbrirTablero3
-        	//Cierra: panelBotonesTableros
-			
-		panelPrincipalBody.add(panelBotonesTableros, BorderLayout.CENTER);//Lo añade y lo ubica abajo
+			panelAlineamientoIzquierda.add(panelTablero);
+	        //Cierra: panelAlineamientoIzquierda
+		
 
-        return panelPrincipalBody;
+	    panelPrincipalBody.add(panelAlineamientoIzquierda); // Añadir el panelAuxiliar
+	    panelPrincipalBody.revalidate();//Recarga el panelPrincipalScroll para que se muestre el tablero nuevo
+	    panelPrincipalBody.repaint();
+
+	    for (int i = 0; i < 16; i++) {
+	    	panelTablero();
+	    }
+	    
+
+
+
+	    
+	    panelPrincipalBody.revalidate();//Recarga el panelPrincipalScroll para que se muestre el tablero nuevo
+	    panelPrincipalBody.repaint();
+	    
     }
     //Cierra: Método para crear el panelPrincipalBody
+    
+    //Abre: Método para crear el panelTablero
+	public static JButton panelTablero() {
+        
+    	JPanel panelTablero = new JPanel();
+		panelTablero.setBackground(millos);
+		panelTablero.setForeground(negro);
+		panelTablero.setOpaque(detalles);
+		panelTablero.setLayout(new FlowLayout(FlowLayout.CENTER, 30, 10));
+			
+			//Abre: btnAbrirTablero
+			String nombreTablero = "XD";//TODO:
+			JButton btnAbrirTablero = new JButton(nombreTablero);//Crea nuevo
+			btnAbrirTablero.setBackground(petroleo);//Color de fondo
+			btnAbrirTablero.setForeground(blanco);//Color de letra
+			btnAbrirTablero.setFont(new Font("Calibri", Font.BOLD, 20));//Cambia la letra del interior
+			btnAbrirTablero.setCursor(new Cursor(Cursor.HAND_CURSOR));//Pone el cursor con una manita
+			btnAbrirTablero.setPreferredSize(tamañoBotonTablero);//Tamaño botón
+			
+		      	//Abre: Acción del btnAbrirTablero
+				btnAbrirTablero.addActionListener(new ActionListener() {
+		            public void actionPerformed(ActionEvent evento) {
+		            	//TODO:Crear método en el Controller
+		            	//ctrl.actionBtnAbrirTablero1();//Se llama el método del Controller que gestiona el evento. 
+		            }
+		        });
+				//Cierra: Acción del btnAbrirTablero
+	        
+			//Cierra: btnAbrirTablero
+			    
+		panelTablero.add(btnAbrirTablero);
+		
+		panelAlineamientoIzquierda.add(panelTablero);
+		
+		panelPrincipalBody.revalidate();
+		panelPrincipalBody.repaint();
+	    
+	    return btnAbrirTablero;
+		   
+	}
+	// Cierra: Método para crear el panelTablero
     
     
     
@@ -435,7 +470,7 @@ public class Principal extends JFrame {
     	//JDialog hace que solo la emergente sea interactiva, las demás ventanas se bloquean.
     	emergenteCrearTablero = new JDialog(framePrincipal, "Crear Tablero", true);//Crea nuevo (Dueño), (Título), (Bloquea interacción mientras esté abierta)
         emergenteCrearTablero.setSize(600, 300);//Tamaño
-        emergenteCrearTablero.setBackground(morado2);//Color de la barra superior
+        emergenteCrearTablero.setBackground(blanco);//Color de la barra superior
         emergenteCrearTablero.getContentPane().setBackground(blanco);//Color del fondo del frame
         emergenteCrearTablero.setResizable(false);//No permite modificar el tamaño de la ventana
         emergenteCrearTablero.setLocationRelativeTo(framePrincipal);//Se centra según el framePrincipal
@@ -459,9 +494,9 @@ public class Principal extends JFrame {
 		        lblTituloCrearTablero.setOpaque(detalles);//Mostrar detalles
 		        //Cierra: lblTituloCrearTablero
 	        
-	        panelTituloCrearTablero.add(Box.createVerticalGlue());//Agrega espacio flexible antes del JLabel
+	        panelTituloCrearTablero.add(Box.createVerticalGlue());//Agrega espacio flexible
 	        panelTituloCrearTablero.add(lblTituloCrearTablero);//Añade lblTituloCrearTablero
-	        panelTituloCrearTablero.add(Box.createVerticalGlue());//Agrega espacio flexible después del JLabel
+	        panelTituloCrearTablero.add(Box.createVerticalGlue());//Agrega espacio flexible
 	        //Cierra: panelTituloCrearTablero
 	        
 		    
@@ -560,6 +595,7 @@ public class Principal extends JFrame {
 		        
 		        	//Abre: Acción del btnCrearTableroEmergenteCrearTablero
 		    		btnCrearTableroEmergenteCrearTablero.addActionListener(new ActionListener() {
+		    			
 			            public void actionPerformed(ActionEvent evento) {
 			            	ctrl.actionEnterTxtFieldIngresarNombreEmergenteCrearTablero();//Se llama el método del Controller que gestiona el evento.
 			            }
@@ -822,6 +858,38 @@ public class Principal extends JFrame {
 		Principal.panelPrincipalBody = panelPrincipalBody;
 	}
 
+	public static JPanel getPanelTablero() {
+		return panelTablero;
+	}
+
+	public static void setPanelTablero(JPanel panelTablero) {
+		Principal.panelTablero = panelTablero;
+	}
+
+	public static JPanel getPanelAlineamientoIzquierda() {
+		return panelAlineamientoIzquierda;
+	}
+
+	public static void setPanelAlineamientoIzquierda(JPanel panelAlineamientoIzquierda) {
+		Principal.panelAlineamientoIzquierda = panelAlineamientoIzquierda;
+	}
+
+	public static JScrollPane getPanelPrincipalScroll() {
+		return panelPrincipalScroll;
+	}
+
+	public static void setPanelPrincipalScroll(JScrollPane panelPrincipalScroll) {
+		Principal.panelPrincipalScroll = panelPrincipalScroll;
+	}
+
+	public static JScrollPane getPanelTableroScroll() {
+		return panelTableroScroll;
+	}
+
+	public static void setPanelTableroScroll(JScrollPane panelTableroScroll) {
+		Principal.panelTableroScroll = panelTableroScroll;
+	}
+
 	public static JTextField getTxtFieldIngresarNombreEmergenteCrearTablero() {
 		return txtFieldIngresarNombreEmergenteCrearTablero;
 	}
@@ -870,30 +938,6 @@ public class Principal extends JFrame {
 
 	public static void setBtnCrearTablero(JButton btnCrearTablero) {
 		Principal.btnCrearTablero = btnCrearTablero;
-	}
-
-	public static JButton getBtnAbrirTablero1() {
-		return btnAbrirTablero1;
-	}
-
-	public static void setBtnAbrirTablero1(JButton btnAbrirTablero1) {
-		Principal.btnAbrirTablero1 = btnAbrirTablero1;
-	}
-
-	public static JButton getBtnAbrirTablero2() {
-		return btnAbrirTablero2;
-	}
-
-	public static void setBtnAbrirTablero2(JButton btnAbrirTablero2) {
-		Principal.btnAbrirTablero2 = btnAbrirTablero2;
-	}
-
-	public static JButton getBtnAbrirTablero3() {
-		return btnAbrirTablero3;
-	}
-
-	public static void setBtnAbrirTablero3(JButton btnAbrirTablero3) {
-		Principal.btnAbrirTablero3 = btnAbrirTablero3;
 	}
 
 	public static JButton getBtnAgregarInvitados() {
@@ -1105,6 +1149,22 @@ public class Principal extends JFrame {
 		Principal.limon3 = limon3;
 	}
 
+	public int getX() {
+		return x;
+	}
+
+	public static void setX(int x) {
+		Principal.x = x;
+	}
+
+	public static Dimension getTamañoBotonTablero() {
+		return tamañoBotonTablero;
+	}
+
+	public static void setTamañoBotonTablero(Dimension tamañoBotonTablero) {
+		Principal.tamañoBotonTablero = tamañoBotonTablero;
+	}
+
 	public static String getMensajeIngresarNombreTablero() {
 		return mensajeIngresarNombreTablero;
 	}
@@ -1120,6 +1180,6 @@ public class Principal extends JFrame {
 	public static void setMensajeIngresarCorreo(String mensajeIngresarCorreo) {
 		Principal.mensajeIngresarCorreo = mensajeIngresarCorreo;
 	}
-      
+	     
 }
 //class
