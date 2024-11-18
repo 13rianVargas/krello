@@ -836,6 +836,21 @@ public class Controlador {
 	}
 	//Cierra: actionVolverPrincipal
 	
+	public void actionLblCerrarSesion() {
+		
+		if (Principal.getFramePrincipal()==null) {
+			//No hace nada
+		}else if (Principal.getFramePrincipal().isActive()) {
+			Principal.getFramePrincipal().dispose();
+			new Login(this);
+		}else if (FrameTablero.getFrameTablero()==null) {
+			//No hace nada	
+		}else if (FrameTablero.getFrameTablero().isActive()) {
+			FrameTablero.getFrameTablero().dispose();
+			new Login(this);
+		}
+	}
+	
 	
 	
 	//CREAR TABLERO

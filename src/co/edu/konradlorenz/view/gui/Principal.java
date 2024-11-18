@@ -278,11 +278,13 @@ public class Principal extends JFrame {
 			            }
 			            @Override
 			        	public void mouseClicked(MouseEvent e) {
-			                //TODO: Acción para volver al Login
+			                ctrl.actionLblCerrarSesion();
 			            }
 			        });
 		        	//Cierra: Acción de lblCerrarSesion
 			        
+		        	
+		        	
 	        	//Cierra: lblCerrarSesion
 		        	
 	        panelCerrarSesion.add(lblCerrarSesion);//Agrega lblCerrarSesion
