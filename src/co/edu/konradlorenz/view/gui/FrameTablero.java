@@ -3,7 +3,6 @@ package co.edu.konradlorenz.view.gui;
 import java.awt.*;
 import java.awt.event.*;
 
-import java.util.Properties;
 import java.util.Calendar;
 
 import javax.swing.*;
@@ -28,12 +27,13 @@ public class FrameTablero extends JFrame{
 	private static JDialog emergenteEditarTablero;
 	private static JDialog emergenteColaboradores;
 	private static JDialog emergenteEliminar;
+	private static JDialog emergenteDelegados;
 	private static JDialog emergenteCrearTarea;
 	private static JDialog emergenteEditarLista;
-	private static JDialog emergenteEliminarLista;
-	private static JDialog emergenteEliminarTarea;
-	private static JDialog emergenteDelegados;
 	private static JDialog emergenteMoverLista;
+	private static JDialog emergenteEliminarLista;
+	private static JDialog emergenteEditarTarea;
+	private static JDialog emergenteEliminarTarea;
 	
 	//PANELS 
 	private static JPanel panelTableroContent;
@@ -52,6 +52,8 @@ public class FrameTablero extends JFrame{
 	private static JTextField txtFieldIngresarNombreEmergenteCrearTarea;
 	private static JTextField txtFieldIngresarNombreEmergenteEditarLista;
 	private static JTextField txtFieldIngresarDescripcionEmergenteCrearTarea;
+	private static JTextField txtFieldNombreEmergenteEditarTarea;
+	private static JTextField txtFieldDescripcionEmergenteEditarTarea;
 	
 	//BUTTONS
 	private static JButton btnCrearLista;
@@ -75,6 +77,8 @@ public class FrameTablero extends JFrame{
 	private static JButton btnBorrarEmergenteEliminarLista;
 	private static JButton btnCancelarEmergenteEliminarTarea;
 	private static JButton btnBorrarEmergenteEliminarTarea;
+	private static JButton btnCancelarEmergenteEditarTarea;
+	private static JButton btnGuardarEmergenteEditarTarea;
 	
 	//LABELS (Actuan como botón)
 	private static JLabel lblEditarTablero;
@@ -111,6 +115,8 @@ public class FrameTablero extends JFrame{
 	private static String mensajeCorreoColaboradores = " Ingrese correo del colaborador...";
 	private static String mensajeIngresarNombreTarea = " Ingrese nombre de la tarea...";
 	private static String mensajeIngresarDescripcionTarea = " Ingrese la descripción...";
+	private static String mensajeNombreTarea = " Nombre de la tarea ";
+	private static String mensajeDescripcionTarea= " Descripción de la tarea";
 	
 	
 	
@@ -1859,7 +1865,6 @@ public class FrameTablero extends JFrame{
 
 		emergenteMoverLista.setVisible(true); // Hace visible la emergente
 	}
-
 	// Cierra: Método para crear emergenteMoverLista
 
     //Abre: Método para crear emergenteEliminar
@@ -1957,17 +1962,122 @@ public class FrameTablero extends JFrame{
     }
     //Cierra: Método para crear emergenteEliminar
     
-    //Abre: Método para crear emergenteEditarTarea
-    public static void emergenteEditarTarea() {
-    	
-    	//Lista de los delegadps
-    	
-    	
-    }
-    //Cierra: Método para crear emergenteEditarTarea
-    
-    //Cierra: Método para crear emergenteEditarTarea
-    
+	// Abre: Método para crear emergenteEditarTarea
+	public static void emergenteEditarTarea() {
+
+		// JDialog hace que solo la emergente sea interactiva, las demás ventanas se
+		// bloquean.
+		emergenteEditarTarea = new JDialog(frameTablero, "Editar Tarea", true);// Crea nuevo (Dueño), (Título), (Bloquea
+																				// interacción mientras esté abierta)
+		emergenteEditarTarea.setSize(600, 470);// Tamaño
+		emergenteEditarTarea.setBackground(morado2);// Color de la barra superior
+		emergenteEditarTarea.getContentPane().setBackground(blanco);// Color del fondo del frame
+		emergenteEditarTarea.setResizable(false);// No permite modificar el tamaño de la ventana
+		emergenteEditarTarea.setLocationRelativeTo(frameTablero);// Se centra según el framePrincipal
+		emergenteEditarTarea.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);// Se cierra al dar click en la X
+		emergenteEditarTarea.setLayout(new BorderLayout());// Diseño
+
+		// Abre: panelTituloEditarTarea
+		JPanel panelTituloEditarTarea = new JPanel();
+		panelTituloEditarTarea.setLayout(new BoxLayout(panelTituloEditarTarea, BoxLayout.Y_AXIS));// Diseño: El
+		// BoxLayout.Y_AXIS es
+		// para que se ubiquen
+		// VERTICALMENTE una
+		// encima de la otra.
+		panelTituloEditarTarea.setBackground(morado);
+		panelTituloEditarTarea.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));// top, left, bottom, right ->
+		// Ajusta un borde por
+		// pixeles
+
+		// Abre: lblTituloEditarTarea
+		JLabel lblTituloEditarTarea = new JLabel("Editar Tarea");
+		lblTituloEditarTarea.setFont(new Font("Calibri", Font.BOLD, 35));
+		lblTituloEditarTarea.setForeground(morado2);
+		lblTituloEditarTarea.setAlignmentX(Component.CENTER_ALIGNMENT);
+		panelTituloEditarTarea.add(lblTituloEditarTarea);
+		// Cierra: lblTituloEditarTarea
+
+		emergenteEditarTarea.add(panelTituloEditarTarea, BorderLayout.NORTH);
+
+		// Abre: panelIzquierdo
+		JPanel panelIzquierdo = new JPanel();
+		panelIzquierdo.setLayout(new FlowLayout(FlowLayout.LEFT, 10, 10));
+		panelIzquierdo.setBackground(millos);// fondo
+		panelIzquierdo.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
+
+		// Abre: txtFieldNombreEmergenteEditarTarea
+		txtFieldNombreEmergenteEditarTarea = new JTextField(mensajeNombreTarea);
+		txtFieldNombreEmergenteEditarTarea.setForeground(gris);
+		txtFieldNombreEmergenteEditarTarea.setFont(new Font("Calibri", Font.PLAIN, 20));
+		txtFieldNombreEmergenteEditarTarea.setBackground(gris2);
+		txtFieldNombreEmergenteEditarTarea.setBorder(BorderFactory.createLineBorder(gris, 2));
+
+		txtFieldNombreEmergenteEditarTarea.setPreferredSize(new Dimension(200, 30)); // Pequeño
+		txtFieldNombreEmergenteEditarTarea.setMaximumSize(new Dimension(200, 30)); // Restringe el tamaño máximo
+
+		// Descripcin
+		txtFieldDescripcionEmergenteEditarTarea = new JTextField(mensajeDescripcionTarea);
+		txtFieldDescripcionEmergenteEditarTarea.setForeground(gris);
+		txtFieldDescripcionEmergenteEditarTarea.setPreferredSize(new Dimension(50, 30));
+		txtFieldDescripcionEmergenteEditarTarea.setFont(new Font("Calibri", Font.PLAIN, 20));
+		txtFieldDescripcionEmergenteEditarTarea.setBackground(gris2);
+		txtFieldDescripcionEmergenteEditarTarea.setBorder(BorderFactory.createLineBorder(gris, 2));
+
+		txtFieldDescripcionEmergenteEditarTarea.setPreferredSize(new Dimension(200, 200)); // Más grande
+		txtFieldDescripcionEmergenteEditarTarea.setMaximumSize(new Dimension(200, 20)); // Restringe el tamaño máximo
+
+		panelIzquierdo.add(txtFieldNombreEmergenteEditarTarea, BorderLayout.NORTH);
+		panelIzquierdo.add(Box.createVerticalStrut(10));
+		panelIzquierdo.add(txtFieldDescripcionEmergenteEditarTarea, BorderLayout.NORTH);
+
+		// Abre: panelDerecho
+		JPanel panelDerecho = new JPanel();
+		panelDerecho.setLayout(new BoxLayout(panelDerecho, BoxLayout.Y_AXIS));
+		panelDerecho.setBackground(cyan);
+		panelDerecho.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
+
+		// Campo de Fecha
+
+		JPanel datePickerPanel = crearSelectorDeFecha();
+		panelDerecho.add(datePickerPanel);
+
+		panelDerecho.add(Box.createVerticalStrut(20));
+
+		// Abre: ListaDelegados
+		// HICE ESTA LISTA PARA VER COMO SE VE
+		String[] delegados = { "Delegado 1", "Delegado 2", "Delegado 3", "Delegado 4" };
+		JList<String> listaDelegados = new JList<>(delegados);
+		listaDelegados.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		JScrollPane scrollDelegados = new JScrollPane(listaDelegados);
+		scrollDelegados.setPreferredSize(new Dimension(250, 100));
+		panelDerecho.add(scrollDelegados);
+
+		JSplitPane splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, panelIzquierdo, panelDerecho);
+		splitPane.setDividerLocation(300);
+		splitPane.setDividerSize(5);
+		splitPane.setResizeWeight(0.5);
+		splitPane.setEnabled(false);
+
+		// Cierra: Lista delegados
+
+		emergenteEditarTarea.add(splitPane, BorderLayout.CENTER);
+
+		// Panel de botones
+		JPanel panelBotonesBasicos = new JPanel(new FlowLayout(FlowLayout.RIGHT, 20, 10));
+		panelBotonesBasicos.setBackground(cyan);
+
+		btnCancelarEmergenteEditarTarea = new JButton("Cancelar");
+		btnGuardarEmergenteEditarTarea = new JButton("Guardar");
+
+		panelBotonesBasicos.add(btnCancelarEmergenteEditarTarea);
+		panelBotonesBasicos.add(btnGuardarEmergenteEditarTarea);
+
+		emergenteEditarTarea.add(panelBotonesBasicos, BorderLayout.SOUTH);
+
+		emergenteEditarTarea.setVisible(true);
+	}
+	// Cierra: Método para crear emergenteEditarTarea
+
     //Abre: Método para crear emergenteEliminarTarea
     public static void emergenteEliminarTarea() {
     	
