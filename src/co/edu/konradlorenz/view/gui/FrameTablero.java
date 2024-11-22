@@ -1,14 +1,44 @@
 package co.edu.konradlorenz.view.gui;
 
-import java.awt.*;
-import java.awt.event.*;
-
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Component;
+import java.awt.Cursor;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
+import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.Calendar;
 
-import javax.swing.*;
-import javax.swing.border.*;
+import javax.swing.BorderFactory;
+import javax.swing.Box;
+import javax.swing.BoxLayout;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JCheckBox;
+import javax.swing.JComboBox;
+import javax.swing.JDialog;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JList;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JSeparator;
+import javax.swing.JSplitPane;
+import javax.swing.JTextField;
+import javax.swing.ListSelectionModel;
+import javax.swing.SwingConstants;
+import javax.swing.SwingUtilities;
+import javax.swing.Timer;
+import javax.swing.border.EmptyBorder;
 
-import co.edu.konradlorenz.controller.*;
+import co.edu.konradlorenz.controller.Controlador;
+import co.edu.konradlorenz.model.Tarea;
 
 @SuppressWarnings("serial")
 public class FrameTablero extends JFrame{
@@ -22,7 +52,7 @@ public class FrameTablero extends JFrame{
 	//FRAMES
 	private static JFrame frameTablero;
 	
-	//EMERGENTES
+	//DIALOGS
 	private static JDialog emergenteCrearLista;
 	private static JDialog emergenteEditarTablero;
 	private static JDialog emergenteEditarLista;
@@ -41,7 +71,7 @@ public class FrameTablero extends JFrame{
 	private static JPanel panelTableroBody;
 	private static JPanel panelLista;
 	
-	//SCROLL PANEL
+	//SCROLL PANES
 	private static JScrollPane panelTableroScroll;
 	private static JScrollPane panelListaScroll;
 	
@@ -49,7 +79,6 @@ public class FrameTablero extends JFrame{
 	private static JTextField txtFieldIngresarNombreEmergenteCrearLista;
 	private static JTextField txtFieldIngresarNombreEmergenteEditarTablero;
 	private static JTextField txtFieldIngresarCorreoEmergenteColaboradores;
-	private static JTextField txtFieldIngresarNombreEmergenteCrearTarea;
 	private static JTextField txtFieldIngresarNombreEmergenteEditarLista;
 	private static JTextField txtFieldIngresarDescripcionEmergenteCrearTarea;
 	private static JTextField txtFieldNombreEmergenteEditarTarea;
@@ -85,29 +114,34 @@ public class FrameTablero extends JFrame{
 	private static JLabel lblEditarLista;
 	private static JLabel lblNuevaTarea;
 	private static JLabel lblEditarTarea;
+	
+	//COMBOBOXS
+    private static JComboBox<Integer> cmbDay;
+    private static JComboBox<String> cmbMonth;
+    private static JComboBox<Integer> cmbYear;
 		
-	//COLORS (Se inicializan en el Controller)
-	private static Color negro;
-	private static Color blanco;
-	private static Color rojo;
-	private static Color verde;
-	private static Color millos;
-	private static Color azulito;
-	private static Color rosa;
-	private static Color rosa2;
-	private static Color cyan;
-	private static Color cyan2;
-	private static Color gris;
-	private static Color gris2;
-	private static Color morado;
-	private static Color morado2;
-	private static Color morado3;
-	private static Color aguacate;
-	private static Color petroleo;
-	private static Color petroleo2;
-	private static Color limon;
-	private static Color limon2;
-	private static Color limon3;
+	//COLORS
+	private static Color negro = new Color(0, 0, 0);
+	private static Color blanco = new Color(255, 255, 255);
+	private static Color rojo = new Color(255, 0, 0);
+	private static Color verde = new Color(117, 251, 76);
+	private static Color millos = new Color(0, 0, 255);
+	private static Color azulito = new Color(31, 165, 163);
+	private static Color rosa = new Color(243, 178, 177);
+	private static Color rosa2 = new Color(235, 116, 116);
+	private static Color cyan = new Color(117, 251, 253);
+	private static Color cyan2 = new Color(81, 174, 173);
+	private static Color gris = new Color(154, 154, 154);
+	private static Color gris2 = new Color(217, 217, 217);
+	private static Color morado = new Color(98, 20, 109);
+	private static Color morado2 = new Color(173, 16, 195);
+	private static Color morado3 = new Color(161, 114, 167);
+	private static Color aguacate = new Color(102, 181, 127);
+	private static Color petroleo = new Color(0, 151, 149);
+	private static Color petroleo2 = new Color(83, 181, 179);
+	private static Color limon = new Color(206, 220, 23);
+	private static Color limon2 = new Color(180, 200, 0);
+	private static Color limon3 = new Color(162, 168, 0);
 
 	//STRINGS
 	private static String mensajeIngresarNombreLista = " Ingrese nombre de la lista...";
@@ -130,27 +164,6 @@ public class FrameTablero extends JFrame{
  		//Inicializaciones que dependen del Controlador
     	ctrl = controlador;//Llama al controller del AplMain
     	detalles = ctrl.detalles;
-    	negro = ctrl.negro;
-    	blanco = ctrl.blanco;
-    	rojo = ctrl.rojo;
-    	verde = ctrl.verde;
-    	millos = ctrl.millos;
-    	azulito = ctrl.azulito;
-    	rosa = ctrl.rosa;
-    	rosa2 = ctrl.rosa2;
-    	cyan = ctrl.cyan;
-    	cyan2 = ctrl.cyan2;
-    	gris = ctrl.gris;
-    	gris2 = ctrl.gris2;
-    	morado = ctrl.morado;
-    	morado2 = ctrl.morado2;
-    	morado3 = ctrl.morado3;
-    	aguacate = ctrl.aguacate;
-    	petroleo = ctrl.petroleo;
-    	petroleo2 = ctrl.petroleo2;
-    	limon = ctrl.limon;
-    	limon2 = ctrl.limon2;
-    	limon3 = ctrl.limon3;
 
     	//Aquí inicia el verdadero Constructor de la ventana
  		frameTablero = new JFrame();
@@ -427,10 +440,13 @@ public class FrameTablero extends JFrame{
 
 		    panelLista.add(panelSuperior, BorderLayout.NORTH);
 		    
-		
-		for (int i = 0; i < 10; i++) {			
-			panelTarea(panelLista); //Se utilizaria cuando se realice el evento boton crear tarea, pero lo dejo para que vean como quedo
-		}
+		  	//Abrir: Acción al cliquear dentro del panelLista
+		    panelLista.addMouseListener(new MouseAdapter() {
+				public void mouseClicked(MouseEvent e) {
+//					ctrl.seleccionarLista(lista);
+				}
+			});
+			//Cierra: Acción al cliquear dentro del panelLista
 	         
 	    //scroll de la lista de tareas
 	    panelListaScroll = new JScrollPane(panelLista, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
@@ -448,7 +464,7 @@ public class FrameTablero extends JFrame{
 	// Cierra: Método para crear el panelLista
 	
 	// Abre: Método para crear el panelTarea
-	public static void panelTarea(JPanel panelListaScroll) {
+	public static void panelTarea(Tarea tarea) {
 		
 	    JPanel panelTarea = new JPanel();
 	    panelTarea.setLayout(new FlowLayout(FlowLayout.LEFT));//Diseño de flujo hacia la izquierda
@@ -462,7 +478,7 @@ public class FrameTablero extends JFrame{
 	    panelTarea.add(checkBoxTarea);//Añade checkBoxTarea
 
 	    	//Abrir: lblNombreTarea
-	    	String nombreTarea = "Test";//TODO: Agarrar lo del txtField de la emergente
+	    	String nombreTarea = ctrl.getNombreTareaAbierta();
 		    JLabel lblNombreTarea = new JLabel(nombreTarea);
 		    lblNombreTarea.setFont(new Font("Calibri", Font.PLAIN, 15));
 		    lblNombreTarea.setForeground(negro);
@@ -477,7 +493,7 @@ public class FrameTablero extends JFrame{
 		    lblEditarTarea.setIcon(new ImageIcon(Principal.class.getResource("/co/edu/konradlorenz/view/img/Tuerca20x20.png")));//Ruta de la imagen
 		    lblEditarTarea.setFont(new Font("Calibri", Font.PLAIN, 18));//Cambia la letra del interior
 		    lblEditarTarea.setCursor(new Cursor(Cursor.HAND_CURSOR));//Pone el cursor con una manita
-		    lblEditarTarea.setToolTipText("Editar Tarea");
+		    lblEditarTarea.setToolTipText("Editar Tarea");//Mensaje flotante
 	    	
 	    		//Abrir: Acción del lblEditarTarea
 		    	lblEditarTarea.addMouseListener(new MouseAdapter() {
@@ -493,9 +509,19 @@ public class FrameTablero extends JFrame{
 
 	    // Agregar el botón de editar después del espacio
 	    panelTarea.add(lblEditarTarea);
+	    
+		  	//Abrir: Acción al cliquear dentro del panelTarea
+	    	panelTarea.addMouseListener(new MouseAdapter() {
+				public void mouseClicked(MouseEvent e) {
+					ctrl.seleccionarTarea(tarea);
+				}
+			});
+			//Cierra: Acción al cliquear dentro del panelTarea
 
 	    // Añadir el panelTarea al panelListaScroll en la sección central
 	    panelLista.add(panelTarea, BorderLayout.CENTER);
+	    panelLista.revalidate();//Recarga el panelTableroScroll para que se muestre la lista nueva
+	    panelLista.repaint();
 	}
 	// Cierra: Método para crear el panelTarea
 
@@ -745,7 +771,7 @@ public class FrameTablero extends JFrame{
 			        //Abre: Acción del txtFieldIngresarNombreEmergenteCrearTablero
 					txtFieldIngresarNombreEmergenteEditarTablero.addActionListener(new ActionListener() {
 			            public void actionPerformed(ActionEvent evento) {
-			            	ctrl.txtFieldIngresarNombreEmergenteEditarTablero();//Se llama el método del Controller que gestiona el evento.
+			            	ctrl.actionBtnGuardarEmergenteEditarTablero();//Se llama el método del Controller que gestiona el evento.
 			            }
 			        });
 			        //Cierra: Acción del txtFieldIngresarNombreEmergenteCrearTablero
@@ -1289,130 +1315,98 @@ public class FrameTablero extends JFrame{
         
         
 	        //Abre: panelCentral
-        	JPanel panelCentral = new JPanel(new FlowLayout(FlowLayout.CENTER, 10, 10));//Diseño: Flujo Centrado (espacio horizontal),(espacio vertical)
-        	panelCentral.setBackground(millos);//Color de fondo
-        	panelCentral.setOpaque(detalles);//Mostrar detalles
-	        
-	        	//Abre: lblNombre
-		        JLabel lblNombre = new JLabel("Nombre:");//Crea nuevo
-		        lblNombre.setFont(new Font("Calibri", Font.PLAIN, 25));//Cambia la letra del interior
-	        	//Cierra: lblNombre
+	        JPanel panelCentral = new JPanel();
+	        panelCentral.setLayout(new BoxLayout(panelCentral, BoxLayout.Y_AXIS));
+	        panelCentral.setBackground(millos); // Color de fondo
+	        panelCentral.setOpaque(detalles); // Mostrar detalles
+	        panelCentral.setBorder(BorderFactory.createEmptyBorder(15, 15, 15, 15)); // Margen
+	
+		        //Abre: panelDescripcion
+		        JPanel panelDescripcion = new JPanel(new FlowLayout(FlowLayout.CENTER, 5, 5)); // FlowLayout alineado a la izquierda
+		        panelDescripcion.setBackground(rojo); // Color de fondo
+		        panelDescripcion.setOpaque(detalles); // Mostrar detalles
 		        
-		        panelCentral.add(lblNombre);//Añade lblNombre
-		        
-	        	//Abre: txtFieldIngresarNombreEmergenteCrearTarea
-		        txtFieldIngresarNombreEmergenteCrearTarea = new JTextField(mensajeIngresarNombreTarea);//Crea nuevo
-		        txtFieldIngresarNombreEmergenteCrearTarea.setForeground(gris);//Color de letra
-		        txtFieldIngresarNombreEmergenteCrearTarea.setPreferredSize(new Dimension(400, 40));
-		        txtFieldIngresarNombreEmergenteCrearTarea.setFont(new Font("Calibri", Font.PLAIN, 20));//Cambia la letra del interior
-		        txtFieldIngresarNombreEmergenteCrearTarea.setBackground(gris2);//Color de fondo
-		        txtFieldIngresarNombreEmergenteCrearTarea.setBorder(BorderFactory.createLineBorder(gris, 2));//Color del borde
-		        txtFieldIngresarNombreEmergenteCrearTarea.setCursor(new Cursor(Cursor.TEXT_CURSOR));//Pone el cursor modo escritura
-		        
-			        //Abre: Placeholder "mensaje previo"
-		        	txtFieldIngresarNombreEmergenteCrearTarea.addFocusListener(new FocusListener() {
-			            @Override
-			            public void focusGained(FocusEvent e) {
-			                if (txtFieldIngresarNombreEmergenteCrearTarea.getText().equals(mensajeIngresarNombreTarea)) {
-			                	txtFieldIngresarNombreEmergenteCrearTarea.setText("");//Cambia el contenido del txtField
-			                	txtFieldIngresarNombreEmergenteCrearTarea.setForeground(negro);//Color de letra
-			                }
-			            }
-			            @Override
-			            public void focusLost(FocusEvent e) {
-			                //Si el campo de texto está vacío al perder el foco, restaura el placeholder
-			                if (txtFieldIngresarNombreEmergenteCrearTarea.getText().isEmpty()) {
-			                	txtFieldIngresarNombreEmergenteCrearTarea.setText(mensajeIngresarNombreTarea);//Cambia el contenido del txtField
-			                	txtFieldIngresarNombreEmergenteCrearTarea.setForeground(gris);//Color de letra
-			                }
-			            }
-			        });
-			        //Cierra: Placeholder "mensaje previo"
-		        
-			        //Abre: Acción del txtFieldIngresarNombreEmergenteCrearTarea
-		        	txtFieldIngresarNombreEmergenteCrearTarea.addActionListener(new ActionListener() {
-			            public void actionPerformed(ActionEvent evento) {
-			            	//ctrl.actionEnterTxtFieldIngresarNombreEmergenteCrearTablero();//TODO: No se que debe hacer el método del Controller que gestiona el evento.
-			            }
-			        });
-			        //Cierra: Acción del txtFieldIngresarNombreEmergenteCrearTarea
-		        
-		        //Cierra: txtFieldIngresarNombreEmergenteCrearTarea
-		        
-			    panelCentral.add(txtFieldIngresarNombreEmergenteCrearTarea, BorderLayout.NORTH);//Agrega txtFieldIngresarNombreEmergenteCrearTarea
-	        
-			    panelCentral.add(Box.createVerticalStrut(10));//Espacio entre componentes (lbl y txtField)
-			    panelCentral.setBorder(BorderFactory.createEmptyBorder(15, 0, 15, 0));// top, left, bottom, right -> Ajusta un borde por pixeles
-			    
-			  //Abre: lblDescripcion
-		        JLabel lblDescripcion = new JLabel("Descripción:");//Crea nuevo
-		        lblDescripcion.setFont(new Font("Calibri", Font.PLAIN, 25));//Cambia la letra del interior
-	        	//Cierra: lblDescripcion
-		        
-		        panelCentral.add(lblDescripcion);//Añade lblDescripcion
-		        
-	        	//Abre: txtFieldIngresarDescripcionEmergenteCrearTarea
-		        txtFieldIngresarDescripcionEmergenteCrearTarea = new JTextField(mensajeIngresarDescripcionTarea);//Crea nuevo
-		        txtFieldIngresarDescripcionEmergenteCrearTarea.setForeground(gris);//Color de letra
-		        txtFieldIngresarDescripcionEmergenteCrearTarea.setPreferredSize(new Dimension(400, 40));
-		        txtFieldIngresarDescripcionEmergenteCrearTarea.setFont(new Font("Calibri", Font.PLAIN, 20));//Cambia la letra del interior
-		        txtFieldIngresarDescripcionEmergenteCrearTarea.setBackground(gris2);//Color de fondo
-		        txtFieldIngresarDescripcionEmergenteCrearTarea.setBorder(BorderFactory.createLineBorder(gris, 2));//Color del borde
-		        txtFieldIngresarDescripcionEmergenteCrearTarea.setCursor(new Cursor(Cursor.TEXT_CURSOR));//Pone el cursor modo escritura
-		        
-			        //Abre: Placeholder "mensaje previo"
-		        	txtFieldIngresarDescripcionEmergenteCrearTarea.addFocusListener(new FocusListener() {
-			            @Override
-			            public void focusGained(FocusEvent e) {
-			                if (txtFieldIngresarDescripcionEmergenteCrearTarea.getText().equals(mensajeIngresarDescripcionTarea)) {
-			                	txtFieldIngresarDescripcionEmergenteCrearTarea.setText("");//Cambia el contenido del txtField
-			                	txtFieldIngresarDescripcionEmergenteCrearTarea.setForeground(negro);//Color de letra
-			                }
-			            }
-			            @Override
-			            public void focusLost(FocusEvent e) {
-			                //Si el campo de texto está vacío al perder el foco, restaura el placeholder
-			                if (txtFieldIngresarDescripcionEmergenteCrearTarea.getText().isEmpty()) {
-			                	txtFieldIngresarDescripcionEmergenteCrearTarea.setText(mensajeIngresarDescripcionTarea);//Cambia el contenido del txtField
-			                	txtFieldIngresarDescripcionEmergenteCrearTarea.setForeground(gris);//Color de letra
-			                }
-			            }
-			        });
-			        //Cierra: Placeholder "mensaje previo"
-		        
-			        //Abre: Acción del txtFieldIngresarDescripcionEmergenteCrearTarea
-		        	txtFieldIngresarDescripcionEmergenteCrearTarea.addActionListener(new ActionListener() {
-			            public void actionPerformed(ActionEvent evento) {
-			            	//ctrl.actionEnterTxtFieldIngresarNombreEmergenteCrearTablero();//TODO: No se que debe hacer el método del Controller que gestiona el evento.
-			            }
-			        });
-			        //Cierra: Acción del txtFieldIngresarDescripcionEmergenteCrearTarea
-		        
-		        //Cierra: txtFieldIngresarDescripcionEmergenteCrearTarea
-		        
-			    panelCentral.add(txtFieldIngresarDescripcionEmergenteCrearTarea, BorderLayout.CENTER);//Agrega txtFieldIngresarDescripcionEmergenteCrearTarea
-	        
-			    panelCentral.add(Box.createVerticalStrut(10));//Espacio entre componentes (lbl y txtField)
-			    panelCentral.setBorder(BorderFactory.createEmptyBorder(15, 0, 15, 0));// top, left, bottom, right -> Ajusta un borde por pixeles
-	        
-			  //Abre: lblFecha
-		        JLabel lblFecha = new JLabel("Fecha:");//Crea nuevo
-		        lblFecha.setFont(new Font("Calibri", Font.PLAIN, 25));//Cambia la letra del interior
-	        	//Cierra: lblFecha
-		        
-		        panelCentral.add(lblFecha);//Añade lblFecha
+			        //Abre: lblDescripcion
+			        JLabel lblDescripcion = new JLabel("Descripción:");
+			        lblDescripcion.setFont(new Font("Calibri", Font.PLAIN, 25));
+			        lblDescripcion.setBackground(rosa);
+			        lblDescripcion.setOpaque(detalles);
+			        //Cierra: lblDescripcion
+			        
+		        panelDescripcion.add(lblDescripcion);
+		
+			        //Abre: txtFieldIngresarDescripcionEmergenteCrearTarea
+			        txtFieldIngresarDescripcionEmergenteCrearTarea = new JTextField(mensajeIngresarDescripcionTarea);
+			        txtFieldIngresarDescripcionEmergenteCrearTarea.setForeground(gris);
+			        txtFieldIngresarDescripcionEmergenteCrearTarea.setPreferredSize(new Dimension(400, 40));
+			        txtFieldIngresarDescripcionEmergenteCrearTarea.setFont(new Font("Calibri", Font.PLAIN, 20));
+			        txtFieldIngresarDescripcionEmergenteCrearTarea.setBackground(verde);
+			        txtFieldIngresarDescripcionEmergenteCrearTarea.setOpaque(detalles);
+			        txtFieldIngresarDescripcionEmergenteCrearTarea.setBorder(BorderFactory.createLineBorder(gris, 2));
+			        txtFieldIngresarDescripcionEmergenteCrearTarea.setCursor(new Cursor(Cursor.TEXT_CURSOR));
+			        
+				      	//Abre: Placeholder "mensaje previo"
+						txtFieldIngresarDescripcionEmergenteCrearTarea.addFocusListener(new FocusListener() {
+				            @Override
+				            public void focusGained(FocusEvent e) {
+				                if (txtFieldIngresarDescripcionEmergenteCrearTarea.getText().equals(mensajeIngresarDescripcionTarea)) {
+				                	txtFieldIngresarDescripcionEmergenteCrearTarea.setText("");//Cambia el contenido del txtField
+				                	txtFieldIngresarDescripcionEmergenteCrearTarea.setForeground(negro);//Color de letra
+				                }
+				            }
+				            @Override
+				            public void focusLost(FocusEvent e) {
+				                //Si el campo de texto está vacío al perder el foco, restaura el placeholder
+				                if (txtFieldIngresarDescripcionEmergenteCrearTarea.getText().isEmpty()) {
+				                	txtFieldIngresarDescripcionEmergenteCrearTarea.setText(mensajeIngresarDescripcionTarea);//Cambia el contenido del txtField
+				                	txtFieldIngresarDescripcionEmergenteCrearTarea.setForeground(gris);//Color de letra
+				                }
+				            }
+				        });
+				        //Cierra: Placeholder "mensaje previo"
+			        
+			        	//Abre: Acción del txtFieldIngresarDescripcionEmergenteCrearTarea
+			        	txtFieldIngresarDescripcionEmergenteCrearTarea.addActionListener(new ActionListener() {
+				            public void actionPerformed(ActionEvent evento) {
+				            	ctrl.actionEnterTxtFieldDescripcionEmergenteCrearTarea();
+				            }
+				        });
+				        //Cierra: Acción del txtFieldIngresarDescripcionEmergenteCrearTarea
+			
+			        
+		        panelDescripcion.add(txtFieldIngresarDescripcionEmergenteCrearTarea);
+		        //Cierra: panelDescripcion
+	
+		        //Abre: panelFecha
+		        JPanel panelFecha = new JPanel(new FlowLayout(FlowLayout.CENTER, 10, 10)); // FlowLayout alineado a la izquierda
+		        panelFecha.setBackground(verde); // Color de fondo
+		        panelFecha.setOpaque(detalles); // Mostrar detalles
+		
+			        //Abre: lblFecha
+			        JLabel lblFecha = new JLabel("Fecha:");
+			        lblFecha.setFont(new Font("Calibri", Font.PLAIN, 25));
+			        lblFecha.setBackground(rosa);
+			        lblFecha.setOpaque(detalles);
+	
+		        panelFecha.add(lblFecha);
+			
+			        //Abre: datePickerPanel
+			        JPanel datePickerPanel = crearSelectorDeFecha();
+			        datePickerPanel.setBackground(rojo);
+			        datePickerPanel.setOpaque(detalles);
+		
+		        panelFecha.add(datePickerPanel);
+		        //Cierra: panelFecha
+	
+	        panelCentral.add(Box.createVerticalGlue()); // Espacio flexible antes
+	        panelCentral.add(panelDescripcion);
+	        panelCentral.add(Box.createVerticalStrut(10)); // Espacio fijo entre los paneles
+	        panelCentral.add(panelFecha);
+	        panelCentral.add(Box.createVerticalGlue()); // Espacio flexible después
+	        //Cierra: panelCentral
 
-		        JPanel datePickerPanel = crearSelectorDeFecha();
-		        panelCentral.add(datePickerPanel);
 
-	        
-			    panelCentral.add(Box.createVerticalStrut(10));//Espacio entre componentes (lbl y txtField)
-			    panelCentral.setBorder(BorderFactory.createEmptyBorder(15, 0, 15, 0));// top, left, bottom, right -> Ajusta un borde por pixeles
-			    
-			    //Cierra: panelCentral
-	        
-	        
-        emergenteCrearTarea.add(panelCentral, BorderLayout.CENTER);//Lo añade y lo ubica al centro
+        emergenteCrearTarea.add(panelCentral, BorderLayout.CENTER); // Añade al centro
 	        
         
 	        //Abre: panelBotonesBasicos
@@ -1438,7 +1432,7 @@ public class FrameTablero extends JFrame{
 	        	//Cierra: btnCancelarEmergenteCrearTarea
 	    		
     			//Abre: btnCrearTareaEmergenteCrearTarea
-		        btnCrearTareaEmergenteCrearTarea = new JButton("Crear Tablero");//Crear nuevo
+		        btnCrearTareaEmergenteCrearTarea = new JButton("Crear Tarea");//Crear nuevo
 		        btnCrearTareaEmergenteCrearTarea.setFont(new Font("Arial", Font.PLAIN, 18));//Cambia la letra del interior
 		        btnCrearTareaEmergenteCrearTarea.setPreferredSize(new Dimension(200, 40));
 		        btnCrearTareaEmergenteCrearTarea.setBackground(morado2);//Color de fondo
@@ -1447,7 +1441,7 @@ public class FrameTablero extends JFrame{
 		        	//Abre: Acción del btnCrearTareaEmergenteCrearTarea
 		        	btnCrearTareaEmergenteCrearTarea.addActionListener(new ActionListener() {
 			            public void actionPerformed(ActionEvent evento) {
-			            	//ctrl.actionEnterTxtFieldIngresarNombreEmergenteCrearTablero();//TODO: no se cual es el metodo / Se llama el método del Controller que gestiona el evento.
+			            	ctrl.actionEnterTxtFieldDescripcionEmergenteCrearTarea();
 			            }
 			        });
 			        //Cierra: Acción del btnCrearTareaEmergenteCrearTarea
@@ -1464,12 +1458,12 @@ public class FrameTablero extends JFrame{
     	
         
         //Abre: Funcionalidad cambiar el foco automático al abrir la emergente
-        //txtFieldIngresarNombreEmergenteCrearTablero.setEnabled(false);
-        //Timer timer = new Timer(100, e -> {
-            //txtFieldIngresarNombreEmergenteCrearTablero.setEnabled(true);
-        //});//Temporizador
-        //timer.setRepeats(false);//Evita que el temporizador se repita
-        //timer.start();//Inicia el temporizador
+        txtFieldIngresarDescripcionEmergenteCrearTarea.setEnabled(false);
+        Timer timer = new Timer(100, e -> {
+        	txtFieldIngresarDescripcionEmergenteCrearTarea.setEnabled(true);
+        });//Temporizador
+        timer.setRepeats(false);//Evita que el temporizador se repita
+        timer.start();//Inicia el temporizador
         //Cierra: Funcionalidad cambiar el foco automático al abrir la emergente
         
         
@@ -1480,60 +1474,83 @@ public class FrameTablero extends JFrame{
     }
     //Cierra: Método para crear emergenteCrearTarea
     
-	    //Abre; Metodo para crear un panelSelectorFecha
-	    public static JPanel crearSelectorDeFecha() {
-	        // Crear panel para el selector de fecha
-	        JPanel panelFecha = new JPanel(new FlowLayout(FlowLayout.LEFT));
-	        panelFecha.setBackground(Color.WHITE); // Ajusta el color de fondo si lo necesitas
-	        
-	        // Crear JComboBox para día, mes y año
-	        JComboBox<Integer> dayComboBox = new JComboBox<>();
-	        JComboBox<String> monthComboBox = new JComboBox<>();
-	        JComboBox<Integer> yearComboBox = new JComboBox<>();
-	
-	        // Rellenar días (1-31)
-	        for (int i = 1; i <= 31; i++) {
-	            dayComboBox.addItem(i);
-	        }
-	
-	        // Rellenar meses
-	        String[] months = {"Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio",
-	                           "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"};
-	        for (String month : months) {
-	            monthComboBox.addItem(month);
-	        }
-	
-	        // Rellenar años (desde 1990 hasta 2030)
-	        int currentYear = Calendar.getInstance().get(Calendar.YEAR);
-	        for (int i = currentYear - 30; i <= currentYear + 10; i++) {
-	            yearComboBox.addItem(i);
-	        }
-	
-	        // Establecer tamaños y estilos
-	        Dimension fieldSize = new Dimension(100, 30);
-	        dayComboBox.setPreferredSize(fieldSize);
-	        monthComboBox.setPreferredSize(fieldSize);
-	        yearComboBox.setPreferredSize(fieldSize);
-	
-	        Font font = new Font("Calibri", Font.PLAIN, 20);
-	        dayComboBox.setFont(font);
-	        monthComboBox.setFont(font);
-	        yearComboBox.setFont(font);
-	
-	        // Añadir componentes al panel
-	        panelFecha.add(new JLabel("Día:"));
-	        panelFecha.add(dayComboBox);
-	        panelFecha.add(new JLabel("Mes:"));
-	        panelFecha.add(monthComboBox);
-	        panelFecha.add(new JLabel("Año:"));
-	        panelFecha.add(yearComboBox);
-	
-	        return panelFecha;
-	    }
-	    //Cierra: Metodo para crear un panelSelectorFecha
+    //Abre; Metodo para crear un panelSelectorFecha
+    public static JPanel crearSelectorDeFecha() {
+        // Crear panel para el selector de fecha
+        JPanel panelFecha = new JPanel(new FlowLayout(FlowLayout.LEFT));
+        panelFecha.setBackground(verde);//Color de fondo
+        panelFecha.setOpaque(detalles);//Mostrar detalles
+        
+        // Crear JComboBox para día, mes y año
+        cmbDay = new JComboBox<>();
+        cmbMonth = new JComboBox<>();
+        cmbYear = new JComboBox<>();
+        
+        cmbDay.setBackground(cyan);//Color de fondo
+        cmbDay.setOpaque(detalles);//Mostrar detalles
+        cmbDay.setCursor(new Cursor(Cursor.HAND_CURSOR));//Pone el cursor con una manita
+        
+        cmbMonth.setBackground(verde);//Color de fondo
+        cmbMonth.setOpaque(detalles);//Mostrar detalles
+        cmbMonth.setCursor(new Cursor(Cursor.HAND_CURSOR));//Pone el cursor con una manita
+        
+        cmbYear.setBackground(limon);//Color de fondo
+        cmbYear.setOpaque(detalles);//Mostrar detalles
+        cmbYear.setCursor(new Cursor(Cursor.HAND_CURSOR));//Pone el cursor con una manita
+
+        // Obtener la fecha actual
+        Calendar calendar = Calendar.getInstance();
+        int currentDay = calendar.get(Calendar.DAY_OF_MONTH);
+        int currentMonth = calendar.get(Calendar.MONTH);
+        int currentYear = calendar.get(Calendar.YEAR);
+
+        // Rellenar días (1-31)
+        for (int i = 1; i <= 31; i++) {
+            cmbDay.addItem(i);
+        }
+        // Seleccionar el día actual
+        cmbDay.setSelectedItem(currentDay);
+
+        // Rellenar meses
+        String[] months = {"ENE", "FEB", "MAR", "ABR", "MAY", "JUN",
+                           "JUL", "AGO", "SEP", "OCT", "NOV", "DIC"};
+        for (String month : months) {
+            cmbMonth.addItem(month);
+        }
+        // Seleccionar el mes actual
+        cmbMonth.setSelectedIndex(currentMonth);
+
+        // Rellenar años (desde el año actual hasta más de 10 años)
+        for (int i = currentYear; i <= currentYear + 10; i++) {
+            cmbYear.addItem(i);
+        }
+        // Seleccionar el año actual
+        cmbYear.setSelectedItem(currentYear);
+
+        // Establecer tamaños y estilos
+        Dimension fieldSize = new Dimension(100, 30);
+        cmbDay.setPreferredSize(fieldSize);
+        cmbMonth.setPreferredSize(fieldSize);
+        cmbYear.setPreferredSize(fieldSize);
+
+        Font font = new Font("Calibri", Font.PLAIN, 20);
+        cmbDay.setFont(font);
+        cmbMonth.setFont(font);
+        cmbYear.setFont(font);
+
+        // Añadir componentes al panel
+        panelFecha.add(new JLabel("Día:"));
+        panelFecha.add(cmbDay);
+        panelFecha.add(new JLabel("Mes:"));
+        panelFecha.add(cmbMonth);
+        panelFecha.add(new JLabel("Año:"));
+        panelFecha.add(cmbYear);
+
+        return panelFecha;
+    }
+    //Cierra: Metodo para crear un panelSelectorFecha
 
 	//Abre: Método para crear emergenteEditarLista
-    //Abre: Método para crear emergenteEditarLista
 	public static void emergenteEditarLista() {
     	
     	//JDialog hace que solo la emergente sea interactiva, las demás ventanas se bloquean.
@@ -1576,6 +1593,7 @@ public class FrameTablero extends JFrame{
 			
 			
 				//Abre: txtFieldIngresarNombreEmergenteEditarLista
+				mensajeEditarNombreTablero = ctrl.getNombreListaAbierta();
 				txtFieldIngresarNombreEmergenteEditarLista = new JTextField(mensajeEditarNombreTablero);//Crea nuevo
 				txtFieldIngresarNombreEmergenteEditarLista.setForeground(blanco);//Color de letra
 				//txtFieldIngresarNombreEmergenteEditarLista.setPreferredSize(new Dimension(198, 42));
@@ -1710,8 +1728,7 @@ public class FrameTablero extends JFrame{
 			        	//Abre: Acción del btnGuardarEmergenteEditarLista
 	    				btnGuardarEmergenteEditarLista.addActionListener(new ActionListener() {
 				            public void actionPerformed(ActionEvent evento) {
-				            	//TODO:Crear método en el Controller
-				            	//ctrl.GuardarEmergenteEditarLista();//Se llama el método del Controller que gestiona el evento. 
+				            	ctrl.txtFieldIngresarNombreEmergenteEditarLista();//Se llama el método del Controller que gestiona el evento. 
 				            }
 				        });
 						//Cierra: Acción del btnGuardarEmergenteEditarLista
@@ -2211,12 +2228,12 @@ public class FrameTablero extends JFrame{
 		FrameTablero.emergenteEditarTablero = emergenteEditarTablero;
 	}
 
-	public static JDialog getEmergenteColaboradores() {
-		return emergenteColaboradores;
+	public static JDialog getEmergenteEditarLista() {
+		return emergenteEditarLista;
 	}
 
-	public static void setEmergenteColaboradores(JDialog emergenteColaboradores) {
-		FrameTablero.emergenteColaboradores = emergenteColaboradores;
+	public static void setEmergenteEditarLista(JDialog emergenteEditarLista) {
+		FrameTablero.emergenteEditarLista = emergenteEditarLista;
 	}
 
 	public static JDialog getEmergenteEliminar() {
@@ -2227,6 +2244,14 @@ public class FrameTablero extends JFrame{
 		FrameTablero.emergenteEliminar = emergenteEliminar;
 	}
 
+	public static JDialog getEmergenteDelegados() {
+		return emergenteDelegados;
+	}
+
+	public static void setEmergenteDelegados(JDialog emergenteDelegados) {
+		FrameTablero.emergenteDelegados = emergenteDelegados;
+	}
+
 	public static JDialog getEmergenteCrearTarea() {
 		return emergenteCrearTarea;
 	}
@@ -2235,12 +2260,12 @@ public class FrameTablero extends JFrame{
 		FrameTablero.emergenteCrearTarea = emergenteCrearTarea;
 	}
 
-	public static JDialog getEmergenteEditarLista() {
-		return emergenteEditarLista;
+	public static JDialog getEmergenteMoverLista() {
+		return emergenteMoverLista;
 	}
 
-	public static void setEmergenteEditarLista(JDialog emergenteEditarLista) {
-		FrameTablero.emergenteEditarLista = emergenteEditarLista;
+	public static void setEmergenteMoverLista(JDialog emergenteMoverLista) {
+		FrameTablero.emergenteMoverLista = emergenteMoverLista;
 	}
 
 	public static JDialog getEmergenteEliminarLista() {
@@ -2251,6 +2276,14 @@ public class FrameTablero extends JFrame{
 		FrameTablero.emergenteEliminarLista = emergenteEliminarLista;
 	}
 
+	public static JDialog getEmergenteEditarTarea() {
+		return emergenteEditarTarea;
+	}
+
+	public static void setEmergenteEditarTarea(JDialog emergenteEditarTarea) {
+		FrameTablero.emergenteEditarTarea = emergenteEditarTarea;
+	}
+
 	public static JDialog getEmergenteEliminarTarea() {
 		return emergenteEliminarTarea;
 	}
@@ -2259,12 +2292,12 @@ public class FrameTablero extends JFrame{
 		FrameTablero.emergenteEliminarTarea = emergenteEliminarTarea;
 	}
 
-	public static JPanel getPanelTableroBody() {
-		return panelTableroBody;
+	public static JDialog getEmergenteColaboradores() {
+		return emergenteColaboradores;
 	}
 
-	public static void setPanelTableroBody(JPanel panelTableroBody) {
-		FrameTablero.panelTableroBody = panelTableroBody;
+	public static void setEmergenteColaboradores(JDialog emergenteColaboradores) {
+		FrameTablero.emergenteColaboradores = emergenteColaboradores;
 	}
 
 	public static JPanel getPanelTableroHead() {
@@ -2281,6 +2314,14 @@ public class FrameTablero extends JFrame{
 
 	public static void setPanelTableroMiddle(JPanel panelTableroMiddle) {
 		FrameTablero.panelTableroMiddle = panelTableroMiddle;
+	}
+
+	public static JPanel getPanelTableroBody() {
+		return panelTableroBody;
+	}
+
+	public static void setPanelTableroBody(JPanel panelTableroBody) {
+		FrameTablero.panelTableroBody = panelTableroBody;
 	}
 
 	public static JPanel getPanelLista() {
@@ -2334,15 +2375,6 @@ public class FrameTablero extends JFrame{
 		FrameTablero.txtFieldIngresarCorreoEmergenteColaboradores = txtFieldIngresarCorreoEmergenteColaboradores;
 	}
 
-	public static JTextField getTxtFieldIngresarNombreEmergenteCrearTarea() {
-		return txtFieldIngresarNombreEmergenteCrearTarea;
-	}
-
-	public static void setTxtFieldIngresarNombreEmergenteCrearTarea(
-			JTextField txtFieldIngresarNombreEmergenteCrearTarea) {
-		FrameTablero.txtFieldIngresarNombreEmergenteCrearTarea = txtFieldIngresarNombreEmergenteCrearTarea;
-	}
-
 	public static JTextField getTxtFieldIngresarNombreEmergenteEditarLista() {
 		return txtFieldIngresarNombreEmergenteEditarLista;
 	}
@@ -2359,6 +2391,23 @@ public class FrameTablero extends JFrame{
 	public static void setTxtFieldIngresarDescripcionEmergenteCrearTarea(
 			JTextField txtFieldIngresarDescripcionEmergenteCrearTarea) {
 		FrameTablero.txtFieldIngresarDescripcionEmergenteCrearTarea = txtFieldIngresarDescripcionEmergenteCrearTarea;
+	}
+
+	public static JTextField getTxtFieldNombreEmergenteEditarTarea() {
+		return txtFieldNombreEmergenteEditarTarea;
+	}
+
+	public static void setTxtFieldNombreEmergenteEditarTarea(JTextField txtFieldNombreEmergenteEditarTarea) {
+		FrameTablero.txtFieldNombreEmergenteEditarTarea = txtFieldNombreEmergenteEditarTarea;
+	}
+
+	public static JTextField getTxtFieldDescripcionEmergenteEditarTarea() {
+		return txtFieldDescripcionEmergenteEditarTarea;
+	}
+
+	public static void setTxtFieldDescripcionEmergenteEditarTarea(
+			JTextField txtFieldDescripcionEmergenteEditarTarea) {
+		FrameTablero.txtFieldDescripcionEmergenteEditarTarea = txtFieldDescripcionEmergenteEditarTarea;
 	}
 
 	public static JButton getBtnCrearLista() {
@@ -2529,6 +2578,22 @@ public class FrameTablero extends JFrame{
 		FrameTablero.btnBorrarEmergenteEliminarTarea = btnBorrarEmergenteEliminarTarea;
 	}
 
+	public static JButton getBtnCancelarEmergenteEditarTarea() {
+		return btnCancelarEmergenteEditarTarea;
+	}
+
+	public static void setBtnCancelarEmergenteEditarTarea(JButton btnCancelarEmergenteEditarTarea) {
+		FrameTablero.btnCancelarEmergenteEditarTarea = btnCancelarEmergenteEditarTarea;
+	}
+
+	public static JButton getBtnGuardarEmergenteEditarTarea() {
+		return btnGuardarEmergenteEditarTarea;
+	}
+
+	public static void setBtnGuardarEmergenteEditarTarea(JButton btnGuardarEmergenteEditarTarea) {
+		FrameTablero.btnGuardarEmergenteEditarTarea = btnGuardarEmergenteEditarTarea;
+	}
+
 	public static JLabel getLblEditarTablero() {
 		return lblEditarTablero;
 	}
@@ -2559,6 +2624,30 @@ public class FrameTablero extends JFrame{
 
 	public static void setLblEditarTarea(JLabel lblEditarTarea) {
 		FrameTablero.lblEditarTarea = lblEditarTarea;
+	}
+
+	public static JComboBox<Integer> getCmbDay() {
+		return cmbDay;
+	}
+
+	public static void setCmbDay(JComboBox<Integer> cmbDay) {
+		FrameTablero.cmbDay = cmbDay;
+	}
+
+	public static JComboBox<String> getCmbMonth() {
+		return cmbMonth;
+	}
+
+	public static void setCmbMonth(JComboBox<String> cmbMonth) {
+		FrameTablero.cmbMonth = cmbMonth;
+	}
+
+	public static JComboBox<Integer> getCmbYear() {
+		return cmbYear;
+	}
+
+	public static void setCmbYear(JComboBox<Integer> cmbYear) {
+		FrameTablero.cmbYear = cmbYear;
 	}
 
 	public static Color getNegro() {
@@ -2767,6 +2856,22 @@ public class FrameTablero extends JFrame{
 
 	public static void setMensajeIngresarDescripcionTarea(String mensajeIngresarDescripcionTarea) {
 		FrameTablero.mensajeIngresarDescripcionTarea = mensajeIngresarDescripcionTarea;
+	}
+
+	public static String getMensajeNombreTarea() {
+		return mensajeNombreTarea;
+	}
+
+	public static void setMensajeNombreTarea(String mensajeNombreTarea) {
+		FrameTablero.mensajeNombreTarea = mensajeNombreTarea;
+	}
+
+	public static String getMensajeDescripcionTarea() {
+		return mensajeDescripcionTarea;
+	}
+
+	public static void setMensajeDescripcionTarea(String mensajeDescripcionTarea) {
+		FrameTablero.mensajeDescripcionTarea = mensajeDescripcionTarea;
 	}
 
 }    
