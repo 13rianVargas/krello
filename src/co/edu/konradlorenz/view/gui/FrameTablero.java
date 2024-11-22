@@ -1383,7 +1383,7 @@ public class FrameTablero extends JFrame{
 		        panelFecha.setOpaque(detalles); // Mostrar detalles
 		
 			        //Abre: lblFecha
-			        JLabel lblFecha = new JLabel("Fecha:");
+			        JLabel lblFecha = new JLabel("Vence:");
 			        lblFecha.setFont(new Font("Calibri", Font.PLAIN, 25));
 			        lblFecha.setBackground(rosa);
 			        lblFecha.setOpaque(detalles);
