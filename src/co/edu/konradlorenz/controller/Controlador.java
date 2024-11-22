@@ -32,7 +32,7 @@ public class Controlador {
 	private ArrayList<Persona> listaDePersonasGlobal = new ArrayList<>();
 
 	private Administrador administradorAbierto;
-	private Colaborador colaboradorAbierto;
+//	private Colaborador colaboradorAbierto;
 	private Tablero tableroAbierto;
 	private Lista listaAbierta;
 	private Tarea tareaAbierta;
@@ -130,10 +130,10 @@ public class Controlador {
 	// > > > > > > > > > > > > > > > E L I M I N A R < < < < < < < < < < < < < < //
 	// > > > > > > > > > > > > > > > > > > > < < < < < < < < < < < < < < < < < < //
 
-	public void eliminarTablero() {
-		
-	}
-	// eliminarTablero
+//	public void eliminarTablero() {
+//		
+//	}
+//	// eliminarTablero
 	
 //	public void eliminarLista() {
 //		mostrarListas();
@@ -747,6 +747,7 @@ public class Controlador {
 	}
 	//Cierra: actionVolverPrincipal
 	
+	//Abre: actionLblCerrarSesion
 	public void actionLblCerrarSesion() {
 		
 		if (Principal.getFramePrincipal()==null) {
@@ -761,7 +762,7 @@ public class Controlador {
 			new Login(this);
 		}
 	}
-	
+	//Cierra: actionLblCerrarSesion
 	
 	
 	//CREAR TABLERO
