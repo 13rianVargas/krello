@@ -1,12 +1,29 @@
 package co.edu.konradlorenz.view.gui;
 
 
-import java.awt.*;
-import java.awt.event.*;
+import java.awt.CardLayout;
+import java.awt.Color;
+import java.awt.Cursor;
+import java.awt.Font;
+import java.awt.Image;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
-import javax.swing.*;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JPasswordField;
+import javax.swing.JTextField;
+import javax.swing.SwingConstants;
+import javax.swing.SwingUtilities;
 
-import co.edu.konradlorenz.controller.*;
+import co.edu.konradlorenz.controller.Controlador;
 
 @SuppressWarnings("serial")
 public class Login extends JFrame {
@@ -48,28 +65,28 @@ public class Login extends JFrame {
 	private static JButton btnLoginCrearCuenta;
 	private static JButton btnRegisterCrearCuenta;
 	
-	//COLORS (Se inicializan en el Controller)
-	private static Color negro;
-	private static Color blanco;
-	private static Color rojo;
-	private static Color verde;
-	private static Color millos;
-	private static Color azulito;
-	private static Color rosa;
-	private static Color rosa2;
-	private static Color cyan;
-	private static Color cyan2;
-	private static Color gris;
-	private static Color gris2;
-	private static Color morado;
-	private static Color morado2;
-	private static Color morado3;
-	private static Color aguacate;
-	private static Color petroleo;
-	private static Color petroleo2;
-	private static Color limon;
-	private static Color limon2;
-	private static Color limon3;
+	//COLORS
+	private static Color negro = new Color(0, 0, 0);
+	private static Color blanco = new Color(255, 255, 255);
+	private static Color rojo = new Color(255, 0, 0);
+	private static Color verde = new Color(117, 251, 76);
+	private static Color millos = new Color(0, 0, 255);
+	private static Color azulito = new Color(31, 165, 163);
+	private static Color rosa = new Color(243, 178, 177);
+	private static Color rosa2 = new Color(235, 116, 116);
+	private static Color cyan = new Color(117, 251, 253);
+	private static Color cyan2 = new Color(81, 174, 173);
+	private static Color gris = new Color(154, 154, 154);
+	private static Color gris2 = new Color(217, 217, 217);
+	private static Color morado = new Color(98, 20, 109);
+	private static Color morado2 = new Color(173, 16, 195);
+	private static Color morado3 = new Color(161, 114, 167);
+	private static Color aguacate = new Color(102, 181, 127);
+	private static Color petroleo = new Color(0, 151, 149);
+	private static Color petroleo2 = new Color(83, 181, 179);
+	private static Color limon = new Color(206, 220, 23);
+	private static Color limon2 = new Color(180, 200, 0);
+	private static Color limon3 = new Color(162, 168, 0);
 	
 	//STRINGS LOGIN
 	private static String mensajeIniciarSesionLogin = "Inicia sesión para continuar";
@@ -103,27 +120,6 @@ public class Login extends JFrame {
     	detalles = ctrl.detalles;
     	cardLayout = new CardLayout();
     	contenedor= new JPanel(cardLayout);
-    	negro = ctrl.negro;
-    	blanco = ctrl.blanco;
-    	rojo = ctrl.rojo;
-    	verde = ctrl.verde;
-    	millos = ctrl.millos;
-    	azulito = ctrl.azulito;
-    	rosa = ctrl.rosa;
-    	rosa2 = ctrl.rosa2;
-    	cyan = ctrl.cyan;
-    	cyan2 = ctrl.cyan2;
-    	gris = ctrl.gris;
-    	gris2 = ctrl.gris2;
-    	morado = ctrl.morado;
-    	morado2 = ctrl.morado2;
-    	morado3 = ctrl.morado3;
-    	aguacate = ctrl.aguacate;
-    	petroleo = ctrl.petroleo;
-    	petroleo2 = ctrl.petroleo2;
-    	limon = ctrl.limon;
-    	limon2 = ctrl.limon2;
-    	limon3 = ctrl.limon3;
 		
     	//Aquí inicia el verdadero Constructor de la ventana
     	frameLogin = new JFrame();
